@@ -1,13 +1,13 @@
 #Basic Operation
 
-
-### 查看postgresql版本信息
+## Install and start server
+### 1. 查看postgresql版本信息
     psql --version
 
-### 获取帮助
+### 2. 获取帮助
     psql --help
 
-### 查看postgresql进程
+### 3. 查看postgresql进程
     ps aux|grep postgres
 `lukechen 16756  0.0  0.0 112640  1004 pts/1    S+   17:06   0:00 grep --color=auto postgres`
 
@@ -19,38 +19,32 @@
     * T 停止 traced or stopped
     * Z 僵死 a defunct (”zombie”) process
 
-### 启动/停止/重启/尝试重启/重新加载/强制加载/状态
+### 4. 启动/停止/重启/尝试重启/重新加载/强制加载/状态
     service postgresql-9.4 XXX
     start, stop, restart, try-restart, reload, force-reload, status
 
-### 切换到postgresql用户
-    sudo su postgres
+## 添加新用户和数据库
 
-### 切换到DB
-    psql [dbname]
-
-### 退出psql客户端程序
-    \q
-
-### 添加新用户和数据库
-
-### 创建新用户(指定为superuser)
+### 1. 创建新用户(指定为superuser)
     sudo -u postgres createuser --superuser dbuser
 
-### 更改数据库的所有者
+### 2. 更改数据库的所有者
     alter database adempiere owner to adempiere;
 
-### 登陆到psql控制台
-    sudo -u postgres psql
-
-#### 创建数据库
+### 3. 创建数据库
     sudo -u postgres createdb [dbname] -O [owner]
 
-### 删除数据库
+### 4. 删除数据库
     dropdb [dbname]
 
-### 指定用户连接到指定的数据库
+### 5. 指定用户连接到指定的数据库
     psql -U username -d dbname -h 127.0.0.1 -p 5432
+
+### 6. 退出psql客户端程序
+    \q
+
+### 7. 登陆到psql控制台
+    sudo -u postgres psql
 
 ## Basic Operation in Postgresql
     \h：查看SQL命令的解释，比如\h select。
@@ -62,13 +56,27 @@
     \du：列出所有用户。
     \e：打开文本编辑器。
     \conninfo：列出当前数据库和连接的信息。
-### 创建模式
-    CREATE SCHEME name;
 
-### 创建新表
-    CREATE TABLE user(name VARCHAR(20), signup_date DATE);
+### 模式Schema
+    * 创建模式
+    CREATE SCHEME [schemaname   ];
 
-### 插入数据
+    * 删除模式
+    DROP SCHEMA [schemaname];
+
+    * 如果Schema下有Table，执行删除
+    DROP SCHEMA [schemaname] CASCADE； #cascade 串联，瀑布流
+
+### 数据表Table
+    * 创建数据表
+    CREATE TABLE [tablename](
+        column1 VARCHAR(20),
+        column2 DATE);
+
+    * 删除数据表
+    DROP TABLE [tablename];
+
+### 3. 插入数据
 
 * 语法：
     INSERT INTO TABLE_NAME (
@@ -92,7 +100,7 @@
         'test',
         '2013-12-22');
 
-### 选择记录
+### 4. 查询记录
 * 语法
     SELECT column1, column2, ...
     FROM schema.table;
@@ -100,29 +108,29 @@
 * 注意
     避免使用SELECT * 来增加查询的复杂度
 
-### 更新数据
+### 5. 更新数据
 * 语法
     UPDATE user set name = '李四' WHERE name = '张三';
 
-### 删除记录
+### 6. 删除记录
     DELETE FROM user WHERE name = '李四' ;
 
-### 添加栏位
+### 7. 添加列
     ALTER TABLE user ADD email VARCHAR(40);
 
-### 更新结构
+### 8. 更新列
     ALTER TABLE user ALTER COLUMN signup_date SET NOT NULL;
 
-### 更名栏位
+### 9. 更新列名
     ALTER TABLE user RENAME COLUMN signup_date TO signup;
 
-### 删除栏位
+### 10. 删除列名
     ALTER TABLE user DROP COLUMN email;
 
-### 表格更名
+### 11. 更新表名
     ALTER TABLE user RENAME TO backup_tbl;
 
-### 删除表格
+### 12. 删除表格
     DROP TABLE IF EXISTS backup_tbl;
 
 ### WHERE语句
@@ -172,3 +180,32 @@ Save and clost file. Restart server:
 
 Then use:
     psql -U dbuser -d dbname -h 127.0.0.1 -p 5432
+
+> How to config Postgresql to record log
+
+There are three logs in PostgreSQL, they are `pg_log`, `pg_xlog`, `pg_clog`
+
+    * pg_log  : 数据库运行日志（Default is off）
+    * pg_xlog : WAR日志，即重做日志
+    * pg_clog ：事务提交日志
+
+Config pg_log and start it, location is postgresql.conf(var/lib/pgsql/9.4/data/postgresql.conf)
+
+    log_destination = 'csvlog'
+    logging_collector = on    # require restart service
+    log_directory = 'pg_log'
+    log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+    log_rotation_age = 1d
+    log_rotation_size = 100MB
+    log_min_messages = info
+    # 记录执行慢的SQL
+    log_min_duration_statement = 60
+    log_checkpoints = on
+    log_connections = on
+    log_disconnections = on
+    log_duration = on
+    log_line_prefix = '%m'
+    # 监控数据库中长时间的锁
+    log_lock_waits = on
+    # 记录DDL操作
+    log_statement = 'ddl'
