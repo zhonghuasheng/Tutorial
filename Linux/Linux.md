@@ -1,5 +1,8 @@
+1. 复制本地文件到另一台机器
+    scp /*/file anotherPCUser@ip:/*folder
 
-
+2. JDK, JAVA_HOME, MVN can not found
+    source /etc/profile
 
 
 

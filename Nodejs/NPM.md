@@ -99,3 +99,28 @@ node的安装分为`全局模式`和`本地模式`。
     npm root -g：查看全局的包的安装路径
 
 ### 17、npm -v：查看npm安装的版本
+
+Plugin execution not covered by lifecycle configuration: org.mule.tools.javascript:npm-maven-plugin:1.0:fetch-modules   (execution: default, phase: generate-sources)
+
+
+解决办法：将pom.xml中的build部分添加一个pluginManagement标签，如下形势：
+
+<build>
+
+<pluginManagement>
+
+<plugins>
+
+<plugin>
+
+...
+
+</plugin>
+
+...
+
+</plugins>
+
+</pluginManagement>
+
+</build>
