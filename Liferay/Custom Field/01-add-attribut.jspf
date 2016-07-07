@@ -1,0 +1,108 @@
+var DDMIntegerField = A.Component.create(
+                {
+                    ATTRS: {
+                        dataType: {
+                            value: 'integer'
+                        },
+
+                        fieldNamespace: {
+                            value: 'ddm'
+                        },
+
+                        maxInteger: {
+                            value: 2147483647
+                        }
+                    },
+
+                    EXTENDS: A.FormBuilderTextField,
+
+                    NAME: 'ddm-integer',
+
+                    prototype: {
+                        getPropertyModel: function() {
+                            var instance = this;
+
+                            var model = DDMIntegerField.superclass.getPropertyModel.apply(instance, arguments);
+
+                            model.push(
+                                {
+                                    attributeName: 'maxInteger',
+                                    editor: new A.TextCellEditor({
+                                        inputFormatter: {
+                                            value: function(val) {
+                                                if (isString(val)) {
+                                                    val = val.replace(REGEX_NL, TPL_BR);
+                                                }
+                                                console.log('222' + val);
+                                            return val;
+                                            }
+                                        },
+
+                                        outputFormatter: {
+                                            value: function(val) {
+                                                var instance = this;
+
+                                                if (isString(val)) {
+                                                    if (instance.get('unescapeValue')) {
+                                                        val = LString.unescapeEntities(val);
+                                                    }
+
+                                                    val = val.replace(REGEX_BR, 'n');
+                                                }
+
+                                                return val;
+                                            }
+                                        }
+                                    }),
+
+                                    formatter: function(val) {
+                                        console.log('formatter');
+                                        return val;
+                                    },
+
+                                    name: '<%= UnicodeLanguageUtil.get(pageContext, "Max")%>'
+                                });
+
+                            return model;
+                        },
+                    }
+                }
+            );
+
+
+        var XML_ATTRIBUTES_FIELD_ATTRS = {
+            dataType: 1,
+            indexType: 1,
+            localizable: 1,
+            multiple: 1,
+            name: 1,
+            options: 1,
+            readOnly: 1,
+            repeatable: 1,
+            required: 1,
+            showLabel: 1,
+            type: 1,
+            width: 1,
+            selectAll: 1,
+            maxInteger: 1
+        };
+
+        var typeElement = instance._createDynamicNode(
+            'dynamic-element',
+            {
+                dataType: field.get('dataType'),
+                fieldNamespace: field.get('fieldNamespace'),
+                indexType: field.get('indexType'),
+                localizable: field.get('localizable'),
+                multiple: field.get('multiple'),
+                name: field.get('name'),
+                readOnly: field.get('readOnly'),
+                repeatable: field.get('repeatable'),
+                required: field.get('required'),
+                showLabel: field.get('showLabel'),
+                type: field.get('type'),
+                width: field.get('width'),
+                selectAll: field.get('selectAll'),
+                maxInteger: field.get('maxInteger')
+            }
+        );

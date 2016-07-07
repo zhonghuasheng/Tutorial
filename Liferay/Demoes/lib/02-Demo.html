@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+<head>
+    <title>YUI 3 gallery treeview checkbox test</title>
+    <link type="text/css" rel="stylesheet" href="http://yui.yahooapis.com/gallery-2010.02.17-20/build/gallery-treeview/assets/skins/sam/gallery-treeview.css" />
+    <script src="http://yui.yahooapis.com/3.0.0/build/yui/yui-debug.js" type="text/javascript"></script>
+</head>
+<body class="yui-skin-sam">
+    <h3>Tree with highlight propagation and 'checkbox' skin</h3>
+    <div id="treeDiv1"  class="whitebg ygtv-checkbox"></div>
+    <button id="logHilit">Log selected</button>
+
+    <hr/>
+    <h3>Tree with single node highlighting and simple skin</h3>
+
+    <div id="treeDiv2" class="whitebg ygtv-highlight"></div>
+    <input type="text" id="my-input" />
+    <script type="text/javascript">
+        YUI({
+            modules: {
+                'gallery-port': {
+                    fullpath: 'http://yui.yahooapis.com/gallery-2010.02.17-20/build/gallery-port/gallery-port-min.js',
+                    requires: ['base','node']
+                },
+                'gallery-treeview': {
+                    fullpath: 'http://yui.yahooapis.com/gallery-2010.02.17-20/build/gallery-treeview/gallery-treeview-min.js',
+                    requires: ['node','gallery-port']
+                 }
+            },
+
+            filter: 'debug',
+
+            logExclude: {
+                attribute: true,
+                event: true,
+                base: true,
+                deprecated: true,
+                Selector: true
+            }
+
+        }).use('gallery-treeview', function(Y) {
+            //Creating the local YAHOO copy
+            var YAHOO = Y.Port(),
+                Lang = YAHOO.lang,
+                Dom = YAHOO.util.Dom,
+                Event = YAHOO.util.Event,
+                Gallery = Y.apm;
+
+            //global variable to allow console inspection of tree:
+            var tree1, tree2;
+
+            var makeBranch = function (parent,label) {
+                label = label || '';
+                var n = Math.random() * (6 - (label.length || 0));
+                for (var i = 0;i < n;i++) {
+                    var tmpNode = new Gallery.TextNode('label' + label + '-' + i, parent, Math.random() > .5);
+                    makeBranch(tmpNode,label + '-' + i);
+                }
+            }
+
+            var treeInit = function() {
+                tree1 = new Gallery.TreeView("treeDiv1");
+                makeBranch(tree1.getRoot());
+                tree1.setNodesProperty('propagateHighlightUp',true);
+                tree1.setNodesProperty('propagateHighlightDown',true);
+                tree1.on('clickEvent',tree1.onEventToggleHighlight);
+                tree1.render();
+
+                Y.on('click', function() {
+                    var hiLit = tree1.getNodesByProperty('highlightState',1);
+                    if (Lang.isNull(hiLit)) {
+                        Y.log("None selected");
+                    } else {
+                        var labels = [];
+                        for (var i = 0; i < hiLit.length; i++) {
+                            labels.push(hiLit[i].label);
+                        }
+                        Y.log("Highlighted nodes:\n" + labels.join("\n"), "info", "example");
+                    }
+                }, '#logHilit');
+
+                tree2 = new Gallery.TreeView("treeDiv2");
+                makeBranch(tree2.getRoot());
+                tree2.singleNodeHighlight = true;
+                tree2.on('clickEvent',tree2.onEventToggleHighlight);
+                tree2.render();
+
+            };
+
+            //Add an onDOMReady handler to build the tree when the document is ready
+            Y.on('domready', treeInit);
+
+        });
+        YUI({
+            gallery: 'gallery-2012.06.20-20-07'
+        }).use('gallery-placeholder', 'node', function(Y) {
+            var ipt = Y.one('#my-input');
+            ipt.plug(Y.Plugin.Placeholder, {
+                text : 'First Name',
+                hideOnFocus : false
+            });
+        });
+    </script>
+</body>
+</html>
