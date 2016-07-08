@@ -24,37 +24,30 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
     AUI.add(
         'liferay-portlet-dynamic-data-mapping-custom-fields',
         function(A) {
-            var L = A.Lang,
-                FormBuilderTextField = A.FormBuilderTextField,
-                FormBuilderTypes = A.FormBuilder.types,
-                booleanParse = A.DataType.Boolean.parse,
-                stringParse = A.DataType.String.parse,
-                camelize = Liferay.Util.camelize,
-                trim = A.Lang.trim,
-                getCN = A.getClassName,
-                CSS_CLEARFIX = getCN('clearfix')
-                CSS_FORM_CONTROL = getCN('form', 'control'),
-                CSS_FIELD_INPUT = getCN('field', 'input'),
-                CSS_FIELD_INPUT_TEXT = getCN('field', 'input', 'text'),
-                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
-                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
-                CSS_FB_DROP_ZONE = getCN('form', 'builder', 'drop', 'zone'),
-                CSS_ICON = getCN('glyphicon'),
-                CSS_ICON_ASTERISK = getCN('glyphicon', 'asterisk'),
-                CSS_ICON_QUESTION_SIGN = getCN('glyphicon', 'question', 'sign'),
-                STR_BLANK = '',
-                TPL_BUTTON = '<div class="field-labels-inline">' +
-                        '<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
-                        '<div>',
-                TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
-                        '<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' + '</div>',
-                TPL_PARAGRAPH = '<p></p>',
-                TPL_SEPARATOR = '<div class="separator"></div>',
-                TPL_TEXT_HTML = '<textarea class="form-builder-field-node lfr-ddm-text-html"></textarea>',
-                TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>',
-                TPL_INPUT = '<input id="{id}" class="' + [CSS_FORM_BUILDER_FIELD_NODE, CSS_FIELD_INPUT,
-                         CSS_FIELD_INPUT_TEXT, CSS_FORM_CONTROL].join(' ') +
-                         '" name="{name}" type="text" value="{value}" placeholder="{placeholder}"/>';
+            var FormBuilderTextField = A.FormBuilderTextField;
+            var FormBuilderTypes = A.FormBuilder.types;
+
+            var booleanParse = A.DataType.Boolean.parse;
+            var camelize = Liferay.Util.camelize;
+            var trim = A.Lang.trim;
+
+            var STR_BLANK = '';
+
+            var TPL_BUTTON = '<div class="field-labels-inline">' +
+                                '<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
+                            '<div>';
+
+            var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
+                                    '<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' +
+                                '</div>';
+
+            var TPL_PARAGRAPH = '<p></p>';
+
+            var TPL_SEPARATOR = '<div class="separator"></div>';
+
+            var TPL_TEXT_HTML = '<textarea class="form-builder-field-node lfr-ddm-text-html"></textarea>';
+
+            var TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>';
 
             var applyStyles = function(node, styleContent) {
                 var styles = styleContent.replace(/\n/g, STR_BLANK).split(';');
@@ -74,34 +67,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                         }
                     }
                 );
-            };
-
-            var LiferayFormBuilderTextField = function() {};
-            LiferayFormBuilderTextField.ATTRS = {
-                template: {
-                    valueFn: function() {
-                        return TPL_INPUT;
-                    }
-                },
-
-                placeholder: {
-                    setter: stringParse,
-                    value: '123'
-                },
-
-                placeholderNode: {
-                    valueFn: function() {
-                        var instance = this;
-console.log('placeholderNode' + instance.get('placeholder'));
-                        return A.Node.create(
-                            L.sub(
-                                TPL_INPUT, {
-                                    placeholder: AEscape.html(instance.get('placeholder'))
-                                }
-                            )
-                        );
-                    }
-                }
             };
 
             var LiferayFormBuilderField = function() {};
@@ -136,71 +101,17 @@ console.log('placeholderNode' + instance.get('placeholder'));
                 }
             };
 
-            A.Base.mix(A.FormBuilderTextField, [LiferayFormBuilderTextField]);
             A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);
-
-            var FormBuilderTextFieldProto = FormBuilderTextField.prototype;
-            var originalFormBuilderTextFieldGetPropertyModel = FormBuilderTextFieldProto.getPropertyModel;
-            FormBuilderTextFieldProto = {
-                _uiSetPlaceholder : function(val) {
-                    var instance = this,
-                    placeholderNode = instance.get('placeholderNode');
-                    console.log('_uiSetPlaceholder' + val);
-                    placeholderNode.setContent(AEscape.html(val));
-                },
-
-                renderUI : function() {
-	                var instance = this,
-	                boundingBox = instance.get('boundingBox'),
-	                contentBox = instance.get('contentBox'),
-	                labelNode = instance.get('labelNode'),
-	                requiredFlagNode = instance.get('requiredFlagNode'),
-	                templateNode = instance.get('templateNode'),
-	                tipFlagNode = instance.get('tipFlagNode');
-
-	                contentBox.addClass(CSS_CLEARFIX);
-
-	                contentBox.append(labelNode);
-	                contentBox.append(requiredFlagNode);
-	                contentBox.append(tipFlagNode);
-	                contentBox.append(templateNode);
-	    console.log('render' + contentBox);
-	                instance.controlsToolbar.render(boundingBox);
-                },
-
-                getPropertyModel : function() {
-	                var instance = this;
-	                var model = originalFormBuilderTextFieldGetPropertyModel.call(instance);
-	                var type = instance.get('type');
-
-	                return model.concat(
-	                    {
-	                        attributeName: 'placeholder',
-	                        editor: new A.TextCellEditor(),
-	                        formatter: function(val) {
-	                            return val.data.value;
-	                        },
-	                        name: '<liferay-ui:message key="Placeholder" />'
-	                    }
-	                )
-                }
-            };
-
-            FormBuilderTextField.HTML_PARSER = {
-                dropZoneNode: '.' + CSS_FB_DROP_ZONE,
-                labelNode: 'label',
-                requiredFlagNode: '.' + CSS_ICON + ' .' + CSS_ICON_ASTERISK,
-                tipFlagNode: '.' + CSS_ICON + ' .' + CSS_ICON_QUESTION_SIGN,
-                placeholderNode: 'text'
-            };
 
             var FormBuilderProto = A.FormBuilderField.prototype;
 
-            var originalFormBuilderFieldGetPropertyModel = FormBuilderProto.getPropertyModel;
+            var originalGetPropertyModel = FormBuilderProto.getPropertyModel;
 
             FormBuilderProto.getPropertyModel = function() {
                 var instance = this;
-                var model = originalFormBuilderFieldGetPropertyModel.call(instance);
+
+                var model = originalGetPropertyModel.call(instance);
+
                 var type = instance.get('type');
 
                 var indexTypeOptions = {
@@ -713,6 +624,11 @@ console.log('placeholderNode' + instance.get('placeholder'));
                 }
             );
 
+			<%--
+			/**
+			 * Checkbox Group
+			 */
+			--%>
             var L = A.Lang,
             AEscape = A.Escape,
             getCN = A.getClassName,
@@ -725,12 +641,17 @@ console.log('placeholderNode' + instance.get('placeholder'));
             CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER = getCN('form-builder-field', 'options', 'container'),
             TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
             TPL_RADIO = '<div><input id="{id}" class="' +
-                    [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_CHECKBOX, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
-                    '" name="{name}" type="checkbox" value="{value}" /><label class="field-label" for="{id}">{label}</label></div>';
+                [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_CHECKBOX, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
+                '" name="{name}" type="checkbox" value="{value}" /><label class="field-label" for="{id}">{label}</label></div>';
 
             var booleanOptions = {
                 'false': '<liferay-ui:message key="no" />',
                 'true': '<liferay-ui:message key="yes" />'
+            };
+
+            var selectAllOption = {
+                label: 'Select All',
+                value: 'select all'
             };
 
             var DDMCheckboxGroupField = A.Component.create({
@@ -762,12 +683,10 @@ console.log('placeholderNode' + instance.get('placeholder'));
                             }
                         ]
                     },
-
                     selectAll: {
                         setter: booleanParse,
                         value: true
                     },
-
                     selectAllNode: {
                         valueFn: function() {
                             return A.Node.create(
@@ -836,6 +755,8 @@ console.log('placeholderNode' + instance.get('placeholder'));
 
                        renderUI: function() {
                            var instance = this,
+                           getCN = A.getClassName,
+                           CSS_CLEARFIX = getCN('clearfix')
                            boundingBox = instance.get('boundingBox'),
                            contentBox = instance.get('contentBox'),
                            labelNode = instance.get('labelNode'),
@@ -877,6 +798,105 @@ console.log('placeholderNode' + instance.get('placeholder'));
                        }
                     }
             });
+
+            <%--
+            /**
+             * Set placeholder attribute
+             */
+            --%>
+            var stringParse = A.DataType.String.parse,
+                CSS_CLEARFIX = getCN('clearfix')
+                CSS_FORM_CONTROL = getCN('form', 'control'),
+                CSS_FIELD_INPUT = getCN('field', 'input'),
+                CSS_FIELD_INPUT_TEXT = getCN('field', 'input', 'text'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                CSS_FB_DROP_ZONE = getCN('form', 'builder', 'drop', 'zone'),
+                CSS_ICON = getCN('glyphicon'),
+                CSS_ICON_ASTERISK = getCN('glyphicon', 'asterisk'),
+                CSS_ICON_QUESTION_SIGN = getCN('glyphicon', 'question', 'sign'),
+                TPL_INPUT = '<input id="{id}" class="placeholder ' + [CSS_FORM_BUILDER_FIELD_NODE, CSS_FIELD_INPUT,
+                         CSS_FIELD_INPUT_TEXT, CSS_FORM_CONTROL].join(' ') +
+                         '" name="{name}" type="text" value="{value}" placeholder="{placeholder}"/>';
+
+            var LiferayFormBuilderTextField = function() {};
+            LiferayFormBuilderTextField.ATTRS = {
+                template: {
+                    valueFn: function() {
+                        return TPL_INPUT;
+                    }
+                },
+
+                placeholder: {
+                    setter: stringParse,
+                    value: '123'
+                }
+            };
+
+            A.Base.mix(A.FormBuilderTextField, [LiferayFormBuilderTextField]);
+            var FormBuilderTextFieldProto = FormBuilderTextField.prototype;
+            var originalFormBuilderTextFieldGetPropertyModel = FormBuilderTextFieldProto.getPropertyModel;
+            FormBuilderTextFieldProto.getPropertyModel = function() {
+                var instance = this;
+                var model = originalFormBuilderTextFieldGetPropertyModel.call(instance);
+                var type = instance.get('type');
+console.log('getPropertyModel');
+                return model.concat(
+                    {
+                        attributeName: 'placeholder',
+                        editor: new A.TextCellEditor(),
+                        formatter: function(val) {
+                            return val.data.value;
+                        },
+                        name: '<liferay-ui:message key="Placeholder" />'
+                    }
+                );
+            };
+
+            FormBuilderTextFieldProto.getHTML = function() {
+                var instance = this;
+console.log('getHtml');
+                return L.sub(
+                    instance.get('template'), {
+                        id: AEscape.html(instance.get('id')),
+                        label: AEscape.html(instance.get('label')),
+                        name: AEscape.html(instance.get('name')),
+                        value: AEscape.html(instance.get('predefinedValue')),
+                        width: AEscape.html(instance.get('width')),
+                        placeholder: AEscape.html(instance.get('placeholder')),
+                    }
+                );
+            };
+
+var WIDTH_VALUES_MAP = {
+                                    small: 'col-xs-4',
+                                    medium: 'col-xs-8',
+                                    large: 'col-xs-12'
+                                };
+
+           FormBuilderTextFieldProto._uiSetWidth = function(val) {
+                                        var instance = this,
+                                            templateNode = instance.get('templateNode');
+console.log(instance);
+                                        templateNode.removeClass(WIDTH_VALUES_MAP[instance.prevWidth]);
+                                        templateNode.addClass(WIDTH_VALUES_MAP[val]);
+                                        instance.prevWidth = val;
+
+                                        var placeholder = instance.get('placeholder');
+                                        var placeholderTag = AUI().one('.placeholder');
+
+                                        if (placeholderTag != null) {
+                                            placeholderTag.setAttribute('placeholder', placeholder);
+                                        }
+                                    };
+
+            FormBuilderTextFieldProto._uiSetPlaceholder = function(val) {
+console.log('_uiSetPlaceholder' + val);
+                var instance = this,
+                placeholderNode = instance.get('placeholder');
+                placeholderNode.setContent(AEscape.html(val));
+            };
+console.dir(A.FormBuilderTextField);
 
             FormBuilderTypes['ddm-date'] = DDMDateField;
             FormBuilderTypes['ddm-decimal'] = DDMDecimalField;
