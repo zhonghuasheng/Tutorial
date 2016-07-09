@@ -1,0 +1,2 @@
+1. VO,PO,POJO的定义和区别
+三个都是java实体对象，vo，跟po比较类似，po是persistent object，是在是orm框架中的entity，po的每个属性基本上都对应数据库表里面的某个字段，而vo(value object)有时可以跟po一样，有时并不对应。POJO（Plain Old Java Objects）是简单java对象，他并不继承任何类（继承Object），实现任何接口，只有属性跟get set方法。而po一般要实现序列化接口，有时也继承一些类。
