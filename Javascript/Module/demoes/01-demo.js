@@ -327,4 +327,334 @@ text和image插件，则是允许require.js加载文本和图片文件。
 　　　　}
 　　);
 类似的插件还有json和mdown，用于加载json文件和markdown文件。
- */
+ 
+
+JavaScript的Array可以包含任意数据类型，并通过索引来访问每个元素。
+
+要取得Array的长度，直接访问length属性：
+
+var arr = [1, 2, 3.14, 'Hello', null, true];
+arr.length; // 6
+请注意，直接给Array的length赋一个新的值会导致Array大小的变化：
+
+var arr = [1, 2, 3];
+arr.length; // 3
+arr.length = 6;
+arr; // arr变为[1, 2, 3, undefined, undefined, undefined]
+
+indexOf
+
+与String类似，Array也可以通过indexOf()来搜索一个指定的元素的位置：
+
+var arr = [10, 20, '30', 'xyz'];
+arr.indexOf(10); // 元素10的索引为0
+
+slice
+
+slice()就是对应String的substring()版本，它截取Array的部分元素，然后返回一个新的Array：
+
+var arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+arr.slice(0, 3); // 从索引0开始，到索引3结束，但不包括索引3: ['A', 'B', 'C']
+arr.slice(3); // 从索引3开始到结束: ['D', 'E', 'F', 'G']
+
+push和pop
+
+push()向Array的末尾添加若干元素，pop()则把Array的最后一个元素删除掉：
+
+var arr = [1, 2];
+arr.push('A', 'B'); // 返回Array新的长度: 4
+arr; // [1, 2, 'A', 'B']
+arr.pop(); // pop()返回'B'
+arr; // [1, 2, 'A']
+arr.pop(); arr.pop(); arr.pop(); // 连续pop 3次
+arr; // []
+arr.pop(); // 空数组继续pop不会报错，而是返回undefined
+arr; // []
+
+unshift和shift
+
+如果要往Array的头部添加若干元素，使用unshift()方法，shift()方法则把Array的第一个元素删掉：
+
+var arr = [1, 2];
+arr.unshift('A', 'B'); // 返回Array新的长度: 4
+arr; // ['A', 'B', 1, 2]
+arr.shift(); // 'A'
+arr; // ['B', 1, 2]
+arr.shift(); arr.shift(); arr.shift(); // 连续shift 3次
+arr; // []
+arr.shift(); // 空数组继续shift不会报错，而是返回undefined
+arr; // []
+
+sort
+
+sort()可以对当前Array进行排序，它会直接修改当前Array的元素位置，直接调用时，按照默认顺序排序：
+
+var arr = ['B', 'C', 'A'];
+arr.sort();
+arr; // ['A', 'B', 'C']
+
+reverse
+
+reverse()把整个Array的元素给掉个个，也就是反转：
+
+var arr = ['one', 'two', 'three'];
+arr.reverse(); 
+arr; // ['three', 'two', 'one']
+
+splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。
+注释：该方法会改变原始数组。
+splice()方法是修改Array的“万能方法”，它可以从指定的索引开始删除若干元素，然后再从该位置添加若干元素：
+
+var arr = ['Microsoft', 'Apple', 'Yahoo', 'AOL', 'Excite', 'Oracle'];
+// 从索引2开始删除3个元素,然后再添加两个元素:
+arr.splice(2, 3, 'Google', 'Facebook'); // 返回删除的元素 ['Yahoo', 'AOL', 'Excite']
+arr; // ['Microsoft', 'Apple', 'Google', 'Facebook', 'Oracle']
+// 只删除,不添加:
+arr.splice(2, 2); // ['Google', 'Facebook']
+arr; // ['Microsoft', 'Apple', 'Oracle']
+// 只添加,不删除:
+arr.splice(2, 0, 'Google', 'Facebook'); // 返回[],因为没有删除任何元素
+arr; // ['Microsoft', 'Apple', 'Google', 'Facebook', 'Oracle']
+
+concat
+
+concat()方法把当前的Array和另一个Array连接起来，并返回一个新的Array：
+
+var arr = ['A', 'B', 'C'];
+var added = arr.concat([1, 2, 3]);
+added; // ['A', 'B', 'C', 1, 2, 3]
+arr; // ['A', 'B', 'C']
+请注意，concat()方法并没有修改当前Array，而是返回了一个新的Array。
+
+实际上，concat()方法可以接收任意个元素和Array，并且自动把Array拆开，然后全部添加到新的Array里：
+
+join
+
+join()方法是一个非常实用的方法，它把当前Array的每个元素都用指定的字符串连接起来，然后返回连接后的字符串：
+
+var arr = ['A', 'B', 'C', 1, 2, 3];
+arr.join('-'); // 'A-B-C-1-2-3'
+如果Array的元素不是字符串，将自动转换为字符串后再连接。
+
+如果Array的元素不是字符串，将自动转换为字符串后再连接。
+
+JavaScript的对象是一种无序的集合数据类型，它由若干键值对组成。
+
+JavaScript的对象用于描述现实世界中的某个对象。例如，为了描述“小明”这个淘气的小朋友，我们可以用若干键值对来描述他：
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    school: 'No.1 Middle School',
+    height: 1.70,
+    weight: 65,
+    score: null
+};
+
+JavaScript用一个{...}表示一个对象，键值对以xxx: xxx形式申明，用,隔开。注意，最后一个键值对不需要在末尾加,，如果加了，有的浏览器（如低版本的IE）将报错。
+
+上述对象申明了一个name属性，值是'小明'，birth属性，值是1990，以及其他一些属性。最后，把这个对象赋值给变量xiaoming后，就可以通过变量xiaoming来获取小明的属性了：
+
+xiaoming.name; // '小明'
+xiaoming.birth; // 1990
+访问属性是通过.操作符完成的，但这要求属性名必须是一个有效的变量名。如果属性名包含特殊字符，就必须用''括起来：
+
+var xiaohong = {
+    name: '小红',
+    'middle-school': 'No.1 Middle School'
+};
+
+xiaohong的属性名middle-school不是一个有效的变量，就需要用''括起来。访问这个属性也无法使用.操作符，必须用['xxx']来访问：
+
+xiaohong['middle-school']; // 'No.1 Middle School'
+xiaohong['name']; // '小红'
+xiaohong.name; // '小红'
+
+也可以用xiaohong['name']来访问xiaohong的name属性，不过xiaohong.name的写法更简洁。我们在编写JavaScript代码的时候，属性名尽量使用标准的变量名，这样就可以直接通过object.prop的形式访问一个属性了。
+
+实际上JavaScript对象的所有属性都是字符串，不过属性对应的值可以是任意数据类型。
+
+如果访问一个不存在的属性会返回什么呢？JavaScript规定，访问不存在的属性不报错，而是返回undefined：
+
+var xiaoming = {
+    name: '小明'
+};
+xiaoming.age; // undefined
+
+由于JavaScript的对象是动态类型，你可以自由地给一个对象添加或删除属性：
+
+var xiaoming = {
+    name: '小明'
+};
+xiaoming.age; // undefined
+xiaoming.age = 18; // 新增一个age属性
+xiaoming.age; // 18
+delete xiaoming.age; // 删除age属性
+xiaoming.age; // undefined
+delete xiaoming['name']; // 删除name属性
+xiaoming.name; // undefined
+delete xiaoming.school; // 删除一个不存在的school属性也不会报错
+如果我们要检测xiaoming是否拥有某一属性，可以用in操作符：
+
+如果我们要检测xiaoming是否拥有某一属性，可以用in操作符：
+
+var xiaoming = {
+    name: '小明',
+    birth: 1990,
+    school: 'No.1 Middle School',
+    height: 1.70,
+    weight: 65,
+    score: null
+};
+'name' in xiaoming; // true
+'grade' in xiaoming; // false
+不过要小心，如果in判断一个属性存在，这个属性不一定是xiaoming的，它可能是xiaoming继承得到的：
+
+'toString' in xiaoming; // true
+因为toString定义在object对象中，而所有对象最终都会在原型链上指向object，所以xiaoming也拥有toString属性。
+
+要判断一个属性是否是xiaoming自身拥有的，而不是继承得到的，可以用hasOwnProperty()方法：
+
+var xiaoming = {
+    name: '小明'
+};
+xiaoming.hasOwnProperty('name'); // true
+xiaoming.hasOwnProperty('toString'); // false
+
+Map和Set
+
+阅读: 67464
+JavaScript的默认对象表示方式{}可以视为其他语言中的Map或Dictionary的数据结构，即一组键值对。
+
+但是JavaScript的对象有个小问题，就是键必须是字符串。但实际上Number或者其他数据类型作为键也是非常合理的。
+
+为了解决这个问题，最新的ES6规范引入了新的数据类型Map。要测试你的浏览器是否支持ES6规范，请执行以下代码，如果浏览器报ReferenceError错误，那么你需要换一个支持ES6的浏览器：
+
+'use strict';
+var m = new Map();
+var s = new Set();
+alert('你的浏览器支持Map和Set！');
+
+Map
+
+Map是一组键值对的结构，具有极快的查找速度。
+
+举个例子，假设要根据同学的名字查找对应的成绩，如果用Array实现，需要两个Array：
+var m = new Map(); // 空Map
+m.set('Adam', 67); // 添加新的key-value
+m.set('Bob', 59);
+m.has('Adam'); // 是否存在key 'Adam': true
+m.get('Adam'); // 67
+m.delete('Adam'); // 删除key 'Adam'
+m.get('Adam'); // undefined
+
+Map和Set
+
+阅读: 67464
+JavaScript的默认对象表示方式{}可以视为其他语言中的Map或Dictionary的数据结构，即一组键值对。
+
+但是JavaScript的对象有个小问题，就是键必须是字符串。但实际上Number或者其他数据类型作为键也是非常合理的。
+
+为了解决这个问题，最新的ES6规范引入了新的数据类型Map。要测试你的浏览器是否支持ES6规范，请执行以下代码，如果浏览器报ReferenceError错误，那么你需要换一个支持ES6的浏览器：
+
+'use strict';
+var m = new Map();
+var s = new Set();
+alert('你的浏览器支持Map和Set！');
+
+// 直接运行测试
+
+ Run
+Map
+
+Map是一组键值对的结构，具有极快的查找速度。
+
+举个例子，假设要根据同学的名字查找对应的成绩，如果用Array实现，需要两个Array：
+
+var names = ['Michael', 'Bob', 'Tracy'];
+var scores = [95, 75, 85];
+给定一个名字，要查找对应的成绩，就先要在names中找到对应的位置，再从scores取出对应的成绩，Array越长，耗时越长。
+
+如果用Map实现，只需要一个“名字”-“成绩”的对照表，直接根据名字查找成绩，无论这个表有多大，查找速度都不会变慢。用JavaScript写一个Map如下：
+
+var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+m.get('Michael'); // 95
+初始化Map需要一个二维数组，或者直接初始化一个空Map。Map具有以下方法：
+
+var m = new Map(); // 空Map
+m.set('Adam', 67); // 添加新的key-value
+m.set('Bob', 59);
+m.has('Adam'); // 是否存在key 'Adam': true
+m.get('Adam'); // 67
+m.delete('Adam'); // 删除key 'Adam'
+m.get('Adam'); // undefined
+由于一个key只能对应一个value，所以，多次对一个key放入value，后面的值会把前面的值冲掉：
+
+var m = new Map();
+m.set('Adam', 67);
+m.set('Adam', 88);
+m.get('Adam'); // 88
+
+Set
+
+Set和Map类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在Set中，没有重复的key。
+
+要创建一个Set，需要提供一个Array作为输入，或者直接创建一个空Set：
+
+var s1 = new Set(); // 空Set
+var s2 = new Set([1, 2, 3]); // 含1, 2, 3
+重复元素在Set中自动被过滤：
+
+var s = new Set([1, 2, 3, 3, '3']);
+s; // Set {1, 2, 3, "3"}
+
+注意数字3和字符串'3'是不同的元素。
+
+通过add(key)方法可以添加元素到Set中，可以重复添加，但不会有效果：
+
+>>> s.add(4)
+>>> s
+{1, 2, 3, 4}
+>>> s.add(4)
+>>> s
+{1, 2, 3, 4}
+通过delete(key)方法可以删除元素：
+
+var s = new Set([1, 2, 3]);
+s; // Set {1, 2, 3}
+s.delete(3);
+s; // Set {1, 2}
+
+遍历Array可以采用下标循环，遍历Map和Set就无法使用下标。为了统一集合类型，ES6标准引入了新的iterable类型，Array、Map和Set都属于iterable类型。
+
+具有iterable类型的集合可以通过新的for ... of循环来遍历。
+
+for ... of循环是ES6引入的新的语法，请测试你的浏览器是否支持：
+
+'use strict';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
