@@ -633,10 +633,289 @@ for ... of循环是ES6引入的新的语法，请测试你的浏览器是否支�
 
 'use strict';
 
+for循环的3个条件都是可以省略的，如果没有退出循环的判断条件，就必须使用break语句退出循环，否则就是死循环：
 
+var x = 0;
+for (;;) { // 将无限循环下去
+    if (x > 100) {
+        break; // 通过if判断来退出循环
+    }
+    x ++;
+}
 
+for ... in
 
+for循环的一个变体是for ... in循环，它可以把一个对象的所有属性依次循环出来：
 
+var o = {
+    name: 'Jack',
+    age: 20,
+    city: 'Beijing'
+};
+for (var key in o) {
+    alert(key); // 'name', 'age', 'city'
+}
+
+遍历Array可以采用下标循环，遍历Map和Set就无法使用下标。为了统一集合类型，ES6标准引入了新的iterable类型，Array、Map和Set都属于iterable类型。
+
+具有iterable类型的集合可以通过新的for ... of循环来遍历。
+
+for ... of循环是ES6引入的新的语法，请测试你的浏览器是否支持：
+
+用for ... of循环遍历集合，用法如下：
+
+var a = ['A', 'B', 'C'];
+var s = new Set(['A', 'B', 'C']);
+var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
+for (var x of a) { // 遍历Array
+    alert(x);
+}
+for (var x of s) { // 遍历Set
+    alert(x);
+}
+for (var x of m) { // 遍历Map
+    alert(x[0] + '=' + x[1]);
+}
+你可能会有疑问，for ... of循环和for ... in循环有何区别？
+
+for ... in循环由于历史遗留问题，它遍历的实际上是对象的属性名称。一个Array数组实际上也是一个对象，它的每个元素的索引被视为一个属性。
+
+当我们手动给Array对象添加了额外的属性后，for ... in循环将带来意想不到的意外效果：
+
+var a = ['A', 'B', 'C'];
+a.name = 'Hello';
+for (var x in a) {
+    alert(x); // '0', '1', '2', 'name'
+}
+for ... in循环将把name包括在内，但Array的length属性却不包括在内。
+
+for ... of循环则完全修复了这些问题，它只循环集合本身的元素：
+
+var a = ['A', 'B', 'C'];
+a.name = 'Hello';
+for (var x of a) {
+    alert(x); 'A', 'B', 'C'
+}
+这就是为什么要引入新的for ... of循环。
+
+然而，更好的方式是直接使用iterable内置的forEach方法，它接收一个函数，每次迭代就自动回调该函数。以Array为例：
+
+var a = ['A', 'B', 'C'];
+a.forEach(function (element, index, array) {
+    // element: 指向当前元素的值
+    // index: 指向当前索引
+    // array: 指向Array对象本身
+    alert(element);
+});
+注意，forEach()方法是ES5.1标准引入的，你需要测试浏览器是否支持。
+
+Set与Array类似，但Set没有索引，因此回调函数的前两个参数都是元素本身：
+
+var s = new Set(['A', 'B', 'C']);
+s.forEach(function (element, sameElement, set) {
+    alert(element);
+});
+Map的回调函数参数依次为value、key和map本身：
+
+var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
+m.forEach(function (value, key, map) {
+    alert(value);
+});
+如果对某些参数不感兴趣，由于JavaScript的函数调用不要求参数必须一致，因此可以忽略它们。例如，只需要获得Array的element：
+
+var a = ['A', 'B', 'C'];
+a.forEach(function (element) {
+    alert(element);
+});
+
+定义函数
+
+在JavaScript中，定义函数的方式如下：
+
+function abs(x) {
+    if (x >= 0) {
+        return x;
+    } else {
+        return -x;
+    }
+}
+上述abs()函数的定义如下：
+
+function指出这是一个函数定义；
+abs是函数的名称；
+(x)括号内列出函数的参数，多个参数以,分隔；
+{ ... }之间的代码是函数体，可以包含若干语句，甚至可以没有任何语句。
+请注意，函数体内部的语句在执行时，一旦执行到return时，函数就执行完毕，并将结果返回。因此，函数内部通过条件判断和循环可以实现非常复杂的逻辑。
+
+如果没有return语句，函数执行完毕后也会返回结果，只是结果为undefined。
+
+由于JavaScript的函数也是一个对象，上述定义的abs()函数实际上是一个函数对象，而函数名abs可以视为指向该函数的变量。
+
+因此，第二种定义函数的方式如下：
+
+var abs = function (x) {
+    if (x >= 0) {
+        return x;
+    } else {
+        return -x;
+    }
+};
+在这种方式下，function (x) { ... }是一个匿名函数，它没有函数名。但是，这个匿名函数赋值给了变量abs，所以，通过变量abs就可以调用该函数。
+
+上述两种定义完全等价，注意第二种方式按照完整语法需要在函数体末尾加一个;，表示赋值语句结束。
+
+arguments
+
+JavaScript还有一个免费赠送的关键字arguments，它只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数。arguments类似Array但它不是一个Array：
+
+function foo(x) {
+    alert(x); // 10
+    for (var i=0; i<arguments.length; i++) {
+        alert(arguments[i]); // 10, 20, 30
+    }
+}
+foo(10, 20, 30);
+利用arguments，你可以获得调用者传入的所有参数。也就是说，即使函数不定义任何参数，还是可以拿到参数的值：
+
+function abs() {
+    if (arguments.length === 0) {
+        return 0;
+    }
+    var x = arguments[0];
+    return x >= 0 ? x : -x;
+}
+
+abs(); // 0
+abs(10); // 10
+abs(-9); // 9
+实际上arguments最常用于判断传入参数的个数。你可能会看到这样的写法：
+
+// foo(a[, b], c)
+// 接收2~3个参数，b是可选参数，如果只传2个参数，b默认为null：
+function foo(a, b, c) {
+    if (arguments.length === 2) {
+        // 实际拿到的参数是a和b，c为undefined
+        c = b; // 把b赋给c
+        b = null; // b变为默认值
+    }
+    // ...
+}
+要把中间的参数b变为“可选”参数，就只能通过arguments判断，然后重新调整参数并赋值。
+
+rest参数
+
+由于JavaScript函数允许接收任意个参数，于是我们就不得不用arguments来获取所有参数：
+
+function foo(a, b) {
+    var i, rest = [];
+    if (arguments.length > 2) {
+        for (i = 2; i<arguments.length; i++) {
+            rest.push(arguments[i]);
+        }
+    }
+    console.log('a = ' + a);
+    console.log('b = ' + b);
+    console.log(rest);
+}
+为了获取除了已定义参数a、b之外的参数，我们不得不用arguments，并且循环要从索引2开始以便排除前两个参数，这种写法很别扭，只是为了获得额外的rest参数，有没有更好的方法？
+
+ES6标准引入了rest参数，上面的函数可以改写为：
+
+function foo(a, b, ...rest) {
+    console.log('a = ' + a);
+    console.log('b = ' + b);
+    console.log(rest);
+}
+
+foo(1, 2, 3, 4, 5);
+// 结果:
+// a = 1
+// b = 2
+// Array [ 3, 4, 5 ]
+
+foo(1);
+// 结果:
+// a = 1
+// b = undefined
+// Array []
+rest参数只能写在最后，前面用...标识，从运行结果可知，传入的参数先绑定a、b，多余的参数以数组形式交给变量rest，所以，不再需要arguments我们就获取了全部参数。
+
+如果传入的参数连正常定义的参数都没填满，也不要紧，rest参数会接收一个空数组（注意不是undefined）。
+
+因为rest参数是ES6新标准，所以你需要测试一下浏览器是否支持。请用rest参数编写一个sum()函数，接收任意个参数并返回它们的和：
+
+'use strict';
+
+function sum(...rest) {
+   ???
+}
+
+// 测试:
+var i, args = [];
+for (i=1; i<=100; i++) {
+    args.push(i);
+}
+if (sum() !== 0) {
+    alert('测试失败: sum() = ' + sum());
+} else if (sum(1) !== 1) {
+    alert('测试失败: sum(1) = ' + sum(1));
+} else if (sum(2, 3) !== 5) {
+    alert('测试失败: sum(2, 3) = ' + sum(2, 3));
+} else if (sum.apply(null, args) !== 5050) {
+    alert('测试失败: sum(1, 2, 3, ..., 100) = ' + sum.apply(null, args));
+} else {
+    alert('测试通过!');
+}
+
+前面我们讲到了JavaScript引擎有一个在行末自动添加分号的机制，这可能让你栽到return语句的一个大坑：
+
+function foo() {
+    return { name: 'foo' };
+}
+
+foo(); // { name: 'foo' }
+如果把return语句拆成两行：
+
+function foo() {
+    return
+        { name: 'foo' };
+}
+
+foo(); // undefined
+要小心了，由于JavaScript引擎在行末自动添加分号的机制，上面的代码实际上变成了：
+
+function foo() {
+    return; // 自动添加了分号，相当于return undefined;
+        { name: 'foo' }; // 这行语句已经没法执行到了
+}
+所以正确的多行写法是：
+
+function foo() {
+    return { // 这里不会自动加分号，因为{表示语句尚未结束
+        name: 'foo'
+    };
+}
+
+高阶函数英文叫Higher-order function。那么什么是高阶函数？
+
+JavaScript的函数其实都指向某个变量。既然变量可以指向函数，函数的参数能接收变量，那么一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数。
+
+一个最简单的高阶函数：
+
+function add(x, y, f) {
+    return f(x) + f(y);
+}
+当我们调用add(-5, 6, Math.abs)时，参数x，y和f分别接收-5，6和函数Math.abs，根据函数定义，我们可以推导计算过程为：
+
+x = -5;
+y = 6;
+f = Math.abs;
+f(x) + f(y) ==> Math.abs(-5) + Math.abs(6) ==> 11;
+return 11;
+用代码验证一下：
+
+add(-5, 6, Math.abs); // 11
+编写高阶函数，就是让函数的参数能够接收别的函数。
 
 
 
