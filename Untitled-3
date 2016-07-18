@@ -1,0 +1,81 @@
+
+
+
+
+
+                        var FormBuilderTextFieldExtends = A.Component.create(
+                {
+                    ATTRS: {
+                        template: {
+                            valueFn: function() {
+                                return TPL_INPUT;
+                            }
+                        },
+
+                        width: {
+                            validator: function(val) {
+                                val = A.Lang.String.toLowerCase(val);
+                                return val in WIDTH_VALUES_MAP;
+                            },
+                            value: 'small'
+                        },
+
+                        placeholder: {
+                            setter: stringParse,
+                            value: ''
+                        }
+                    },
+
+                    UI_ATTRS: ['placeholder'],
+                    EXTENDS: A.FormBuilderField,
+                    NAME: 'text',
+                    prototype: {
+                        getHTML: function() {
+                            var instance = this;
+
+                            return L.sub(
+                                instance.get('template'), {
+                                    id: AEscape.html(instance.get('id')),
+                                    label: AEscape.html(instance.get('label')),
+                                    name: AEscape.html(instance.get('name')),
+                                    value: AEscape.html(instance.get('predefinedValue')),
+                                    width: AEscape.html(instance.get('width')),
+                                    placeholder: AEscape.html(instance.get('placeholder')),
+                                }
+                            );
+                        },
+
+                        getPropertyModel: function() {
+                            var instance = this;
+                            var model = originalFormBuilderTextFieldGetPropertyModel.call(instance);
+                            return model.concat(
+                                {
+                                    attributeName: 'placeholder',
+                                    editor: new A.TextCellEditor(),
+                                    formatter: function(val) {
+                                        return val.data.value;
+                                    },
+                                    name: '<liferay-ui:message key="Placeholder" />'
+                                }
+                            );
+                        },
+
+                        _uiSetWidth: function(val) {
+                            var instance = this,
+                                templateNode = instance.get('templateNode');
+                            templateNode.removeClass(WIDTH_VALUES_MAP[instance.prevWidth]);
+                            templateNode.addClass(WIDTH_VALUES_MAP[val]);
+                            instance.prevWidth = val;
+                        },
+
+                        _uiSetPlaceholder: function(val) {
+                            var instance = this,
+                            templateNode = instance.get('templateNode');
+                            templateNode.setAttribute('placeholder', val);
+                        }
+                    }
+                }
+            );
+
+            A.FormBuilder.types['text'] = FormBuilderTextFieldExtends;
+            A.FormBuilderTextField = FormBuilderTextFieldExtends;

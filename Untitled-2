@@ -1,0 +1,57 @@
+            var CSS_FORM_CONTROL = getCN('form', 'control'),
+                CSS_FIELD = getCN('field'),
+                CSS_FIELD_TEXT = getCN('field', 'text'),
+                CSS_FIELD_TEXTAREA = getCN('field', 'textarea'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                TPL_TEXTAREA = '<div class="form-builder-field-wrapper"><textarea id="{id}" class="' + [
+                    CSS_FORM_BUILDER_FIELD_NODE, CSS_FIELD, CSS_FIELD_TEXT,
+                    CSS_FIELD_TEXTAREA, CSS_FORM_CONTROL].join(' ') + '" name="{name}" placeholder="{placeholder}">{value}</textarea></div>';
+
+            var FormBuilderTextAreaFieldProto = A.FormBuilderTextAreaField.prototype;
+            var originalFormBuilderTextAreaFieldGetPropertyModel = FormBuilderTextAreaFieldProto.getPropertyModel;
+
+            var FormBuilderextAreaExtends = A.Component.create({
+                ATTRS: {
+                    template: {
+                        valueFn: function() {
+                            return TPL_TEXTAREA;
+                        }
+                    }
+                },
+
+                EXTENDS: A.FormBuilderTextField,
+                NAME: 'textarea',
+            });
+
+            A.FormBuilder.types['textarea'] = FormBuilderextAreaExtends;
+            A.FormBuilderTextAreaField = FormBuilderextAreaExtends;
+
+
+
+                       <%--
+            /**
+             * Set placeholder attribute in textarea
+             */
+            --%>
+            var CSS_FORM_CONTROL = getCN('form', 'control'),
+                CSS_FIELD = getCN('field'),
+                CSS_FIELD_TEXT = getCN('field', 'text'),
+                CSS_FIELD_TEXTAREA = getCN('field', 'textarea'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                TPL_TEXTAREA = '<div class="form-builder-field-wrapper"><textarea id="{id}" class="' + [
+                    CSS_FORM_BUILDER_FIELD_NODE, CSS_FIELD, CSS_FIELD_TEXT,
+                    CSS_FIELD_TEXTAREA, CSS_FORM_CONTROL].join(' ') + '" name="{name}" placeholder="{placeholder}">{value}</textarea></div>';
+
+            var LiferayFormBUilderTextAreaField = function() {};
+
+            LiferayFormBUilderTextAreaField.ATTRS = {
+                template: {
+                        valueFn: function() {
+                            return TPL_TEXTAREA;
+                        }
+                }
+            };
+
+            A.Base.mix(A.FormBuilderTextAreaField, [LiferayFormBUilderTextAreaField]);
