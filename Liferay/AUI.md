@@ -1,5 +1,7 @@
 Liferay的AUI框架如何学习
 2012年11月15日 Liferay 暂无评论 阅读 15,094 views 次
+http://www.auicss.com/?s=Document
+
 
 * 一、AUI是什么？
 
@@ -264,3 +266,105 @@ YUI({
         });
         </@aui.script>
 </#if>
+
+
+
+YUI介绍以及快速入门 Yahoo的JS框架
+本文由arthinking发表于5年前 | Javascript | 评论数 4 |  被围观 19,588 views+
+1、YUI介绍：
+2、在页面中引入JS文件：
+3、开始使用YUI：
+3.1、创建一个YUI沙箱：
+3.2、在YUI中使用DOM节点
+3.3、创建UI效果
+3.4、使用Ajax加载内容
+
+1、YUI介绍：
+YUI库是一系列使用Javascript和CSS创建的的工具和控件集，用来创建富客户端Web应用。使用到了DOM scripting，DHTML和AJAX。
+
+2、在页面中引入JS文件：
+可以从官网下载YUI http://yuilibrary.com/yui/quick-start/ 然后引入页面，也可以在线引入
+
+<script type="text/javascript" src="script/yui3/build/yui/yui-min.js"></script>
+<!-- <script src="http://yui.yahooapis.com/3.4.1/build/yui/yui-min.js"></script> -->
+3、开始使用YUI：
+3.1、创建一个YUI沙箱：
+<script>
+// Create a YUI sandbox on your page.
+YUI().use('node', 'event', function (Y) {
+    // The Node and Event modules are loaded and ready to use.
+    // Your code goes here!
+});
+</script>
+创建一个YUI实例用于使用所有的YUI组建，也叫一个沙箱。每一个YUI沙箱都有它自己的一个实例和一套自己的激活了的模块，所以它不会与同一个页面中的其他沙箱冲突。任何定义在沙箱内的变量只会在本沙箱内有效，不会自动变成全局变量。
+
+当声明一个沙箱 时，指定你想想要使用的模块，在上面的代码中，我们指定了使用node和even模块 。这样，我们就可以在这个沙箱内通过Y来使用node和evnet的API了。
+
+YUI会管理需要依赖的各模块的运算和加载在你的页面中单一请求或者组合请求中需要使用到得JS文件。在所有的YUI模块加载完成后你的代码将会被执行。
+
+3.2、在YUI中使用DOM节点
+YUI中的节点组件使得使用，创建和操作DOM节点变得非常方便。节点API允许使用元素相关参照物或者选择器去使用DOM决节点
+
+<script>
+YUI().use('node', function (Y) {
+    // Access DOM nodes.
+    var oneElementById     = Y.one('#foo'),
+        oneElementByName   = Y.one('body'),
+        allElementsByClass = Y.all('.bar');
+
+    // Create DOM nodes.
+    var contentNode = Y.Node.create('<div>'),
+        listNode    = Y.Node.create('<ul>'),
+        footerNode  = Y.Node.create('<footer>');
+
+    contentNode.setContent('<p>Node makes it easy to add content.</p>');
+    listNode.insert('<li>Buy milk</li>');
+    footerNode.prepend('<h2>Footer Content</h2>');
+
+    // Manipulate DOM nodes.
+    Y.all('.important').addClass('highlight');
+
+    Y.one('#close-button').on('click', function () {
+        contentNode.hide();
+    });
+});
+</script>
+3.3、创建UI效果
+使用Transition组件使得在你的用户交互中创建基于CSS的绚丽效果变得更加容易了。
+
+<script>
+YUI().use('transition', function (Y) {
+    // Fade away.
+    Y.one('#fademe').transition({
+        duration: 1, // seconds
+        opacity : 0
+    });
+
+    // Shrink to nothing.
+    Y.one('#shrinkme').transition({
+        duration: 1, // seconds
+        width   : 0,
+        height  : 0
+    });
+});
+</script>
+3.4、使用Ajax加载内容
+由node-load模块提供的Node.load()方法使得在页面运行时动态的添加内容更方便了。
+
+<script>
+YUI().use('node-load', function (Y) {
+    // Replace the contents of the #content node with content.html.
+    Y.one('#content').load('content.html');
+});
+</script>
+本问由arthinking翻译，查看英文原文：http://yuilibrary.com/yui/quick-start/
+除了文章中有特别说明，均为IT宅原创文章，转载请以链接形式注明出处。
+本文链接：http://www.itzhai.com/introduction-and-quick-start-yui-js.html
+关键字: YUI
+arthinkingJava技术交流群：280755654，入门群：428693174more 分享到： 6 　文章评论
+4条评论
+鬼片迷2013年08月20日16:23:21 #-49楼 回复
+这个教程对新手来说是很有价值的！
+L.LAWLIGHT2015年02月27日01:29:49 #-48楼 回复
+非常感谢，分分钟就能对YUI有个大概了解
+
