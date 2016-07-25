@@ -16,15 +16,15 @@ function m2() {
 
 var module1 = new Object({
     _count : 0,
-    
+
     m1 : function() {
         console.log('module1 function m1');
     },
-    
+
     m2 : function() {
         console.log('module 1 function m2');
     }
-    
+
 });
 /*
 对象写法
@@ -37,15 +37,15 @@ module1._count = 5;
 
 var module1 = (function() {
     var _count = 0;
-    
+
     var m1 = function() {
         console.log('module1 function m1');
     };
-    
+
     var m2 = function() {
         console.log('module1 function m2');
     };
-    
+
     return {
         m1 : m1,
         m2 : m2
@@ -64,7 +64,7 @@ var module1 = (function(mod){
     mod.m3 = function() {
         console.log('module1 function m3');
     };
-    
+
     return mod;
 })(module1);
 
@@ -86,7 +86,7 @@ var module1 = (function(mod){
     mod.m4 = function() {
         console.log('module1 function m4');
     };
-    
+
     return mod;
 })(window.module1 || {});
 
@@ -327,7 +327,7 @@ text和image插件，则是允许require.js加载文本和图片文件。
 　　　　}
 　　);
 类似的插件还有json和mdown，用于加载json文件和markdown文件。
- 
+
 
 JavaScript的Array可以包含任意数据类型，并通过索引来访问每个元素。
 
@@ -398,7 +398,7 @@ reverse
 reverse()把整个Array的元素给掉个个，也就是反转：
 
 var arr = ['one', 'two', 'three'];
-arr.reverse(); 
+arr.reverse();
 arr; // ['three', 'two', 'one']
 
 splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。
@@ -917,7 +917,63 @@ return 11;
 add(-5, 6, Math.abs); // 11
 编写高阶函数，就是让函数的参数能够接收别的函数。
 
+"链式作用域"
+那就是在函数的内部，再定义一个函数。
 
+　　function f1(){
+
+　　　　var n=999;
+
+　　　　function f2(){
+　　　　　　alert(n); // 999
+　　　　}
+
+　　}
+
+在上面的代码中，函数f2就被包括在函数f1内部，这时f1内部的所有局部变量，对f2都是可见的。但是反过来就不行，f2内部的局部变量，对f1就是不可见的。这就是Javascript语言特有的"链式作用域"结构（chain scope），子对象会一级一级地向上寻找所有父对象的变量。所以，父对象的所有变量，对子对象都是可见的，反之则不成立。
+先上段代码：
+
+//函数a
+
+function a()
+
+{
+
+    var i=0;
+    //函数b
+    function b()
+    {
+        alert(++i);
+    }
+    return b;
+}
+    //函数c
+    var c = a();
+    c();
+
+代码特点：
+1、函数b嵌套在函数a内部；
+2、函数a返回函数b。
+代码中函数a的内部函数b，被函数a外面的一个变量c引用的时候，这就叫创建了一个闭包。有时候函数b也可以用一个匿名函数代替来返回，即return function(){};
+优点：1.保护函数内的变量安全,加强了封装性 2.在内存中维持一个变量(用的太多就变成了缺点，占内存)
+闭包之所以会占用资源是当函数a执行结束后, 变量i不会因为函数a的结束而销毁, 因为b的执行需要依赖a中的变量。
+不适合场景：返回闭包的函数是个非常大的函数
+
+闭包的典型框架应该就是jquery了。
+闭包是javascript语言的一大特点，主要应用闭包场合主要是为了：设计私有的方法和变量。
+这在做框架的时候体现更明显，有些方法和属性只是运算逻辑过程中的使用的，不想让外部修改这些属性，因此就可以设计一个闭包来只提供方法获取。
+
+闭包的缺点就是常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。
+
+
+
+1. 逻辑连续，当闭包作为另一个函数调用的参数时，避免你脱离当前逻辑而单独编写额外逻辑。
+2. 方便调用上下文的局部变量。
+3. 加强封装性，第2点的延伸，可以达到对变量的保护作用。
+
+缺点：
+
+闭包有一个非常严重的问题，那就是内存浪费问题，这个内存浪费不仅仅因为它常驻内存，更重要的是，对闭包的使用不当会造成无效内存的产生
 
 
 

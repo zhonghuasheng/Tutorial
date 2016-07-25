@@ -246,3 +246,21 @@ YUI({
     hideOnFocus : false
   });
 });
+
+<#if fieldStructure.rule??>
+    <@aui.script>
+        AUI({
+            modules: {
+                'ext_all': {
+                    fullPath: 'html/js/extjs/ext_all.js',
+                    type: 'js',
+                    requires: ['base']
+                }
+            }
+        }).use('ext_all', function(E) {
+            if ('${fieldStructure.rule}' != '') {
+                E.bindingRule(JSON.parse('${fieldStructure.rule}'), '${namespacedFieldName}', '${fieldStructure.type}');
+            }
+        });
+        </@aui.script>
+</#if>
