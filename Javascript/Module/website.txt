@@ -1,3 +1,5 @@
-Javascript模块化编程（一）：模块的写法
+﻿Javascript模块化编程（一）：模块的写法
 http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
+http://blog.lxjwlt.com/2016/07/23/chrome.html#directory0100542517940424245
+http://zjutkz.net/2016/04/13/%E9%80%89%E6%8B%A9%E6%81%90%E6%83%A7%E7%97%87%E7%9A%84%E7%A6%8F%E9%9F%B3%EF%BC%81%E6%95%99%E4%BD%A0%E8%AE%A4%E6%B8%85MVC%EF%BC%8CMVP%E5%92%8CMVVM/
 
