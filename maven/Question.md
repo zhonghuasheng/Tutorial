@@ -408,4 +408,16 @@ layout：在上面描述仓库的时候，我们提到他们有统一的布局�
 9 </settings>
 settings.xml最后一个谜题是activeProfiles元素。它包含一系列的activeProfile元素，每个都有一个profile id的值，任何profile id被定义到activeProfile的profile将被激活，不管其他的环境设置怎么样。如果没有匹配的profile被找到，那么就什么事情也不做。例如：如果env-test是一个activeProfile，一个在pom.xml或者profile.xml中的具有相应id的profile将被激活。如果没有这样的profile被找到，就什么事也不做，一切照常。
 
+### maven中jar和war的区别
+jar文件包括java普通类、资源文件和普通文件，在maven中即是打包src/main/java和src/main/resources资源文件夹下的所有文件。在打包的时候会自动生成MATA-INF文件夹，用于存储maven的pom信息和MANIFEST.MF文件。例如：
+war文件包含全部的web应用程序，即所有的java类，配置信息和jsp、js等静态资源。但是需要注意war引用war的时候会将应用war的资源全部拷贝到当前war的相同文件下，重名的文件会被替换。例如:
 
+war包依赖：
+
+<dependency>
+      <groupId>com.my.module</groupId>
+      <artifactId>module1</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <type>war</type>
+</dependency>
+module4依赖于module1，编译后module1类文件拷贝到了module4中classes文件下，jsp拷贝到了对应jsp目录下

@@ -977,9 +977,53 @@ function a()
 
 
 
+总结一下，有这么几条规则需要遵守：
+
+不要使用new Number()、new Boolean()、new String()创建包装对象；
+
+用parseInt()或parseFloat()来转换任意类型到number；
+
+用String()来转换任意类型到string，或者直接调用某个对象的toString()方法；
+
+通常不必把任意类型转换为boolean再判断，因为可以直接写if (myVar) {...}；
+
+typeof操作符可以判断出number、boolean、string、function和undefined；
+
+判断Array要使用Array.isArray(arr)；
+
+判断null请使用myVar === null；
+
+判断某个全局变量是否存在用typeof window.myVar === 'undefined'；
+
+函数内部判断某个变量是否存在用typeof myVar === 'undefined'。
+
+最后有细心的同学指出，任何对象都有toString()方法吗？null和undefined就没有！确实如此，这两个特殊值要除外，虽然null还伪装成了object类型。
+
+更细心的同学指出，number对象调用toString()报SyntaxError：
+
+123.toString(); // SyntaxError
+遇到这种情况，要特殊处理一下：
+
+123..toString(); // '123', 注意是两个点！
+(123).toString(); // '123'
 
 
+在JavaScript中，Date对象用来表示日期和时间。
 
+要获取系统当前时间，用：
+
+var now = new Date();
+now; // Wed Jun 24 2015 19:49:22 GMT+0800 (CST)
+now.getFullYear(); // 2015, 年份
+now.getMonth(); // 5, 月份，注意月份范围是0~11，5表示六月
+now.getDate(); // 24, 表示24号
+now.getDay(); // 3, 表示星期三
+now.getHours(); // 19, 24小时制
+now.getMinutes(); // 49, 分钟
+now.getSeconds(); // 22, 秒
+now.getMilliseconds(); // 875, 毫秒数
+now.getTime(); // 1435146562875, 以number形式表示的时间戳
+注意，当前时间是浏览器从本机操作系统获取的时间，所以不一定准确，因为用户可以把当前时间设定为任何值。
 
 
 

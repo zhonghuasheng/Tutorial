@@ -4,6 +4,7 @@
 2. JDK, JAVA_HOME, MVN can not found
     source /etc/profile
 
+3. sudo yum install tree
 
 
 
