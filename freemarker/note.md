@@ -34,3 +34,13 @@ FreeMarker的模板文件并不比HTML页面复杂多少,FreeMarker模板文件�
 实际上,使用标签时前面的符号#也可能变成@,如果该指令是一个用户指令而不是系统内建指令时,应将#符号改成@符号.
 使用FTL标签时, 应该有正确的嵌套,而不是交叉使用,这和XML标签的用法完全一样.如果全用不存在的指令,FreeMarker不会使用模板输出,而是产生一个错误消息.
 FreeMarker会忽略FTL标签中的空白字符.值得注意的是< , /> 和指令之间不允许有空白字符.
+
+#### include指令的作用类似于JSP的包含指令,用于包含指定页.include指令的语
+<#include "../init.ftl">
+
+#### import指令
+该指令用于导入FreeMarker模板中的所有变量,并将该变量放置在指定的Map对象中,import指令的语法格式如下:
+<#import "/lib/common.ftl" as com>
+上面的代码将导入/lib/common.ftl模板文件中的所有变量,交将这些变量放置在一个名为com的Map对象中.
+
+
