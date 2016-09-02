@@ -1,18 +1,18 @@
 /*
 1. 如何创建嵌套的过滤器
 
-       //允许你减少集合中的匹配元素的过滤器，  
-       //只剩下那些与给定的选择器匹配的部分。在这种情况下，  
-       //查询删除了任何没（:not）有（:has）  
+       //允许你减少集合中的匹配元素的过滤器，
+       //只剩下那些与给定的选择器匹配的部分。在这种情况下，
+       //查询删除了任何没（:not）有（:has）
        //包含class为“selected”（.selected）的子节点。
     .filter(":not(:has(.selected))")
 2. 如何重用元素搜索
 
-    var allItems = $("div.item"); 
-    var keepList = $("div#container1 div.item"); 
-        //现在你可以继续使用这些jQuery对象来工作了。例如， 
-        //基于复选框裁剪“keep list”，复选框的名称 
-        //符合 
+    var allItems = $("div.item");
+    var keepList = $("div#container1 div.item");
+        //现在你可以继续使用这些jQuery对象来工作了。例如，
+        //基于复选框裁剪“keep list”，复选框的名称
+        //符合
    <DIV>class names:
     $(formToLookAt + " input:checked").each(function () {
         keepList = keepList.filter("." + $(this).attr("name"));
@@ -20,8 +20,8 @@
    </DIV>
 3. 任何使用has()来检查某个元素是否包含某个类或是元素
 
-       //jQuery 1.4.*包含了对这一has方法的支持。该方法找出  
-       //某个元素是否包含了其他另一个元素类或是其他任何的  
+       //jQuery 1.4.*包含了对这一has方法的支持。该方法找出
+       //某个元素是否包含了其他另一个元素类或是其他任何的
        //你正在查找并要在其之上进行操作的东东。
     $("input").has(".email").addClass("email_icon");
 4. 如何使用jQuery来切换样式表
@@ -30,10 +30,10 @@
     $('link[media="screen"]').attr('href', 'Alternative.css');
 5. 如何限制选择范围（基于优化目的）
 
-       //尽可能使用标签名来作为类名的前缀，  
-       //这样jQuery就不需要花费更多的时间来搜索  
-       //你想要的元素。还要记住的一点是，  
-       //针对于你的页面上的元素的操作越具体化，  
+       //尽可能使用标签名来作为类名的前缀，
+       //这样jQuery就不需要花费更多的时间来搜索
+       //你想要的元素。还要记住的一点是，
+       //针对于你的页面上的元素的操作越具体化，
        //就越能降低执行和搜索的时间。
     var in_stock = $('#shopping_cart_items input.is_in_stock');
     <ul id="shopping_cart_items">
@@ -43,8 +43,8 @@
     </ul>
 6. 如何正确地使用ToggleClass
 
-        //切换（toggle）类允许你根据某个类的  
-        //是否存在来添加或是删除该类。  
+        //切换（toggle）类允许你根据某个类的
+        //是否存在来添加或是删除该类。
         //这种情况下有些开发者使用：
         a.hasClass('blueButton') ? a.removeClass('blueButton') : a.addClass('blueButton');
         //toggleClass允许你使用下面的语句来很容易地做到这一点     a.toggleClass('blueButton');
@@ -77,7 +77,7 @@
     var e = $("", { href: "#", class: "a-class another-class", title: "..." });
 14. 如何使用多个属性来进行过滤
 
-       //在使用许多相类似的有着不同类型的input元素时，  
+       //在使用许多相类似的有着不同类型的input元素时，
        //这种基于精确度的方法很有用
       var elements = $('#someid input[type=sometype][value=somevalue]').get();
 15. 如何使用jQuery来预加载图像
@@ -91,16 +91,16 @@
 16. 如何为任何与选择器相匹配的元素设置事件处理程序
 
     $('button.someClass').live('click', someFunction);
-        //注意，在jQuery 1.4.2中，delegate和undelegate选项 
-        //被引入代替live，因为它们提供了更好的上下文支持 
-        //例如，就table来说，以前你会用 
-     //.live()  
+        //注意，在jQuery 1.4.2中，delegate和undelegate选项
+        //被引入代替live，因为它们提供了更好的上下文支持
+        //例如，就table来说，以前你会用
+     //.live()
     $("table").each(function () {
         $("td", this).live("hover", function () {
             $(this).toggleClass("hover");
         });
     });
-       //现在用 
+       //现在用
     $("table").delegate("td", "hover", function () {
         $(this).toggleClass("hover");
     });
@@ -128,15 +128,15 @@
     });
 23. 如何定义一个定制的选择器
 
-    $.expr[':'].mycustomselector = function(element, index, meta, stack){  
-    // element- 一个DOM元素 
-        // index – 栈中的当前循环索引 
-        // meta – 有关选择器的元数据 
-        // stack – 要循环的所有元素的栈 
-        // 如果包含了当前元素就返回true  
-        // 如果不包含当前元素就返回false };  
-        // 定制选择器的用法： 
-     $('.someClasses:test').doSomething(); 
+    $.expr[':'].mycustomselector = function(element, index, meta, stack){
+    // element- 一个DOM元素
+        // index – 栈中的当前循环索引
+        // meta – 有关选择器的元数据
+        // stack – 要循环的所有元素的栈
+        // 如果包含了当前元素就返回true
+        // 如果不包含当前元素就返回false };
+        // 定制选择器的用法：
+     $('.someClasses:test').doSomething();
 24. 如何检查某个元素是否存在
 
      if ($('#someDiv' ).length) {
@@ -152,9 +152,9 @@
     });
 26. 如何显示或是删除input域中的默认值
 
-       //这段代码展示了在用户未输入值时，  
-       //如何在文本类型的input域中保留  
-       //一个默认值  
+       //这段代码展示了在用户未输入值时，
+       //如何在文本类型的input域中保留
+       //一个默认值
     $(".swap").each(function (i) {
         wap_val[i] = $(this).val();
         $(this).focusin(function () {
@@ -173,7 +173,7 @@
     setTimeout(function () {
         $('.mydiv').hide('blind', {}, 500)
     }, 5000);
-    //而这是在1.4中可以使用delay()这一功能来实现的方式（这很像是休眠） 
+    //而这是在1.4中可以使用delay()这一功能来实现的方式（这很像是休眠）
     $(".mydiv").delay(5000).hide('blind', {}, 500);
 28. 如何把已创建的元素动态地添加到DOM中
 
@@ -209,12 +209,12 @@
         //用法 $('#mytextarea').maxLength(500);
 30. 如何为函数创建一个基本的测试
 
-    //把测试单独放在模块中 
+    //把测试单独放在模块中
     module("Module B");
     test("some other test", function () {
-        //指明测试内部预期有多少要运行的断言 
+        //指明测试内部预期有多少要运行的断言
         expect(2);
-        //一个比较断言，相当于JUnit的assertEquals  
+        //一个比较断言，相当于JUnit的assertEquals
         equals(true, false, "failing test");
         equals(true, true, "passing test");
     });
@@ -229,9 +229,9 @@
 
      jQuery.fn.center = function () {
         this.css('position', 'absolute');
-        this.css('top', ($(window).height() - this.height()) 
+        this.css('top', ($(window).height() - this.height())
                         / +$(window).scrollTop() + 'px');
-        this.css('left', ($(window).width() - this.width()) 
+        this.css('left', ($(window).width() - this.width())
                          / 2 + $(window).scrollLeft() + 'px');
         return this;
     }
@@ -257,8 +257,8 @@
     $('#searchBox').closest('div');
 37. 如何使用Firebug和Firefox来记录jQuery事件日志
 
-       // 允许链式日志记录 
-       // 用法： 
+       // 允许链式日志记录
+       // 用法：
     $('#someDiv').hide().log('div hidden').addClass('someClass');
     jQuery.log = jQuery.fn.log = function (msg) {
         if (console) {
@@ -302,7 +302,7 @@
     });
 42. 如何基于一些输入文本来过滤一个元素列表
 
-       //如果元素的值和输入的文本相匹配的话  
+       //如果元素的值和输入的文本相匹配的话
        //该元素将被返回
     $('.someClass').filter(function () {
         return $(this).attr('value') == $('input#someId').val();
@@ -329,7 +329,7 @@
 45. 如何使用jQuery来解析XML（基本的例子）
 
     function parseXml(xml) {
-        //找到每个Tutorial并打印出author  
+        //找到每个Tutorial并打印出author
         $(xml).find("Tutorial").each(function () {
             $("#output").append($(this).attr("author") + "");
         });
@@ -343,10 +343,10 @@
 
     //事件可以这样绑定命名空间
     $('input').bind('blur.validation', function (e) {
-        // ...  
+        // ...
     });
 
-    //data方法也接受命名空间 
+    //data方法也接受命名空间
     $('input').data('validation.isValid', true);
 48. 如何检查cookie是否启用
 
@@ -355,7 +355,7 @@
      document.cookie = "cookietest=1; expires=" + dt.toGMTString();
      var cookiesEnabled = document.cookie.indexOf("cookietest=") != -1;
      if (!cookiesEnabled) {
-        //没有启用cookie 
+        //没有启用cookie
     }
 49. 如何让cookie过期
 
@@ -375,4 +375,16 @@
         return $(this);
     }
        //用法　 $('p').replaceUrl();
+
+### contains
+
+定义和用法
+:contains 选择器选取包含指定字符串的元素。
+该字符串可以是直接包含在元素中的文本，或者被包含于子元素中。
+经常与其他元素/选择器一起使用，来选择指定的组中包含指定文本的元素（如上面的例子）。
+语法
+$(":contains(text)")
+参数	描述
+text	必需。规定要查找的文本。
+
  */

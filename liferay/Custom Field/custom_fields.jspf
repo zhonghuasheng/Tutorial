@@ -1,23 +1,37 @@
-<%--
-/**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
- */
---%>
-
 <%
 Calendar localeCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
 int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
+
+long companyId = themeDisplay.getCompanyId();
+Boolean andOperator = ParamUtil.getBoolean(request, "andOperator", true);
+int total = DDLRecordSetServiceUtil.searchCount(companyId, groupId, "", DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS);
+List<DDLRecordSet> results = DDLRecordSetServiceUtil.search(companyId, groupId, "", "",
+        DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, andOperator, 0, total,
+        OrderByComparatorFactoryUtil.getOrderByComparatorFactory()
+        .create("ddlrecordset", new Object[] { "recordsetid", "createdate" } ));
+//DDLRecordSetLists
+StringBuffer recordSetBuffer = new StringBuffer();
+StringBuffer fieldsBuffer = new StringBuffer();
+recordSetBuffer.append("[");
+fieldsBuffer.append("{");
+for (DDLRecordSet ddlRecordSet: results) {
+    recordSetBuffer.append("{");
+    recordSetBuffer.append("value: '" + ddlRecordSet.getRecordSetId() + "',");
+    recordSetBuffer.append("label: '" + ddlRecordSet.getName(request.getLocale()) + "'");
+    recordSetBuffer.append("},");
+    DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
+    fieldsBuffer.append(ddlRecordSet.getRecordSetId() + ":[");
+
+    for (String fieldName: ddmStructure.getFieldNames()) {
+        fieldsBuffer.append("{");
+        fieldsBuffer.append("value: '" + fieldName + "',");
+        fieldsBuffer.append("label: '" + fieldName + "'");
+        fieldsBuffer.append("},");
+    }
+    fieldsBuffer.append("],");
+}
+recordSetBuffer.append("]");
+fieldsBuffer.append("}");
 %>
 
 <aui:script>
@@ -26,27 +40,19 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
         function(A) {
             var FormBuilderTextField = A.FormBuilderTextField;
             var FormBuilderTypes = A.FormBuilder.types;
-
             var booleanParse = A.DataType.Boolean.parse;
             var camelize = Liferay.Util.camelize;
             var trim = A.Lang.trim;
-
             var STR_BLANK = '';
-
-            var TPL_BUTTON = '<div class="field-labels-inline">' +
-                                '<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />' +
-                            '<div>';
-
-            var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">' +
-                                    '<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>' +
-                                '</div>';
-
+            var TPL_BUTTON = '<div class="field-labels-inline">'
+                + '<input type="button" value="<%= UnicodeLanguageUtil.get(pageContext, "select") %>" />'
+                + '<div>';
+            var TPL_LINK_TO_PAGE = '<div class="lfr-ddm-link-to-page">'
+                + '<a href="javascript:;"><%= UnicodeLanguageUtil.get(pageContext, "link") %></a>'
+                + '</div>';
             var TPL_PARAGRAPH = '<p></p>';
-
             var TPL_SEPARATOR = '<div class="separator"></div>';
-
             var TPL_TEXT_HTML = '<textarea class="form-builder-field-node lfr-ddm-text-html"></textarea>';
-
             var TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>';
 
             var applyStyles = function(node, styleContent) {
@@ -67,6 +73,11 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                         }
                     }
                 );
+            };
+
+            var booleanOptions = {
+                'false': '<liferay-ui:message key="no" />',
+                'true': '<liferay-ui:message key="yes" />'
             };
 
             var LiferayFormBuilderField = function() {};
@@ -98,20 +109,25 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                 repeatable: {
                     setter: booleanParse,
                     value: false
+                },
+
+                rule: {
+                    setter: stringParse,
+                    value: ''
+                },
+
+                referencedField: {
                 }
             };
 
             A.Base.mix(A.FormBuilderField, [LiferayFormBuilderField]);
 
             var FormBuilderProto = A.FormBuilderField.prototype;
-
             var originalGetPropertyModel = FormBuilderProto.getPropertyModel;
 
             FormBuilderProto.getPropertyModel = function() {
                 var instance = this;
-
                 var model = originalGetPropertyModel.call(instance);
-
                 var type = instance.get('type');
 
                 var indexTypeOptions = {
@@ -132,48 +148,549 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     'true': '<liferay-ui:message key="yes" />'
                 };
 
-                return model.concat(
-                    [
-                        {
-                            attributeName: 'indexType',
-                            editor: new A.RadioCellEditor(
-                                {
-                                    options: indexTypeOptions
-                                }
-                            ),
-                            formatter: function(val) {
-                                return indexTypeOptions[val.data.value];
-                            },
-                            name: '<liferay-ui:message key="indexable" />'
+                model.push(
+                    {
+                        attributeName: 'indexType',
+                        editor: new A.RadioCellEditor(
+                            {
+                                options: indexTypeOptions
+                            }
+                        ),
+                        formatter: function(val) {
+                            return indexTypeOptions[val.data.value];
                         },
-                        {
-                            attributeName: 'localizable',
-                            editor: new A.RadioCellEditor(
-                                {
-                                    options: booleanOptions
-                                }
-                            ),
-                            formatter: function(val) {
-                                return booleanOptions[val.data.value];
-                            },
-                            name: '<liferay-ui:message key="localizable" />'
+                        name: '<liferay-ui:message key="indexable" />'
+                    },
+                    {
+                        attributeName: 'localizable',
+                        editor: new A.RadioCellEditor(
+                            {
+                                options: booleanOptions
+                            }
+                        ),
+                        formatter: function(val) {
+                            return booleanOptions[val.data.value];
                         },
-                        {
-                            attributeName: 'repeatable',
-                            editor: new A.RadioCellEditor(
-                                {
-                                    options: booleanOptions
-                                }
-                            ),
-                            formatter: function(val) {
-                                return booleanOptions[val.data.value];
+                        name: '<liferay-ui:message key="localizable" />'
+                    },
+                    {
+                        attributeName: 'repeatable',
+                        editor: new A.RadioCellEditor(
+                            {
+                                options: booleanOptions
+                            }
+                        ),
+                        formatter: function(val) {
+                            return booleanOptions[val.data.value];
+                        },
+                        name: '<liferay-ui:message key="repeatable" />'
+                    },
+                    {
+                        attributeName: 'rule',
+                        editor: new A.TextCellEditor(),
+                        formatter: function(val) {
+                            return val.data.value;
+                        },
+                        name: '<liferay-ui:message key="Rule" />'
+                    },
+                    {
+                        attributeName: 'referencedField',
+                        editor: new A.DropDownListCellEditor({
+                        options:
+                        [
+                            {
+                                label: "DDLRecordSet",
+                                name: "referencedRecordSetName",
+                                options: <%=recordSetBuffer.toString() %>
                             },
-                            name: '<liferay-ui:message key="repeatable" />'
-                        }
-                    ]
+                            {
+                                label: "Field",
+                                name: "referencedFieldName",
+                                dataSource: <%=fieldsBuffer.toString() %>
+                            }
+                        ]
+                        }),
+                        formatter: function(val) {
+                            if (val.value) {
+                                var value = JSON.parse(val.value);
+                                return value.name + "-" + value.fieldName;
+                            }
+                        },
+                        name: '<liferay-ui:message key="Refer to Field" />'
+                    }
                 );
+
+                return model;
             };
 
+            <%--
+            /**
+             * Set placeholder attribute in text
+             */
+            --%>
+            var L = A.Lang,
+                AEscape = A.Escape,
+                getCN = A.getClassName,
+                stringParse = A.DataType.String.parse,
+                CSS_CLEARFIX = getCN('clearfix')
+                CSS_FORM_CONTROL = getCN('form', 'control'),
+                CSS_FIELD_INPUT = getCN('field', 'input'),
+                CSS_FIELD_INPUT_TEXT = getCN('field', 'input', 'text'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                CSS_FB_DROP_ZONE = getCN('form', 'builder', 'drop', 'zone'),
+                CSS_ICON = getCN('glyphicon'),
+                CSS_ICON_ASTERISK = getCN('glyphicon', 'asterisk'),
+                CSS_ICON_QUESTION_SIGN = getCN('glyphicon', 'question', 'sign'),
+                TPL_INPUT = '<input id="{id}" class="ddm-form-builder-text-field-placeholder ' + [CSS_FORM_BUILDER_FIELD_NODE,
+                                    CSS_FIELD_INPUT, CSS_FIELD_INPUT_TEXT,
+                                    CSS_FORM_CONTROL].join(' ') + '" name="{name}" type="text" value="{value}" placeholder="{placeholder}"/>';
+
+            var FormBuilderTextFieldProto = A.FormBuilderTextField.prototype;
+            var originalFormBuilderTextFieldGetPropertyModel = FormBuilderTextFieldProto.getPropertyModel;
+            var WIDTH_VALUES_MAP = {
+                small: 'input-large',
+                medium: 'input-xlarge',
+                large: 'input-xxlarge'
+            };
+
+            var FormBuilderTextFieldExtends = A.Component.create(
+                {
+                    ATTRS: {
+                        template: {
+                            valueFn: function() {
+                                return TPL_INPUT;
+                            }
+                        },
+
+                        width: {
+                            validator: function(val) {
+                                val = A.Lang.String.toLowerCase(val);
+                                return val in WIDTH_VALUES_MAP;
+                            },
+                            value: 'small'
+                        },
+
+                        placeholder: {
+                            setter: stringParse,
+                            value: ''
+                        }
+                    },
+
+                    UI_ATTRS: ['placeholder'],
+                    EXTENDS: A.FormBuilderField,
+                    NAME: 'text',
+                    prototype: {
+                        getHTML: function() {
+                            var instance = this;
+
+                            return L.sub(
+                                instance.get('template'), {
+                                    id: AEscape.html(instance.get('id')),
+                                    label: AEscape.html(instance.get('label')),
+                                    name: AEscape.html(instance.get('name')),
+                                    value: AEscape.html(instance.get('predefinedValue')),
+                                    width: AEscape.html(instance.get('width')),
+                                    placeholder: AEscape.html(instance.get('placeholder')),
+                                }
+                            );
+                        },
+
+                        getPropertyModel: function() {
+                            var instance = this;
+                            var model = originalFormBuilderTextFieldGetPropertyModel.call(instance);
+                            return model.concat(
+                                {
+                                    attributeName: 'placeholder',
+                                    editor: new A.TextCellEditor(),
+                                    formatter: function(val) {
+                                        return val.data.value;
+                                    },
+                                    name: '<liferay-ui:message key="Placeholder" />'
+                                }
+                            );
+                        },
+
+                        _uiSetWidth: function(val) {
+                            var instance = this,
+                                templateNode = instance.get('templateNode');
+                            templateNode.removeClass(WIDTH_VALUES_MAP[instance.prevWidth]);
+                            templateNode.addClass(WIDTH_VALUES_MAP[val]);
+                            instance.prevWidth = val;
+                        },
+
+                        _uiSetPlaceholder: function(val) {
+                            var instance = this,
+                            templateNode = instance.get('templateNode');
+                            templateNode.setAttribute('placeholder', val);
+                        }
+                    }
+                }
+            );
+
+            A.FormBuilder.types['text'] = FormBuilderTextFieldExtends;
+            A.FormBuilderTextField = FormBuilderTextFieldExtends;
+
+            <%--
+            /**
+             * Set placeholder attribute in textarea
+             */
+            --%>
+            var CSS_FORM_CONTROL = getCN('form', 'control'),
+                CSS_FIELD = getCN('field'),
+                CSS_FIELD_TEXT = getCN('field', 'text'),
+                CSS_FIELD_TEXTAREA = getCN('field', 'textarea'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                TPL_TEXTAREA = '<textarea id="{id}" class="' + [
+                    CSS_FORM_BUILDER_FIELD_NODE, CSS_FIELD, CSS_FIELD_TEXT,
+                    CSS_FIELD_TEXTAREA, CSS_FORM_CONTROL].join(' ') + '" name="{name}" placeholder="{placeholder}">{value}</textarea>';
+
+            var FormBuilderTextAreaFieldProto = A.FormBuilderTextAreaField.prototype;
+            var originalFormBuilderTextAreaFieldGetPropertyModel = FormBuilderTextAreaFieldProto.getPropertyModel;
+
+            var FormBuilderextAreaExtends = A.Component.create({
+                ATTRS: {
+                    template: {
+                        valueFn: function() {
+                            return TPL_TEXTAREA;
+                        }
+                    }
+                },
+
+                EXTENDS: A.FormBuilderTextField,
+                NAME: 'textarea',
+            });
+
+            A.FormBuilder.types['textarea'] = FormBuilderextAreaExtends;
+            A.FormBuilderTextAreaField = FormBuilderextAreaExtends;
+
+            <%--
+            /**
+             * Sets placeholder attribute in select
+             */
+            --%>
+            var CSS_FORM_CONTROL = getCN('form', 'control'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                TPL_SELECT = '<select id="{id}" class="' + [CSS_FORM_BUILDER_FIELD_NODE, CSS_FORM_CONTROL]
+                    .join(' ') + '" name="{name}" value="{value}"></select>';
+
+            var FormBuilderSelectFieldExtends = A.Component.create({
+                ATTRS: {
+                    multiple: {
+                        setter: A.DataType.Boolean.parse,
+                        value: false
+                    },
+
+                    placeholder: {
+                        setter: stringParse,
+                        value: ''
+                    },
+
+                    template: {
+                        valueFn: function() {
+                            return TPL_SELECT;
+                        }
+                    }
+                },
+
+                UI_ATTRS: A.FormBuilderField.UI_ATTRS.concat(['multiple', 'predefinedValue', 'placeholder']),
+                CSS_PREFIX: CSS_FORM_BUILDER_FIELD,
+                EXTENDS: A.FormBuilderMultipleChoiceField,
+                NAME: 'select',
+
+                prototype: {
+                    getHTML: function() {
+                        var instance = this;
+
+                        return L.sub(
+                            instance.get('template'), {
+                                id: AEscape.html(instance.get('id')),
+                                label: AEscape.html(instance.get('label')),
+                                name: AEscape.html(instance.get('name')),
+                                value: AEscape.html(instance.get('predefinedValue'))
+                            }
+                        );
+                    },
+
+                    getPropertyModel: function() {
+                        var instance = this,
+                            strings = instance.getStrings();
+
+                        var model = FormBuilderSelectFieldExtends.superclass.getPropertyModel.apply(instance, arguments);
+
+                        model.push(
+                        {
+                            attributeName: 'multiple',
+                            editor: new A.RadioCellEditor({
+                                options: {
+                                    'true': strings.yes,
+                                    'false': strings.no
+                                }
+                            }),
+                            formatter: A.bind(instance._booleanFormatter, instance),
+                            name: strings.multiple
+                        },
+                        {
+                            attributeName: 'placeholder',
+                            editor: new A.TextCellEditor(),
+                            formatter: function(val) {
+                                return val.data.value;
+                            },
+                            name: '<liferay-ui:message key="Placeholder" />'
+                        });
+
+                        return model;
+                    },
+
+                    _uiSetMultiple: function(val) {
+                        var instance = this,
+                            templateNode = instance.get('templateNode');
+
+                        if (val) {
+                            templateNode.setAttribute('multiple', 'multiple');
+                        }
+                        else {
+                            templateNode.removeAttribute('multiple');
+                        }
+
+                        instance.predefinedValueEditor.set('multiple', val);
+                    },
+
+                    _uiSetPlaceholder: function(val) {
+                        var instance = this,
+                            placeholderValue = instance.get('placeholder');
+                            templateNode = instance.get('templateNode');
+                        templateNode.setAttribute('placeholder', val);
+
+                        if (placeholderValue != null && placeholderValue.trim().length > 0) {
+                            AUI().one('select[name="'+templateNode.get('name')+'"]')
+                            .prepend('<option selected disabled value="">' + instance.get('placeholder') + '</option>');
+                        }
+                    },
+                }
+            });
+
+            A.FormBuilder.types['select'] = FormBuilderSelectFieldExtends;
+            A.FormBuilderSelectField = FormBuilderSelectFieldExtends;
+
+            <%--
+            /**
+             * Radio
+             */
+            --%>
+
+            var L = BUILDER = 'builder',
+                CHECKED = 'checked',
+                CHOICE = 'choice',
+                CONTAINER = 'container',
+                DISABLED = 'disabled',
+                EMPTY_STR = '',
+                FIELD = 'field',
+                FORM_BUILDER_FIELD = 'form-builder-field',
+                FORM_BUILDER_RADIO_FIELD = 'form-builder-radio-field',
+                ID = 'id',
+                INPUT = 'input',
+                NAME = 'name',
+                NODE = 'node',
+                OPTIONS = 'options',
+                PREDEFINED_VALUE = 'predefinedValue',
+                RADIO = 'radio',
+                SPACE = ' ',
+                TEMPLATE_NODE = 'templateNode',
+
+                CSS_FIELD = getCN(FIELD),
+                CSS_FIELD_CHOICE = getCN(FIELD, CHOICE),
+                CSS_FIELD_RADIO = getCN(FIELD, RADIO),
+                CSS_FORM_BUILDER_FIELD = getCN(FORM_BUILDER_FIELD),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN(FORM_BUILDER_FIELD, NODE),
+                CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER = getCN(FORM_BUILDER_FIELD, OPTIONS, CONTAINER),
+                TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
+                TEMPLATE_RADIO =
+                    '<div><input id="{id}" class="' + [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_RADIO, CSS_FORM_BUILDER_FIELD_NODE].join(
+                        SPACE) +
+                    '" name="{name}" type="radio" value="{value}" {checked} {disabled} /><label class="field-label" for="{id}">{label}</label></div>';
+
+            var FormBuilderRadioFieldExtends = A.Component.create({
+                NAME: FORM_BUILDER_RADIO_FIELD,
+
+                ATTRS: {
+                    template: {
+                        valueFn: function() {
+                            return TPL_RADIO;
+                        }
+                    },
+
+                    other: {
+                        setter: booleanParse,
+                        value: false
+                    }
+                },
+
+                CSS_PREFIX: CSS_FORM_BUILDER_FIELD,
+                UI_ATTRS: A.FormBuilderField.UI_ATTRS.concat(['multiple', 'predefinedValue', 'other']),
+                EXTENDS: A.FormBuilderMultipleChoiceField,
+
+                prototype: {
+                    getHTML: function() {
+                        return TPL_OPTIONS_CONTAINER;
+                    },
+
+                    getPropertyModel: function() {
+                        var instance = this;
+                        var strings = instance.getStrings();
+                        var type = instance.get('type');
+                        var model = FormBuilderRadioFieldExtends.superclass.getPropertyModel.apply(instance, arguments);
+
+                        model.push({
+                            attributeName: 'multiple',
+                            editor: new A.RadioCellEditor({
+                                options: {
+                                    'true': strings.yes,
+                                    'false': strings.no
+                                }
+                            }),
+                            formatter: A.bind(instance._booleanFormatter, instance),
+                            name: strings.multiple
+                        });
+
+                        if (type === "radio" || type === "ddm-checkbox-group") {
+                            model.push({
+                                attributeName: 'other',
+                                editor: new A.RadioCellEditor(
+                                    {
+                                        options: booleanOptions
+                                    }
+                                ),
+                                formatter: function(val) {
+                                    return booleanOptions[val.data.value]
+                                },
+                                name: '<%= UnicodeLanguageUtil.get(pageContext, "Other") %>'
+                            });
+                        }
+
+                        return model;
+                    },
+
+                    _uiSetMultiple: function(val) {
+                        var instance = this,
+                            templateNode = instance.get('templateNode');
+
+                        if (val) {
+                            templateNode.setAttribute('multiple', 'multiple');
+                        } else {
+                            templateNode.removeAttribute('multiple');
+                        }
+
+                        instance.predefinedValueEditor.set('multiple', val);
+                    },
+
+                    _uiSetDisabled: function(val) {
+                        var instance = this,
+                            templateNode = instance.get(TEMPLATE_NODE);
+
+                        templateNode.all(INPUT).each(function(input) {
+                            if (val) {
+                                input.setAttribute(DISABLED, val);
+                            } else {
+                                input.removeAttribute(DISABLED);
+                            }
+                        });
+                    },
+
+                    _uiSetOptions: function(val) {
+                        var instance = this,
+                            buffer = [],
+                            counter = 0,
+                            predefinedValue = instance.get(PREDEFINED_VALUE),
+                            templateNode = instance.get(TEMPLATE_NODE),
+                            newOptions = [];
+
+                        if (val != null && val.length > 0) {
+                            val.forEach(function(item) {
+                                if (item.label != 'Other' && item.value != '') {
+                                    newOptions.push(item);
+                                }
+                            });
+                        }
+
+                        if (this.get('other')) {
+                            newOptions.push({
+                                label: 'Other',
+                                value: ''
+                            });
+                        }
+
+                        A.each(newOptions, function(item, index, collection) {
+                            var checked = A.Array.indexOf(predefinedValue, item.value) > -1;
+
+                            if (item.label == 'Other') {
+                                checked = false;
+                            };
+
+                            buffer.push(
+                                L.sub(
+                                    TEMPLATE_RADIO, {
+                                        checked: checked ? 'checked="checked"' : EMPTY_STR,
+                                        disabled: instance.get(DISABLED) ? 'disabled="disabled"' : EMPTY_STR,
+                                        id: AEscape.html(instance.get(ID) + counter++),
+                                        label: AEscape.html(item.label),
+                                        name: AEscape.html(instance.get(NAME)),
+                                        value: AEscape.html(item.value)
+                                    }
+                                )
+                            );
+                        });
+
+                        instance.optionNodes = A.NodeList.create(buffer.join(EMPTY_STR));
+                        templateNode.setContent(instance.optionNodes);
+                    },
+
+                    _uiSetPredefinedValue: function(val) {
+                        var instance = this,
+                            optionNodes = instance.optionNodes;
+
+                        if (!optionNodes) {
+                            return;
+                        }
+
+                        optionNodes.set(CHECKED, false);
+                        optionNodes.all('input[value="' + AEscape.html(val) + '"]').set(CHECKED, true);
+                    },
+
+                    _uiSetOther: function(val) {
+                       var options = this.get('options');
+                       var newOptions = [];
+
+                       if (options != null && options.length > 0) {
+                            options.forEach(function(item) {
+                                if (item.label != 'Other' && item.value != '') {
+                                    newOptions.push(item);
+                                }
+                            });
+                        }
+
+                        if (this.get('other')) {
+                            newOptions.push({
+                                label: 'Other',
+                                value: ''
+                            });
+                        }
+
+                       this.set('options', newOptions);
+                   },
+                }
+            });
+
+            A.FormBuilder.types['radio'] = FormBuilderRadioFieldExtends;
+            A.FormBuilderRadioField = FormBuilderRadioFieldExtends;
+
+            <%--
+            /**
+             * Date
+             */
+            --%>
             var DDMDateField = A.Component.create(
                 {
                     ATTRS: {
@@ -187,7 +704,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: A.FormBuilderTextField,
-
                     NAME: 'ddm-date',
 
                     prototype: {
@@ -257,12 +773,44 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
                         fieldNamespace: {
                             value: 'ddm'
+                        },
+
+                        maxDecimal: {
+                            value: ''
+                        },
+
+                        minDecimal: {
+                            value: ''
                         }
                     },
 
                     EXTENDS: A.FormBuilderTextField,
+                    NAME: 'ddm-decimal',
 
-                    NAME: 'ddm-decimal'
+                    prototype: {
+                        getPropertyModel: function() {
+                            var instance = this;
+                            var model = DDMDecimalField.superclass.getPropertyModel.apply(instance, arguments);
+                            model.push({
+                                attributeName: 'maxDecimal',
+                                editor: new A.TextCellEditor(),
+                                formatter: function(val) {
+                                    return val.data.value;
+                                },
+                                name: '<%= UnicodeLanguageUtil.get(pageContext, "Max")%>'
+                            },
+                            {
+                                attributeName: 'minDecimal',
+                                editor: new A.TextCellEditor(),
+                                formatter: function(val) {
+                                    return val.data.value;
+                                },
+                                name: '<%= UnicodeLanguageUtil.get(pageContext, "Min")%>'
+                            });
+
+                            return model;
+                        }
+                    }
                 }
             );
 
@@ -279,7 +827,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: A.FormBuilderField,
-
                     NAME: 'ddm-documentlibrary',
 
                     prototype: {
@@ -351,13 +898,15 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                         },
 
                         maxInteger: {
-                            setter: integerParse,
-                            value: 2147483647
+                            value: ''
+                        },
+
+                        minInteger: {
+                            value: ''
                         }
                     },
 
                     EXTENDS: A.FormBuilderTextField,
-
                     NAME: 'ddm-integer',
 
                     prototype: {
@@ -368,40 +917,20 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
                             model.push(
                                 {
-                                    attributeName: 'max',
-                                    editor: new A.TextCellEditor({
-                                        inputFormatter: {
-                                            value: function(val) {
-                                                if (isString(val)) {
-                                                    val = val.replace(REGEX_NL, TPL_BR);
-                                                }
-                                                console.log('222' + val);
-                                            return val;
-                                            }
-                                        },
-
-                                        outputFormatter: {
-                                            value: function(val) {
-                                                var instance = this;
-
-                                                if (isString(val)) {
-                                                    if (instance.get('unescapeValue')) {
-                                                        val = LString.unescapeEntities(val);
-                                                    }
-
-                                                    val = val.replace(REGEX_BR, 'n');
-                                                }
-
-                                                return val;
-                                            }
-                                        }
-                                    }),
-
+                                    attributeName: 'maxInteger',
+                                    editor: new A.TextCellEditor(),
                                     formatter: function(val) {
-                                        return val;
+                                        return val.data.value;
                                     },
-
                                     name: '<%= UnicodeLanguageUtil.get(pageContext, "Max")%>'
+                                },
+                                {
+                                    attributeName: 'minInteger',
+                                    editor: new A.TextCellEditor(),
+                                    formatter: function(val) {
+                                        return val.data.value;
+                                    },
+                                    name: '<%= UnicodeLanguageUtil.get(pageContext, "Min")%>'
                                 });
 
                             return model;
@@ -419,12 +948,47 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
                         fieldNamespace: {
                             value: 'ddm'
+                        },
+
+                        maxNumber: {
+                            value: ''
+                        },
+
+                        minNumber: {
+                            value: ''
                         }
                     },
 
                     EXTENDS: A.FormBuilderTextField,
+                    NAME: 'ddm-number',
 
-                    NAME: 'ddm-number'
+                    prototype: {
+                        getPropertyModel: function() {
+                            var instance = this;
+
+                            var model = DDMIntegerField.superclass.getPropertyModel.apply(instance, arguments);
+
+                            model.push(
+                                {
+                                    attributeName: 'maxNumber',
+                                    editor: new A.TextCellEditor(),
+                                    formatter: function(val) {
+                                        return val.data.value;
+                                    },
+                                    name: '<%= UnicodeLanguageUtil.get(pageContext, "Max")%>'
+                                },
+                                {
+                                    attributeName: 'minNumber',
+                                    editor: new A.TextCellEditor(),
+                                    formatter: function(val) {
+                                        return val.data.value;
+                                    },
+                                    name: '<%= UnicodeLanguageUtil.get(pageContext, "Min")%>'
+                                });
+
+                            return model;
+                        },
+                    }
                 }
             );
 
@@ -450,9 +1014,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: A.FormBuilderField,
-
                     NAME: 'ddm-paragraph',
-
                     UI_ATTRS: ['label', 'style'],
 
                     prototype: {
@@ -520,9 +1082,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: A.FormBuilderField,
-
                     NAME: 'ddm-separator',
-
                     UI_ATTRS: ['style'],
 
                     prototype: {
@@ -570,7 +1130,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: FormBuilderTextField,
-
                     NAME: 'ddm-text-html',
 
                     prototype: {
@@ -594,7 +1153,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: FormBuilderTextField,
-
                     NAME: 'ddm-link-to-page',
 
                     prototype: {
@@ -618,7 +1176,6 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                     },
 
                     EXTENDS: A.FormBuilderField,
-
                     NAME: 'wcm-image',
 
                     prototype: {
@@ -629,30 +1186,25 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                 }
             );
 
+            <%--
+            /**
+             * Checkbox Group
+             */
+            --%>
             var L = A.Lang,
-            AEscape = A.Escape,
-            getCN = A.getClassName,
-            CSS_RADIO = getCN('radio'),
-            CSS_FIELD = getCN('field'),
-            CSS_FIELD_CHOICE = getCN('field', 'choice'),
-            CSS_FIELD_CHECKBOX = getCN('field', 'checkbox'),
-            CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
-            CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
-            CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER = getCN('form-builder-field', 'options', 'container'),
-            TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
-            TPL_RADIO = '<div><input id="{id}" class="' +
-                [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_CHECKBOX, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
-                '" name="{name}" type="checkbox" value="{value}" /><label class="field-label" for="{id}">{label}</label></div>';
-
-            var booleanOptions = {
-                'false': '<liferay-ui:message key="no" />',
-                'true': '<liferay-ui:message key="yes" />'
-            };
-
-            var selectAllOption = {
-                label: 'Select All',
-                value: 'select all'
-            };
+                AEscape = A.Escape,
+                getCN = A.getClassName,
+                CSS_RADIO = getCN('radio'),
+                CSS_FIELD = getCN('field'),
+                CSS_FIELD_CHOICE = getCN('field', 'choice'),
+                CSS_FIELD_CHECKBOX = getCN('field', 'checkbox'),
+                CSS_FORM_BUILDER_FIELD = getCN('form-builder-field'),
+                CSS_FORM_BUILDER_FIELD_NODE = getCN('form-builder-field', 'node'),
+                CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER = getCN('form-builder-field', 'options', 'container'),
+                TPL_OPTIONS_CONTAINER = '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
+                TPL_RADIO = '<div><input id="{id}" class="ddm-checkbox-group-select-all {css} ' +
+                    [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_CHECKBOX, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
+                    '" name="{name}" type="checkbox" value="{value}" /><label class="field-label" for="{id}">{label}</label></div>';
 
             var DDMCheckboxGroupField = A.Component.create({
                 ATTRS: {
@@ -706,10 +1258,12 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
                 NAME: 'ddm-checkbox-group',
                 EXTENDS: A.FormBuilderRadioField,
-                UI_ATTRS: ['acceptChildren', 'label', 'name', 'options', 'predefinedValue', 'showLabel', 'selectAll'],
+                UI_ATTRS: ['selectAll'],
+
                 HTML_PARSER: {
                     selectAllNode: 'radio'
                 },
+
                 prototype: {
                     /**
                      * Set the `options` attribute in the UI.
@@ -735,6 +1289,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                                             checked: checked ? 'checked="checked"' : '',
                                             disabled: instance.get('disabled') ? 'disabled="disabled"' : '',
                                             id: AEscape.html(instance.get('id') + counter++),
+                                            css: (item.label === 'Other' && item.value === '') ? "ddm-checkbox-group-other" : "",
                                             label: AEscape.html(item.label),
                                             name: AEscape.html(instance.get('name')),
                                             value: AEscape.html(item.value)
@@ -744,59 +1299,232 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
                             }
                         });
 
-                           instance.optionNodes = A.NodeList.create(buffer.join(''));
-                           templateNode.setContent(instance.optionNodes);
-                       },
+                       instance.optionNodes = A.NodeList.create(buffer.join(''));
+                       templateNode.setContent(instance.optionNodes);
+                   },
 
-                       _uiSetSelectAll: function(val) {
-                           var selectAllNode = this.get('selectAllNode');
-                           selectAllNode.toggle(val);
-                       },
+                   _uiSetSelectAll: function(val) {
+                       var selectAllNode = this.get('selectAllNode');
+                       selectAllNode.toggle(val);
+                   },
 
-                       renderUI: function() {
-                           var instance = this,
-                           getCN = A.getClassName,
-                           CSS_CLEARFIX = getCN('clearfix')
-                           boundingBox = instance.get('boundingBox'),
-                           contentBox = instance.get('contentBox'),
-                           labelNode = instance.get('labelNode'),
-                           requiredFlagNode = instance.get('requiredFlagNode'),
-                           templateNode = instance.get('templateNode'),
-                           tipFlagNode = instance.get('tipFlagNode');
-                           selectAllNode = instance.get('selectAllNode');
+                   renderUI: function() {
+                       var instance = this,
+                       getCN = A.getClassName,
+                       CSS_CLEARFIX = getCN('clearfix')
+                       boundingBox = instance.get('boundingBox'),
+                       contentBox = instance.get('contentBox'),
+                       labelNode = instance.get('labelNode'),
+                       requiredFlagNode = instance.get('requiredFlagNode'),
+                       templateNode = instance.get('templateNode'),
+                       tipFlagNode = instance.get('tipFlagNode'),
+                       selectAllNode = instance.get('selectAllNode');
 
-                           contentBox.addClass(CSS_CLEARFIX);
+                       contentBox.addClass(CSS_CLEARFIX);
+                       contentBox.append(labelNode);
+                       contentBox.append(requiredFlagNode);
+                       contentBox.append(tipFlagNode);
+                       contentBox.append(templateNode);
+                       contentBox.append(selectAllNode);
 
-                           contentBox.append(labelNode);
-                           contentBox.append(requiredFlagNode);
-                           contentBox.append(tipFlagNode);
-                           contentBox.append(templateNode);
-                           contentBox.append(selectAllNode);
+                       instance.controlsToolbar.render(boundingBox);
+                   },
 
-                           instance.controlsToolbar.render(boundingBox);
-                       },
+                   getPropertyModel: function() {
+                       var instance = this;
+                       var model = DDMCheckboxGroupField.superclass.getPropertyModel.apply(instance, arguments);
 
-                       getPropertyModel: function() {
-                           var instance = this;
-                           var model = DDMCheckboxGroupField.superclass.getPropertyModel.apply(instance, arguments);
+                       model.push({
+                           attributeName: 'selectAll',
+                           editor: new A.RadioCellEditor(
+                               {
+                                   options: booleanOptions
+                               }
+                           ),
+                           formatter: function(val) {
+                               return booleanOptions[val.data.value];
+                           },
+                           name: '<%= UnicodeLanguageUtil.get(pageContext, "Select All")%>'
+                       });
 
-                           model.push({
-                               attributeName: 'selectAll',
-                               editor: new A.RadioCellEditor(
-                                   {
-                                       options: booleanOptions
-                                   }
-                               ),
-                               formatter: function(val) {
-                                   return booleanOptions[val.data.value];
-                               },
+                       return model;
+                   }
+                }
+            });
 
-                               name: '<%= UnicodeLanguageUtil.get(pageContext, "Select All")%>',
-                           });
+            var CSS_FIELD_RADIO = getCN('field', 'radio'),
+                TPL_RADIO_SINGLE_CONTAINER =
+                         '<div class="' + CSS_FORM_BUILDER_FIELD_OPTIONS_CONTAINER + '"></div>',
+                TPL_RADIO_SINGLE =
+                         '<div class="radio-single-css"><label class="field-label" style="clear:both;" for="{id}"><input id="{id}" class="' +
+                          [CSS_FIELD, CSS_FIELD_CHOICE, CSS_FIELD_RADIO, CSS_FORM_BUILDER_FIELD_NODE].join(' ') +
+                          '" name="{name}" type="radio" value="{value}" {checked} {disabled} />{label}</label></div>';
+            var booleanOptions = {
+                'false': '<liferay-ui:message key="no" />',
+                'true': '<liferay-ui:message key="yes" />'
+            };
 
-                           return model;
-                       }
+            var DDMRadioSingleField = A.Component.create({
+                ATTRS: {
+                    dataType: {
+                        value: 'string'
+                    },
+
+                    template: {
+                        valueFn: function() {
+                            return TPL_RADIO_SINGLE;
+                        }
+                    },
+
+                    fieldNamespace: {
+                        value: 'ddm'
+                    },
+
+                    options: {
+                        value: [
+                            {
+                                label: 'option 1',
+                                value: 'value 1'
+                            },
+                            {
+                                label: 'option 2',
+                                value: 'value 2'
+                            },
+                            {
+                                label: 'option 3',
+                                value: 'value 3'
+                            }
+                        ]
+                    },
+                },
+
+                NAME: 'ddm-radio-single',
+                EXTENDS: A.FormBuilderRadioField,
+
+                prototype: {
+                    /**
+                     * Set the `options` attribute in the UI.
+                     *
+                     * @method _uiSetOptions
+                     * @param val
+                     * @protected
+                     */
+                    getHTML: function() {
+                        return TPL_RADIO_SINGLE_CONTAINER;
+                    },
+
+                    _uiSetOptions: function(val) {
+                        var instance = this,
+                            buffer = [],
+                            counter = 0,
+                            predefinedValue = instance.get('predefinedValue'),
+                            templateNode = instance.get('templateNode');
+
+                        A.each(val, function(item) {
+                            if (item != null) {
+                                var checked = A.Array.indexOf(predefinedValue, item.value) > -1;
+
+                                buffer.push(
+                                    L.sub(
+                                        TPL_RADIO_SINGLE, {
+                                            checked: checked ? 'checked="checked"' : '',
+                                            disabled: instance.get('disabled') ? 'disabled="disabled"' : '',
+                                            id: AEscape.html(instance.get('id') + counter++),
+                                            label: AEscape.html(item.label),
+                                            name: AEscape.html(instance.get('name')),
+                                            value: AEscape.html(item.value)
+                                        }
+                                    )
+                                );
+                            }
+                        });
+
+                        instance.optionNodes = A.NodeList.create(buffer.join(''));
+                        templateNode.setContent(instance.optionNodes);
+                    },
+
+                    renderUI: function() {
+                        var instance = this,
+                        getCN = A.getClassName,
+                        CSS_CLEARFIX = getCN('clearfix'),
+                        boundingBox = instance.get('boundingBox'),
+                        contentBox = instance.get('contentBox'),
+                        labelNode = instance.get('labelNode'),
+                        requiredFlagNode = instance.get('requiredFlagNode'),
+                        templateNode = instance.get('templateNode'),
+                        tipFlagNode = instance.get('tipFlagNode');
+
+                        contentBox.addClass(CSS_CLEARFIX);
+                        contentBox.append(labelNode);
+                        contentBox.append(requiredFlagNode);
+                        contentBox.append(tipFlagNode);
+                        contentBox.append(templateNode);
+
+                        instance.controlsToolbar.render(boundingBox);
+                    },
+
+                    getPropertyModel: function() {
+                        var instance = this;
+                        var model = DDMRadioSingleField.superclass.getPropertyModel.apply(instance, arguments);
+
+                        return model;
                     }
+                }
+            });
+
+            <%--
+            /**
+             * Address Field
+             */
+            --%>
+            var TPL_ADDRESS = '<div class="ddm-address-container"><select name="ddm-address-country"><option selected disabled value>Country</option></select><select name="ddm-address-region"><option selected disabled value>State/Province</option></select><input name="ddm-address-country" type="text" placeholder="City" /></div>';
+            var DDMAddressField = A.Component.create({
+                ATTRS: {
+                    fieldNamespace: {
+                        value: 'ddm'
+                    }
+                },
+
+                NAME: 'ddm-address',
+                EXTENDS: FormBuilderTextField,
+
+                prototype: {
+                    getHTML: function () {
+                        return TPL_ADDRESS;
+                    }
+                }
+            });
+
+            <%--
+            /**
+             * Recommender Field
+             */
+            --%>
+            var DDMRecommenderImageField = A.Component.create({
+                NAME: 'ddm-recommender-image',
+                EXTENDS: DDMCheckboxGroupField
+            });
+
+            <%--
+            /**
+             * Container Field
+             */
+            --%>
+            var TEMPLATE_CONTAINER = '<div></div>';
+
+            var DDMContainer = A.Component.create({
+                ATTRS: {
+                    fieldNamespace: {
+                        value: 'ddm'
+                    }
+                },
+                NAME: 'ddm-container',
+                EXTENDS: A.FormBuilderField,
+                prototype: {
+                    getHTML: function () {
+                        return TEMPLATE_CONTAINER;
+                    }
+                },
             });
 
             FormBuilderTypes['ddm-date'] = DDMDateField;
@@ -810,6 +1538,10 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
             FormBuilderTypes['ddm-text-html'] = DDMHTMLTextField;
             FormBuilderTypes['wcm-image'] = WCMImageField;
             FormBuilderTypes['ddm-checkbox-group'] = DDMCheckboxGroupField;
+            FormBuilderTypes['ddm-radio-single'] = DDMRadioSingleField;
+            FormBuilderTypes['ddm-address'] = DDMAddressField;
+            FormBuilderTypes['ddm-recommender-image'] = DDMRecommenderImageField;
+            FormBuilderTypes['ddm-container'] = DDMContainer;
         },
         '',
         {

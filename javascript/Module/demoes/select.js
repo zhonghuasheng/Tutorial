@@ -12,4 +12,5 @@ $("#select_id option[index='0']").remove(); //删除Select中索引值为0的Opt
 $("#select_id option[value='3']").remove(); //删除Select中Value='3'的Option
 $("#select_id option[text='4']").remove(); //删除Select中Text='4'的Option.
 $("#charCity").empty();  //清空
+$('[#selector option:contains("abc")'); //查找text包含abc的所有option
  */
