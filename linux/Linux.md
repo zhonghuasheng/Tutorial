@@ -6,7 +6,9 @@
 
 3. sudo yum install tree
 
-
+### pice
+ .表示当前位置
+ ～回到
 
 
 

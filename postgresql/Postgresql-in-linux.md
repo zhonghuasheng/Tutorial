@@ -139,10 +139,25 @@
 ### EXPLAIN SELECT * FROM user_ limit 10 offset 2;
 
 
+### psql 查看所有表
+    select count(*) from pg_tables where schemaname='public';
 
+### 为postgres用户设置一个密码。
+    \password postgres
 
+### 创建数据库用户dbuser（刚才创建的是Linux系统用户），并设置密码。
+    CREATE USER dbuser WITH PASSWORD 'password'; // Can not login
+    CREATE USER dbuser WITH PASSWORD 'password' login createdb; // Can not login
+    CREATE ROLE TEST with password 'xxx' login createdb;
 
+### 创建用户数据库，这里为exampledb，并指定所有者为dbuser。
+    CREATE DATABASE exampledb OWNER dbuser;
 
+### 将exampledb数据库的所有权限都赋予dbuser，否则dbuser只能登录控制台，没有任何数据库操作权限。
+    GRANT ALL PRIVILEGES ON DATABASE exampledb to dbuser;
+
+### Sign
+    psql -U dbuser -d exampledb -h 127.0.0.1 -p 5432
 
 
 
