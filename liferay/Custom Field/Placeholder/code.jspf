@@ -1,9 +1,0 @@
-            LiferayFormBuilderTextField.HTML_PARSER = {
-                dropZoneNode: '.' + CSS_FB_DROP_ZONE,
-                labelNode: 'label',
-                requiredFlagNode: '.' + CSS_ICON + ' .' + CSS_ICON_ASTERISK,
-                tipFlagNode: '.' + CSS_ICON + ' .' + CSS_ICON_QUESTION_SIGN,
-                placeholderNode: 'radio'
-            };
-
-
