@@ -1,5 +1,5 @@
 ## Spring
-
+http://blog.csdn.net/yangyangiud/article/details/52368712
 ### Factory Pattern
 #### Simple Factory
 #### Factory Method
