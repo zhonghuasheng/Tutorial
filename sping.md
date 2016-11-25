@@ -30,6 +30,88 @@
 
 ### Spring AOP
 #### Spring AOP引入
+
+看execution表示式的格式：
+括号中各个pattern分别表示`修饰符匹配（modifier-pattern?）`、
+`返回值匹配（ret-type-pattern）`、`类路径匹配（declaring-type-pattern?）`、`方法名匹配（name-pattern）`、`参数匹配（(param-pattern)）`、`异常类型匹配（throws-pattern?）`，`其中后面跟着“?”`的是可选项。
+在各个pattern中可以使用`“*”`来表示匹配所有。在(param-pattern)中，可以指定具体的参数类型，多个参数间用“,”隔开，各个也可以用“*”来表示匹配任意类型的参数，
+如(String)表示匹配一个String参数的方法；(*,String)表示匹配有两个参数的方法，第一个参数可以是任意类型，而第二个参数是String类型；可以用(..)表示零个或多个任意参数。
+现在来看看几个例子：
+* execution(* *(..))
+表示匹配所有方法
+* execution(public * com. savage.service.UserService.*(..))
+表示匹配com.savage.server.UserService中所有的公有方法
+* execution(* com.savage.server..*.*(..))
+表示匹配com.savage.server包及其子包下的所有方法
+
+除了execution表示式外，还有within、this、target、args等Pointcut表示式。一个Pointcut定义由Pointcut表示式和Pointcut签名组成，例如：
+java 代码
+execution(modifier-pattern?
+ret-type-pattern
+declaring-type-pattern?
+name-pattern(param-pattern)
+throws-pattern?)
+
+//Pointcut表示式
+@Pointcut("execution(* com.savage.aop.MessageSender.*(..))")
+//Point签名
+private void log(){} 然后要使用所定义的Pointcut时，可以指定Pointcut签名，如上面的定义等同与：
+
+在使用spring框架配置AOP的时候，不管是通过XML配置文件还是注解的方式都需要定义pointcut"切入点"
+例如定义切入点表达式  execution (* com.sample.service.impl..*.*(..))
+execution()是最常用的切点函数，其语法如下所示：
+ 整个表达式可以分为五个部分：
+ 1、execution(): 表达式主体。
+ 2、第一个*号：表示返回类型，*号表示所有的类型。
+ 3、包名：表示需要拦截的包名，后面的两个句点表示当前包和当前包的所有子包，com.sample.service.impl包、子孙包下所有类的方法。
+ 4、第二个*号：表示类名，*号表示所有的类。
+ 5、*(..):最后这个星号表示方法名，*号表示所有的方法，后面括弧里面表示方法的参数，两个句点表示任何参数。
+
+ AspectJ的Execution表达式
+execution()
+execution()是最常用的切点函数，其语法如下所示：
+
+execution(<修饰符模式>? <返回类型模式> <方法名模式>(<参数模式>) <异常模式>?)  除了返回类型模式、方法名模式和参数模式外，其它项都是可选的。与其直接讲解该方法的使用规则，还不如通过一个个具体的例子进行理解。下面，我们给出各种使用execution()函数实例。
+
+1)通过方法签名定义切点
+ execution(public * *(..))l
+匹配所有目标类的public方法，但不匹配SmartSeller和protected void showGoods()方法。第一个*代表返回类型，第二个*代表方法名，而..代表任意入参的方法；
+
+ execution(* *To(..))l
+匹配目标类所有以To为后缀的方法。它匹配NaiveWaiter和NaughtyWaiter的greetTo()和serveTo()方法。第一个*代表返回类型，而*To代表任意以To为后缀的方法；
+
+2)通过类定义切点
+ execution(* com.baobaotao.Waiter.*(..))l
+匹配Waiter接口的所有方法，它匹配NaiveWaiter和NaughtyWaiter类的greetTo()和serveTo()方法。第一个*代表返回任意类型，com.baobaotao.Waiter.*代表Waiter接口中的所有方法；
+
+ execution(* com.baobaotao.Waiter+.*(..))l
+匹 配Waiter接口及其所有实现类的方法，它不但匹配NaiveWaiter和NaughtyWaiter类的greetTo()和serveTo()这 两个Waiter接口定义的方法，同时还匹配NaiveWaiter#smile()和NaughtyWaiter#joke()这两个不在Waiter 接口中定义的方法。
+
+3)通过类包定义切点
+在类名模式串中，“.*”表示包下的所有类，而“..*”表示包、子孙包下的所有类。
+ execution(* com.baobaotao.*(..))l
+匹配com.baobaotao包下所有类的所有方法；
+
+ execution(* com.baobaotao..*(..))l
+匹 配com.baobaotao包、子孙包下所有类的所有方法，如com.baobaotao.dao，com.baobaotao.servier以及 com.baobaotao.dao.user包下的所有类的所有方法都匹配。“..”出现在类名中时，后面必须跟“*”，表示包、子孙包下的所有类；
+
+ execution(* com..*.*Dao.find*(..))l
+匹配包名前缀为com的任何包下类名后缀为Dao的方法，方法名必须以find为前缀。如com.baobaotao.UserDao#findByUserId()、com.baobaotao.dao.ForumDao#findById()的方法都匹配切点。
+
+4)通过方法入参定义切点
+切点表达式中方法入参部分比较复杂，可以使用“*”和“ ..”通配符，其中“*”表示任意类型的参数，而“..”表示任意类型参数且参数个数不限。
+
+ execution(* joke(String,int)))l
+匹 配joke(String,int)方法，且joke()方法的第一个入参是String，第二个入参是int。它匹配 NaughtyWaiter#joke(String,int)方法。如果方法中的入参类型是java.lang包下的类，可以直接使用类名，否则必须使用全限定类名，如joke(java.util.List,int)；
+
+ execution(* joke(String,*)))l
+匹 配目标类中的joke()方法，该方法第一个入参为String，第二个入参可以是任意类型，如joke(String s1,String s2)和joke(String s1,double d2)都匹配，但joke(String s1,double d2,String s3)则不匹配；
+
+ execution(* joke(String,..)))l
+匹配目标类中的joke()方法，该方法第 一个入参为String，后面可以有任意个入参且入参类型不限，如joke(String s1)、joke(String s1,String s2)和joke(String s1,double d2,String s3)都匹配。
+
+ execution(* joke(Object+)))l
+匹 配目标类中的joke()方法，方法拥有一个入参，且入参是Object类型或该类的子类。它匹配joke(String s1)和joke(Client c)。如果我们定义的切点是execution(* joke(Object))，则只匹配joke(Object object)而不匹配joke(String cc)或joke(Client c)。
 #### Spring AOP引入2
 #### Spring AOP基本概念
 
@@ -47,10 +129,265 @@
 #### 异常处理@exceptionhandler
 #### 获得beanFactory对象
 
+#### Spring Controller
+package org.springframework.web.bind.annotation;
 
-http://www.mybatis.org/mybatis-3/zh/configuration.html
+@RequestMapping来映射URL
+    注解 @RequestMapping 可以用在类定义处和方法定义处。
+    `类定义处`：规定初步的请求映射，相对于web应用的根目录；
+    `方法定义处`：进一步细分请求映射，相对于类定义处的URL。如果类定义处没有使用该注解，则方法标记的URL相对于根目录而言；
+```java
+package com.springmvc.helloworld_1;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value="/example")
+public class HelloWorld {
+
+    @RequestMapping("/helloworld")
+    public String hello(){
+        System.out.println("hello world");
+
+        return "success";
+    }
+}
+```
+
+上面代码在类定义处指定映射为"/example"，在hello()方法处指定为"/helloworld"。那么hello()方法的URL映射地址为：http://localhost:8080/springMVC/example/helloworld
+如果去掉类定义处的@RequestMapping(value="/example")，那么hello()方法的映射地址就变为了：http://localhost:8080/springMVC/helloworld
+还有一个注意的，@RequestMapping的默认属性为value，所以@RequestMapping(value="/example")和@RequestMapping("/example")是等价的。
+
+2、@RequestMapping除了可以指定URL映射外，还可以指定“请求方法、请求参数和请求头”的映射请求
+    注解的value、method、params及headers分别指定“请求的URL、请求方法、请求参数及请求头”。它们之间是与的关系，联合使用会使得请求的映射更加精细。
+　　2.1  method属性可以指定请求的类型，http中规定请求有四种类型：get，post，put，delete。其值在枚举类型RequestMethod中有规定。
+
+　　　　例如：@RequestMapping(value="/helloworld", method=RequestMethod.DELETE) 指定只有DELETE方式的helloworld请求才能够执行该处理方法。
+```java
+package com.springmvc.RequestMapping_2;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/springmvc")
+public class RequestMappingTest {
+
+    private static final String SUCCESS = "success";
+
+    /**
+     * 注解 @RequestMapping 可以用在类定义处和方法定义处
+     * 1、类定义处：规定初步的请求映射，相对于web应用的根目录
+     * 2、方法定义处：进一步细分请求映射，相对于类定义处的URL。如果类定义处没有使用该注解，则方法标记的URL相对于根目录而言
+     *
+     * 所以，testRequestMappingURL方法对应的URL目录为：/springmvc/testRequestMappingURL
+     */
+    @RequestMapping("/testRequestMappingURL")
+    public String testRequestMappingURL(){
+        System.out.println("testRequestMappingURL 方法...");
+
+        return SUCCESS;
+    }
+
+    /**
+     * 1、了解：可以指定params和headers参数。
+     *
+     * params和headers的值规定了：
+     * ①、请求参数必须包含param，和view。而且，view的值必须为true
+     * ②、请求头中必须包含有Accept-Language，而且其值必须为zh-CN,zh;q=0.8
+     */
+    @RequestMapping(value="/testParamsAndHearders",
+                    params={"view=true","param"},
+                    headers={"Accept-Language=zh-CN,zh;q=0.8"})
+    public String testParamsAndHearders(){
+        System.out.println("testParamsAndHearders 方法...");
+
+        return SUCCESS;
+    }
+}
+```
+
+#### web.xml的完整配置是这样的：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+  <display-name></display-name>
+  <!-- 404错误拦截 -->
+  <error-page>
+	<error-code>404</error-code>
+	<location>/error404.jsp</location>
+  </error-page>
+  <!-- 500错误拦截 -->
+  <error-page>
+	<error-code>500</error-code>
+	<location>/error500.jsp</location>
+  </error-page>
+  <!-- 加载spring容器 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/classes/spring/applicationContext-*.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+  <!-- 配置前端控制器 -->
+  <servlet>
+	  <servlet-name>spring</servlet-name>
+	  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	  <init-param>
+		  <!-- ContextconfigLocation配置springmvc加载的配置文件
+		  适配器、处理映射器等
+		   -->
+		  <param-name>contextConfigLocation</param-name>
+		  <param-value>WEB-INF/classes/spring/springmvc.xml</param-value>
+  </init-param>
+  </servlet>
+  <servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <!-- 1、.action访问以.action结尾的  由DispatcherServlet进行解析
+		   2、/,所有访问都由DispatcherServlet进行解析
+	   -->
+	  <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!-- 解决post乱码问题的过滤器 -->
+  <filter>
+	  <filter-name>CharacterEncodingFilter</filter-name>
+	  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+	  <init-param>
+		  <param-name>encoding</param-name>
+		  <param-value>utf-8</param-value>
+	  </init-param>
+  </filter>
+  <filter-mapping>
+	  <filter-name>CharacterEncodingFilter</filter-name>
+	  <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <welcome-file-list>
+	<welcome-file>welcome.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
+```
+
+http://www.tuicool.com/articles/eyINveF
+
+#### 整个applicationContext-dao.xml配置文件应该是这样的：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!-- 加载数据库连接的资源文件 -->
+<context:property-placeholder location="/WEB-INF/classes/jdbc.properties"/>
+<!-- 配置数据源   dbcp数据库连接池 -->
+<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	<property name="driverClassName" value="${jdbc.driver}"/>
+	<property name="url" value="${jdbc.url}"/>
+	<property name="username" value="${jdbc.username}"/>
+	<property name="password" value="${jdbc.password}"/>
+</bean>
+<!-- 配置sqlSessionFactory -->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- 数据库连接池 -->
+	<property name="dataSource" ref="dataSource"/>
+	<!-- 加载Mybatis全局配置文件 -->
+	<property name="configLocation" value="/WEB-INF/classes/mybatis/SqlMapConfig.xml"/>
+</bean>
+<!-- 配置mapper扫描器 -->
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<!-- 扫描包路径，如果需要扫描多个包中间用半角逗号隔开 -->
+	<property name="basePackage" value="com.wxisme.ssm.mapper"></property>
+	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+</bean>
+</beans>
+```
+#### 整个事务控制的配置是这样的：
+applicationContext-transaction.xml
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!-- 事务控制  对MyBatis操作数据库  spring使用JDBC事务控制类 -->
+<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<!-- 配置数据源 -->
+	<property name="dataSource" ref="dataSource"/>
+</bean>
+	<!-- 通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- 传播行为 -->
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="insert*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- 配置aop  -->
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.wxisme.ssm.service.impl.*.*(..))"/>
+	</aop:config>
+</beans>
+```
+#### SqlMapConfig.xml的配置
+SqlMapConfig.xml的配置
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 将数据库连接数据抽取到属性文件中方便测试 -->
+<!-- <properties resource="/WEB-INF/classes/jdbc.properties"></properties> -->
+<!-- 别名的定义 -->
+<typeAliases>
+	<!-- 批量定义别名 ，指定包名，自动扫描包中的类，别名即为类名，首字母大小写无所谓-->
+	<package name="com.wxisme.ssm.po"/>
+</typeAliases>
+<!-- 数据库连接用数据库连接池 -->
+<mappers>
+	<!-- 通过扫描包的方式来进行批量加载映射文件 -->
+	<package name="com.wxisme.ssm.mapper"/>
+</mappers>
+</configuration>
+```
 
 ## Mybatis
+http://www.mybatis.org/mybatis-3/zh/configuration.html
 ### Environment
 ### Configuration XML
 ### Mapper XML
@@ -65,15 +402,15 @@ http://www.mybatis.org/mybatis-3/zh/configuration.html
 
 
 ### 配置文件的基本结构
-* configuration —— 根元素 
+* configuration —— 根元素
     * properties —— 定义配置外在化
     * settings —— 一些全局性的配置
     * typeAliases —— 为一些类定义别名
     * typeHandlers —— 定义类型处理，也就是定义java类型与数据库中的数据类型之间的转换关系
     * objectFactory —— 对象工厂
     * plugins —— Mybatis的插件，插件可以修改Mybatis内部的运行规则
-    * environments —— 配置Mybatis的环境 
-        * environment 
+    * environments —— 配置Mybatis的环境
+        * environment
              * transactionManager —— 事务管理器
              * dataSource —— 数据源
     * databaseIdProvider
