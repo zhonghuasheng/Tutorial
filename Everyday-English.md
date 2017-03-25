@@ -1,5 +1,5 @@
-`Mar 20` Liferay is not about waiting for the storm to pass. It's about learning to dance in the rain.    
- 
+`Mar 20` Liferay is not about waiting for the storm to pass. It's about learning to dance in the rain.
+
  生活不是等待暴风雨的过去，而是要学会在雨中跳舞。
 
 `Mar 21` What is insistence? That is, day after day, you tell yourself to go on for another day.
@@ -14,6 +14,10 @@
 
 一个女人要是什么都懂，那就必须同时懂得怎么伪装成什么都不懂。 - 简.奥斯汀
 
-`Mar24` Affiction comes to us, not to make us sad but sober; not to make us sorry but wise.
+`Mar 24` Affiction comes to us, not to make us sad but sober; not to make us sorry but wise.
 
 痛苦的降临，是要让我们清醒而不是难过，让我们更有智慧而不是懊悔。
+
+`Mar 25` If you don't walk out, you will think that this is the whole world.
+
+如果你不出去走走，你会以为这就是全世界。
