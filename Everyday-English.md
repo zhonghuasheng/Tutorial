@@ -22,6 +22,10 @@
 
 如果你不出去走走，你会以为这就是全世界。
 
+`Mar 26` Enjoy your own life without comparing it with that of another.
+
+享受自己的生活，不要和别人比较。
+
 `Mar27` Sometimes you have to stop thinking too much and just go where your heart takes you.
 
 有时候，我们不要想太多，顺着自己的心意就好了。
