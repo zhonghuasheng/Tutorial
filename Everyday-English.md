@@ -21,3 +21,7 @@
 `Mar 25` If you don't walk out, you will think that this is the whole world.
 
 如果你不出去走走，你会以为这就是全世界。
+
+`Mar27` Sometimes you have to stop thinking too much and just go where your heart takes you.
+
+有时候，我们不要想太多，顺着自己的心意就好了。
