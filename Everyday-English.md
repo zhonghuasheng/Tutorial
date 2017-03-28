@@ -29,3 +29,7 @@
 `Mar27` Sometimes you have to stop thinking too much and just go where your heart takes you.
 
 有时候，我们不要想太多，顺着自己的心意就好了。
+
+`Mar28` The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the saild.
+
+悲观者抱怨风向，乐观者期待风向改变，务实的人调整帆布。
