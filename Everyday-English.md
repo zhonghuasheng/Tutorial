@@ -33,3 +33,7 @@
 `Mar28` The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the saild.
 
 悲观者抱怨风向，乐观者期待风向改变，务实的人调整帆布。
+
+`Mar29` I'll be allright. One day. Someday. Just not today.
+
+我会好起来的，某一天，总有一天，而不是今天。
