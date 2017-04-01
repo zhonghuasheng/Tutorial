@@ -41,3 +41,7 @@
 `Mar30` Being nice to someone you dislike doesn't mean you're a hypocritical people. It means you're mature enough to tolerate your dislike towards them.
 
 能够善待不太喜欢的人，并不代表你虚伪，而意味这你内心成熟到可以容纳这些不喜欢。
+
+`Mar31` If you're lonely when you're alone, you're in bad company.
+
+如果你独处时感到寂寞，说明你没有把自己陪好。
