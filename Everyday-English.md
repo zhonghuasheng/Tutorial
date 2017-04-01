@@ -37,3 +37,7 @@
 `Mar29` I'll be allright. One day. Someday. Just not today.
 
 我会好起来的，某一天，总有一天，而不是今天。
+
+`Mar30` Being nice to someone you dislike doesn't mean you're a hypocritical people. It means you're mature enough to tolerate your dislike towards them.
+
+能够善待不太喜欢的人，并不代表你虚伪，而意味这你内心成熟到可以容纳这些不喜欢。
