@@ -50,3 +50,7 @@
 `Apr 1` Life is short, and if you ever come across a beautiful, exciting, crazy moment in it, you gottaseize it while you can before that moment's gone.
 
 人生苦短，如果有机会碰到美丽，激动，疯狂的时刻，就得在那一刻消失之前紧紧把握住。
+
+`Apr 2` Every difficulty slurred over will be a ghost to disturb your repose later on. - Tagore
+
+每一个你闪避得困难，将来都会如鬼魂般打扰你得安宁。- 泰戈尔
