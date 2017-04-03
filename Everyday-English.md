@@ -26,22 +26,27 @@
 
 享受自己的生活，不要和别人比较。
 
-`Mar27` Sometimes you have to stop thinking too much and just go where your heart takes you.
+`Mar 27` Sometimes you have to stop thinking too much and just go where your heart takes you.
 
 有时候，我们不要想太多，顺着自己的心意就好了。
 
-`Mar28` The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the saild.
+`Mar 28` The pessimist complains about the wind; the optimist expects it to change; the realist adjusts the saild.
 
 悲观者抱怨风向，乐观者期待风向改变，务实的人调整帆布。
 
-`Mar29` I'll be allright. One day. Someday. Just not today.
+`Mar 29` I'll be allright. One day. Someday. Just not today.
 
 我会好起来的，某一天，总有一天，而不是今天。
 
-`Mar30` Being nice to someone you dislike doesn't mean you're a hypocritical people. It means you're mature enough to tolerate your dislike towards them.
+`Mar 30` Being nice to someone you dislike doesn't mean you're a hypocritical people. It means you're mature enough to tolerate your dislike towards them.
 
 能够善待不太喜欢的人，并不代表你虚伪，而意味这你内心成熟到可以容纳这些不喜欢。
 
-`Mar31` If you're lonely when you're alone, you're in bad company.
+`Mar 31` If you're lonely when you're alone, you're in bad company.
 
 如果你独处时感到寂寞，说明你没有把自己陪好。
+
+
+`Apr 1` Life is short, and if you ever come across a beautiful, exciting, crazy moment in it, you gottaseize it while you can before that moment's gone.
+
+人生苦短，如果有机会碰到美丽，激动，疯狂的时刻，就得在那一刻消失之前紧紧把握住。
