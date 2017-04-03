@@ -54,3 +54,7 @@
 `Apr 2` Every difficulty slurred over will be a ghost to disturb your repose later on. - Tagore
 
 每一个你闪避得困难，将来都会如鬼魂般打扰你得安宁。- 泰戈尔
+
+`Apr 3` We always learn to be stronger when we are hurt and learn to be more independent during parting.
+
+我们总是在上海中学着更坚强，在离别中学着更独立。
