@@ -62,3 +62,7 @@
 `Apr 4` Smile and silence are two powerful tools. Smile is the way to solve many problems and silence is the way to avoid many problems.
 
 微笑和沉默是两把利器：微笑解决很多问题，沉默避免许多问题。
+
+`Apr 5` Ordinary people merely think how they shall spend their time; a man of talent tries to use it.
+
+普通人想着如何度过时间，有才能的想着怎么利用时间。
