@@ -66,3 +66,8 @@
 `Apr 5` Ordinary people merely think how they shall spend their time; a man of talent tries to use it.
 
 普通人想着如何度过时间，有才能的想着怎么利用时间。
+
+`Apr 6` I will not let anyone walk through my mind with their dirty feet.
+
+我不会让任何人用肮脏的脚踏足我的思想。
+
