@@ -71,3 +71,6 @@
 
 我不会让任何人用肮脏的脚踏足我的思想。
 
+`Apr 7` I am prepared for the worst, but hope for the best.
+
+我期待最好的，但为最坏的做好准备。
