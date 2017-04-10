@@ -79,3 +79,7 @@
 
 如果难过就抬头望望天，望着望着就忘了
 
+`Apr 9` My motto is: Contented with little, yet wishing for more.
+
+我的座右铭是：为一点点感到满足，但希望获得更多。
+
