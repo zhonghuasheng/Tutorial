@@ -74,3 +74,8 @@
 `Apr 7` I am prepared for the worst, but hope for the best.
 
 我期待最好的，但为最坏的做好准备。
+
+`Apr 8` Ready or not, some day it will all come to an end.
+
+如果难过就抬头望望天，望着望着就忘了
+
