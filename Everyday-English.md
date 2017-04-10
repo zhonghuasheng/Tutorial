@@ -83,3 +83,6 @@
 
 我的座右铭是：为一点点感到满足，但希望获得更多。
 
+`Apr 10` If you let yourself be undisciplined on the small things, you will probably be undisciplined on the large things as well.
+
+如果你在小事上没有原则，那么大事上一样没有原则。
