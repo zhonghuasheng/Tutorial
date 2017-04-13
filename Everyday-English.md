@@ -90,3 +90,7 @@
 `Apr 11` A little bit of mercy makes the world less cold and more just.
 
 多一点怜悯可以让世界少一点冷酷多一点正义。
+
+`Apr 12` Be yourself, everyone else is already taken.
+
+做你自己，其他角色已经有人了。
