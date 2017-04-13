@@ -86,3 +86,7 @@
 `Apr 10` If you let yourself be undisciplined on the small things, you will probably be undisciplined on the large things as well.
 
 如果你在小事上没有原则，那么大事上一样没有原则。
+
+`Apr 11` A little bit of mercy makes the world less cold and more just.
+
+多一点怜悯可以让世界少一点冷酷多一点正义。
