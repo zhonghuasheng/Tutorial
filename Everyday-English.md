@@ -94,3 +94,7 @@
 `Apr 12` Be yourself, everyone else is already taken.
 
 做你自己，其他角色已经有人了。
+
+`Apr 13` Life was funny thing that occured on the way to the grave.
+
+生命是再通往坟墓之路上发生的一件趣事。
