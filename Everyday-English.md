@@ -98,3 +98,7 @@
 `Apr 13` Life was funny thing that occured on the way to the grave.
 
 生命是再通往坟墓之路上发生的一件趣事。
+
+`Apr 14` Protect your innocence...Our innocence allows us to do what the practical mind prohibits.
+
+保护你的纯真...天真让我们做实际心态所不允许的事。
