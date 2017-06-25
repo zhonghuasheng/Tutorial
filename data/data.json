@@ -6,5 +6,10 @@
         "life" : 7,
         "learning" : 2,
         "exercise" : 0.5
+    }],
+    "keyWords": [{
+        "keyWrodCN": "二级域名",
+        "keyWordEN": "Second-level domain",
+        "noteURL": null
     }]
 }
