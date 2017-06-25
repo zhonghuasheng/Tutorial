@@ -1,0 +1,10 @@
+{
+    "dailyStatus" : [{
+        "date" : "2017-06-25",
+        "week" : "Saturday",
+        "work" : 2,
+        "life" : 7,
+        "learning" : 2,
+        "exercise" : 0.5
+    }]
+}
