@@ -6,10 +6,18 @@
         "life" : 7,
         "learning" : 2,
         "exercise" : 0.5
+    },
+    {
+        "date" : "2017-06-26",
+        "week" : "Monday",
+        "work" : 6.8,
+        "life" : 6,
+        "learning" : 4,
+        "exercise" : 0
     }],
     "keyWords": [{
         "keyWrodCN": "二级域名",
         "keyWordEN": "Second-level domain",
-        "noteURL": null
+        "noteURL": "https://github.com/zhonghuasheng/Tutorial/blob/tutorial/file/network/second-level-domain.md"
     }]
 }
