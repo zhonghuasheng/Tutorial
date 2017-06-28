@@ -14,6 +14,22 @@
         "life" : 6,
         "learning" : 5,
         "exercise" : 0
+    },
+    {
+        "date" : "2017-06-27",
+        "week" : "Tuesday",
+        "work" : 6.9,
+        "life" : 8,
+        "learning" : 3,
+        "exercise" : 9
+    },
+    {
+        "date" : "2017-06-28",
+        "week" : "Wednesday",
+        "work" : 7.8,
+        "life" : 0,
+        "learning" : 8.2,
+        "exercise" : 0
     }],
     "keyWords": [{
         "keyWrodCN": "二级域名",
