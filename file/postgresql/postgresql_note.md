@@ -43,6 +43,16 @@ SELECT replace_attribute(
 );
 ```
 
+### Select Node
+
+SELECT
+  column1,
+  column2,
+  unnest(xpath('/node1/node2[@attribute1=4]/@attribute2', cast(request.column as xml))) as x,
+  unnest(xpath('/node1/node2[@attribute1=4]/@status', cast(request.column as xml))) as y,
+  unnest(xpath('/node1/node2[@attribute1=4]/@selected', cast(request.column as xml))) as z
+FROM table as request;;
+
 ### Loop array
 
 ```sql
