@@ -38,10 +38,26 @@
         "life" : 8,
         "learning" : 4.6,
         "exercise" : 8
+    },
+    {
+        "date" : "2017-06-30",
+        "week" : "Friday",
+        "work" : 8,
+        "life" : 7,
+        "learning" : 6.5,
+        "exercise" : 6
     }],
-    "keyWords": [{
-        "keyWrodCN": "二级域名",
-        "keyWordEN": "Second-level domain",
-        "noteURL": "https://github.com/zhonghuasheng/Tutorial/blob/tutorial/file/network/second-level-domain.md"
-    }]
+    "keyWords": [
+
+        {
+            "keyWrodCN" : "二级域名",
+            "keyWordEN" : "Second-level domain",
+            "noteURL" : "https://github.com/zhonghuasheng/Tutorial/blob/tutorial/file/network/second-level-domain.md"
+        },
+        {
+            "keyWorkCN" : "内容分发网络",
+            "keyWordEN" : "Content Delivery Network",
+            "noteURL" : null
+        }
+    ]
 }
