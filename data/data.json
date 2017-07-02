@@ -46,6 +46,22 @@
         "life" : 7,
         "learning" : 6.5,
         "exercise" : 6
+    },
+    {
+        "date" : "2017-07-01",
+        "week" : "Saturday",
+        "work" : 0,
+        "life" : 8,
+        "learning" : 8,
+        "exercise" : 6
+    },
+    {
+        "date" : "2017-07-02",
+        "week" : "Sunday",
+        "work" : 0,
+        "life" : 8,
+        "learning" : 8.1,
+        "exercise" : 6
     }],
     "keyWords": [
 
