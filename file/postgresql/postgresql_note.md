@@ -74,3 +74,9 @@ BEGIN
 END
 $do$
 ```
+
+#### How to dump data from remote database table
+
+```sql
+pg_dump --host server1 --encoding=utf8 --no-owner --username=foo --password -t table_name db_name > server1_db.sql
+```
