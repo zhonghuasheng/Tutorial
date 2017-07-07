@@ -89,3 +89,5 @@ psql -h hostname -d dbname -U username -p 5432 -a -q -f /filepath/filename.sql
 -q: quiet
 -f: file
 ```
+
+
