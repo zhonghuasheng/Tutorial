@@ -80,3 +80,14 @@ $do$
 ```sql
 pg_dump --host server1 --encoding=utf8 --no-owner --username=foo --password -t table_name db_name > server1_db.sql
 ```
+
+#### Run sql file in pql command
+
+```sql
+psql -h hostname -d dbname -U username -p 5432 -a -q -f /filepath/filename.sql
+-a: all echo
+-q: quiet
+-f: file
+```
+
+
