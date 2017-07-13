@@ -11,3 +11,9 @@ git checkout -b newbranch commitid
 ```shell
 git branch newbranch commitid
 ```
+
+### Add tag for a release branch
+```shell
+git tag -a V1.0.0 -m "Apr 1 release"
+git push --tag
+```
