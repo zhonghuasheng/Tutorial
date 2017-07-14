@@ -12,6 +12,11 @@ git checkout -b newbranch commitid
 git branch newbranch commitid
 ```
 
+### Update authuor for commited commit
+
+```shell
+git commit --amend --author 'Hua Sheng' --email "xiaoyong6906@126.com"
+```
 ### Add tag for a release branch
 ```shell
 git tag -a V1.0.0 -m "Apr 1 release"
