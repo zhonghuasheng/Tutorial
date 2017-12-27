@@ -280,6 +280,10 @@ service postgresql initdb The service command supports only basic LSB actions (s
 
 ####
 psql: FATAL:  Ident authentication failed for user "xxx"
+=======
+```sql
+\i C:/batchexc/batch.sql
+```
 
 ### Disconnect all connections for a database
 select pg_terminate_backend(pg_stat_activity.pid) from pg_stat_activity where datname='databasename' AND pid<>pg_backend_pid();
