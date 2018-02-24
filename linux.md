@@ -1,5 +1,8 @@
-### 请空文件内容
 sudo sh -c "echo '' > a.txt"
 
-### 重命名文件夹
 mv folderAName newFolderName
+
+ln -s sourcefile targetfile
+> ln -s /xxx/xx/eclipse eclipseLink
+
+wget -e use_proxy=yes -e http_proxy=x.x.x.x:1080
