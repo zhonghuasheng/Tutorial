@@ -51,3 +51,6 @@ $ redis                            # 重新进入客户端
 redis> PING                        # 执行命令不再需要密码，清空密码操作成功
 
 PONG
+
+### Redis中查看所有数据库的命令
+* config get databases
