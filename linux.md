@@ -17,3 +17,7 @@ sudo sh -c "ulimit -n 65535 && exec su userA"
     * -a 显示所有
     * -n 不用别名显示，只用数字显示
     * -p 显示进程号和进程名
+
+### 测试域名能不能解析
+* nslookup server
+    * eg: `nslookup www.baidu.com`
