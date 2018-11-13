@@ -21,3 +21,7 @@ sudo sh -c "ulimit -n 65535 && exec su userA"
 ### 测试域名能不能解析
 * nslookup server
     * eg: `nslookup www.baidu.com`
+
+### Linux邮件服务器：Postfix
+http://cn.linux.vbird.org/linux_server/0380mail.php
+
