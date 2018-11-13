@@ -1,3 +1,10 @@
+### 微服务本身的复杂度带来的问题
+* 分散在各个服务器上的日志如何处理？
+* 如果业务出现了错误和异常，如何定位和处理？
+* 如何跟踪业务的处理顺序和结果？
+
+### 微服务时代 运维监控是难点
+
 启动一个服务注册中心，只需要一个注解@EnableEurekaServer，这个注解需要在springboot工程的启动application类上加：
 @SpringBootApplication
 @EnableEurekaServer
