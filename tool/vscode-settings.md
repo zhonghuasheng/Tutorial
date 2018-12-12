@@ -1,3 +1,4 @@
+```
 {
     "editor.renderWhitespace": true,
     "editor.tabSize":4,
@@ -9,3 +10,4 @@
     "vsicons.dontShowNewVersionMessage": true,
     "spell.StopAsking": true
 }
+```
