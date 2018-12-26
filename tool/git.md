@@ -28,3 +28,12 @@ git push --tag
 
 * fatal: Refusing to fetch into current branch refs/heads/tutorial of non-bare repository
 当你处于分支develop时，这个时候去fetch develop分支的代码的时候就会报这个错误，也就是说不可以在非bare的git仓库中通过fetch快进你的当前分支与远程同步。这个时候你要切换到其他分支，然后再去fetch非当前分支的代码。
+
+### .gitignore can not work
+> If you already have a file checked in, and you want to ignore it, Git will not ignore the file if you add a rule later. In those cases, you must untrack the file first, by running the following command in your termianl:
+```
+$ git rm --cached
+$ git add -A
+$ git commit -m 'your message, eg update .gitignore'
+```
+.gitignore文件只是ignore没有被staged(cached)文件
