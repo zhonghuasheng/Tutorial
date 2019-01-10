@@ -27,4 +27,7 @@
 
 ```
 -Dhttps.proxyHost=x.x.x.x -Dhttps.proxyPort=?
+
+`example`  mvn install -Dhttp.proxyHost=10.10.0.100 -Dhttp.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|127.0.0.1
+
 ```
