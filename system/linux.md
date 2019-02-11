@@ -17,10 +17,14 @@ sudo sh -c "ulimit -n 65535 && exec su userA"
     * -a 显示所有
     * -n 不用别名显示，只用数字显示
     * -p 显示进程号和进程名
-
+    * `netstat -natpl` 显示tcp的侦听端口
+    * `netstat -naupl` 显示udp的侦听端口
 ### 测试域名能不能解析
 * nslookup server
     * eg: `nslookup www.baidu.com`
+
+### 测试端口是否开放
+* `telnet ip port`
 
 ### Linux邮件服务器：Postfix
 http://cn.linux.vbird.org/linux_server/0380mail.php
