@@ -19,6 +19,7 @@ SaaS: 软件服务，Software-as-a-Service
     * Email, IM, Facebook, Twitter
     * Almost every application can be SaaS
 WMS: Warehouse Management System 仓库管理系统
+ROI: Return On Investment 投资回报率
 
 * This approach(方式，途径) makes it easier to re-use（重用） the component somewhere else and deliver（交互） the component's intended（期望的） appearance even if the global styles are different.
 The best way to build a habit is to start small.
