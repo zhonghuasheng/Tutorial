@@ -13,3 +13,22 @@
     * Extension ClassLoader：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。
     * App ClassLoader：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。
         * 除了Java默认提供的三个ClassLoader之外，用户还可以根据需要定义自已的ClassLoader，而这些自定义的ClassLoader都必须继承自java.lang.ClassLoader类，也包括Java提供的另外二个ClassLoader（Extension ClassLoader和App ClassLoader）在内，但是Bootstrap ClassLoader不继承自ClassLoader，因为它不是一个普通的Java类，底层由C++编写，已嵌入到了JVM内核当中，当JVM启动后，Bootstrap ClassLoader也随着启动，负责加载完核心类库后，并构造Extension ClassLoader和App ClassLoader类加载器。
+# *JavaEE*
+## `基础语法`
+### 类
+### 接口
+### 数组
+### 方法重载
+### 方法重写
+### 面向对象
+### 常用包
+### IO
+https://juejin.im/post/5af79bcc51882542ad771546
+https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html
+### 多线程
+### 反射机制
+### 泛型
+### 集合框架
+### 异常处理
+### JAVA8新特性
+### JAVA8新特性
