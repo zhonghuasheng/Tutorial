@@ -13,6 +13,80 @@
     * Extension ClassLoader：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。
     * App ClassLoader：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。
         * 除了Java默认提供的三个ClassLoader之外，用户还可以根据需要定义自已的ClassLoader，而这些自定义的ClassLoader都必须继承自java.lang.ClassLoader类，也包括Java提供的另外二个ClassLoader（Extension ClassLoader和App ClassLoader）在内，但是Bootstrap ClassLoader不继承自ClassLoader，因为它不是一个普通的Java类，底层由C++编写，已嵌入到了JVM内核当中，当JVM启动后，Bootstrap ClassLoader也随着启动，负责加载完核心类库后，并构造Extension ClassLoader和App ClassLoader类加载器。
+
+# *JDK*
+### JDK中自带的工具
+#### `version 1.8`
+
+#### Create and Build Applications
+* appletviewer
+* extcheck
+* jar
+* java
+* javac
+* javadoc
+* javah
+* javap
+* jdb
+* jdeps
+
+#### Security
+* keytool
+* jarsigner
+* policytool
+
+#### Internationalization
+* native2ascli
+
+#### Remote Method Invocation(RMI)
+* rmic
+* rmiregistry
+* rmid
+* serialver
+
+#### Java IDL and RMI-IIOP
+* tnameserv
+* idlj
+* orbd
+* servertool
+
+#### Deploy Applications and Applets
+* pack200
+* unpack200
+* javapackager
+* javafxpackager
+
+#### Java Web Start
+* javaws
+
+#### Monitor Java Applications
+* jconsole
+* jvisualvm
+
+#### Monitor the JVM
+* jps
+* jstat
+* jstatd
+* jmc
+
+#### Web Services
+* schemagen
+* wsgen
+* wsimport
+* xjc
+
+#### Troubleshooting
+* jcmd
+* jinfo
+* jhat
+* jmap
+* jsadebugd
+* jstack
+
+#### Scripting
+* jrunscript
+* jjs
+
 # *JavaEE*
 ## `基础语法`
 ### 类
