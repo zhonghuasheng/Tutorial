@@ -9,6 +9,7 @@ financial:金融的，财务的，财政的，有钱的
 abbreviation:省略，缩写
 contribution:贡献
 prerequisites:前提条件
+partition:分片
 IaaS: 基础设施服务， Infrastructure-as-a-Service
     * Compute, Storage, Networking
     * AWS, Google Cloud Platform, Azure, OpenStack, ZStack
