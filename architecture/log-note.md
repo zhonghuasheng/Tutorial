@@ -54,3 +54,47 @@ http://blog.chinaunix.net/uid-20196318-id-3611197.html
 * foreach语句是for语句的特殊简化版本，但是foreach语句并不能完全取代for语句，然而，任何的foreach语句都可以改写为for语句版本。
 * foreach提高了代码的可读性和安全性（不用怕数组越界）
 * foreach的缺点是丢失了索引信息
+
+### ELK
+
+`Filebeta README file`
+    # Welcome to Filebeat 6.6.1
+Filebeat sends log files to Logstash or directly to Elasticsearch.
+## Getting Started
+To get started with Filebeat, you need to set up Elasticsearch on
+your localhost first. After that, start Filebeat with:
+     ./filebeat -c filebeat.yml -e
+This will start Filebeat and send the data to your Elasticsearch
+instance. To load the dashboards for Filebeat into Kibana, run:
+    ./filebeat setup -e
+For further steps visit the
+[Getting started](https://www.elastic.co/guide/en/beats/filebeat/6.6/filebeat-getting-started.html) guide.
+## Documentation
+Visit [Elastic.co Docs](https://www.elastic.co/guide/en/beats/filebeat/6.6/index.html)
+for the full Filebeat documentation.
+## Release notes
+
+`common cmd`
+./filebeat -e -c filebeat.yml -d "publish"
+
+`logstash`
+input {
+    betas {
+        port => "5044"
+    }
+}
+
+filter {
+    grok {
+        match => {"message" => "%{COMBINEDAPACHELOG}"}
+    }
+    geoip {
+        source => "clientip"
+    }
+}
+
+output {
+    elasticsearch {
+        hosts => ["localhost:9200"]
+    }
+}

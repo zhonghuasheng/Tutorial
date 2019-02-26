@@ -19,6 +19,17 @@ sudo sh -c "ulimit -n 65535 && exec su userA"
     * -p 显示进程号和进程名
     * `netstat -natpl` 显示tcp的侦听端口
     * `netstat -naupl` 显示udp的侦听端口
+### CentOS7开放端口：CentOS7已经使用firewall作为防火墙，不再使用iptables
+* root用户
+* 开启防火墙 systemctl start firewalld.service
+* 开启端口 firewall-cmd --zone=pubnlic --add-port=8080/tcp --permanent
+    * --zone-public:表作用域的公共
+    * --add-port=8080/tcp：添加tcp协议的端口为8080
+    * --permanent: 永久生效，无此参数表示临时生效
+* 重启防火墙 systemctl restart firewalld.service
+* 重新载入配置 firewall-cmd --reload
+* firewall-cmd --list-ports
+
 ### 测试域名能不能解析
 * nslookup server
     * eg: `nslookup www.baidu.com`
