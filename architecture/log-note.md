@@ -78,23 +78,22 @@ for the full Filebeat documentation.
 ./filebeat -e -c filebeat.yml -d "publish"
 
 `logstash`
+node {
+    name => 'betas'
+}
+
 input {
     betas {
+        host => "xxx"
         port => "5044"
     }
 }
 
 filter {
-    grok {
-        match => {"message" => "%{COMBINEDAPACHELOG}"}
-    }
-    geoip {
-        source => "clientip"
-    }
 }
 
 output {
     elasticsearch {
-        hosts => ["localhost:9200"]
+        hosts => ["xxx:9200"]
     }
 }
