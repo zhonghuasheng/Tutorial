@@ -10,6 +10,7 @@ abbreviation:省略，缩写
 contribution:贡献
 prerequisites:前提条件
 partition:分片
+POC: Proof of concept 是对某些想法的一个较短而不完整的实现，以证明其可行性，示范其原理
 IaaS: 基础设施服务， Infrastructure-as-a-Service
     * Compute, Storage, Networking
     * AWS, Google Cloud Platform, Azure, OpenStack, ZStack
