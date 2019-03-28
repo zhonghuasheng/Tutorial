@@ -27,3 +27,17 @@ DevOps:（Development和Operations的组合词）是一组过程、方法与系�
 * This approach(方式，途径) makes it easier to re-use（重用） the component somewhere else and deliver（交互） the component's intended（期望的） appearance even if the global styles are different.
 The best way to build a habit is to start small.
 Life turns out to be better if you think from other's perspective.
+
+Here is a list of keywords in the Java programming language. You cannot use any of the following as identifiers in your programs. The keywords const and goto are reserved, even though they are not currently used. true, false, and null might seem like keywords, but they are actually literals; you cannot use them as identifiers in your programs.
+
+
+|  |  |  |  |  |
+|--|--|--|--|--|
+| abstract | continue | for | new | switch |
+| assert*** | default | goto* | package | synchronized |
+| break | double | implements | private | this |
+| byte | else | import | public | throws |
+| case | enum**** | instanceof | return | transient |
+| char | final | interface | static | void |
+| class | finally | log | strictfp** | volatile |
+| const* | float | native | super | while |
