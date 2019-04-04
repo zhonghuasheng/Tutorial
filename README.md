@@ -10,15 +10,24 @@
 </center>
 
 ## 英语
-[计算机行业常用英语积累](english.md)
+[计算机行业常用英语积累](english/english.md)
 
 ## Java
 
+### Java基础
+[Java笔记](java/basic/java-basic.md)
+
+### Java Core
+
+### Java Web
+
 ## Spring大家族
 
-[Java笔记](java.md)
+### Spring
 
 [Spring笔记](spring/spring.md)
+
+### Spring Boot
 
 [SpringBoot历史](spring-boot/0-springboot-history.md)
 
@@ -29,6 +38,8 @@
 [SpringBoot统一异常处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
 
 [SpringBoot Security]
+
+### Spring Cloud
 
 ## 中间件
 
