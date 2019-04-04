@@ -47,6 +47,8 @@
 
 [SpringBoot基础](spring-boot/1-springboot-basic.md)
 
+[SpringBoot统一结果处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
+
 [SpringBoot Security]
 
 [SpringCloud笔记]
