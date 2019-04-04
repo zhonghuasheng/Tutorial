@@ -74,7 +74,7 @@
 [Linux常用命令](system/linux.md)
 
 
-## ![网络](png/icon/network.png)网络
+## 网络
 
 [域名](network/notes/second-level-domain.md)
 [从HTTP到HTTPS到HSTS](network/notes/HTTP_HTTPS_SSL.md)
