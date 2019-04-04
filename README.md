@@ -1,49 +1,21 @@
+<center>
 <h2 style="text-align:center">声明</h2>
 <h3 stype="text-align:center">该文档为本人工作、学习的总结，有些解决方案不一定适合所有情况，取者自思。</h2>
 
 
-| 英语 | Java | Spring大家族 | 数据结构 | 算法 |
-|:------:|:------:|:------:|:------:|:------:|
-| ![English](png/icon/english.png) | ![JAVA](png/icon/java-coffee-cup-logo.png) | ![Spring Framework](png/icon/spring-logo-48.png)| ![Data Structure](png/icon/data-structure.png) | ![Algorithm.png](png/icon/algorithm.png) |
+| 英语 | Java | Spring大家族 | 中间件 | 数据库 | 数据结构 | 算法 | 服务器 | 网络 | 其他 |
+|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
+| [![English](png/icon/english.png)](#英语) | [![JAVA](png/icon/java-coffee-cup-logo.png)](#Java) | [![Spring Framework](png/icon/spring-logo-48.png)](#Spring大家族)| [![中间件](png/icon/plugins.png)](#中间件) | [![数据库](png/icon/database.png)](#数据库) | [![Data Structure](png/icon/data-structure.png)](#数据结构) | [![Algorithm.png](png/icon/algorithm.png)](#算法) | [![服务器](png/icon/server.png)](#服务器) | [![网络](png/icon/network.png)](#网络) | [![其他](png/icon/other.png)](#其他) |
 
-### 常用英语
-[常用英语积累](english.md)
+</center>
 
-### 日志
-[为什么使用log](architecture/log-note.md)
-[如何解决Apache Server中Catalina.out文件过大的问题](tool/cronolog.md)
+## 英语
+[计算机行业常用英语积累](english.md)
 
-### 大数据
-[Note](data/bigdata.md)
+## Java
 
-### 数据库
-[Mongodb](database/mongodb.md)
+## Spring大家族
 
-[MySQL](database/mysql.md)
-
-[Postgresql](database/postgresql.md)
-
-[Postgresql在Linux中的安装以及常用命令](database/postgresql/postgresql_note.md)
-
-[解决Postgresql RDS CPU使用率过高的问题](database/postgresql/PostgreSQL_CPU_Usage_High.md)
-
-[Redis](database/redis.md)
-
-### 网络
-
-[域名](network/notes/second-level-domain.md)
-[从HTTP到HTTPS到HSTS](network/notes/HTTP_HTTPS_SSL.md)
-
-### 算法
-[Letcode](letcode/note.md)
-
-### APP
-[混合开发](mobile/app.md)
-
-### Shell脚本
-[Shell基础编程](shell/shell.md)
-
-### Spring 家族
 [Java笔记](java.md)
 
 [Spring笔记](spring/spring.md)
@@ -58,13 +30,59 @@
 
 [SpringBoot Security]
 
-[SpringCloud笔记]
+## 中间件
 
 ### MyBatis
 [MyBatis](mybatis.md)
 
+### 消息队列
+[ActiveMQ](activemq.md)
+
+### 日志
+[为什么使用log](architecture/log-note.md)
+[如何解决Apache Server中Catalina.out文件过大的问题 - Cronolog](tool/cronolog.md)
+
+## 数据库
+
+### MySQL
+
+[MySQL](database/mysql.md)
+
+### Postgresql
+
+[Postgresql](database/postgresql.md)
+
+[Postgresql在Linux中的安装以及常用命令](database/postgresql/postgresql_note.md)
+
+[解决Postgresql RDS CPU使用率过高的问题](database/postgresql/PostgreSQL_CPU_Usage_High.md)
+
+### Mongodb
+[Mongodb](database/mongodb.md)
+
+### Redis
+
+[Redis](database/redis.md)
+
+## 数据结构
+
+## 算法
+[Letcode](letcode/note.md)
+
+## 服务器
+
 ### Linux
 [Linux常用命令](system/linux.md)
+
+
+## 网络
+
+[域名](network/notes/second-level-domain.md)
+[从HTTP到HTTPS到HSTS](network/notes/HTTP_HTTPS_SSL.md)
+
+## 其他
+
+### 大数据
+[Note](data/bigdata.md)
 
 ### 工具
 [API测试工具](tool/api-testing-tool.md)
@@ -76,8 +94,14 @@
 [VSCode](tool/vscode-settings.md)
 [ELK](elasticsearch.md)
 
-### 消息队列
-[ActiveMQ](activemq.md)
+### APP
+[混合开发](mobile/app.md)
+
+### Shell脚本
+[Shell基础编程](shell/shell.md)
+
+
+
 
 ### 下一代产品
 [ServiceMesh](ServiceMesh.md)
