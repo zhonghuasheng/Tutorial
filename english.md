@@ -61,3 +61,11 @@ Here is a list of keywords in the Java programming language. You cannot use any 
 | char | final | interface | static | void |
 | class | finally | log | strictfp** | volatile |
 | const* | float | native | super | while |
+
+B2C：企业与消费者之间的电子商务，类似天猫、京东是属于此类模式，企业在电子商务平台上售卖，消费者进行购买，是最常见的电子商务模式。
+
+B2B：企业与企业之间的电子商务，也可以说是供应方与采购方之间的电子商务，此类模式是解决了上游到中游的采购问题，降低采购成本，类似阿里巴巴的1688。
+
+C2C：消费者与消费者之间的电子商务，此类模式对商家的包容性更大，很多是个人，比如：淘宝、微店都是此类。
+
+O2O：线上到线下再到线上，线上消费，线下服务，线上核销，例如：美团、饿了么。
