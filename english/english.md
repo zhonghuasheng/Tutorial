@@ -42,6 +42,8 @@ ROI: Return On Investment 投资回报率
 
 DevOps:（Development和Operations的组合词）是一组过程、方法与系统的统称，用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。
 
+QPS = req/sec = 请求数/秒 （单个进程每秒请求服务器的成功次数）
+
 This approach(方式，途径) makes it easier to re-use（重用） the component somewhere else and deliver（交互） the component's intended（期望的） appearance even if the global styles are different.
 
 The best way to build a habit is to start small.
