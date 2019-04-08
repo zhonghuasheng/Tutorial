@@ -44,6 +44,7 @@ DevOps:（Development和Operations的组合词）是一组过程、方法与系�
 
 QPS = req/sec = 请求数/秒 （单个进程每秒请求服务器的成功次数）
 
+
 This approach(方式，途径) makes it easier to re-use（重用） the component somewhere else and deliver（交互） the component's intended（期望的） appearance even if the global styles are different.
 
 The best way to build a habit is to start small.
@@ -71,3 +72,6 @@ B2B：企业与企业之间的电子商务，也可以说是供应方与采购�
 C2C：消费者与消费者之间的电子商务，此类模式对商家的包容性更大，很多是个人，比如：淘宝、微店都是此类。
 
 O2O：线上到线下再到线上，线上消费，线下服务，线上核销，例如：美团、饿了么。
+
+### Sentences
+* How many times have you had to start over from scratch? 你有多少次从头开始？
