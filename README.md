@@ -95,6 +95,10 @@
 ### 大数据
 [Note](data/bigdata.md)
 
+### 架构
+[集群环境下日志合并方案](architecture/集群环境下日志合并方案.md)
+[数据中台架构随想](architecture/数据中台架构随想.md)
+
 ### 工具
 [API测试工具](tool/api-testing-tool.md)
 [流量统计，网站分析](tool/common-tools.md)
