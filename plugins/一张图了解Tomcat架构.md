@@ -60,4 +60,6 @@
             ```
 
 
-Standard*XXXX*是组件接口的默认实现类。
+### 知识点总结
+* Standard*XXXX*是组件接口的默认实现类。
+* 如果希望定制Web应用的错误页面，出了按照Servlet规范在web.xml中添加<error-page>外，还可以通过配置Host中的errorReportValueClass属性来实现。前者的作用范围是当前web应用，后者是整个虚拟机。除非错误页面和具体web应用无关，否则不推荐使用此配置方式，当然此配置方式的另一个好处是处于安全的考虑，隐藏了服务器的细节。
