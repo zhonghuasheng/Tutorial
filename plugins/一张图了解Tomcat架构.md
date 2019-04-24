@@ -21,7 +21,7 @@
             ```
         * Container:
             ```
-
+            一个Service只有一个Container
             ```
             * Engine
                 ```
@@ -63,3 +63,13 @@
 ### 知识点总结
 * Standard*XXXX*是组件接口的默认实现类。
 * 如果希望定制Web应用的错误页面，出了按照Servlet规范在web.xml中添加<error-page>外，还可以通过配置Host中的errorReportValueClass属性来实现。前者的作用范围是当前web应用，后者是整个虚拟机。除非错误页面和具体web应用无关，否则不推荐使用此配置方式，当然此配置方式的另一个好处是处于安全的考虑，隐藏了服务器的细节。
+
+### Tomcat Server处理一个HTTP请求过程
+1. 用户点击页面，用户请求（localhost/test/index.jsp）被发送到本机端口的8080，被在那里监听的HTTP/1.1 Connector捕获
+2. Connector把请求（Socket请求）封装成request和response，交给Container
+3. Container中Engine获得请求localhost/test/index.jsp，匹配所有的虚拟主机Host
+4. 名为localhost的Engine获得请求/test/index.jsp，匹配她所拥有的所有Context。Host匹配到路径为/test的Context
+5. /test的Contxt获得/index.jsp，在其所有的wrapper中找到对应的servlet
+6. servlet调用JspServlet中的doGet()或doPost()等执行业务逻辑
+7. Context把执行完之后的HttpServletResponse对象返回给Host
+8. Host返回给Engine，Engine返回给Connector，connector返回给Browser
