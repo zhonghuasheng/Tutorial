@@ -76,8 +76,8 @@
 * [Letcode](letcode/note.md)
 
 ## 服务器
-[Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
-[Tomcat如何处理一个请求](plugins/一张图了解Tomcat架构.md)
+* [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
+* [Tomcat如何处理一个请求](plugins/一张图了解Tomcat架构.md)
 
 ### Linux
 * [Linux常用命令](system/linux.md)
