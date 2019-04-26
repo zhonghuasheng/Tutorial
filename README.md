@@ -79,6 +79,7 @@
 ## 服务器
 * [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
 * [Tomcat如何处理一个请求](plugins/一张图了解Tomcat架构.md)
+* [Tomcat安全配置建议](https://github.com/zhonghuasheng/Tutorial/wiki/Tomcat%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE)
 
 ### Linux
 * [Linux常用命令](system/linux.md)
