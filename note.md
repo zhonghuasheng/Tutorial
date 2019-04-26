@@ -122,3 +122,8 @@ http://www.woshipm.com
 * 商品管理 :  对商品的增删改查以及上下架等其他操作，比较重要。
 
 分表中的热点问题： 指操作集中到某1个或2个表，其他表的操作很好。
+
+Java并发知识
+https://www.jianshu.com/p/509e21a13213
+https://www.jianshu.com/p/6d428439d27f
+https://www.processon.com/view/5ab5a979e4b0a248b0e026b3#map
