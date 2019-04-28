@@ -1,5 +1,14 @@
 # Log
 
+## 目录
+1. 为什么要使用Log
+2. Log的等级
+3. 什么时候打Log
+4. 打什么样的Log
+5. 打Log对系统性能的影响
+6. 一些日志框架
+7. 使用Log时注意事项
+
 ### 为什么要使用Log
 
  *用途主要体现在以下方面:*
@@ -12,6 +21,8 @@
 
 ### Log的等级
 
+#### Java类
+
 |Log4j slf4j |J2SE | Useage|
 |:------------|:------|:------|
 |trace|FINEST|输出更详细的调试信息|
@@ -23,12 +34,19 @@
 |error|SERVER|错误，问题影响到系统的执行，并且系统不能自行恢复到正常状态|
 |fatal||宕机|
 
+#### Tomcat类
+* Tomcat分5类log
+    * localhost, localhost_access, manager, admin, catalina
+* 每一类log分7种等级
+    * SERVER > WARNING > INFO > CONFIG > FINE > FINER > FINEST
+
 ### 什么时候打Log
 
 * 系统安装配置时，对于系统安装的参数，如jdk版本，JVM内存大小，等主要相关信息的输出，这样可以看到安装到了哪一个步骤，模块部署是否正常
 * 异常捕获时输出日志，出错时的参数，特别对于prod上不能debug的环境，有时只能通过日志去猜测可能出错的原因
 * scheduled job，如定时发送邮件等，这些需要在job开始前后都要记录日志，甚至中间的过程都要详细记录
 * 一些敏感操作，如delete，这个时候需要记录who when delete what, pre value, current value
+* 关键步骤需要打log，比如服务模块的启动
 
 ### 打什么样的Log
 
@@ -39,21 +57,23 @@
 ### 打Log对系统性能的影响
 
 * 获取logger实例的开销
-
-* 写文件IO开销
+* 写文件IO开销（禁掉Tomcat中的部分日志，如localhost，manager， admin等）
 
 
 ### 一些日志框架
+* Apache Commons Logging
+    * 提供接口而非实现，通常配合着log4j来使用。
+* Log4j / Log4j2
+* LogBack(Log4j的改良版)
+
 
 ### 使用Log时注意事项
+1. 正确的理解日志的输出级别
+2. 正确的书写log的输出内容
+3. 日志信息应该是简介且可描述的（建议使用自定义异常）
+4. 正确的使用输出的模式
+5. 尽量使用slf4j或者commons-logging等抽象日志框架，而不是具体的logging(jdk自带)、log4j、log4j2
 
-http://blog.csdn.net/xiangnideshen/article/details/45894631
-http://blog.chinaunix.net/uid-20196318-id-3611197.html
-
-* foreach语句是java5的新特征之一，在遍历数组、集合方面，foreach为开发人员提供了极大的方便。
-* foreach语句是for语句的特殊简化版本，但是foreach语句并不能完全取代for语句，然而，任何的foreach语句都可以改写为for语句版本。
-* foreach提高了代码的可读性和安全性（不用怕数组越界）
-* foreach的缺点是丢失了索引信息
 
 ### ELK
 ELK是三款软件的组合。是一整套完整的解决方案。分别是由Logstash（收集+分析）、ElasticSearch（搜索+存储）、Kibana（可视化展示）三款软件。ELK主要是为了在海量的日志系统里面实现分布式日志数据集中式管理和查询，便于监控以及排查故障。
