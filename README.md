@@ -1,7 +1,7 @@
 <h2 align="center">声明</h2>
-<h3 align="center">该文档为本人工作、学习的总结，有些解决方案不一定适合所有情况，取者自思。</h3>
-  <h4 align="center">扫描微信公众号可阅读更多文章</h4>
-  <span align="center"><img src="qrcode_for_gh_cbc9fa7b557c_258.jpg"/></span>
+<h4 align="center">该文档为本人工作、学习的总结，有些解决方案不一定适合所有情况，取者自思。</h4>
+<h4 align="center">扫描微信公众号可阅读更多文章</h4>
+<p align="center"><img src="qrcode_for_gh_cbc9fa7b557c_258.jpg"/></p>
 
 
 <center>
