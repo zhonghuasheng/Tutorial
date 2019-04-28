@@ -52,6 +52,7 @@
 
 ### 日志
 * [为什么使用log](architecture/log-note.md)
+* [深入理解JAVA日志基础](https://github.com/zhonghuasheng/Tutorial/wiki/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JAVA%E6%97%A5%E5%BF%97%E5%9F%BA%E7%A1%80)
 * [如何解决Apache Server中Catalina.out文件过大的问题 - Cronolog](tool/cronolog.md)
 
 ## 数据库
