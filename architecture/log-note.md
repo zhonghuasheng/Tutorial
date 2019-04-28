@@ -23,6 +23,8 @@
 
 #### Java类
 
+![Java日志结构](img/java-log-architecture.png)
+
 |Log4j slf4j |J2SE | Useage|
 |:------------|:------|:------|
 |trace|FINEST|输出更详细的调试信息|
@@ -62,9 +64,10 @@
 
 ### 一些日志框架
 * Apache Commons Logging
-    * 提供接口而非实现，通常配合着log4j来使用。
+    * 提供接口而非实现，通常配合着log4j来使用
 * Log4j / Log4j2
 * LogBack(Log4j的改良版)
+* Tinylog 精简版日志框架，运行特别快，适合小项目
 
 
 ### 使用Log时注意事项
@@ -126,3 +129,5 @@ output {
         hosts => ["xxx:9200"]
     }
 }
+
+http://www.importnew.com/16331.html
