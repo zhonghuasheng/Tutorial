@@ -30,6 +30,8 @@ Oops:哎呀
 LOL：开怀大笑
 Simple Storage Service S3 简单存储服务
 Elastic Compute Cloud EC2 弹性计算云
+DOS： 拒绝服务攻击，利用合理的服务请求占用过多的服务资源，从而使合法用户无法得到服务的响应的行为，这就是DOS攻击。信息安全三要素-保密性、完整性和可用性。DOS针对的目标采用的使可用性攻击。
+DDos: Distributd Denial of Service 分布式拒绝服务，是指攻击者利用大量的“肉鸡”，对攻击目标发动大量的正常或非正常请求，耗尽目标主机资源或者网络资源，从而使被攻击的主机不能为正常的用户提供服务。
 Martin Fowler Microservices微服务之父 马丁.福勒 Thoughtworks首席科学家
 Playload: FormData和Payload是浏览器传输给接口的两种格式，这两种方式浏览器是通过Content-Type来进行区分的(了解Content-Type)，如果是 application/x-www-form-urlencoded的话，则为formdata方式，如果是application/json或multipart/form-data的话，则为 Request Payload的方式。
 delivery 交付
