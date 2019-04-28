@@ -28,6 +28,8 @@ failover机制又称失效转移或故障切换，指系统中的某一项设备
 failback机制又称自动回复，是指主系统或服务因升级而暂时不可用，现有服务需要转义到备用系统，待主系统升级后切换服务至主系统
 Oops:哎呀
 LOL：开怀大笑
+Simple Storage Service S3 简单存储服务
+Elastic Compute Cloud EC2 弹性计算云
 Martin Fowler Microservices微服务之父 马丁.福勒 Thoughtworks首席科学家
 Playload: FormData和Payload是浏览器传输给接口的两种格式，这两种方式浏览器是通过Content-Type来进行区分的(了解Content-Type)，如果是 application/x-www-form-urlencoded的话，则为formdata方式，如果是application/json或multipart/form-data的话，则为 Request Payload的方式。
 delivery 交付
