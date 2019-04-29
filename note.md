@@ -127,7 +127,7 @@ Java并发知识
 https://www.jianshu.com/p/509e21a13213
 https://www.jianshu.com/p/6d428439d27f
 https://www.processon.com/view/5ab5a979e4b0a248b0e026b3#map
-
+s
 http://blog.csdn.net/xiangnideshen/article/details/45894631
 http://blog.chinaunix.net/uid-20196318-id-3611197.html
 
@@ -135,3 +135,7 @@ http://blog.chinaunix.net/uid-20196318-id-3611197.html
 * foreach语句是for语句的特殊简化版本，但是foreach语句并不能完全取代for语句，然而，任何的foreach语句都可以改写为for语句版本。
 * foreach提高了代码的可读性和安全性（不用怕数组越界）
 * foreach的缺点是丢失了索引信息
+
+https://www.cnblogs.com/tuyile006/p/5366886.html
+https://mp.weixin.qq.com/s/i2_c4A0146B7Ev8QnofbfQ
+https://mp.weixin.qq.com/s/fcFAuTK7-oS49aKs2H6VYg
