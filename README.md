@@ -18,8 +18,8 @@
 ## Java
 
 ### Java基础
-* <a href="java/basic/java-basic.md" target="_blank">Java笔记</a>
-* <a href="https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98" target="_blank">Java基础面试题</a>
+<a href="java/basic/java-basic.md" target="_blank">Java笔记</a>
+<a href="https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98" target="_blank">Java基础面试题</a>
 * <a href="https://github.com/zhonghuasheng/Tutorial/wiki/JAVA8%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E5%B8%A6Permanent-Generation" target="_blank">JAVA8+版本移除了永久带Permanent Generation</a>
 
 ### Java Core
