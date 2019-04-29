@@ -32,6 +32,7 @@
 ## Spring大家族
 
 ### Spring
+* [为什么要有Spring](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2)
 * [Spring笔记](spring/spring.md)
 
 ### Spring Boot
