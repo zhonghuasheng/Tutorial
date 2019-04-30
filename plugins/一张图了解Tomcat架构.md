@@ -73,3 +73,5 @@
 6. servlet调用JspServlet中的doGet()或doPost()等执行业务逻辑
 7. Context把执行完之后的HttpServletResponse对象返回给Host
 8. Host返回给Engine，Engine返回给Connector，connector返回给Browser
+
+不错的文章： http://note.youdao.com/noteshare?id=a9d957049757af03d2823a22daf71169
