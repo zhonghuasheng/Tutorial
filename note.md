@@ -139,3 +139,5 @@ http://blog.chinaunix.net/uid-20196318-id-3611197.html
 https://www.cnblogs.com/tuyile006/p/5366886.html
 https://mp.weixin.qq.com/s/i2_c4A0146B7Ev8QnofbfQ
 https://mp.weixin.qq.com/s/fcFAuTK7-oS49aKs2H6VYg
+JDK动态代理 CGLib动态代理（采用底层的字节码技术）
+Spring AOP用到了动态代理，Spring事务管理用到了动态代理，MyBatis数据库连接池用到了动态代理，MyBatis创建Mapper用到了动态代理

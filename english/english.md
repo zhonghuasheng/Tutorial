@@ -37,6 +37,9 @@ Playload: FormData和Payload是浏览器传输给接口的两种格式，这两�
 delivery 交付
 collaboration 协作
 refactoring 重构
+IOC Inversion of Control  控制反转
+DI Dependency Injection 依赖注入
+AOP Aspect Oriented Programming 面向切面编程
 This approach(方式，途径) makes it easier to re-use（重用） the component somewhere else and deliver（交互） the component's intended（期望的） appearance even if the global styles are different.
 
 The best way to build a habit is to start small.

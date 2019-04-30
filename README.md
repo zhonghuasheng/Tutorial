@@ -33,7 +33,8 @@
 ## Spring大家族
 
 ### Spring
-* [为什么要有Spring](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2)
+* [为什么要有Spring 这里主要是引入Spring IOC](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2)
+* [为什么要有Spring AOP](http://note.youdao.com/noteshare?id=21f2b64abb67a24ad45baca5456648a5)
 * [Spring笔记](spring/spring.md)
 
 ### Spring Boot
