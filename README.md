@@ -19,7 +19,7 @@
 
 ### Java基础
 * [Java笔记](java/basic/java-basic.md)
-* [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98){:target="_blank"}
+* [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98)
 * [JAVA8+版本移除了永久带Permanent Generation](https://github.com/zhonghuasheng/Tutorial/wiki/JAVA8%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E5%B8%A6Permanent-Generation)
 
 
@@ -35,6 +35,7 @@
 ### Spring
 * [为什么要有Spring 这里主要是引入Spring IOC](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2)
 * [为什么要有Spring AOP](http://note.youdao.com/noteshare?id=21f2b64abb67a24ad45baca5456648a5)
+* [Spring历史版本以及现在的帝国](http://note.youdao.com/noteshare?id=80509c0296c54ccb86c1848b95c9c530)
 * [Spring笔记](spring/spring.md)
 
 ### Spring Boot
