@@ -86,7 +86,10 @@
 ### 设计模式
 
 #### 创建型
-* [单例模式](https://github.com/zhonghuasheng/DesignPattern/wiki/%E5%88%9B%E5%BB%BA%E5%9E%8B---%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-Singleton-Pattern)
+* [单例模式 Singleton Pattern](https://github.com/zhonghuasheng/DesignPattern/wiki/%E5%88%9B%E5%BB%BA%E5%9E%8B---%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-Singleton-Pattern)
+
+#### 结构型
+* [代理模式 Proixy Pattern](https://github.com/zhonghuasheng/DesignPattern/wiki/%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F-Proxy-Design-Pattern)
 
 ## 算法
 * [Letcode](letcode/note.md)
