@@ -110,6 +110,7 @@
 * [域名](network/notes/second-level-domain.md)
 * [从HTTP到HTTPS到HSTS](network/notes/HTTP_HTTPS_SSL.md)
 * [DOS & DDOS的攻与防](https://github.com/zhonghuasheng/Tutorial/wiki/DOS-&-DDOS%E7%9A%84%E6%94%BB%E4%B8%8E%E9%98%B2)
+* [为什么是3次握手4次挥手](https://github.com/zhonghuasheng/Tutorial/issues/21)
 * [从浏览器输入URL到页面渲染都发生了什么 - 结合Tomcat架构解析](http://note.youdao.com/noteshare?id=cca91d065dc509bae387a16925efa497)
 
 
