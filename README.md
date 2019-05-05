@@ -63,6 +63,7 @@
 * [为什么使用log](architecture/log-note.md)
 * [深入理解JAVA日志基础](https://github.com/zhonghuasheng/Tutorial/wiki/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JAVA%E6%97%A5%E5%BF%97%E5%9F%BA%E7%A1%80)
 * [如何解决Apache Server中Catalina.out文件过大的问题 - Cronolog](tool/cronolog.md)
+* [通过查看access日志来了解系统的访问情况](shell/linux命令在tomcat日志中的应用.md)
 
 ## 数据库
 * [分库分表 如何做到永不迁移数据和避免热点](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8-%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E6%B0%B8%E4%B8%8D%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%92%8C%E9%81%BF%E5%85%8D%E7%83%AD%E7%82%B9)
@@ -99,6 +100,7 @@
 * [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
 * [Tomcat如何处理一个请求](plugins/一张图了解Tomcat架构.md)
 * [Tomcat安全配置建议](https://github.com/zhonghuasheng/Tutorial/wiki/Tomcat%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE)
+* [Tomcat Access日志分析](shell/linux命令在tomcat日志中的应用.md)
 
 ### Linux
 * [Linux常用命令](system/linux.md)
