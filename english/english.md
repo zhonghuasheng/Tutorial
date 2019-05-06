@@ -41,6 +41,7 @@ IOC Inversion of Control  控制反转
 DI Dependency Injection 依赖注入
 AOP Aspect Oriented Programming 面向切面编程
 This approach(方式，途径) makes it easier to re-use（重用） the component somewhere else and deliver（交互） the component's intended（期望的） appearance even if the global styles are different.
+OOP Object Oriented Programming 面向对象编程
 
 The best way to build a habit is to start small.
 Life turns out to be better if you think from other's perspective.
