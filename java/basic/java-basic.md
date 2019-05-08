@@ -602,6 +602,13 @@ System.out.println(InterfaceExample.x);
 - [深入理解 abstract class 和 interface](https://www.ibm.com/developerworks/cn/java/l-javainterface-abstract/)
 - [When to Use Abstract Class and Interface](https://dzone.com/articles/when-to-use-abstract-class-and-intreface)
 
+### Java中还有一个叫标记接口（接口中没有任何方法，如Cloneable, RandomAccess, Serializable）
+标记接口（Marker）：这就说明了 RandomAccess 为空的原因，这个接口的功能仅仅起到标记的作用。
+这不是与序列化接口 Serializable 差不多吗？ 只要你认真观察， 其实不只这一个标记接口， 实际上 ArrayList 还实现了另外两个这样的空接口：
+Cloneable 接口 ：实现了 Cloneable 接口，以指示 Object.clone() 方法可以合法地对该类实例进行按字段复制。 如果在没有实现 Cloneable 接口的实例上调用 Object 的 clone 方法，则会导致抛出 CloneNotSupportedException 异常。
+Serializable 接口： 类通过实现 java.io.Serializable 接口以启用其序列化功能。未实现此接口的类将无法使其任何状态序列化或反序列化。
+
+
 
 ## super
 

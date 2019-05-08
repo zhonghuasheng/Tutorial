@@ -115,7 +115,9 @@ List list = Arrays.asList(1, 2, 3);
 
 ### 1. 概览
 
-因为 ArrayList 是基于数组实现的，所以支持快速随机访问。RandomAccess 接口标识着该类支持快速随机访问。
+因为 ArrayList 是基于数组实现的，所以支持快速随机访问(可以使用下标来访问，随机指的是下标是随机的 get(int index))。RandomAccess 接口标识着该类支持快速随机访问。
+
+ArrayList类中存在两个私有成员（当然不仅仅只有两个），elementData是一个Object类型的数组，用来保存元素；size表示ArrayList中实际的元素数目（所以size()方法返回的是实际元素的数目）。
 
 ```java
 public class ArrayList<E> extends AbstractList<E>
@@ -126,6 +128,10 @@ public class ArrayList<E> extends AbstractList<E>
 
 ```java
 private static final int DEFAULT_CAPACITY = 10;
+
+public ArrayList() {
+    this(10);
+}
 ```
 
 <div align="center"> <img src="pics/52a7744f-5bce-4ff3-a6f0-8449334d9f3d.png" width="400px"> </div><br>
@@ -169,6 +175,9 @@ private void grow(int minCapacity) {
     elementData = Arrays.copyOf(elementData, newCapacity);
 }
 ```
+
+看了这几段代码，ensureCapacity(minCapacity)的作用就显而易见了，就是增加数组列表的容量，原理很简单，首先判断该参数是否大于0并且是否大于当前容量，然后就到了grow方法，其他的语句先别管，看最后一句，elementData = Arrays.copyOf(elementData, newCapacity); 这条语句先按指定参数创建一个更大的数组，然后把原数组的元素一个个拷贝到大数组中，最后将elementData 的引用指向这个大数组。这样，就增大了数组列表的容量，而小数组也会被gc回收。所以数据量很大的时候还是建议初始化的时候就指定容量，提高效率
+
 
 ### 3. 删除元素
 
@@ -545,7 +554,7 @@ private V putForNullKey(V value) {
 ```java
 void addEntry(int hash, K key, V value, int bucketIndex) {
     if ((size >= threshold) && (null != table[bucketIndex])) {
-        resize(2 * table.length);
+        resize(2 * table.length); // resize的时候double size
         hash = (null != key) ? hash(key) : 0;
         bucketIndex = indexFor(hash, table.length);
     }
@@ -774,7 +783,7 @@ static final int tableSizeFor(int cap) {
 ### 9. 与 HashTable 的比较
 
 - HashTable 使用 synchronized 来进行同步。
-- HashMap 可以插入键为 null 的 Entry。
+- HashMap 可以插入键为 null 的 Entry，HashTable不可以。
 - HashMap 的迭代器是 fail-fast 迭代器。
 - HashMap 不能保证随着时间的推移 Map 中的元素次序是不变的。
 
