@@ -12,6 +12,14 @@
 
 </center>
 
+<h2 align="center">技术栈</h2>
+
+<center>
+
+![](5c9867cde4b0afc7441ea764.png)
+
+</center>
+
 ## 英语
 * [计算机行业常用英语积累](english/english.md)
 
