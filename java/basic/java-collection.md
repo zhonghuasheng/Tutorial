@@ -2,8 +2,10 @@ https://www.w3resource.com/java-tutorial/java-collections.php
 
 <!-- GFM-TOC -->
 * [一、概览](#一概览)
-    * [Collection](#collection)
-    * [Map](#map)
+    * [Collection框架](#collection)
+    * [Map框架](#map)
+    * [Concurrent框架](#concurrent)
+* []
 * [二、容器中的设计模式](#二容器中的设计模式)
     * [迭代器模式](#迭代器模式)
     * [适配器模式](#适配器模式)
@@ -19,10 +21,72 @@ https://www.w3resource.com/java-tutorial/java-collections.php
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
-
+# Definationis
+* Iterator: public interface Iterator<E>
+* Iterable: public interface Iterable<T>
+* Collection: public interface Collection<E> extends Iterable<E>
+    * List:
+        * ArrayList
+        * LinkedList
+        * Stack
+        * Vector
+    * Set:
+        * HashSet
+        * LinkedHashSet
+        * TreeSet
+    * Queue:
+        * PriorityQueue
+        * ArrayDeque
+        * LinkedList(Deque)
+* Map
+    * HashMap
+    * HashLinkedMap
+    * HashTable
+    * TreeMap
+https://www.cnblogs.com/skywang12345/p/3308498.html
+https://www.journaldev.com/1260/collections-in-java-tutorial
+https://www.cnblogs.com/skywang12345/p/3308762.html
+https://www.cnblogs.com/skywang12345/tag/%E9%9B%86%E5%90%88/
 # 一、概览
 
-容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。
+Java的集合类位于java.util.*包下，大体分为2类，Collection和Map，另外就是2个工具类。Concurrent是jdk1.5引入的（在这之前java语言内置对多线程的支持比较有限），主要代码由Doug Lea完成。
+
+* Collection包含3个分支
+    ```
+    AbstractCollection是抽象类，实现了部分Collection中的API，如contains，toArray, remove, toString等方法。
+    ```
+    * Queue
+        ```
+        队列是一种特殊的线性表，允许在表的头部进行删除操作，在表的尾部进行插入操作。有2个继承接口，BlockingQueue(阻塞队列)和Deque(双向队列)。AbstractQueue是抽象类，实现了Queue中的大部分API，常见实现类有LinkedQueue。
+        ```
+    * List
+        ```
+        List是一个有序的队列，每个元素都有它的索引，第一个元素的索引值为0。AbstractList是抽象类，实现了List中的大部分API，常见实现类有LinkedList, ArrayList, Vector, Stack。
+        ```
+    * Set
+        ```
+        Set是一个不允许有重复元素的集合。 AbstractSet是抽象类，实现了Set中的大部分API，常见的实现类有HashSet, TreeSet。
+        ```
+* Map包含1个分支
+    ```
+    Map是一个映射接口，即key-value的键值对。AbstractMap是抽象类，实现了Map中的大部分API，HashMap, TreeMap, WeakHashMap是其实现类。
+    ```
+* Concurrent主要有3个package组成
+    * java.util.concurrent
+        ```
+        提供大部分关于并发的接口和类，如BlockingQueue, ConcurrentHashMap, ExecutorService等
+        ```
+    * java.util.concurrent.atomic
+        ```
+        提供所有的原子类操作，如AtomicInteger, AtomicLong等
+        ```
+    * java.util.concurrent.locks
+        ```
+        提供锁相关的类，如Lock, ReentrantLock, ReadWriteLock, Confition等
+        ```
+* 工具类
+    * Arrays: 操作数组
+    * Collections: 操作集合
 
 ## Collection
 
@@ -1119,7 +1183,7 @@ public final class ConcurrentCache<K, V> {
 - [HashMap 相关面试题及其解答](https://www.jianshu.com/p/75adf47958a7)
 - [Java 集合细节（二）：asList 的缺陷](http://wiki.jikexueyuan.com/project/java-enhancement/java-thirtysix.html)
 - [Java Collection Framework – The LinkedList Class](http://javaconceptoftheday.com/java-collection-framework-linkedlist-class/)
-
+- [Java Concurrent模块](https://blog.csdn.net/xkzju2010/article/details/52023539)
 
 
 
