@@ -152,12 +152,14 @@ abstract V                    remove(Object key)
 abstract int                  size()
 abstract Collection<V>        values()
 ```
-
+<p>
 Map 是一个键值对(key-value)映射接口。Map映射中不能包含重复的键；每个键最多只能映射到一个值。
-Map 接口提供三种collection 视图，允许以键集(keySet())、值集(values())或键-值(entrySet())映射关系集的形式查看某个映射的内容。[MapTest1.java]()
+Map 接口提供三种collection 视图，允许以键集(keySet())、值集(values())或键-值(entrySet())映射关系集的形式查看某个映射的内容。
 Map 映射顺序。有些实现类，可以明确保证其顺序，如 TreeMap；另一些映射实现则不保证顺序，如 HashMap 类。
 Map 的实现类应该提供2个“标准的”构造方法：第一个，void（无参数）构造方法，用于创建空映射；第二个，带有单个 Map 类型参数的构造方法，用于创建一个与其参数具有相同键-值映射关系的新映射。实际上，后一个构造方法允许用户复制任意映射，生成所需类的一个等价映射。尽管无法强制执行此建议（因为接口不能包含构造方法），但是 JDK 中所有通用的映射实现都遵从它。
+</p>
 
+[Map的三种Collection视图例子 MapTest01.java](https://github.com/zhonghuasheng/JAVA/blob/master/basic/src/main/java/com/zhonghuasheng/basic/util/MapTest01.java)
 
 ## Concurrent包下的集合概述
 
