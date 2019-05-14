@@ -1,8 +1,5 @@
 <h2 align="center">声明</h2>
-<h4 align="center">该文档为本人工作、学习的总结，有些解决方案不一定适合所有情况，取者自思。</h4>
-<h4 align="center">扫描微信公众号可阅读更多文章</h4>
-<p align="center"><img src="qrcode_for_gh_cbc9fa7b557c_258.jpg"/></p>
-
+<h4 align="center">该文档为本人工作、学习的总结，有些解决方案不一定适合所有情况，取者自思。另外，笔记都是闲暇之余总结，很多没有成体系，所以暂时没有发布，今年会陆陆续续发出来。我写了一个自动commit的脚本，国内国外都会定时同步合并我最新的笔记并发布到Tutorial这个repository。Wiki中也有一些详细的文章，同时Issue中记录的为一些面试题，喜欢的话可以Star下，也可以Fork走作为自己笔记的一部分，总之，生活不易，希望对大家学习有帮助。祝好！！！</h4>
 
 <center>
 
