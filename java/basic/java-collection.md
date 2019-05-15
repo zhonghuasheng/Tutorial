@@ -26,7 +26,7 @@
                 * [LinkedList使用](#LinkedList使用)
     * [Map集合下常用实现类详解](#Map集合下常用实现类详解)
         * [AbstractMap接口源码解析](#AbstractMap接口源码解析)
-            * [HashMap源码解析和使用](#HashMap源码解析和使用)   
+            * [HashMap源码解析和使用](#HashMap源码解析和使用)
             * [WeakHashMap源码解析和使用](#WeakHashMap源码解析和使用)
             * [TreeHashMap源码解析和使用](#TreeHashMap源码解析和使用)
         * [HashTable源码解析和使用](#HashTable源码解析和使用)
@@ -132,7 +132,7 @@ abstract Object[]        toArray()
 2. 源码阅读
 `接口定义`
 ```java
-public interface Map<K,V> 
+public interface Map<K,V>
 ```
 
 `常用方法`

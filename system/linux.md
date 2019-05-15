@@ -1,17 +1,10 @@
-sudo sh -c "echo '' > a.txt"
-
-mv folderAName newFolderName
-
-ln -s sourcefile targetfile
-> ln -s /xxx/xx/eclipse eclipseLink
-
-wget -e use_proxy=yes -e http_proxy=x.x.x.x:1080
-
-### 设置ulimit
-sudo sh -c "ulimit -n 65535 && exec su userA"
-
+* 清空文件 sudo sh -c "echo '' > a.txt"
+* 重命名 mv folderAName newFolderName
+* 创建软链 ln -s sourcefile targetfile
+    > ln -s /xxx/xx/eclipse eclipseLink
+* 使用代理下载文件 wget -e use_proxy=yes -e http_proxy=x.x.x.x:1080
+* 设置ulimit sudo sh -c "ulimit -n 65535 && exec su userA"
 ## 网络篇
-
 ### 查看所有开放的端口
 * 可以通过`netstat -anp`来查看哪些端口被打开
     * -a 显示所有
@@ -40,11 +33,14 @@ sudo sh -c "ulimit -n 65535 && exec su userA"
 ### Linux邮件服务器：Postfix
 http://cn.linux.vbird.org/linux_server/0380mail.php
 
-### Linux输出重定向
-linux 环境中支持输入输出重定向，用符号<和>来表示。
-0、1和2分别表示标准输入、标准输出和标准错误信息输出，
-将一个脚本的执行过程及执行结果打印到日志的常用命令：
-./myscript.sh 2>&1 | tee mylog.log
-可以用来指定需要重定向的标准输入或输出，比如 2>a.txt 表示将错误信息输出到文件a.txt中。
-同时，还可以在这三个标准输入输出之间实现重定向，比如将错误信息重定向到标准输出，可以用 2>&1来实现。
-Linux下还有一个特殊的文件/dev/null，它就像一个无底洞，所有重定向到它的信息都会消失得无影无踪。这一点非常有用，当我们不需要回显程序的所有信息时，就可以将输出重定向到/dev/null。
+* Linux输出重定向
+    ```
+    linux 环境中支持输入输出重定向，用符号<和>来表示。
+    0、1和2分别表示标准输入、标准输出和标准错误信息输出，
+    将一个脚本的执行过程及执行结果打印到日志的常用命令：
+    ./myscript.sh 2>&1 | tee mylog.log
+    可以用来指定需要重定向的标准输入或输出，比如 2>a.txt 表示将错误信息输出到文件a.txt中。
+    同时，还可以在这三个标准输入输出之间实现重定向，比如将错误信息重定向到标准输出，可以用 2>&1来实现。
+    Linux下还有一个特殊的文件/dev/null，它就像一个无底洞，所有重定向到它的信息都会消失得无影无踪。这一点非常有用，当我们不需要回显程序的所有信息时，就可以将输出重定向到/dev/null。
+    ```
+* 查看环境变量 env | grep -E 'M2|MAVEN'
