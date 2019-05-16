@@ -359,7 +359,51 @@ LinkedList中使用Node对象来存储数据
 
 `常用方法`
 ```java
+boolean add(E element) // offer属于 offer in interface Deque<E>, add 属于 add in interface Collection<E>
+void(int index, E element) // 判断index==size，=就linkLast, or linkBefore
+void addFirst(E element)
+void addLast(E element)
+void clear() // 清空，注意GC
+Object clone() // 浅拷贝 shallow copy
+Iterator<E> descendingIterator() // 倒着输出
+E element() // 获取第一个元素
+E get(int index)
+E getFirst();
+E getLast();
+int indexOf(Object object)
+int lastIndexOf(Object object)
+ListIterator<E> listIterator(int index)
+boolean offer(E element) // offer属于 offer in interface Deque<E>, add 属于 add in interface Collection<E>
+boolean offerFirst(E element)
+boolean offerLast(E element)
+E peek() // 返回链表中的第一个元素，并且不会移除
+E peekFirst() // 和peek没啥区别
+E peekLast()
+E poll() // 返回链表中的第一个元素，并且会移除掉
+E pollFirst() // 链表为空时会返回null
+E pollLast()
+E pop() // 链表为空时会报NoSuchElementException，这就是区别
+void push(E e) // 添加到链表的第一个元素
+E remove（） // 删除第一个元素
+E remove
+E set(int index, E element) // 替换指定位置的元素
+```
 
+LinkedList可以作为FIFO的队列，使用如下方法：
+```java
+add(e)
+offer(e)
+remove()
+poll()
+element()
+peek()
+```
+
+LinkedList也可以作为FILO的栈，使用如下方法：
+```java
+push(e)
+pop()
+peek()
 ```
 
 `源码解析`
@@ -403,11 +447,65 @@ void linkLast(E e) {
     size++;
     modCount++;
 }
+...
 ```
 
 ### Set接口源码解析
+
+`总结`
+```
+Set是继承自Collection的接口，是一个不允许有重复元素的结合。
+AbstractSet是一个抽象类，继承自AbstractCollection，AbstractCollection实现了Set中的绝大部分函数
+HashSet和TreeSet是Set的两个实现类
+    HashSet依赖HashMap，它实际上是通过HashMap实现的，HashSet中的元素是无序的
+    TreeSet依赖TreeMap，它实际上是通过TreeMap实现的，TreeSet中的元素是有序的
+```
+
 #### AbstractSet源码解析
+
+AbstractSet没有对Set做多少的实现，其继承了AbstractCollection
+
+`源码解析`
+```java
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+
+        if (!(o instanceof Set))
+            return false;
+        Collection c = (Collection) o;
+        if (c.size() != size())
+            return false;
+        try {
+            return containsAll(c);
+        } catch (ClassCastException unused)   {
+            return false;
+        } catch (NullPointerException unused) {
+            return false;
+        }
+    }
+```
+
 ##### HashSet源码解析和使用
+`总结`
+```
+HashSet是一个没有重复元素的集合，它是由HashMap实现的（HashMap中key不能重复），不保证元素的顺序，而且HashSet允许使用null元素。
+HashSet是非同步的，因此如果多线程同时访问一个HashSet，而其中至少有一个线程修改了该HashSet夺得话，那么需要保持外部同步，通常可以对该Set的对象封装来完成同步操作，也可以使用Collections.synchronizedSet方法来完成。
+HashSet是通过Iterator迭代遍历的
+```
+
+`常用方法`
+```java
+HashSet()
+HashSet(int initialCapacity)
+HashSet(int initialCapacity, float loadFactor)
+HashSet(int initialCapacity, float loadFactor, boolean dummy)
+HashSet(Collection<? extends E> c)
+boolean add(E)
+void clear()
+Object clone()
+```
+
 ##### TreeSet源码解析和使用
 ### Queue接口源码解析
 ### Deque接口源码解析
