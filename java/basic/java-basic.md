@@ -1312,6 +1312,12 @@ public InitialOrderTest() {
 - 子类（实例变量、普通语句块）
 - 子类（构造函数）
 
+## transient
+被transient关键字修饰的变量不参与序列化，如ArrayList中的 elementData变量
+```java
+private transient Object[] elementData;
+```
+
 
 # 七、反射
 

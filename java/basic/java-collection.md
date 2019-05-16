@@ -82,46 +82,6 @@ Java的集合类位于java.util.*包下，大体分为2类，Collection和Map，
         Set是一个不允许有重复元素的集合。 AbstractSet是抽象类，实现了Set中的大部分API，常见的实现类有HashSet, TreeSet。
         ```
 
-2. 源码阅读
-
-`接口定义`：
-```java
-/* 说明：
-Collection集合用于存Object的，不支持存储基础数据类型，这是由Collection接口的定义决定的： Collection<E>
-这样写会报错： Syntax error, insert "Dimensions" to complete ReferenceType
-List<int> ints = new ArrayList<int>();
-*/
-public interface Collection<E> extends Iterable<E>
-
-```
-
-`常用方法`
-```java
-abstract boolean         add(E object)
-// addAll参数为E或E的子类
-abstract boolean         addAll(Collection<? extends E> collection)
-abstract void            clear()
-abstract boolean         contains(Object object)
-abstract boolean         containsAll(Collection<?> collection)
-abstract boolean         equals(Object object)
-abstract int             hashCode()
-abstract boolean         isEmpty()
-abstract Iterator<E>     iterator()
-abstract boolean         remove(Object object)
-abstract boolean         removeAll(Collection<?> collection)
-abstract boolean         retainAll(Collection<?> collection)
-/*
-* Returns the number of elements in this collection.  If this collection
-* contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
-* <tt>Integer.MAX_VALUE</tt>.
-* Integer.MIN_VALUE是-（2的31次方），Integer.MAX_VALUE是2的31次方减1
-*/
-abstract int             size()
-abstract <T> T[]         toArray(T[] array)
-abstract Object[]        toArray()
-```
-
-
 ## Map集合概述
 1. 概述
 * Map包含1个分支
@@ -181,15 +141,270 @@ Map 的实现类应该提供2个“标准的”构造方法：第一个，void�
 # 2.Java集合详解
 ## Collection集合下常用实现类详解
 ### Iterator接口源码解析
+`总结`
+```
+iterator.remove()方法必须要在调用了next()方法之后，否则会报IllegalStateException。
+if the next method has not yet been called, or the remove method has already been called after the last call to the next method
+```
+
+`常用方法`
+```java
+boolean hasNext()
+E next()
+void remove()
+```
+
 ### Collection接口源码解析
+
+`接口定义`：
+```java
+/* 说明：
+Collection集合用于存Object的，不支持存储基础数据类型，这是由Collection接口的定义决定的： Collection<E>
+这样写会报错： Syntax error, insert "Dimensions" to complete ReferenceType
+List<int> ints = new ArrayList<int>();
+*/
+public interface Collection<E> extends Iterable<E>
+
+```
+
+`常用方法`
+```java
+abstract boolean         add(E object)
+// addAll参数为E或E的子类
+abstract boolean         addAll(Collection<? extends E> collection)
+abstract void            clear()
+abstract boolean         contains(Object object)
+abstract boolean         containsAll(Collection<?> collection)
+abstract boolean         equals(Object object)
+abstract int             hashCode()
+abstract boolean         isEmpty()
+abstract Iterator<E>     iterator()
+abstract boolean         remove(Object object)
+abstract boolean         removeAll(Collection<?> collection)
+abstract boolean         retainAll(Collection<?> collection)
+/*
+* Returns the number of elements in this collection.  If this collection
+* contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
+* <tt>Integer.MAX_VALUE</tt>.
+* Integer.MIN_VALUE是-（2的31次方），Integer.MAX_VALUE是2的31次方减1
+*/
+abstract int             size()
+abstract <T> T[]         toArray(T[] array)
+abstract Object[]        toArray()
+```
+
 ### List接口源码解析
+`总结`
+```
+List是有序的，支持随机访问（通过索引下标访问）
+List允许重复的值（原因是它的数据存储方式）
+
+```
+
+`常用方法`
+```java
+boolean add(E)
+void add(int, E)
+boolean addAll(int, Collection<? extends E>)
+boolean addAll(Collection<? extends E>)
+void clear()
+boolean contains(Object) //AbstractCollection中通过iterator迭代遍历判断 ArrayList中通过调用indexOf(o) >= 0 来判断是否包含
+boolean containsAll(Collection<?>)
+boolean equals(Object)
+E get(int)
+int hashCode()
+int indexOf(Object)
+boolean isEmpty()
+Iterator<E> iterator()
+int lastIndexOf(Object)
+ListIterator<E> listIterator()
+ListIterator<E> listIterator(int)
+E remove(int)
+boolean remove(Object)
+boolean removeAll(Collection<?>)
+boolean retainAll(Collection<?> a) // b.retainAll(a) 移除b中有而a中没有的所有元素，所以结果是a的子集
+E set(int, E)
+int size()
+List<E> subList(int, int)
+Object[] toArray()
+T[] toArray(T[])
+```
+
+```java
+ListIterator.java
+boolean hasNext()
+boolean hasPrevioud()
+E next()
+E previous()
+int nextIndex()
+int previousIndex()
+```
+
 #### AbstractCollection抽象类源码解析
+`总结`
+```
+AbstractCollection是个抽象类，继承自Collection接口，并实现了其中的方法，同时添加了toString()方法
+```
+`常用方法`
+```java
+private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8; // 减8的原因是某些VMs存储了数据的header
+private static <T> T[] finishToArry(T[] r, Iterator<?> it) // 用于将集合转换为数组
+private static int hugeCapacity(int minCapacity) // 用于finishToArry
+boolean add(E e) // 未实现
+boolean addAll(int index, Collection<? extends E> c) // 未实现
+void clear()
+boolean contains(Object o) // 迭代遍历判断
+boolean containsAll(Collection<?> c) // for循环遍历c，然后通过调用contains判断
+boolean isEmpty() // 通过判断size()==0，size()未实现
+Iterator<E> iterator() // 未实现
+boolean remove(Object o) //迭代器遍历删除
+boolean removeAll(Collection<?> c)
+boolean retainAll(Collection<?> c)
+int size();
+Object[] toArray()
+T[] toArray(T[])
+String toString() // 迭代遍历集合，通过StringBuilder接收组合输出
+```
+
 #### AbstractList源码解析
+`总结`
+```
+AbstractList中有Itr(继承Iterator)和ListItr(继承ListIterator)两个内部类
+在迭代遍历过程中，如果出现对集合的写的行为（list.remove(obj)），会报出ConcurrentModificationException。
+AbstractList中仍然没有实现add方法
+```
+```java
+    // list调用remove方法会导致modCount的值改变
+    private void fastRemove(int index) {
+        modCount++;
+        int numMoved = size - index - 1;
+        if (numMoved > 0)
+            System.arraycopy(elementData, index+1, elementData, index,
+                             numMoved);
+        elementData[--size] = null; // clear to let GC do its work
+    }
+
+    // 通过调用iterator.remove()可以保证不会报ConcurrentModificationException
+    public void remove() {
+    if (lastRet < 0)
+        throw new IllegalStateException();
+    checkForComodification();
+
+    try {
+        AbstractList.this.remove(lastRet);
+        if (lastRet < cursor)
+            cursor--;
+        lastRet = -1;
+        expectedModCount = modCount;
+    } catch (IndexOutOfBoundsException e) {
+        throw new ConcurrentModificationException();
+    }
+```
+
 ##### ArrayList源码解析和使用
+`总结`
+1. ArrayList是一个数据集合，相当于一个动态数组(Object[] elementData)。与Java中的数据相比，它的容量能动态增长，默认长度时10(DEFAULT_CAPACITY)，扩容时新的容量=原始容量 + 原始容量>>1
+2. ArrayList实现了RandomAccess接口（Marker Interface），又由于其数据以数据存储，因此支持快速随机查找，但是修改和删除效率不高
+```java
+// Collections中通过RandomAccess接口判断
+    public static <T>
+    int binarySearch(List<? extends Comparable<? super T>> list, T key) {
+        if (list instanceof RandomAccess || list.size()<BINARYSEARCH_THRESHOLD)
+            return Collections.indexedBinarySearch(list, key);
+        else
+            return Collections.iteratorBinarySearch(list, key);
+    }
+```
+3. ArrayList不是线程安全的，Vertor是线程安全的（其绝大部分方法都加了synchronized关键字），可在多线程下使用CopyOnWriteArryList。
+
 ##### Vector源码解析和使用
+`总结`
+```java
+public class Vector<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+```
+1. Vector是一个矢量队列，支持比本的添加、修改、删除、遍历等功能
+2. Vector实现了RandomAccess接口，即支持随机访问功能（get(int index)）
+3. Vector中的public API都是加了synchronized关键字来保证线程安全
+
 ##### Stack源码解析和使用
+`总结`
+```
+Stack是栈，特性是先进后出(FILO, First In Last Out)
+Stack是继承自Vector，也是通过数据实现的
+```
+
+`常用方法`
+```java
+Object push(Object element) // 把对象压入堆栈
+Object pop() // 移除堆栈顶部对象，并作为此方法的返回值返回该对象
+Object peek() // 查看堆栈顶部的对象，但不从堆栈中移除它
+```
+
 #### AbstractSequentialList抽象类源码解析
+`总结`
+```
+这个抽象类没什么特别
+```
+
 ##### LinkedList源码解析和使用
+`总结`
+```java
+public class LinkedList<E> extends AbstractSequentialList<E> implements List<E>, Deque<E>, Cloneable, Serializable {}
+```
+```
+LinkedList实现了Deque接口，能对它进行双向列表操作，也就是说顺序访问会非常高效，随机访问效率比较低
+LinkedList不是线程安全的，可以通过List list = Collections.synchronizedList(new LinkedList(...))来转换，不过LinkedList的数据类型会丢失
+LinkedList中使用Node对象来存储数据
+```
+
+`常用方法`
+```java
+
+```
+
+`源码解析`
+```java
+    private static class Node<E> {
+        E item;
+        Node<E> next;
+        Node<E> prev;
+
+        Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+```
+LinkedList在内部定义了一个叫做Node类型的静态内部类，Node就是一个节点，链表中的节点，有3个属性。
+
+```java
+// 3个属性
+transient int size = 0; // 集合链表内节点数量
+transient Node<E> first; // 首节点
+transient Node<E> last; // 尾节点
+```
+
+```java
+// Appends the specified element to the end of this list
+public boolean add(E e) {
+    linkLast(e);
+    return true;
+}
+
+void linkLast(E e) {
+    final Node<E> l = last;
+    final Node<E> newNode = new Node<>(l, e, null);
+    last = newNode;
+    if (l == null)
+        first = newNode;
+    else
+        l.next = newNode;
+    size++;
+    modCount++;
+}
+```
+
 ### Set接口源码解析
 #### AbstractSet源码解析
 ##### HashSet源码解析和使用
@@ -215,6 +430,7 @@ Map 的实现类应该提供2个“标准的”构造方法：第一个，void�
 
 # 5.圈重点
 * Collection集合用于存Object的，不支持存储基础数据类型，这是由Collection接口的定义决定的： Collection<E>
+* iterator.remove()方法必须要在调用了next()方法之后，否则会报IllegalStateException
 
 # 参考资料
 * 集合框架图 https://img-blog.csdn.net/20160124221843905

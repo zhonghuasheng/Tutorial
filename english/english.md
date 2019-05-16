@@ -64,3 +64,4 @@
 * O2O：线上到线下再到线上，线上消费，线下服务，线上核销，例如：美团、饿了么。
 * How many times have you had to start over from scratch? 你有多少次从头开始？
 * By and large, 总的来说 = In general
+* reserve 存储

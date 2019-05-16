@@ -7,6 +7,7 @@
 * ctrl + alt +B 查看接口的实现类
 * ctrl + e 查看Recent Files
 * Alt + Ins 实现接口的方法，toString(), 构造函数，重写方法
+* double shift调出Everywhere Search
 
 ### FAQ
 * requested without authorization,  you can copy URL and open it in browser to trust it
