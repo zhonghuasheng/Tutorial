@@ -28,8 +28,8 @@
         * [AbstractMap接口源码解析](#AbstractMap接口源码解析)
             * [HashMap源码解析和使用](#HashMap源码解析和使用)
             * [WeakHashMap源码解析和使用](#WeakHashMap源码解析和使用)
-            * [TreeHashMap源码解析和使用](#TreeHashMap源码解析和使用)
-        * [HashTable源码解析和使用](#HashTable源码解析和使用)
+            * [TreeMap源码解析和使用](#TreeMap源码解析和使用)
+        * [Hashtable源码解析和使用](#Hashtable源码解析和使用)
     * [Concurrent包下常用实现类详解](#Concurrent包下常用实现类详解)
 
 * [3. 集合框架中体现的设计模式和编程规范](#3.集合框架中体现的设计模式和编程规范)
@@ -765,11 +765,39 @@ public interface Queue<E> extends Collection<E> {
 Go to here [LinkedList源码解析和使用](#LinkedList源码解析和使用)
 
 ## Map集合下常用实现类详解
+`总结`
+```
+Map是一个键值对的接口，Map<K, V>
+AbstractMap实现了Map接口，但是几乎没有实现Map中的方法，但是却定义了一些常用的方法
+SortedMap继承自Map接口，SortedMap中的内容是排序了的键值对，排序的方法是通过比较器（Comparator）
+NavigableMap是继承自SortedMap的接口，相对于SortedMap，NavigableMap有一系列的导航方法，如获取>, <, >=, <=的值
+TreeMap继承自AbstractMap，实现了NavigableMap接口，因此，TreeMap是有序的键值对
+HashMap继承自AbstractMap，没有实现SortedMap，因此，HashMap不是有序的键值对。HashMap允许插入key或者value为null的元素
+Hashtable没有继承自AbstractMap，继承的是Dictionary，实现了Map接口，因此，Hashtable是无序的键值对。Hashtable不允许插入key或者value为null的元素，Hashtable的方法加了synchronized关键字，保证了线程的安全。
+WeakhashMap继承自AbstractMap，大致来说它与HashMap的键类型不同，WeakHashMap使用的是“弱键”（内存不足时会被GC收掉）
+```
+`源码分析`
+```java
+void clear();
+boolean containsKey(Object key);
+boolean containsValue(Object value);
+Set<Map.Entry<K, V> entrySet();
+boolean equals(Object o);
+V get(Object obj);
+boolean isEmpty();
+Set<K> keySet(); // 返回key的集合，因为key不重复，所以用Set接收
+V put(K k, V v);
+void putAll(Map<? extends K, ? extends V> m);
+V remove(Object key);
+int size();
+Collections<V> values(); // 返回value的结合，values是重复的
+```
+
 #### AbstractMap接口源码解析
 ##### HashMap源码解析和使用
 ##### WeakHashMap源码解析和使用
-##### TreeHashMap源码解析和使用
-##### HashTable源码解析和使用
+##### TreeMap源码解析和使用
+##### Hashtable源码解析和使用
 ## Concurrent包下常用实现类详解
 
 # 3.集合框架中体现的设计模式和编程规范
