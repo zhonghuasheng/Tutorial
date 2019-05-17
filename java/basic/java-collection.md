@@ -391,12 +391,13 @@ E set(int index, E element) // 替换指定位置的元素
 
 LinkedList可以作为FIFO的队列，使用如下方法：
 ```java
-add(e)
-offer(e)
-remove()
-poll()
-element()
-peek()
+// Queue
+boolean add(e) // add比offer的区别在于add时如果capacity超了，会报错，而offer不会
+boolean offer(e)
+E remove() // 返回队列的第一个元素，并且删除，如果队列为空，报NoSuchElementException
+E poll() // 返回队列的第一个元素，并且删除，如果队列为空，返回null
+E element() // 返回队列的第一个元素，不删除，如果队列为空，报NoSuchElementException
+E peek() // 返回队列的第一个元素，不删除，如果队列为空，返回null
 ```
 
 LinkedList也可以作为FILO的栈，使用如下方法：
@@ -740,8 +741,29 @@ TreeSet实现了NavigableSet接口，因此其支持集合的导航方法，如l
 ```
 
 ### Queue接口源码解析
+
+`源码分析`
+```java
+public interface Queue<E> extends Collection<E> {
+    boolean add(e) // add比offer的区别在于add时如果capacity超了，会报错，而offer不会
+    boolean offer(e)
+    E remove() // 返回队列的第一个元素，并且删除，如果队列为空，报NoSuchElementException
+    E poll() // 返回队列的第一个元素，并且删除，如果队列为空，返回null
+    E element() // 返回队列的第一个元素，不删除，如果队列为空，报NoSuchElementException
+    E peek() // 返回队列的第一个元素，不删除，如果队列为空，返回null
+}
+```
+
 ### Deque接口源码解析
+
+`总结`
+```
+双向队列，继承自Queue接口，同时提供了丰富的操作队列的方法，具体可参考LinkedList源码分析
+```
+
 ##### LinkedList使用
+Go to here [LinkedList源码解析和使用](#LinkedList源码解析和使用)
+
 ## Map集合下常用实现类详解
 #### AbstractMap接口源码解析
 ##### HashMap源码解析和使用
