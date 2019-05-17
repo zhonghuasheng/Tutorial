@@ -504,9 +504,241 @@ HashSet(Collection<? extends E> c)
 boolean add(E)
 void clear()
 Object clone()
+boolean contains(Object object)
+boolean isEmpty()
+Iterator<E> iterator()
+boolean remove(Object object)
+int size()
+```
+
+`源码解析`
+```java
+    private transient HashMap<E,Object> map;
+
+    // Dummy value to associate with an Object in the backing Map
+    private transient HashMap<E,Object> map;
+
+    // new一个HashSet的时候其实是new的HashMap
+    public HashSet() {
+        map = new HashMap<>();
+    }
+
+    /*
+    * Constructs a new set containing the elements in the specified
+    * collection.  The <tt>HashMap</tt> is created with default load factor
+    * (0.75) and an initial capacity sufficient to contain the elements in
+    * the specified collection.
+    *
+    * @param c the collection whose elements are to be placed into this set
+    * @throws NullPointerException if the specified collection is null
+    调用的是Math.max((int) (c.size()/.75f) + 1, 16), 比较(int) (c.size()/.75f) + 1和16的大小
+    选择加载因子为.75是出于效率的考虑（时间和空间成本）
+    如果HashMap的当前size >= threadhold(也就是Math.max((int) (c.size()/.75f) + 1, 16))，那么在添加元素的时候，size是要翻倍的，也就是说HashMap的容量必须是2的指数，具体跟踪put方法
+    */
+    public HashSet(Collection<? extends E> c) {
+        map = new HashMap<>(Math.max((int) (c.size()/.75f) + 1, 16));
+        addAll(c);
+    }
+
+    public V put(K key, V value) {
+        if (table == EMPTY_TABLE) {
+            /*
+            会重新计算capacity int capacity = roundUpToPowerOf2(toSize);
+            roundUpToPowerOf2（toSize）
+            return number >= MAXIMUM_CAPACITY
+                ? MAXIMUM_CAPACITY
+                : (number > 1) ? Integer.highestOneBit((number - 1) << 1) : 1;
+
+            public static int highestOneBit(int i) {
+                // HD, Figure 3-1
+                i |= (i >>  1);
+                i |= (i >>  2);
+                i |= (i >>  4);
+                i |= (i >>  8);
+                i |= (i >> 16);
+                return i - (i >>> 1);
+            }
+            */
+            inflateTable(threshold);
+        }
+        if (key == null)
+            return putForNullKey(value);
+        int hash = hash(key);
+        int i = indexFor(hash, table.length);
+        for (Entry<K,V> e = table[i]; e != null; e = e.next) {
+            Object k;
+            if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+                V oldValue = e.value;
+                e.value = value;
+                e.recordAccess(this);
+                return oldValue;
+            }
+        }
+
+        modCount++;
+        addEntry(hash, key, value, i); // 这里调用addEntry
+        return null;
+    }
+
+    // 迭代遍历的时候遍历的是key
+    public Iterator<E> iterator() {
+        return map.keySet().iterator();
+    }
+
+    // add的时候插入的是key
+    public boolean add(E e) {
+        return map.put(e, PRESENT)==null;
+    }
+
+    /** 浅拷贝
+     * Returns a shallow copy of this <tt>HashSet</tt> instance: the elements
+     * themselves are not cloned.
+     *
+     * @return a shallow copy of this set
+     */
+    public Object clone() {
+        try {
+            HashSet<E> newSet = (HashSet<E>) super.clone();
+            newSet.map = (HashMap<E, Object>) map.clone();
+            return newSet;
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError();
+        }
+    }
+    /**
+     * Save the state of this <tt>HashSet</tt> instance to a stream (that is,
+     * serialize it).
+     *
+     * @serialData The capacity of the backing <tt>HashMap</tt> instance
+     *             (int), and its load factor (float) are emitted, followed by
+     *             the size of the set (the number of elements it contains)
+     *             (int), followed by all of its elements (each an Object) in
+     *             no particular order.
+     */
+    private void writeObject(java.io.ObjectOutputStream s)
+        throws java.io.IOException {
+        // Write out any hidden serialization magic
+        s.defaultWriteObject();
+
+        // Write out HashMap capacity and load factor
+        s.writeInt(map.capacity());
+        s.writeFloat(map.loadFactor());
+
+        // Write out size
+        s.writeInt(map.size());
+
+        // Write out all elements in the proper order.
+        for (E e : map.keySet())
+            s.writeObject(e);
+    }
+
+    /**
+     * Reconstitute the <tt>HashSet</tt> instance from a stream (that is,
+     * deserialize it).
+     */
+    private void readObject(java.io.ObjectInputStream s)
+        throws java.io.IOException, ClassNotFoundException {
+        // Read in any hidden serialization magic
+        s.defaultReadObject();
+
+        // Read in HashMap capacity and load factor and create backing HashMap
+        int capacity = s.readInt();
+        float loadFactor = s.readFloat();
+        map = (((HashSet)this) instanceof LinkedHashSet ?
+               new LinkedHashMap<E,Object>(capacity, loadFactor) :
+               new HashMap<E,Object>(capacity, loadFactor));
+
+        // Read in size
+        int size = s.readInt();
+
+        // Read in all elements in the proper order.
+        for (int i=0; i<size; i++) {
+            E e = (E) s.readObject();
+            map.put(e, PRESENT);
+        }
+    }
 ```
 
 ##### TreeSet源码解析和使用
+`总结`
+```java
+public class TreeSet<E> extends AbstractSet<E> implements NavigableSet<E>, Cloneable, Serializable {}
+```
+```
+TreeSet是一个有序并且没有重复的Set集合，它是通过TreeMap实现的
+TreeSet实现了NavigableSet接口，因此其支持集合的导航方法，如lower（返回小于）, floor（返回小于等于）, ceiling（返回大于等于）, higher（返回大于），如果不存在这样的元素，则返回null
+```
+
+`源码解析`
+```java
+    // The backing map. 数据存储在这个对象中
+    private transient NavigableMap<E, Object> m;
+    private static final Object ORESENT = new Obect();
+
+    public TreeSet() {
+        this(new TreeMap<E,Object>());
+    }
+
+    public TreeSet(Collection<? extends E> c) {
+        this();
+        addAll(c);
+    }
+
+    // 带比较器的构造函数
+    public TreeSet(Comparator<? super E> comparator) {
+        this(new TreeMap<>(comparator));
+    }
+
+    TreeSet(NavigableMap<E,Object> m) {
+        this.m = m;
+    }
+
+    public TreeSet(SortedSet<E> s) {
+        this(s.comparator());
+        addAll(s);
+    }
+
+    // 迭代器
+    public Iterator<E> iterator() {
+        return m.navigableKeySet().iterator();
+    }
+
+    public boolean add(E e) {
+        return m.put(e, PRESENT)==null;
+    }
+
+    /* Returns the least key greater than or equal to the given key, or {@code null} if there is no such key.
+    返回集合中大于等于给定元素的最小元素，有点绕，还是英文比较好理解
+    */
+    public E ceiling(E e) {
+        return m.ceilingKey(e);
+    }
+
+    /*
+    Returns the least key strictly greater than the given key, or {@code null} if there is no such key.
+    返回集合中大于给定元素的最小元素
+    */
+    public E higher(E e) {
+        return m.higherKey(e);
+    }
+
+    /*
+    Returns the greatest key strictly less than the given key, or {@code null} if there is no such key.
+    返回集合中小于给定元素的最大元素
+    */
+    public E lower(E e) {
+        return m.lowerKey(e);
+    }
+
+    /*
+    Returns the greatest key less than or equal to the given key, or {@code null} if there is no such key.
+    返回几何中小于或等于给定元素的最大元素
+    */
+    public E floor(E e) {
+        return m.floorKey(e);
+    }
+```
+
 ### Queue接口源码解析
 ### Deque接口源码解析
 ##### LinkedList使用
