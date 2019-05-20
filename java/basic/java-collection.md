@@ -791,10 +791,130 @@ void putAll(Map<? extends K, ? extends V> m);
 V remove(Object key);
 int size();
 Collections<V> values(); // 返回value的结合，values是重复的
+
+// Map中还有一个内置的接口 Map#entrySet()
+interface Entry<K,V> {
+    K getKey();
+    V getValue();
+    int hashCode();
+    V setValue(V);
+    boolean equals(Object obj)
+}
 ```
 
 #### AbstractMap接口源码解析
+AbstractMap实现了Map接口，实现了一些通用的方法
+
+`源码解析`
+```java
+// 巧妙的写法
+private static boolean eq(Object o1, Object o2) {
+    return o1 == null ? o2 == null : o1.equals(o2);
+}
+```
+
 ##### HashMap源码解析和使用
+
+`源码解析`
+```java
+    // 数据存储在这里，一个叫table的变量中
+    transient Entry<K,V>[] table = (Entry<K,V>[]) EMPTY_TABLE;
+    // 看下Entry的定义，每一个Entry是一个单向链表
+    static class Entry<K,V> implements Map.Entry<K,V> {
+        final K key;
+        V value;
+        Entry<K,V> next;
+        int hash;
+
+        /**
+         * Creates new entry.
+         */
+        Entry(int h, K k, V v, Entry<K,V> n) {
+            value = v;
+            next = n;
+            key = k;
+            hash = h;
+        }
+    }
+    // 接下来我们就看下HashMap是如何存储值的。我们都知道HashMap中使用put(K k, V v)来存储值
+    public V put(K key, V value) {
+        if (table == EMPTY_TABLE) {
+            inflateTable(threshold);
+        }
+        if (key == null)
+            return putForNullKey(value); // 存储null key，直接调价到table[0]中
+        int hash = hash(key); // 首先根据key计算出hash值
+        int i = indexFor(hash, table.length); // 再根据hash值，计算出数据索引，也就是Entry<K, V>在table中的索引
+        // 然后根据索引找到table中的Entry（是一个单向链表），通过e.next循环遍历单项链表
+        for (Entry<K,V> e = table[i]; e != null; e = e.next) {
+            Object k;
+            // 将key与每一个Entry的key进行对比，哈希值进行对比，如果key已经存在就替换掉旧值，并且返回旧值
+            if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+                V oldValue = e.value;
+                e.value = value;
+                e.recordAccess(this);
+                return oldValue;
+            }
+        }
+
+        modCount++;
+        // 如果key不存在Entry链表中，就新建一个Entry
+        addEntry(hash, key, value, i);
+        return null;
+    }
+
+    // addEntry的时候索引值为0，
+    private V putForNullKey(V value) {
+        for (Entry<K,V> e = table[0]; e != null; e = e.next) {
+            if (e.key == null) {
+                V oldValue = e.value;
+                e.value = value;
+                e.recordAccess(this);
+                return oldValue;
+            }
+        }
+        modCount++;
+        addEntry(0, null, value, 0);
+        return null;
+    }
+
+    // 在table中的index是0，所以HashMap有一个固定存储key为null的值，此位置为table的第一个位置
+    void addEntry(int hash, K key, V value, int bucketIndex) {
+        if ((size >= threshold) && (null != table[bucketIndex])) {
+            resize(2 * table.length); // size翻倍
+            hash = (null != key) ? hash(key) : 0;
+            bucketIndex = indexFor(hash, table.length);
+        }
+
+        createEntry(hash, key, value, bucketIndex);
+    }
+
+    void createEntry(int hash, K key, V value, int bucketIndex) {
+        Entry<K,V> e = table[bucketIndex];
+        table[bucketIndex] = new Entry<>(hash, key, value, e);
+        size++;
+    }
+// 插入null值之后，循环调用Map#put方法插入1-18
+::hash:: 0 ::key:: null ::value:: 1 ::bucketIndex:: 0
+::hash:: 50 ::key:: 1 ::value:: value 1 ::bucketIndex:: 2
+::hash:: 49 ::key:: 2 ::value:: value 2 ::bucketIndex:: 1
+::hash:: 48 ::key:: 3 ::value:: value 3 ::bucketIndex:: 0
+::hash:: 55 ::key:: 4 ::value:: value 4 ::bucketIndex:: 7
+::hash:: 54 ::key:: 5 ::value:: value 5 ::bucketIndex:: 6
+::hash:: 53 ::key:: 6 ::value:: value 6 ::bucketIndex:: 5
+::hash:: 52 ::key:: 7 ::value:: value 7 ::bucketIndex:: 4
+::hash:: 59 ::key:: 8 ::value:: value 8 ::bucketIndex:: 11
+::hash:: 58 ::key:: 9 ::value:: value 9 ::bucketIndex:: 10
+::hash:: 1650 ::key:: 10 ::value:: value 10 ::bucketIndex:: 2
+::hash:: 1614 ::key:: 11 ::value:: value 11 ::bucketIndex:: 14
+::hash:: 1615 ::key:: 12 ::value:: value 12 ::bucketIndex:: 15
+::hash:: 1612 ::key:: 13 ::value:: value 13 ::bucketIndex:: 12
+::hash:: 1613 ::key:: 14 ::value:: value 14 ::bucketIndex:: 13
+::hash:: 1610 ::key:: 15 ::value:: value 15 ::bucketIndex:: 10
+::hash:: 1611 ::key:: 16 ::value:: value 16 ::bucketIndex:: 11
+::hash:: 1608 ::key:: 17 ::value:: value 17 ::bucketIndex:: 8
+```
+
 ##### WeakHashMap源码解析和使用
 ##### TreeMap源码解析和使用
 ##### Hashtable源码解析和使用
