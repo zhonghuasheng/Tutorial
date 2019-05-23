@@ -134,10 +134,15 @@
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
+    * [SoapUI](tool/api-testing-tool.md###SoapUI)
+    * [Postman](tool/api-testing-tool.md###Postman)
 * [流量统计，网站分析](tool/common-tools.md)
 * [日志管理工具](tool/cronolog.md)
 * [Git](tool/git.md)
 * [Intellij](tool/intellij.md)
+    * [常用设置](tool/intellij.md##常用设置)
+    * [常用快捷键](tool/intellij.md##快捷键)
+    * [FAQ](tool/intellij.md##FAQ)
 * [Maven](tool/maven.md)
 * [VSCode](tool/vscode-settings.md)
 * [ELK](elasticsearch.md)
