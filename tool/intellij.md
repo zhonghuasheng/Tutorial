@@ -4,6 +4,35 @@
 ```
 开始没开启显示空格的选项（Setting->Editor->Appearance->show whitespaces）
 ```
+
+### 社区版IDEA如何添加tomcat服务器
+1. 在pom.xml中plugins节点下添加tomcat-maven-plugin，目前比较稳定的是tomcat7-maven-plugin, tomcat8-maven-plugin支持不是很好
+```xml
+<plugins>
+    <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+        <port>8080</port>
+        <path>/</path>
+        <uriEncoding>UTF-8</uriEncoding>
+        <server>tomcat7</server>
+        </configuration>
+    </plugin>
+</plugins>
+```
+
+2. 安装smart tomcat插件
+```
+1. Go to File -> Settings
+2. Click Plugins, search smart tomcat
+3. Install and restart IDEA
+4. Edit Configurations(在IDEA右上边，Run左边的下拉框)
+5. Click +, select Smart Tomcat
+6. Config Tomcat Server, Deployment, Context Path
+```
+
 ## 快捷键
 ```
 ctrl + alt +B 查看接口的实现类
