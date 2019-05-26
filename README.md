@@ -131,6 +131,7 @@
 * [集群环境下日志合并方案](architecture/集群环境下日志合并方案.md)
 * [数据中台架构随想](architecture/数据中台架构随想.md)
 * [分布式与微服务有关系吗](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%89%E5%85%B3%E7%B3%BB%E5%90%97)
+* [20万用户同时访问一个热点Key，如何优化缓存架构？](http://note.youdao.com/noteshare?id=76894225f153d8f0c96c3318aeb90b6b)
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
