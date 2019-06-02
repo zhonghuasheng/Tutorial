@@ -33,6 +33,8 @@
 * [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
 * [线程安全](http://note.youdao.com/noteshare?id=6f65c98d2421430a5faa8e129ee77cb7)
 
+### Java虚拟机
+
 ### Java Web
 
 * [JSP是不是被淘汰](https://github.com/zhonghuasheng/JAVA/wiki/%E5%AF%B9%E5%A4%A7%E5%9E%8BJAVA-Web%E9%A1%B9%E7%9B%AE%E4%B8%8B%E4%BD%BF%E7%94%A8JSP%E7%9A%84%E6%80%9D%E8%80%83)
