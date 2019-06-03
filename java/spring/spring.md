@@ -31,6 +31,8 @@ http://blog.csdn.net/yangyangiud/article/details/52368712
 ### Spring AOP
 #### Spring AOP引入
 
+
+
 看execution表示式的格式：
 括号中各个pattern分别表示`修饰符匹配（modifier-pattern?）`、
 `返回值匹配（ret-type-pattern）`、`类路径匹配（declaring-type-pattern?）`、`方法名匹配（name-pattern）`、`参数匹配（(param-pattern)）`、`异常类型匹配（throws-pattern?）`，`其中后面跟着“?”`的是可选项。
@@ -469,3 +471,38 @@ SqlSession sqlSession = factory.openSession();
 @Component (and @Service and @Repository) are used to auto-detect and auto-configure beans using classpath scanning. There's an implicit one-to-one mapping between the annotated class and the bean (i.e. one bean per class). Control of wiring is quite limited with this approach, since it's purely declarative.
 
 @Bean is used to explicitly declare a single bean, rather than letting Spring do it automatically as above. It decouples the declaration of the bean from the class definition, and lets you create and configure beans exactly how you choose.
+
+# Spring注解
+## 组件类注解
+@Repository
+@Service
+@Controller
+@Component
+
+## 装配类注解
+@Autowired
+@Resource
+@PostConstruct
+@PreDestory
+
+## MVC模块注解
+@Controller
+@RequestMapping
+@RequestParam
+@PathVariable
+@RequestBody
+@ResponseBody
+@RestController
+@ModelAttribute
+
+## 事务模块注解
+@Transactional
+
+## AOP模块注解
+@Aspect
+@Pointcut
+@Around
+@Before
+@After
+@AfterReturning
+@AfterThrowing
