@@ -44,11 +44,18 @@
 ## Spring大家族
 
 ### Spring
+`历史（有关Spring的历史）`
+* [Spring历史版本以及现在的帝国](http://note.youdao.com/noteshare?id=80509c0296c54ccb86c1848b95c9c530)
 * [为什么要有Spring 这里主要是引入Spring IOC](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2)
 * [为什么要有Spring AOP](http://note.youdao.com/noteshare?id=21f2b64abb67a24ad45baca5456648a5)
-* [Spring历史版本以及现在的帝国](http://note.youdao.com/noteshare?id=80509c0296c54ccb86c1848b95c9c530)
+
+`控制反转`
 * [手写一个Spring IOC的简单实现](https://github.com/zhonghuasheng/JAVA/tree/master/basic/src/main/java/com/zhonghuasheng/ioc)
 * [Spring注解大全](java/spring/spring.md/#Spring注解)
+
+`依赖注入`
+* [Spring Dependency Injection - Setter Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/setterinject)
+* [Spring Dependency Injection - Constructor Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/constructorinject)
 
 ### Spring Boot
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
