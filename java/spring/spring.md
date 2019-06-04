@@ -1,36 +1,102 @@
-## Spring
+# Spring
 http://blog.csdn.net/yangyangiud/article/details/52368712
-### Factory Pattern
-#### Simple Factory
-#### Factory Method
-#### Abstract Factory
+## Factory Pattern
+### Simple Factory
+### Factory Method
+### Abstract Factory
 
-### IOC/DI
-#### IOC简介
-#### 注入方式
-#### IOC实现基本原理
+## IOC/DI
+### IOC简介
+### 注入方式
+`Setter Injection`
+```java
+public class Communication {
 
-### AOP
-#### AOP引入
-#### JDK代理
-#### CGLib代理
-#### 模拟Spring-IOC
-#### 模拟Spring-AOP
+    private Messaging messaging;
 
-### Spring 基础
-#### Hello Spring
-#### Spring Singleton
-#### Spring Factory Method
-#### Spring Inject Method
-#### Spring Liferay Cycle
-#### Spring Autowire
-#### Abstract Parent Import
-#### Spring Annotation
-#### Spring Collections
+     /*
+     * DI via Setter
+     */
+    public void setMessaging(Messaging messaging){
+        this.messaging = messaging;
+    }
+
+    public void communicate(){
+        messaging.sendMessage();
+    }
+}
+```
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <bean id="activeMqMessaging" class="com.websystique.spring.domain.impl.ActiveMQMessaging" />
+
+    <bean id="communication" class="com.websystique.spring.Communication">
+        <property name="messaging">
+            <ref bean="activeMqMessaging" />
+        </property>
+    </bean>
+
+</beans>
+```
+
+`Constructor Injection`
+```java
+package com.websystique.spring;
+
+import com.websystique.spring.domain.Encryption;
+
+public class Communication {
+
+    private Encryption encryption;
+    /*
+     * DI via Constructor Injection
+     */
+    public Communication(Encryption encryption){
+        this.encryption = encryption;
+    }
+    public void communicate(){
+        encryption.encryptData();
+    }
+}
+```
+```xml
+<bean id="rsaEncryption" class="com.websystique.spring.domain.impl.RSAEncryption" />
+
+<bean id="communication" class="com.websystique.spring.Communication">
+    <constructor-arg>
+        <ref bean="rsaEncryption" />
+    </constructor-arg>
+</bean>
+```
+
+### IOC实现基本原理
+
+## AOP
+### AOP引入
+### JDK代理
+### CGLib代理
+### 模拟Spring-IOC
+### 模拟Spring-AOP
+
+## Spring 基础
+### Hello Spring
+### Spring Singleton
+### Spring Factory Method
+### Spring Inject Method
+
+## Spring Liferay Cycle
+## Spring Autowire
+## Abstract Parent Import
+## Spring Annotation
+## Spring Collections
 
 ### Spring AOP
 #### Spring AOP引入
-
 
 
 看execution表示式的格式：
