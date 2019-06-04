@@ -1,3 +1,4 @@
+`目录`
 # Spring
 http://blog.csdn.net/yangyangiud/article/details/52368712
 ## Factory Pattern
@@ -7,6 +8,46 @@ http://blog.csdn.net/yangyangiud/article/details/52368712
 
 ## IOC/DI
 ### IOC简介
+### 注入方式(常用的有三种)
+### IOC实现基本原理
+
+## AOP
+### AOP引入
+### JDK代理
+### CGLib代理
+### 模拟Spring-IOC
+### 模拟Spring-AOP
+
+## Spring 基础
+### Hello Spring
+### Spring Singleton
+### Spring Factory Method
+### Spring Inject Method
+
+## Spring Liferay Cycle
+## Spring Autowire
+## Abstract Parent Import
+## Spring Annotation
+## Spring Collections
+
+### Spring AOP
+#### Spring AOP引入
+
+`正文`
+
+# Spring
+http://blog.csdn.net/yangyangiud/article/details/52368712
+## Factory Pattern
+### Simple Factory
+### Factory Method
+### Abstract Factory
+
+## IOC/DI
+### IOC简介
+```
+Spring通过DI（依赖注入）实现IOC（控制反转），常用的注入方式主要有三种：构造函数注入、setter注入、基于注解的注入。
+```
+
 ### 注入方式(常用的有三种)
 `1. Setter Injection`
 ```java
