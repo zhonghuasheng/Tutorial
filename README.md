@@ -73,6 +73,7 @@
 
 ### 消息队列
 * [ActiveMQ](activemq.md)
+* [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
 
 ### 日志
 * [为什么使用log](architecture/log-note.md)
