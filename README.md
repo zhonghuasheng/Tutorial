@@ -157,6 +157,9 @@
 * [VSCode](tool/vscode-settings.md)
 * [ELK](elasticsearch.md)
 * [CloudFlare免费的CDS服务]()
+* [常见部署方式](tool/deployment.md)
+    * [蓝绿部署 Blue/Green](tool/deployment.md#蓝绿部署)
+    * [金丝雀发布/灰度部署](tool/deployment.md#金丝雀发布)
 
 ### APP
 * [混合开发](mobile/app.md)
