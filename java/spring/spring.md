@@ -7,8 +7,8 @@ http://blog.csdn.net/yangyangiud/article/details/52368712
 
 ## IOC/DI
 ### IOC简介
-### 注入方式
-`Setter Injection`
+### 注入方式(常用的有三种)
+`1. Setter Injection`
 ```java
 public class Communication {
 
@@ -44,7 +44,7 @@ public class Communication {
 </beans>
 ```
 
-`Constructor Injection`
+`2. Constructor Injection`
 ```java
 package com.websystique.spring;
 
@@ -73,6 +73,8 @@ public class Communication {
     </constructor-arg>
 </bean>
 ```
+`3. Annotation Injection`
+Go to [here](#Spring注解)
 
 ### IOC实现基本原理
 
