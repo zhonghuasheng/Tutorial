@@ -134,6 +134,33 @@ Go to [here](#Spring注解)
 
 ## Spring Liferay Cycle
 ## Spring Autowire
+
+Bean wiring corresponds to providing the dependencies a bean might need to complete it’s job. In Spring, beans can be wired together in two ways : `Manually` and `Autowiring`.
+
+`Manual wiring` : using ref attribute in <property> or <constructor> tag.
+
+```xml
+<!-- default example (autowire="no") -->
+<bean id="driver" class="com.websystique.spring.domain.Driver">
+    <property name="license" ref="license"/>
+</bean>
+
+<bean id="license" class="com.websystique.spring.domain.License" >
+    <property name="number" value="123456ABCD"/>
+</bean>
+```
+
+`Autowiring` : using autowire attribute in <bean> tag
+```xml
+<bean id="application" class="com.websystique.spring.domain.Application" autowire="byName"/>
+```
+In this approach, beans can be automatically wired using Spring autowire feature. There are 4 supported options for autowiring.
+
+* `autowire="byName"` : Autowiring using property name. If a bean found with same name as the property of other bean, this bean will be wired into other beans property
+* `autowire="byType"` : If a bean found with same type as the type of property of other bean, this bean will be wired into other beans property
+* `autowire="constructor"` : If a bean found with same type as the constructor argument of other bean, this bean will be wired into other bean constructor
+* `autowire="no"` : No Autowiring. Same as explicitly specifying bean using ‘ref’ attribute
+
 ## Abstract Parent Import
 ## Spring Annotation
 ## Spring Collections
