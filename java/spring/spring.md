@@ -540,10 +540,10 @@ SqlSession sqlSession = factory.openSession();
 
 # Spring注解
 ## 组件类注解
-@Repository
-@Service
-@Controller
-@Component
+@Component ：可用于注册所有的bean
+@Repository ：主要用于注册dao层的bean
+@Service ：主要用于注册服务层的bean
+@Controller ：主要用于注册控制层的bean
 
 ## 装配类注解
 @Autowired
@@ -572,3 +572,6 @@ SqlSession sqlSession = factory.openSession();
 @After
 @AfterReturning
 @AfterThrowing
+
+# Reference
+[Spring注入的常用的三种方式](https://blog.csdn.net/a909301740/article/details/78379720)
