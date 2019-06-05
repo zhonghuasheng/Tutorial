@@ -157,10 +157,21 @@ Bean wiring corresponds to providing the dependencies a bean might need to compl
 In this approach, beans can be automatically wired using Spring autowire feature. There are 4 supported options for autowiring.
 
 * `autowire="byName"` : Autowiring using property name. If a bean found with same name as the property of other bean, this bean will be wired into other beans property
+    ```xml
+    <bean id="application" class="com.websystique.spring.domain.Application" autowire="byName"/>
+    ```
 * `autowire="byType"` : If a bean found with same type as the type of property of other bean, this bean will be wired into other beans property
+    ```xml
+    <bean id="application" class="com.websystique.spring.domain.Application" autowire="byType"/>
+    ```
 * `autowire="constructor"` : If a bean found with same type as the constructor argument of other bean, this bean will be wired into other bean constructor
+    ```xml
+    <bean id="application" class="com.websystique.spring.domain.Application" autowire="constructor"/>
+    ```
 * `autowire="no"` : No Autowiring. Same as explicitly specifying bean using ‘ref’ attribute
-
+	```xml
+    <bean id="application" class="com.websystique.spring.domain.Application" autowire="no"/>
+    ```
 ## Abstract Parent Import
 ## Spring Annotation
 ## Spring Collections
