@@ -621,10 +621,19 @@ SqlSession sqlSession = factory.openSession();
 
 # Spring注解
 ## 组件类注解
-@Component ：可用于注册所有的bean
-@Repository ：主要用于注册dao层的bean
-@Service ：主要用于注册服务层的bean
-@Controller ：主要用于注册控制层的bean
+* @ComponentScan
+    * Spring将会自动监测指定包下那些应用了@Resource和Autowired的类
+    * @ComponentScan(basePackages = "com.zhonghuasheng.spring4") @ComponentScan basePackages attribute takes package name[s] as input which will be search for to find any class annotated with Spring specific annotations.
+* @Repository
+    * 主要用于注册dao层的bean
+* @Service
+    * 主要用于注册服务层的bean
+* @Controller
+    * 主要用于注册控制层的bean
+* @Configuration
+    * Used to mark a bean as Configuration Component
+* @Component
+    * 可用于注册所有的bean。General purpose annotation, can be used as a replacement for above annotations.
 
 ## 装配类注解
 @Autowired
