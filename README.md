@@ -54,8 +54,12 @@
 * [Spring注解大全](java/spring/spring.md/#Spring注解)
 
 `依赖注入`
-* [Spring Dependency Injection - Setter Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/setterinject)
-* [Spring Dependency Injection - Constructor Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/constructorinject)
+* [Spring依赖注入之Setter注入 - Setter Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/setterinject)
+* [Spring依赖注入之构造函数注入 - Constructor Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/constructorinject)
+* [Spring自动装配- byName](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/autowirebyname)
+* [Spring自动装配- byType](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/autowirebytype)
+* [Spring自动装配- constructor](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/constructor)
+* [Spring自动装配- no](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/no)
 
 ### Spring Boot
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
