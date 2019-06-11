@@ -126,6 +126,7 @@
 
 ## 算法
 * [Letcode](letcode/note.md)
+* [拜占庭问题](https://github.com/zhonghuasheng/Tutorial/issues/48)
 
 ## 服务器
 * [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
