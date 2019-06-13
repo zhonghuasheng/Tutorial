@@ -50,6 +50,10 @@ Java采用unicode编码，2个字节表示1个字符
     * 字节流能处理所有类型的数据（如图片、avi等），而字符流只能处理字符类型的数据
     * 只要是处理纯文本数据，就优先考虑使用字符流。除此之外都使用字节流
 
+# Java IO与IO的区别和比较
+
+
 # Reference
 * [Java IO详解](https://www.jianshu.com/p/aea76bc0e6d1)
 * [深入理解Java中的IO](https://www.cnblogs.com/ylspace/p/8128112.html)
+* [Java IO与IO的区别和比较](https://blog.51cto.com/825272560/2059144)
