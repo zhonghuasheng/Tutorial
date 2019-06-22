@@ -13,7 +13,7 @@
 
 <center>
 
-![](tutorial-2019-06-22.png)
+![](tutorial-2019-06-23.png)
 
 </center>
 
