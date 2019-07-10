@@ -74,4 +74,6 @@
 7. Context把执行完之后的HttpServletResponse对象返回给Host
 8. Host返回给Engine，Engine返回给Connector，connector返回给Browser
 
+* 如果要去掉默认该界面，可以重命名tomcat目录下的ROOT，并新建空文件夹命名为ROOT：
+
 不错的文章： http://note.youdao.com/noteshare?id=a9d957049757af03d2823a22daf71169
