@@ -7,15 +7,6 @@
 |:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|:------:|
 | [![English](png/icon/english.png)](#英语) | [![JAVA](png/icon/java-coffee-cup-logo.png)](#Java) | [![Spring Framework](png/icon/spring-logo-48.png)](#Spring大家族)| [![中间件](png/icon/plugins.png)](#中间件) | [![数据库](png/icon/database.png)](#数据库) | [![Data Structure](png/icon/data-structure.png)](#数据结构) | [![Algorithm.png](png/icon/algorithm.png)](#算法) | [![服务器](png/icon/server.png)](#服务器) | [![网络](png/icon/network.png)](#网络) | [![其他](png/icon/other.png)](#其他) |
 
-</center>
-
-<h2 align="center">技术栈</h2>
-
-<center>
-
-![](tutorial-2019-07-10.png)
-
-</center>
 
 ## 英语
 * [计算机行业常用英语积累](english/english.md)
@@ -198,3 +189,12 @@
 * [Google Java Coding Style](https://google.github.io/styleguide/javaguide.html)
 * [阿里巴巴代码规范](https://github.com/alibaba/p3c/blob/master/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%EF%BC%88%E8%AF%A6%E5%B0%BD%E7%89%88%EF%BC%89.pdf)
 
+</center>
+
+<h2 align="center">技术栈</h2>
+
+<center>
+
+![](tutorial-2019-07-10.png)
+
+</center>
