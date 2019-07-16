@@ -15,7 +15,7 @@
 ### CentOS7开放端口：CentOS7已经使用firewall作为防火墙，不再使用iptables
 * root用户
 * 开启防火墙 systemctl start firewalld.service
-* 开启端口 firewall-cmd --zone=pubnlic --add-port=8080/tcp --permanent
+* 开启端口 firewall-cmd --zone=public --add-port=50013/tcp --permanent
     * --zone-public:表作用域的公共
     * --add-port=8080/tcp：添加tcp协议的端口为8080
     * --permanent: 永久生效，无此参数表示临时生效
@@ -44,3 +44,43 @@ http://cn.linux.vbird.org/linux_server/0380mail.php
     Linux下还有一个特殊的文件/dev/null，它就像一个无底洞，所有重定向到它的信息都会消失得无影无踪。这一点非常有用，当我们不需要回显程序的所有信息时，就可以将输出重定向到/dev/null。
     ```
 * 查看环境变量 env | grep -E 'M2|MAVEN'
+
+### Shadowsocks服务器端安装
+* 安装pip `curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py` 有可能python的版本低了
+* python get-pip.py
+* pip install shadowsocks
+* 配置shadowsocks
+* vi /etc/shadowsocks.json
+  ```json
+  {
+    "server":"0.0.0.0",
+    "server_port":xx,
+    "local_port":1080,
+    "password":"1234567890",
+    "timeout":600,
+    "method":"aes-256-cfb"
+  }
+  ```
+* 将shadowsocks加入系统服务
+* vi /etc/systemd/system/shadowsocks.service
+  ```xml
+  [Unit]
+  Description=Shadowsocks
+  [Service]
+  TimeoutStartSec=0
+  ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
+  [Install]
+  WantedBy=multi-user.target
+  ```
+  ```shell
+  # 设置开机自启命令
+  systemctl enable shadowsocks
+
+  # 启动命令
+  systemctl start shadowsocks
+
+  #查看状态命令
+  systemctl status shadowsocks
+  ```
+* 客户端
+* 创建一个sh脚本，加入 `sslocal -s serverip -p port -k pwd -m aes-256-cfb -l localserverip -b 0.0.0.0 &`
