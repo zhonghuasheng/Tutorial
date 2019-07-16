@@ -125,10 +125,13 @@
 * [拜占庭问题](https://github.com/zhonghuasheng/Tutorial/issues/48)
 
 ## 服务器
-* [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
-* [Tomcat如何处理一个请求](plugins/一张图了解Tomcat架构.md)
-* [Tomcat安全配置建议](https://github.com/zhonghuasheng/Tutorial/wiki/Tomcat%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE)
-* [Tomcat Access日志分析](shell/linux命令在tomcat日志中的应用.md)
+* Tomcat
+    * [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
+    * [Tomcat如何处理一个请求](plugins/一张图了解Tomcat架构.md)
+    * [Tomcat安全配置建议](https://github.com/zhonghuasheng/Tutorial/wiki/Tomcat%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE)
+    * [Tomcat Access日志分析](shell/linux命令在tomcat日志中的应用.md)
+* Nginx
+    * [Nginx在CentOS中的安装](nginx/nginx.md##安装)
 
 ### Linux
 * [Linux常用命令](system/linux.md)
@@ -145,12 +148,13 @@
 ### 大数据
 * [Note](data/bigdata.md)
 
-### 架构
+### 架构设计
 * [系统设计注意事项](architecture/系统设计注意事项.md)
 * [集群环境下日志合并方案](architecture/集群环境下日志合并方案.md)
 * [数据中台架构随想](architecture/数据中台架构随想.md)
 * [分布式与微服务有关系吗](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%89%E5%85%B3%E7%B3%BB%E5%90%97)
 * [20万用户同时访问一个热点Key，如何优化缓存架构？](http://note.youdao.com/noteshare?id=76894225f153d8f0c96c3318aeb90b6b)
+* [如何防止表单重复提交]()
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
