@@ -200,6 +200,6 @@
 
 <center>
 
-![](tutorial-2019-08-08.png)
+![](tutorial-2019-08-09.png)
 
 </center>
