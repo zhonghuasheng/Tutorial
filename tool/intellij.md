@@ -34,6 +34,7 @@
 ```
 
 ## 快捷键
+* idea常用快捷键设置（改为eclipse相似）: File-> Settings -> search eclipse -> Keymap(change to Eclipse)
 ```
 ctrl + alt +B 查看接口的实现类
 ctrl + e 查看Recent Files
