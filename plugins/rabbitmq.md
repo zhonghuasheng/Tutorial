@@ -13,6 +13,17 @@ String msg = "Hello World! 你好世界！";
 channel.basicPublish("", QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, msg.getBytes());
 ```
 
+## 消息过载
+* Producer生产的message的速度和Consumer消费的message的速度不匹配
+
+## 死信队列（DLX）
+### 什么是死信队列
+DLX（dead-letter-exchange） 当消息在一个队列中变成死信之后，它会被重新publish到另外一个exchange中，这个exchange就是DLX.
+### 死信队列产生的场景
+* 消息被拒绝(basic.reject / basic.nack),并且requeue = false
+* 消息因TTL过期
+* 队列达到最大长度
+
 ## 常用命令
 
 * List Queue
