@@ -1,3 +1,12 @@
+# Part 1 RabbitMQ简介
+## 什么是消息中间件
+
+## 消息中间件的作用
+
+## RabbitMQ的起源
+
+## RabbitMQ的安装
+
 
 # RabbitMQ消息的持久化
 https://www.cnblogs.com/bigberg/p/8195622.html
