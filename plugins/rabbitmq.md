@@ -29,6 +29,9 @@
 * 当mandatory参数设为true时，交换器无法根据自身的类型和路由键找到一个符合条件的队列，那么RabbitMQ会调用Basic.Return命令将消息返回给生产者；为false时，如果出现上述情况，则消息直接被丢弃。那么生产者如何获取到没有被正确路由到合适队列的消息呢?这时候可以通过调用
 channel addReturnListener 来添加 ReturnListener 监昕器实现。
 
+### immediate
+* 当参数告诉服务器如果该消息关联的队列上有消费者，则立刻投递; 如果所有匹配的队列上都没有消费者，则直接将消息返回给生产者，不用将消息存入队列而等待消费者了。RabbitMQ在3.0版本开始去掉了对immediate的支持，官方解释是此参数会影响镜像队列的性能，增加了代码的复杂度。
+
 # RabbitMQ消息的持久化
 https://www.cnblogs.com/bigberg/p/8195622.html
 ## 什么情况下会造成消息丢失？
