@@ -1,4 +1,4 @@
-# Part 1 RabbitMQ简介
+# Part1 RabbitMQ简介
 ## 什么是消息中间件
 * 消息中间件（Message Queue Middleware，简称MQ）是指利用高效可靠的消息传递机制进行与平台无关的数据交流，并基于数据通信来进行分布式系统的集成。
 
@@ -16,6 +16,18 @@
 
 ## RabbitMQ的安装
 
+# Part3客户端开发向导
+## 连接RabbitMQ
+* Channel或者Connection中有个isOpen的方法用来检测是否已经处于开启状态，这个方法的返回值依赖于shutdownCause，有可能
+
+# Part4 RabbitMQ进阶
+## mandatory/immediate参数，备份交换器
+* mandatory和immediate是channel.basicPublish方法中的两个参数，它们都有当消息传递过程中不可达目的地时将消息返回给生产者的功能。
+* RabbitMQ提供的备份交换器(Alternate Exchange)可以将未能被交换器路由的消息（没有绑定队列或者没有匹配的绑定）存储起来，而不用返回给客户端。
+
+### mandatory
+* 当mandatory参数设为true时，交换器无法根据自身的类型和路由键找到一个符合条件的队列，那么RabbitMQ会调用Basic.Return命令将消息返回给生产者；为false时，如果出现上述情况，则消息直接被丢弃。那么生产者如何获取到没有被正确路由到合适队列的消息呢?这时候可以通过调用
+channel addReturnListener 来添加 ReturnListener 监昕器实现。
 
 # RabbitMQ消息的持久化
 https://www.cnblogs.com/bigberg/p/8195622.html
