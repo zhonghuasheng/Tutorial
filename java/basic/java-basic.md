@@ -1402,7 +1402,7 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 [注解 Annotation 实现原理与自定义注解例子](https://www.cnblogs.com/acm-bingzi/p/javaAnnotation.html)
 
-# 十一特性
+# 十一、特性
 
 ## Java 各版本的新特性
 
@@ -1432,6 +1432,9 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - [Difference between Java 1.8 and Java 1.7?](http://www.selfgrowth.com/articles/difference-between-java-18-and-java-17)
 - [Java 8 特性](http://www.importnew.com/19345.html)
 
+# 十二、JDBC操作数据库
+
+# 其他
 ## Java 与 C++ 的区别
 
 - Java 是纯粹的面向对象语言，所有的对象都继承自 java.lang.Object，C++ 为了兼容 C 即支持面向对象也支持面向过程。
@@ -1456,97 +1459,6 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 - Bloch J. Effective java[M]. Addison-Wesley Professional, 2017.
 - 参考 https://github.com/CyC2018/CS-Notes 并加以扩展
 
-
-
-
-### JVM
-* JVM初始分配的堆内存由-Xms指定，默认是物理内存的1/64；JVM的最大分配的堆内存由-Xmx指定，默认是物理内存的1/4.默认空余堆内存小于40%时，JVM就会增大堆直到-Xmx最大限制；空余堆内存大于70%时，JVM就会减少堆直到-Xms的最小限制。因此，服务器端一般设置-Xms、-Xmx相等以避免在每次GC后调整堆的大小。
-
-### JConsole
-* Java 5开始引入JConsole
-
-### 深入拆解Java虚拟机
-* 可以使用-XX:+HeapDumpOnOutOfMemoryError参数来让虚拟机出现OOM的时候自动生成dump文件
-* ClassLoader的具体作用就是将class文件加载到jvm虚拟机中去，程序就可以正确运行了。但是，jvm启动的时候，并不会一次性加载所有的class文件，而是根据需要去动态加载。
-* Java 虚拟机是如何判定两个 Java 类是相同的。Java 虚拟机不仅要看类的全名是否相同，还要看加载此类的类加载器是否一样。只有两者都相同的情况，才认为两个类是相同的。即便是同样的字节代码，被不同的类加载器加载之后所得到的类，也是不同的。
-* ClassLoader
-    * BootStrap ClassLoader：称为启动类加载器，是Java类加载层次中最顶层的类加载器，负责加载JDK中的核心类库，如：rt.jar、resources.jar、charsets.jar等
-    * Extension ClassLoader：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。
-    * App ClassLoader：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。
-        * 除了Java默认提供的三个ClassLoader之外，用户还可以根据需要定义自已的ClassLoader，而这些自定义的ClassLoader都必须继承自java.lang.ClassLoader类，也包括Java提供的另外二个ClassLoader（Extension ClassLoader和App ClassLoader）在内，但是Bootstrap ClassLoader不继承自ClassLoader，因为它不是一个普通的Java类，底层由C++编写，已嵌入到了JVM内核当中，当JVM启动后，Bootstrap ClassLoader也随着启动，负责加载完核心类库后，并构造Extension ClassLoader和App ClassLoader类加载器。
-
-# *JDK*
-### JDK中自带的工具
-#### `version 1.8`
-
-#### Create and Build Applications
-* appletviewer
-* extcheck
-* jar
-* java
-* javac
-* javadoc
-* javah
-* javap
-* jdb
-* jdeps
-
-#### Security
-* keytool
-* jarsigner
-* policytool
-
-#### Internationalization
-* native2ascli
-
-#### Remote Method Invocation(RMI)
-* rmic
-* rmiregistry
-* rmid
-* serialver
-
-#### Java IDL and RMI-IIOP
-* tnameserv
-* idlj
-* orbd
-* servertool
-
-#### Deploy Applications and Applets
-* pack200
-* unpack200
-* javapackager
-* javafxpackager
-
-#### Java Web Start
-* javaws
-
-#### Monitor Java Applications
-* jconsole
-* jvisualvm
-
-#### Monitor the JVM
-* jps
-* jstat
-* jstatd
-* jmc
-
-#### Web Services
-* schemagen
-* wsgen
-* wsimport
-* xjc
-
-#### Troubleshooting
-* jcmd
-* jinfo
-* jhat
-* jmap
-* jsadebugd
-* jstack
-
-#### Scripting
-* jrunscript
-* jjs
 
 # *JavaEE*
 ## `基础语法`
