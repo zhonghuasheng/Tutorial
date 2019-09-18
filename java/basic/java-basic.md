@@ -1370,8 +1370,10 @@ Throwable 可以用来表示任何可以作为异常抛出的类，分为两种�
 在不合理或不正确时间内唤醒一个方法时出现的异常信息，英文意思是无效状态异常，比如在服务器已经返回数据给客户端了，这时候想修改字符集参数，就会报这样的错误。
 ```
 
-# 九泛型
+# 九、泛型
 类型的参数化，就是可以把类型像方法的参数那样传递。泛型使编译器可以在编译期间对类型进行检查以提高类型安全，减少运行时由于对象类型不匹配引发的异常。
+## 为什么要引入泛型？泛型的引入解决了什么问题
+* 在运行时做类型检查，保证了运行时的类型安全，避免了很多运行时的ClassCastException异常。
 
 ```java
 public class Box<T> {
@@ -1385,17 +1387,16 @@ public class Box<T> {
 - [Java 泛型详解](http://www.importnew.com/24029.html)
 - [10 道 Java 泛型面试题](https://cloud.tencent.com/developer/article/1033693)
 
-## 为什么要引入泛型？泛型的引入解决了什么问题
-* 在运行时做类型检查，保证了运行时的类型安全，避免了很多运行时的ClassCastException异常。
 
 ## 有界泛型
-<T extends Animal> // 限定T是Animal或Animal的子类
-<T super Dog> // 限定T是Dog或Dog的超类
+* <T extends Animal> 限定T是Animal或Animal的子类
+* <T super Dog> 限定T是Dog或Dog的超类
 
 ## 泛型通配符
-<? extends Animal> // 限定T是Animal或Animal的子类
+* <? extends Animal> 限定T是Animal或Animal的子类
 
-# 十注解
+
+# 十、注解
 
 Java 注解是附加在代码中的一些元信息，用于一些工具在编译、运行时进行解析和使用，起到说明、配置的功能。注解不会也不能影响代码的实际逻辑，仅仅起到辅助性的作用。
 
