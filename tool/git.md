@@ -1,3 +1,26 @@
+## Git简介
+* https://baike.baidu.com/item/Git/12647237
+
+## Github帐号注册
+* 注册地址： https://github.com
+
+## 本地安装Git客户端
+* 下载地址： https://git-scm.com/
+
+## 配置本地Git信息
+* 配置邮箱，邮箱是注册Github的邮箱 `git config --global user.email xxx@126.com`
+
+* 配置用户名，建议使用字母而不是汉字 `git config --global user.name xxx`
+
+* 查看配置 `git config --list`
+
+## 在Github配置SSH-Key
+* 参考文章 https://jingyan.baidu.com/article/dca1fa6f756777f1a44052e3.html
+
+## 创建自己的代码仓库，并提交一个commit
+* 参考文章 https://jingyan.baidu.com/article/8cdccae9269b1f315413cde2.html
+
+
 ### Create a new git branch from an old commit
 
 * create a new branch and checkout it out
