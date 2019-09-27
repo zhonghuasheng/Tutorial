@@ -46,6 +46,34 @@ git tag -a V1.0.0 -m "Apr 1 release"
 git push --tag
 ```
 
+## Commit Message的格式
+* 参考[Angular规范](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.greljkmo14y0)
+
+### 格式
+```
+<type>(<scope>): <subject> ＃id
+```
+`eg`
+```
+feat(login): 添加了Login模块的后台验证逻辑　#11
+```
+
+### 格式说明
+
+1. `type`用于说明commit的类别，属于必填字段，只允许使用下面７个标识
+    ```
+    * feat: 新功能(feature)
+    * fix: 修补bug
+    * docs:　文档(documentation)
+    * style: 样式(不影响代码运行的变动)
+    * refactor: 重构(既不是新增功能，也不是修补的bug的改动)
+    * test:　增加测试
+    * chore: 构建过程或辅助工具的变动
+    ```
+2. `scope`用于说明commit影响的范围，scope是可选的，可以是多个，中间用,隔开，取值只能从该项目的label中取功能模块的值
+3. `subject`是commit的简单描述，建议使用精简的语言描述，最好不超过50个字符。另外，由于我们是内部项目，commit使用中文描述
+4. `id`是任务的编号，因此每个commit的提交都必须有对应的标号，id加#是能够让Gitlab识别并绑定到现有的任务中。注意#之前和subject是有个空格的
+
 
 ### Issue:
 
