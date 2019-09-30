@@ -103,6 +103,56 @@ public void jspDestroy() {
 ```
 
 #### `JSP语法`
+* JSP声明变量方法等
+```jsp
+<%! declaration; [ declaration; ]+ ... %>
+<%! int i = 0; %>
+<%! int a, b, c; %>
+```
+* JSP表达式
+```jsp
+<%= 表达式 %>
+<p>
+   今天的日期是: <%= (new java.util.Date()).toLocaleString()%>
+</p>
+```
+
+* JSP注释
+```jsp
+<%-- 该部分注释在网页中不会被显示--%>
+```
+
+* JSP指令: JSP指令用来设置与整个JSP页面相关的属性。
+```jsp
+<%@ directive attribute="value" %>
+<%@ page ... %>	定义页面的依赖属性，比如脚本语言、error页面、缓存需求等等
+<%@ include ... %>	包含其他文件
+<%@ taglib ... %>	引入标签库的定义，可以是自定义标签
+```
+
+* JSP行为
+```jsp
+<jsp:action_name attribute="value" />
+jsp:include	用于在当前页面中包含静态或动态资源
+jsp:useBean	寻找和初始化一个JavaBean组件
+jsp:forward	从一个JSP文件向另一个文件传递一个包含用户请求的request对象
+jsp:text	用于封装模板数据
+...
+```
+
+* JSP9大内置对象
+```jsp
+application: ServletContext类实例，与应用上下文有关
+page: 类似Java类中的this关键字
+pageContext： PageContext类的实例，提供对JSP页面所有对象以及命名空间的访问
+config: ServletConfig类实例
+out: PrintWriter类的实例，用于把结果输出到页面上
+request: HttpServletRequest类的实例
+respone: HttpServletResponse类的实例
+session: HttpSession类的实例
+exception: Exception类的对象，代表发生错误的JSP页面中对应的异常对象
+```
+
 #### `JSP指令`
 #### `JSP动作元素`
 #### `JSP隐式对象`
