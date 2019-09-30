@@ -83,8 +83,25 @@ JSP处理
 
 总的来说，JSP网页就是用另一种方式来编写servlet而不用成为Java编程高手。除了解释阶段外，JSP网页几乎可以被当成一个普通的servlet来对待。
 
-
 #### `JSP生命周期`
+* JSP生命周期：编译阶段 -> 初始化阶段 -> 执行阶段 -> 销毁阶段
+    * 编译阶段：Servelt容器将JSP编译为Servlet源文件，生成Servlet类。当浏览器请求JSP页面时，JSP引擎会首先去检查是否需要编译这个文件。如果这个文件爱呢没有被编译过，或者在上次编译后被更改过，则编译这个JSP文件。
+    * 初始化阶段：加载与JSP对应的Servlet类，创建其实例，并调用其初始化方法。容器载入JSP文件后，它会首先做一些初始化工作，调用jspInit()方法，初始化只需要做一次。
+    * 执行阶段：调用与JSP对应的Servlet实例的服务方法。
+    * 销毁阶段：调用与JSP对应的Servlet实例的销毁方法，然后销毁实例。
+* 示例代码
+```jsp
+<%!
+public void jspInit() {
+    System.out.println("JSP Init");
+}
+
+public void jspDestroy() {
+    System.out.println("JSP Destory");
+}
+%>
+```
+
 #### `JSP语法`
 #### `JSP指令`
 #### `JSP动作元素`
