@@ -43,17 +43,18 @@
 
 ## 基本类型
 
-- byte/8
-- char/16
-- short/16
-- int/32
-- float/32
-- long/64
-- double/64
+- byte/8bit
+- char/16bit
+- short/16bit
+- int/32bit
+- float/32bit
+- long/64bit
+- double/64bit
 - boolean/\~
 
 boolean 只有两个值：true、false，可以使用 1 bit 来存储，但是具体大小没有明确规定。JVM 会在编译时期将 boolean 类型的数据转换为 int，使用 1 来表示 true，0 表示 false。JVM 支持 boolean 数组，但是是通过读写 byte 数组来实现的。
 
+1byte=8bit, 8位作为一个字节，字符（char）是Java中的一种基本数据类型，由2个字节组成。在UTF-8编码中，一个英文字符占一个字节，一个中文（含繁体）占3个字节，英文标点占一个字节，中文标点占3个字节；而Unicode编码中英文和中文都是占2个字节，标点也是一样。
 
 ## 包装类型
 
