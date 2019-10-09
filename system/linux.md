@@ -83,4 +83,4 @@ http://cn.linux.vbird.org/linux_server/0380mail.php
   systemctl status shadowsocks
   ```
 * 客户端
-* 创建一个sh脚本，加入 `sslocal -s remoteserverip -p remoteserverport -k pwd -m aes-256-cfb -l localserverport -b 0.0.0.0 &`
+* 创建一个sh脚本，加入 `nohup sslocal -s remoteserverip -p remoteserverport -b 127.0.0.1 -l localserverip -k password -m aes-256-cfb >/dev/null 2>&1 &`

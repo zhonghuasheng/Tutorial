@@ -160,21 +160,78 @@ exception: Exception类的对象，代表发生错误的JSP页面中对应的异
 |  201  |  Created  |  请求时完整的，新的资源被创建  |
 
 #### `JSP表单处理`
-#### `JSP过滤器`
-#### `JSP Coolies处理`
-#### `JSP Session`
-#### `JSP文件上传`
-#### `JSP日期处理`
-#### `JSP页面重定向`
-#### `JSP点击量统计`
-#### `JSP自动刷新`
-#### `JSP发送邮件`
-#### `JSP标准标签库JSTL`
-#### `JSP连接数据库`
-#### `JSP XML数据处理`
-#### `JSP JavaBean`
-#### `JSP自定义标签`
-#### `JSP表达式语言`
-#### `JSP异常处理`
-#### `JSP调试`
-#### `JSP国际化`
+* 表单提交： `get` VS `post`
+* 参数读取： `request.getParameter("xxx")`， 其他的有`request.getParameterValues()`、`request.getParameterNames()`、`request.getInputStream()`
+
+#### `JSP编码设置`
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+  </body>
+</html>
+```
+
+* JSP页面编码:jsp文件本身的编码
+```jsp
+<%@ page pageEncoding="UTF-8" %>
+```
+
+* Web页面显示编码
+```jsp
+<%@ page contentType="text/html; charset=UTF-8" %>
+```
+
+* HTML页面编码
+```jsp
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+```
+
+* Web服务器输入/输出流设置编码
+```java
+request.setCharacterEncoding("UTF-8")
+response.setCharacterEncoding("UTF-8")
+```
+
+* Web服务器响应输出流
+```java
+response.setContentType("UTF-8")
+```
+
+* 他们之间的相互影响和作用域,以及先后作用顺序
+1. pageEncoding: 只是指明了 JSP 页面本身的编码格式，跟页面显示的编码没有关系;
+容器在读取(文件)或者(数据库)或者(字符串常量)时将起转化为内部使用的 Unicode,而页面显示的时候将
+内部的Unicode转换为contentType指定的编码后显示页面内容;
+如果pageEncoding属性存在，那么JSP页面的字符编码方式就由pageEncoding决定，
+否则就由contentType属性中的charset决定，如果charset也不存在，JSP页面的字符编码方式就采用
+默认的ISO-8859-1。
+
+2. contentType: 指定了MIME类型和JSP页面回应时的字符编码方式。MIME类型的默认值是“text/html”;
+字符编码方式的默认值是“ISO-8859-1”. MIME类型和字符编码方式由分号隔开;
+
+3. pageEncoding和contentType的关系:
+    1. pageEncoding的内容只是用于jsp输出时的编码，不会作为header发出去的; 是告诉web Server
+        jsp页面按照什么编码输出,即web服务器输出的响应流的编码;
+    2. 第一阶段是jsp编译成.java，它会根据pageEncoding的设定读取jsp，结果是由指定的编码方案翻译
+        成统一的UTF-8 JAVA源码（即.java）.
+    3. 第二阶段是由JAVAC的JAVA源码至java byteCode的编译，不论JSP编写时候用的是什么编码方案，
+        经过这个阶段的结果全部是UTF-8的encoding的java源码.JAVAC用UTF-8的encoding读取
+        java源码，编译成UTF-8 encoding的二进制码（即.class），这是JVM对常数字串在二进制码
+        （java encoding）内表达的规范.
+    4. 第三阶段是Tomcat（或其的application container）载入和执行阶段二的来的JAVA二进制码，
+        输出的结果，也就是在客户端见到的，这时隐藏在阶段一和阶段二的参数contentType就发挥了功效
+
+4. 和contentType效果一样的设置方式还有 html页面charset, response.setCharacterEncoding(),
+    response.setContentType(),response.setHeader(); response.setContentType(),
+    response.setHeader();优先级最好,其次是response.setCharacterEncoding();再者是
+    <%@page contentType="text/html; chareset=gbk"%>,最后是<meta http-equiv="content-type"
+    content="text/html; charset=gb2312" />.
+
+
+5. web页面输入编码: 在设置页面编码<%@page contentType="text/html; chareset=gbk"%>的同时，也就指定了页面的输入编码;如果页面的显示被设置为UTF-8，那么用户所有的页面输入都会按照 UTF-8 编码; 服务器端程序在读 取表单输入之前要设定输入编码; 表单被提交后，浏览器会将表单字段值转换为指定字符集对应的字节值，然后根据 HTTP 标准 URL编码方案对结果字节进行编码.但是页面需要告诉服务器当前页面的编码方式;request.setCharacterEncoding(),能修改Serverlet获取请求的编码,response.setCharacterEncoding(),能修改Serverlet返回结果的编码.
