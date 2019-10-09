@@ -107,3 +107,14 @@ git add –all //提交所有修改到暂存区
 ...
 autocrlf = false
 ```
+
+#### 解决github提交代码过慢的问题
+* ubuntu下编辑/etc/ssh/ssh_config，windows下在git的安装目录中找，在ssh_config末尾append
+```
+Host github.com
+User git
+Hostname ssh.github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/id_rsa
+Port 443
+```
