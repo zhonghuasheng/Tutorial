@@ -35,6 +35,37 @@ Servlet 生命周期可被定义为从创建直到毁灭的整个过程。以下
     * response.sendRedirect("xxxx")
 
 ## Servlet过滤器
+* 作用：可以实现用户在访问某个资源之前，对访问的请求和响应进行拦截
 ![](filter.png)
 
 ## Servlet监听器
+* 作用：可以在事情发生的前后做一些必要的处理
+* Listener的三大作用域request, session ServletContext
+* Servlet八大监听器和与之对应的Event
+
+<table>
+  <tr><th align="left">Listener接口</th><th align="left">Event类</th></tr>
+  <tr><td>ServletContextListener</td><td>ServletContextEvent</td></tr>
+  <tr><td>ServletContextAttributeListener</td><td>ServletContextAttributeEvent</td></tr>
+  <tr><td>HttpSessionListener</td><td rowspan="2">HttpSessionEvent</td></tr>
+  <tr><td>HttpSessionActivationListener</td></tr>
+  <tr><td>HttpSessionAttributeListener</td><td rowspan="2">HttpSessionBindingEvent</td></tr>
+  <tr><td>HttpSessionBindingListener</td></tr>
+  <tr><td>ServletRequestListener</td><td>ServletRequestEvent</td></tr>
+  <tr><td>ServletRequestAttributeListener</td><td>ServletRequestAttributeEvent</td></tr>
+</table>
+
+`eg`
+```java
+public class MySessionListener implements HttpSessionListener {
+
+	public void sessionCreated(HttpSessionEvent se) {
+		HttpSession hs=se.getSession();
+		System.out.println(hs.getId());
+	}
+
+	public void sessionDestroyed(HttpSessionEvent se) {
+		System.out.println("Session Destoryed");
+	}
+}
+```
