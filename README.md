@@ -17,6 +17,9 @@
 
 ### Java基础
 * [Java基础](java/basic/java-basic.md)
+* [Java Web]
+    * [JSP基础](java/javaweb/jsp.md)
+    * [Servlet基础](java/javaweb/servlet.md)
 * [Java集合](java/basic/java-collection.md)
 * [Java IO/NIO](java/basic/java-io-nio.md)
 * [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98)
