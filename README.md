@@ -96,6 +96,9 @@
 * [RabbitMQ消息发送-Exchange-topic示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/topic)
 * [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
 
+#### Netty
+* [Netty](plugins/netty.md)
+
 ### 日志
 * [为什么使用log](architecture/log-note.md)
 * [深入理解JAVA日志基础](https://github.com/zhonghuasheng/Tutorial/wiki/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JAVA%E6%97%A5%E5%BF%97%E5%9F%BA%E7%A1%80)
@@ -176,6 +179,9 @@
 * [流量统计，网站分析](tool/common-tools.md)
 * [日志管理工具](tool/cronolog.md)
 * [Git](tool/git.md)
+    * [Git](tool/git.md#Commit-Message的格式)
+    * [Git](tool/git.md#Windows与Linux字符设置#解决github提交代码过慢的问题)
+    * [Git](tool/git.md#拉取指定branch代码到各自单独的文件夹)
 * [Intellij](tool/intellij.md)
     * [常用设置](tool/intellij.md##常用设置)
     * [常用快捷键](tool/intellij.md##快捷键)
