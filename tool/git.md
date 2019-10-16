@@ -108,7 +108,7 @@ git add –all //提交所有修改到暂存区
 autocrlf = false
 ```
 
-#### 解决github提交代码过慢的问题
+## 解决github提交代码过慢的问题
 * ubuntu下编辑/etc/ssh/ssh_config，windows下在git的安装目录中找，在ssh_config末尾append
 ```
 Host github.com
@@ -117,4 +117,44 @@ Hostname ssh.github.com
 PreferredAuthentications publickey
 IdentityFile ~/.ssh/id_rsa
 Port 443
+```
+
+## 拉取指定branch代码到各自单独的文件夹
+```shell
+#!/bin/bash
+#basePath是clone的master分支文件夹的外层文件夹
+basePath="/e/ZYX/培训&培训/code/20191011/"
+branchs="branch1,branch2"
+#要将$branchs分割开，先存储旧的分隔符
+OLD_IFS="$IFS"
+
+#设置分隔符
+IFS=","
+
+#如下会自动分隔
+arr=($branchs)
+
+#恢复原来的分隔符
+IFS="$OLD_IFS"
+
+#遍历数组
+for branch in ${arr[@]}
+  do
+  #为每个branch创建一个文件夹
+  cd $basePath
+  rm -rf $branch
+  echo "Delete $branch Done......"
+  mkdir $branch
+
+  #进入master folder并拉取$s分支的代码
+  cd $basePath/master
+  git checkout $branch
+  git pull --all
+  cp -r ./* $basePath/$branch
+
+  echo "Clone $branch Done......"
+done
+
+#当前是master文件夹，最后切换到master分支
+git checkout master
 ```
