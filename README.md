@@ -17,7 +17,7 @@
 
 ### Java基础
 * [Java基础](java/basic/java-basic.md)
-* [Java Web]
+* Java Web
     * [JSP基础](java/javaweb/jsp.md)
     * [Servlet基础](java/javaweb/servlet.md)
 * [Java集合](java/basic/java-collection.md)
