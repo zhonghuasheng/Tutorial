@@ -147,7 +147,7 @@
     * [Tomcat安全配置建议](https://github.com/zhonghuasheng/Tutorial/wiki/Tomcat%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE)
     * [Tomcat Access日志分析](shell/linux命令在tomcat日志中的应用.md)
 * Nginx
-    * [Nginx在CentOS中的安装](nginx/nginx.md##安装)
+    * [Nginx在CentOS中的安装](plugins/nginx.md##安装)
 
 ### Linux
 * [Linux常用命令](system/linux.md)
