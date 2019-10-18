@@ -84,7 +84,7 @@ Integer b = 121;
 System.out.println(a==b); // true
 Integer c = 200;
 Integer d = 200;
-System.out.println(c==d); // false
+System.out.println(c==d); // false，注意int的取值范围
 ```
 
 valueOf() 方法的实现比较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。
