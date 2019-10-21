@@ -1,8 +1,8 @@
 # IO通信简介分类
-## BIO
+## BIO（同步阻塞）
 ## 伪异步通信
-## NIO
-## AIO
+## NIO（异步阻塞）
+## AIO（异步非阻塞）
 
 # WebSocket
 ## 什么是WebSocket
