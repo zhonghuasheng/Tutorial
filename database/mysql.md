@@ -24,3 +24,13 @@
     * Linux中在/var/lib/mysql/
 * 同理，可以显示全部的全局变量
     * show global variables;
+
+### Mysql执行sql文件
+* 进入mysql安装目录，找到mysql.exe所在文件夹
+```
+mysql -uroot -p123456 -Ddbname<C:\a.sql
+```
+* 进入mysql command
+```
+source C:\a.sql
+```
