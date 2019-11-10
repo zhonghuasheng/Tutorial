@@ -151,6 +151,7 @@
 
 ### Linux
 * [Linux常用命令](system/linux.md)
+* [实时记录服务器CPU和内存的使用情况](system/linux.md#记录服务器CPU和内存的实时使用情况)
 
 
 ## 网络
