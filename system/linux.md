@@ -84,3 +84,16 @@ http://cn.linux.vbird.org/linux_server/0380mail.php
   ```
 * 客户端
 * 创建一个sh脚本，加入 `nohup sslocal -s remoteserverip -p remoteserverport -b 127.0.0.1 -l localserverip -k password -m aes-256-cfb >/dev/null 2>&1 &`
+
+# 记录服务器CPU和内存的实时使用情况
+```shell
+#!/bin/bash
+fileName=$1
+
+echo "CPU%,MEM%,TIME" > $fileName
+for (( i = 0; i < 3000; i++ )) do
+    output=`top -b -n1 | grep "Cpu(s)" | awk '{print $2 ","}' | tr -d '\n' && free -m | grep 'Mem' | awk '{print $3/$2 * 100 ","}' | tr -d '\n' && date | awk '{print $4}'`>temp
+    echo "$output" >> $fileName
+    sleep 1
+done
+```
