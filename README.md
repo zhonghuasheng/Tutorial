@@ -99,6 +99,9 @@
 #### Netty
 * [Netty](plugins/netty.md)
 
+#### ELK
+* TODO: [ELK](elasticsearch.md)
+
 ### 日志
 * [为什么使用log](architecture/log-note.md)
 * [深入理解JAVA日志基础](https://github.com/zhonghuasheng/Tutorial/wiki/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3JAVA%E6%97%A5%E5%BF%97%E5%9F%BA%E7%A1%80)
@@ -171,7 +174,8 @@
 * [数据中台架构随想](architecture/数据中台架构随想.md)
 * [分布式与微服务有关系吗](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%89%E5%85%B3%E7%B3%BB%E5%90%97)
 * [20万用户同时访问一个热点Key，如何优化缓存架构？](http://note.youdao.com/noteshare?id=76894225f153d8f0c96c3318aeb90b6b)
-* [如何防止表单重复提交]()
+* TODO: [如何防止表单重复提交]()
+* TODO: [Maven+Jenkis+JMeter构建可持续自动化测试部署方案]()
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
@@ -189,7 +193,6 @@
     * [FAQ](tool/intellij.md##FAQ)
 * [Maven](tool/maven.md)
 * [VSCode](tool/vscode-settings.md)
-* [ELK](elasticsearch.md)
 * [CloudFlare免费的CDS服务]()
 * [LDAP搭建和使用]()
 * [常见部署方式](tool/deployment.md)
@@ -220,6 +223,6 @@
 
 <center>
 
-![](tutorial-2019-10-04.png)
+![](tutorial-2019-10-12.png)
 
 </center>
