@@ -1,23 +1,29 @@
+# 目录
+* [Git介绍](#Git介绍)
+* [Git配置](#Git配置)
+* [Git代码提交规范](#CommitMessage的格式)
+* [对Git的理解](#对Git的理解)
+* 常见问题
+    * [系统换行符配置](#fatal: LF would be replaced by CRLF in .idea/workspace.xml)
+    * [解决github提交代码过慢的问题](#解决github提交代码过慢的问题)
+    * [拉取指定branch代码到各自单独的文件夹](#拉取指定branch代码到各自单独的文件夹)
+
 ## Git简介
 * https://baike.baidu.com/item/Git/12647237
 
-## Github帐号注册
-* 注册地址： https://github.com
+## Git配置
 
-## 本地安装Git客户端
-* 下载地址： https://git-scm.com/
-
-## 配置本地Git信息
+### 配置本地Git信息
 * 配置邮箱，邮箱是注册Github的邮箱 `git config --global user.email xxx@126.com`
 
 * 配置用户名，建议使用字母而不是汉字 `git config --global user.name xxx`
 
 * 查看配置 `git config --list`
 
-## 在Github配置SSH-Key
+### 在Github配置SSH-Key
 * 参考文章 https://jingyan.baidu.com/article/dca1fa6f756777f1a44052e3.html
 
-## 创建自己的代码仓库，并提交一个commit
+###创建自己的代码仓库，并提交一个commit
 * 参考文章 https://jingyan.baidu.com/article/8cdccae9269b1f315413cde2.html
 
 
@@ -46,7 +52,7 @@ git tag -a V1.0.0 -m "Apr 1 release"
 git push --tag
 ```
 
-## Commit Message的格式
+## CommitMessage的格式
 * 参考[Angular规范](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.greljkmo14y0)
 
 ### 格式
@@ -74,6 +80,11 @@ feat(login): 添加了Login模块的后台验证逻辑　#11
 3. `subject`是commit的简单描述，建议使用精简的语言描述，最好不超过50个字符。另外，由于我们是内部项目，commit使用中文描述
 4. `id`是任务的编号，因此每个commit的提交都必须有对应的标号，id加#是能够让Gitlab识别并绑定到现有的任务中。注意#之前和subject是有个空格的
 
+## 对Git的理解
+* 文件状态
+![](png/git-file-status.png)
+* 文件存储状态
+![](png/git-file-storage.png)
 
 ### Issue:
 
@@ -108,7 +119,7 @@ git add –all //提交所有修改到暂存区
 autocrlf = false
 ```
 
-## 解决github提交代码过慢的问题
+### 解决github提交代码过慢的问题
 * ubuntu下编辑/etc/ssh/ssh_config，windows下在git的安装目录中找，在ssh_config末尾append
 ```
 Host github.com
@@ -119,7 +130,7 @@ IdentityFile ~/.ssh/id_rsa
 Port 443
 ```
 
-## 拉取指定branch代码到各自单独的文件夹
+### 拉取指定branch代码到各自单独的文件夹
 ```shell
 #!/bin/bash
 #basePath是clone的master分支文件夹的外层文件夹
