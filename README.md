@@ -10,8 +10,6 @@
 
 ## 英语
 * [计算机行业常用英语积累](english/english.md)
-* [日常英语]()
-    * [新英语第一册](english/新概念英语第一册.md)
 
 ## Java
 
@@ -223,6 +221,6 @@
 
 <center>
 
-![](tutorial-2019-11-24.png)
+![](tutorial-2019-11-25.png)
 
 </center>

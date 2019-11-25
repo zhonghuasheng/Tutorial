@@ -65,3 +65,4 @@
 * How many times have you had to start over from scratch? 你有多少次从头开始？
 * By and large, 总的来说 = In general
 * reserve 存储
+* RollingFile: rolling 周而复始的，有规律的。出自log4j中将日志文件拆分为周而复始的文件碎片。
