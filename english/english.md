@@ -67,3 +67,4 @@
 * reserve 存储
 * RollingFile: rolling 周而复始的，有规律的。出自log4j中将日志文件拆分为周而复始的文件碎片。
 * SEO: Search Engine Optimization搜索引擎优化
+* VisiualVM is a visual tool integrating commandline JDK tools and lightweight profileing capabilities. - VisualVM是一个集成JDK命令的轻量级可视化工具 - light是光的意思，lightweight轻量级(光很轻)，heavyweight重量级
