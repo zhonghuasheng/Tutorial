@@ -3,7 +3,6 @@
 * [jvisualvm使用](#jvisualvm使用)
     * [jvisualvm监控远程服务器](#jvisualvm监控远程服务器)
     * [jvisualvm集成Visual GC插件](#jvisualvm集成Visual-GC插件)
-    * [jvisualvm集成XXX监控tomcat](#jvisualvm集成XXX监控tomcat)
 * [常见问题](#常见问题)
 * [引用](#引用)
 
@@ -74,7 +73,6 @@
 * 参考视图
 ![visual-gc-view](png/visual-gc-view.png)
 
-### jvisualvm集成XXX监控tomcat
 
 # 常见问题
 * 开启OOM-dump
