@@ -75,6 +75,7 @@
 * [SpringBoot统一异常处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
 * [SpringBoot统计在线人数](https://github.com/zhonghuasheng/Tutorial/wiki/SpringBoot%E7%BB%9F%E8%AE%A1%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0)
 * [SpringBoot + Redis + 自定义注解 + 拦截器 实现接口幂等性校验](https://github.com/zhonghuasheng/Spring-Boot/blob/master/springbootidempotence/README.md)
+* [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
 
 ### Spring Cloud
 
@@ -221,6 +222,6 @@
 
 <center>
 
-![](tutorial-2019-12-06.png)
+![](tutorial-2019-12-09.png)
 
 </center>
