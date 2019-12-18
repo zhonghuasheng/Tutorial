@@ -123,7 +123,8 @@
 * [Mongodb](database/mongodb.md)
 
 ### Redis
-* [Redis](database/redis.md)
+* [Redis基础只是](database/redis.md)
+* [Redis使用单线程的原因](https://github.com/zhonghuasheng/Tutorial/issues/105)
 
 ## 数据结构
 
