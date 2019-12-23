@@ -33,10 +33,11 @@
 * [JDBC](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
 
 ### Java虚拟机
-* [深入理解JMM（Java虚拟机模型）](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972)
+* [深入理解JMM（Java虚拟机模型）](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972) - 2019/12/23
   * 计算机各部件速度的差异引出缓存 - 如何保证缓存一致性
   * JMM介绍：变量的各种操作、指令规范、三大特性
   * volatile关键字解读(可见性与指令重排)
+  * HappenBefore规则
 
 ### Java Web
 
