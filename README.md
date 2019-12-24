@@ -25,14 +25,19 @@
 * [JAVA8 新特性 - default方法](http://note.youdao.com/noteshare?id=89fa780dc27b2e39194a7d6ab740d674)
 * [Java中日期和MySQL中日期类型进行整合](http://note.youdao.com/noteshare?id=ccb3c824eb199d990b3cec84ecd815b5)
 
-
 ### Java Core
 * [Java IO](java/basic/java-io-nio.md)
 * [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
 * [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
 * [线程安全](http://note.youdao.com/noteshare?id=6f65c98d2421430a5faa8e129ee77cb7)
 * [JDBC](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
+
 ### Java虚拟机
+* [深入理解JMM（Java虚拟机模型）](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972) - 2019/12/23
+  * 计算机各部件速度的差异引出缓存 - 如何保证缓存一致性
+  * JMM介绍：变量的各种操作、指令规范、三大特性
+  * volatile关键字解读(可见性与指令重排)
+  * HappenBefore规则
 
 ### Java Web
 
@@ -223,6 +228,6 @@
 
 <center>
 
-![](tutorial-2019-12-23.png)
+![](tutorial-2019-12-24.png)
 
 </center>
