@@ -1143,7 +1143,63 @@ System.out.println(e2.get(2)); // 2
 
 # 六、关键字
 
+## 访问控制
+`private`
+`protected`
+`public`
+
+## 类、方法和变量修饰符
+`abstract`
+`class`
+`extends`
+`final`
+`implements`
+`interface`
+`native`
+`new`
+`static`
+`strictfp`
+
+`synchronized`
+
+
+`transient`
+将不需要序列化的属性前添加关键字transient，序列化对象的时候，这个属性就不会被序列化。【对象序列化是一个用于将对象状态转换为字节流的过程，可以将其保存到磁盘文件中或通过网络发送到任何其他程序；从字节流创建对象的相反的过程称为反序列化】
+
+`volatile`
+volatile只能修饰变量，被修饰的变量对其他线程是“可见的”，同时volatile修饰的变量禁止指令重排（保证了有序性）
+
+## 程序控制
+`break`
+`continue`
+`return`
+`do`
+`while`
+`if`
+`else`
+`for`
+`instanceof`
+`switch`
+`case`
+`default`
+
+## 错误处理
+`try` `catch` `throw` `throws`
+
+## 包相关
+`import` `package`
+
+## 基础类型
+`boolean` `byte` `char` `double` `float` `int` `long` `short` `null` `true` `false`
+
+## 变量引用
+`super` `this` `void`
+
+## 保留字
+`goto` `const`
+
 ## final
+
 
 **1. 数据**
 
