@@ -1,3 +1,17 @@
+### 添加阿里镜像
+找到.m2/settings.xml文件
+
+```
+<mirrors>
+  <mirror>
+      <id>alimaven</id>
+      <name>aliyun maven</name>
+      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+     <mirrorOf>central</mirrorOf>
+  </mirror>
+</mirrors>
+```
+
 ### Configure Proxy
 
 * Configure in settings.xml
