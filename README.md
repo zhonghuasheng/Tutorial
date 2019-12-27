@@ -219,6 +219,8 @@
 ### 其他
 #### 程序人生
 * [最好的建议](life/coding-life.md/#最好的建议)
+* [正视自己的价值](life/coding-life.md/#正视自己的价值)
+* [新工程师要干的五件事情](life/coding-life.md/#新工程师要干的五件事情)
 
 #### `RULE`
 * [雅虎前端34条军规](http://note.youdao.com/noteshare?id=b59d0da4f7bb2b7ba5f73129d85b1ba1)
