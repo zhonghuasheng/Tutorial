@@ -217,6 +217,9 @@
 * [Vue笔记](Vue.md)
 
 ### 其他
+#### 程序人生
+* [最好的建议](life/coding-life.md/#最好的建议)
+
 #### `RULE`
 * [雅虎前端34条军规](http://note.youdao.com/noteshare?id=b59d0da4f7bb2b7ba5f73129d85b1ba1)
 * [Google Java Coding Style](https://google.github.io/styleguide/javaguide.html)
