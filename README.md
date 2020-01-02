@@ -1,5 +1,5 @@
 <h2 align="center">声明</h2>
-<h4 align="center">该文档为本人工作、学习的总结，有些解决方案不一定适合所有情况，取者自思。另外，笔记都是闲暇之余总结，很多没有成体系，所以暂时没有发布，今年会陆陆续续发出来。我写了一个自动commit的脚本，国内国外都会定时同步合并我最新的笔记并发布到Tutorial这个repository。Wiki中也有一些详细的文章，同时Issue中记录的为一些面试题，喜欢的话可以Star下，也可以Fork走作为自己笔记的一部分，总之，生活不易，希望对大家学习有帮助。祝好！！！ https://github.com/zhonghuasheng/Tutorial</h4>
+<h4 align="center">该文档为本人学习的总结，有些解决方案不一定适合所有情况，取者自思；学习的资料大多来源网上、书籍、视频，如果引用，我会注明来处，若原著不喜，麻烦告知，我定删除。另外，笔记都是闲暇之余总结，很多没有成体系，所以暂时没有发布，今年会陆陆续续发出来。我写了一个自动commit的脚本，国内国外都会定时同步合并我最新的笔记并发布到Tutorial这个repository。Wiki中也有一些详细的文章，同时Issue中记录的为一些面试题，喜欢的话可以Star下，也可以Fork走作为自己笔记的一部分，总之，生活不易，希望对大家学习有帮助。祝好！！！ https://github.com/zhonghuasheng/Tutorial</h4>
 
 <center>
 
@@ -181,6 +181,7 @@
 * [20万用户同时访问一个热点Key，如何优化缓存架构？](http://note.youdao.com/noteshare?id=76894225f153d8f0c96c3318aeb90b6b)
 * TODO: [如何防止表单重复提交]()
 * TODO: [Maven+Jenkis+JMeter构建可持续自动化测试部署方案]()
+* [如何设计一个对外安全的接口](architecture/如何设计一个对外安全的接口.md)
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
