@@ -1,5 +1,20 @@
 ## 安装
-### 阿里云安装Nginx（CentOS7）
+### 官方推荐安装
+* http://nginx.org/en/linux_packages.html#stable
+* create the file named /etc/yum.repos.d/nginx.repo with the following contents:
+  * [nginx]
+    name=nginx repo
+    baseurl=http://nginx.org/packages/centos/7/$basearch/
+    gpgcheck=0
+    enabled=1
+* yum install nginx
+* nginx -V
+*  查看安装目录  rpm -ql nginx
+*  配置文件在 /etc/nginx/conf.d/default.conf
+*  启动 nginx
+*  nginx -s signal     : send signal to a master process: stop, quit, reopen, reload
+
+### 源码编译安装
 1. 安装编译工具及库文件 `yum -y install make zlib zlib-devel gcc-c++ libtool  openssl openssl-devel`
 2. 安装PCRE（可以使Nginx支持Rewrite功能）
    ```shell
