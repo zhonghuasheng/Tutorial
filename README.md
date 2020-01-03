@@ -174,14 +174,30 @@
 * [Note](data/bigdata.md)
 
 ### 架构设计
+`原则`
 * [系统设计注意事项](architecture/系统设计注意事项.md)
+
+`安全`
+* [如何设计一个对外安全的接口](architecture/如何设计一个对外安全的接口.md)
+
+`高可用`
+* [异地多活](architecture/异地多活.md)
+  * [饿了么异地多活技术实现（一）-总体介绍](http://note.youdao.com/noteshare?id=90d83005bebe9192ab31753294931ab7)
+  * [饿了么异地多活技术实现（二）API-Router的设计与实现](http://note.youdao.com/noteshare?id=7c9ae9f38fb899202e50013243b76003&sub=wcp1578025898948893)
+  * [饿了么异地多活技术实现（三）GZS&DAL](http://note.youdao.com/noteshare?id=6f714e7c80d1a0a26918fc69e96ecb72&sub=wcp1578028147171312)
+  * [饿了么异地多活技术实现（四）- 实时双向复制工具（DRC)](http://note.youdao.com/noteshare?id=d496a2af54f7677d4a4548ca8b443fb2&sub=wcp1578028121631563)
+
+`扩展性`
+`伸缩性`
+`性能`
+* [20万用户同时访问一个热点Key，如何优化缓存架构？](http://note.youdao.com/noteshare?id=76894225f153d8f0c96c3318aeb90b6b)
+
+`其他`
 * [集群环境下日志合并方案](architecture/集群环境下日志合并方案.md)
 * [数据中台架构随想](architecture/数据中台架构随想.md)
 * [分布式与微服务有关系吗](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%89%E5%85%B3%E7%B3%BB%E5%90%97)
-* [20万用户同时访问一个热点Key，如何优化缓存架构？](http://note.youdao.com/noteshare?id=76894225f153d8f0c96c3318aeb90b6b)
 * TODO: [如何防止表单重复提交]()
 * TODO: [Maven+Jenkis+JMeter构建可持续自动化测试部署方案]()
-* [如何设计一个对外安全的接口](architecture/如何设计一个对外安全的接口.md)
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
@@ -234,6 +250,6 @@
 
 <center>
 
-![](tutorial-2020-01-02.png)
+![](tutorial-2020-01-03.png)
 
 </center>
