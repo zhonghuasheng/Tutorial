@@ -183,6 +183,7 @@
 `高可用`
 * [异地多活](architecture/异地多活.md)
   * 饿了么异地多活
+    * [饿了么多活技术架构及运维挑战（零）](http://note.youdao.com/noteshare?id=84b980a643b09bcce110b73ae6447e1d&sub=wcp1578047241075851)
     * [饿了么异地多活技术实现（一）-总体介绍](http://note.youdao.com/noteshare?id=90d83005bebe9192ab31753294931ab7)
     * [饿了么异地多活技术实现（二）API-Router的设计与实现](http://note.youdao.com/noteshare?id=7c9ae9f38fb899202e50013243b76003&sub=wcp1578025898948893)
     * [饿了么异地多活技术实现（三）GZS&DAL](http://note.youdao.com/noteshare?id=6f714e7c80d1a0a26918fc69e96ecb72&sub=wcp1578028147171312)
