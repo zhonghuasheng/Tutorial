@@ -182,10 +182,13 @@
 
 `高可用`
 * [异地多活](architecture/异地多活.md)
-  * [饿了么异地多活技术实现（一）-总体介绍](http://note.youdao.com/noteshare?id=90d83005bebe9192ab31753294931ab7)
-  * [饿了么异地多活技术实现（二）API-Router的设计与实现](http://note.youdao.com/noteshare?id=7c9ae9f38fb899202e50013243b76003&sub=wcp1578025898948893)
-  * [饿了么异地多活技术实现（三）GZS&DAL](http://note.youdao.com/noteshare?id=6f714e7c80d1a0a26918fc69e96ecb72&sub=wcp1578028147171312)
-  * [饿了么异地多活技术实现（四）- 实时双向复制工具（DRC)](http://note.youdao.com/noteshare?id=d496a2af54f7677d4a4548ca8b443fb2&sub=wcp1578028121631563)
+  * 饿了么异地多活
+    * [饿了么异地多活技术实现（一）-总体介绍](http://note.youdao.com/noteshare?id=90d83005bebe9192ab31753294931ab7)
+    * [饿了么异地多活技术实现（二）API-Router的设计与实现](http://note.youdao.com/noteshare?id=7c9ae9f38fb899202e50013243b76003&sub=wcp1578025898948893)
+    * [饿了么异地多活技术实现（三）GZS&DAL](http://note.youdao.com/noteshare?id=6f714e7c80d1a0a26918fc69e96ecb72&sub=wcp1578028147171312)
+    * [饿了么异地多活技术实现（四）- 实时双向复制工具（DRC)](http://note.youdao.com/noteshare?id=d496a2af54f7677d4a4548ca8b443fb2&sub=wcp1578028121631563)
+  * [数据库异地多活方案](http://note.youdao.com/noteshare?id=0132260bad28e1b7eff8237d1b71ecde&sub=wcp1578029015234777)
+  * [精华 - 异地多活设计辣么难？其实是你想多了！](http://note.youdao.com/noteshare?id=4c69460527777953567bf27e301386f4&sub=80933B302262460289A6132D1D2BFA19)
 
 `扩展性`
 `伸缩性`
