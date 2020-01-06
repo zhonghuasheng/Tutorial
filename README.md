@@ -86,8 +86,9 @@
 
 ## 中间件
 
-### MyBatis
-* [MyBatis](plugins/mybatis.md)
+### 控制层
+`Keepalived`
+* [Keepalived原理 + 配置 + 主从切换 + 通知](plugins/keepalived.md)
 
 ### 消息队列
 * [到底什么时候该使用MQ？](http://note.youdao.com/noteshare?id=30a11e46aaef3f00d2ecfb84692ca294&sub=wcp157828038663078)
@@ -103,8 +104,13 @@
   * [RabbitMQ消息发送-Exchange-topic示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/topic)
   * [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
 
-#### Netty
+### 远程调用中间件
+
+`Netty`
 * [Netty](plugins/netty.md)
+
+### 数据访问
+* [MyBatis](plugins/mybatis.md)
 
 #### ELK
 * TODO: [ELK](elasticsearch.md)
@@ -134,23 +140,6 @@
 * [Redis基础只是](database/redis.md)
 * [Redis使用单线程的原因](https://github.com/zhonghuasheng/Tutorial/issues/105)
 
-## 数据结构
-
-### 设计模式
-
-#### 创建型
-* [单例模式 Singleton Pattern](https://github.com/zhonghuasheng/DesignPattern/wiki/%E5%88%9B%E5%BB%BA%E5%9E%8B---%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-Singleton-Pattern)
-
-#### 结构型
-* [代理模式 Proixy Pattern](https://github.com/zhonghuasheng/DesignPattern/wiki/%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F-Proxy-Design-Pattern)
-
-#### 行为型
-* [解释器模式](https://github.com/zhonghuasheng/DesignPattern/wiki/%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E6%9E%90%E5%99%A8%E6%A8%A1%E5%BC%8F-Interpreter-Pattern)
-
-## 算法
-* [Letcode](letcode/note.md)
-* [拜占庭问题](https://github.com/zhonghuasheng/Tutorial/issues/48)
-
 ## 服务器
 * Tomcat
     * [Tomcat服务器架构](plugins/一张图了解Tomcat架构.md)
@@ -159,22 +148,8 @@
     * [Tomcat Access日志分析](shell/linux命令在tomcat日志中的应用.md)
 * Nginx
     * [Nginx在CentOS中的安装](plugins/nginx.md##安装)
-
-### Linux
-* [Linux常用命令](system/linux.md)
-* [实时记录服务器CPU和内存的使用情况](system/linux.md#记录服务器CPU和内存的实时使用情况)
-
-
-## 网络
-* [域名](network/notes/second-level-domain.md)
-* [从HTTP到HTTPS到HSTS](network/notes/HTTP_HTTPS_SSL.md)
-* [DOS & DDOS的攻与防](https://github.com/zhonghuasheng/Tutorial/wiki/DOS-&-DDOS%E7%9A%84%E6%94%BB%E4%B8%8E%E9%98%B2)
-* [为什么是3次握手4次挥手](https://github.com/zhonghuasheng/Tutorial/issues/21)
-* [从浏览器输入URL到页面渲染都发生了什么 - 结合Tomcat架构解析](http://note.youdao.com/noteshare?id=cca91d065dc509bae387a16925efa497)
-* [彻底了解Cookies](network/彻底了解cookies.md)
-
-### 大数据
-* [Note](data/bigdata.md)
+    * [Nginx反向代理服务器搭建](plugins/nginx.md)
+    * TODO： [Nginx实现动静分离](plugins/nginx.md)
 
 ### 架构设计
 `原则`
@@ -208,6 +183,39 @@
 * [分布式与微服务有关系吗](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%B8%8E%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%89%E5%85%B3%E7%B3%BB%E5%90%97)
 * TODO: [如何防止表单重复提交]()
 * TODO: [Maven+Jenkis+JMeter构建可持续自动化测试部署方案]()
+
+
+## 数据结构
+
+### 设计模式
+
+#### 创建型
+* [单例模式 Singleton Pattern](https://github.com/zhonghuasheng/DesignPattern/wiki/%E5%88%9B%E5%BB%BA%E5%9E%8B---%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-Singleton-Pattern)
+
+#### 结构型
+* [代理模式 Proixy Pattern](https://github.com/zhonghuasheng/DesignPattern/wiki/%E7%BB%93%E6%9E%84%E5%9E%8B-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F-Proxy-Design-Pattern)
+
+#### 行为型
+* [解释器模式](https://github.com/zhonghuasheng/DesignPattern/wiki/%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E6%9E%90%E5%99%A8%E6%A8%A1%E5%BC%8F-Interpreter-Pattern)
+
+## 算法
+* [Letcode](letcode/note.md)
+* [拜占庭问题](https://github.com/zhonghuasheng/Tutorial/issues/48)
+
+### Linux
+* [Linux常用命令](system/linux.md)
+* [实时记录服务器CPU和内存的使用情况](system/linux.md#记录服务器CPU和内存的实时使用情况)
+
+## 网络
+* [域名](network/notes/second-level-domain.md)
+* [从HTTP到HTTPS到HSTS](network/notes/HTTP_HTTPS_SSL.md)
+* [DOS & DDOS的攻与防](https://github.com/zhonghuasheng/Tutorial/wiki/DOS-&-DDOS%E7%9A%84%E6%94%BB%E4%B8%8E%E9%98%B2)
+* [为什么是3次握手4次挥手](https://github.com/zhonghuasheng/Tutorial/issues/21)
+* [从浏览器输入URL到页面渲染都发生了什么 - 结合Tomcat架构解析](http://note.youdao.com/noteshare?id=cca91d065dc509bae387a16925efa497)
+* [彻底了解Cookies](network/彻底了解cookies.md)
+
+### 大数据
+* [Note](data/bigdata.md)
 
 ### 工具
 * [API测试工具](tool/api-testing-tool.md)
