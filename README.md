@@ -90,15 +90,18 @@
 * [MyBatis](plugins/mybatis.md)
 
 ### 消息队列
-* [ActiveMQ](plugins/activemq.md)
+* [到底什么时候该使用MQ？](http://note.youdao.com/noteshare?id=30a11e46aaef3f00d2ecfb84692ca294&sub=wcp157828038663078)
 
-#### RabbitMQ
-* [RabbitMQ](plugins/rabbitmq.md)
-* [RabbitMQ基础概念](http://note.youdao.com/noteshare?id=3ee2c852ecf09522bd0dd974921e415d)
-* [RabbitMQ消息发送-Exchange-fanout示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/fanout)
-* [RabbitMQ消息发送-Exchange-direct示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/direct)
-* [RabbitMQ消息发送-Exchange-topic示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/topic)
-* [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
+`ActiveMQ`
+  * [ActiveMQ](plugins/activemq.md)
+
+`RabbitMQ`
+  * [RabbitMQ](plugins/rabbitmq.md)
+  * [RabbitMQ基础概念](http://note.youdao.com/noteshare?id=3ee2c852ecf09522bd0dd974921e415d)
+  * [RabbitMQ消息发送-Exchange-fanout示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/fanout)
+  * [RabbitMQ消息发送-Exchange-direct示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/direct)
+  * [RabbitMQ消息发送-Exchange-topic示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/topic)
+  * [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
 
 #### Netty
 * [Netty](plugins/netty.md)
@@ -191,6 +194,8 @@
   * [数据库异地多活方案](http://note.youdao.com/noteshare?id=0132260bad28e1b7eff8237d1b71ecde&sub=wcp1578029015234777)
   * [精华 - 异地多活设计辣么难？其实是你想多了！](http://note.youdao.com/noteshare?id=4c69460527777953567bf27e301386f4&sub=80933B302262460289A6132D1D2BFA19)
   * [阿里和微博的异地多活方案 - 思考较多](http://note.youdao.com/noteshare?id=ea3f9a9d404a8493eb8671759224e672&sub=wcp1578025746271204)
+* [削峰填谷](architecture/削峰填谷.md)
+  * [58到家MQ如何快速实现流量削峰填谷](http://note.youdao.com/noteshare?id=5b75fab5a151731588d8c25472b52ece&sub=wcp1578276033980908)
 
 `扩展性`
 `伸缩性`
