@@ -1,41 +1,7 @@
-# IO通信简介分类
-## BIO（同步阻塞）
-## 伪异步通信
-## NIO（异步阻塞）
-## AIO（异步非阻塞）
-
-# WebSocket
-## 什么是WebSocket
-* 是H5提出的协议规范
-* 先通过HTTP建立握手协议，建立之后不再使用HTTP而是使用TCP协议（不再握手）
-* 解决Client/Server实时通信的技术
-
-## WebSocket的优势
-* 节省通信开销
-* 服务器主动传递给客户端
-* 实时通信（客户端/服务端都可推送消息）
-
-## WebSocket生命周期
-* 打开事件
-* 消息事件
-* 错误事件
-* 关闭事件
-
-## WebSocket关闭连接
-* 服务器关闭底层连接
-* 客户端发起TCP Close
-
-# 什么是Netty
-Netty 是一款基于异步的事件驱动的、快速开发高性能的网络应用程序Java框架，支持快速地开发可维护的高性能的面向协议的服务器和客户端。它封装了网络编程的复杂性，使网络编程和 Web 技术的最新进展能够被比以往更广泛的开发人员接触到。
-关键字：高性能事件驱动、异步非阻塞、基于NIO的客户端、服务器端、稳定性和可伸缩性
-
-# Netty使用场景
-* 高性能通信领域（游戏、分布式）
-* 多线程并发领域
-* 异步通信领域
-
-# Netty优势
-* API简单
-* 入门门槛底
-* 性能高
-* 成熟、稳定
+* Netty总结+实现一个简易版Tomcat https://www.cnblogs.com/wuzhenzhao/p/10418650.html
+* Netty源码分析 https://segmentfault.com/a/1190000007282628
+* Netty之微信-IM介绍
+    * 代码地址 https://github.com/peiguihuang/wechat-netty
+    * 文档说明介绍
+        * https://www.jianshu.com/p/7522bda72a25
+        * https://blog.csdn.net/huangpeigui/article/details/86596245
