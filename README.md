@@ -104,6 +104,7 @@
 
 #### `Netty`
 * [Netty](plugins/netty.md)
+* [Netty核心组件介绍及手写简易版Tomcat](http://note.youdao.com/noteshare?id=220ac83ee37543ea9d761699bf5915d8&sub=wcp157838393679928)
 
 `数据访问`
 #### `MyBatis`
