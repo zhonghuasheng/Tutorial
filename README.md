@@ -3,9 +3,9 @@
 
 <center>
 
-| 英语 | Java | Spring大家族 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 其他 |
+| 英语 | Java | Spring大家族 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 程序人生 |
 |:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语">英语</a>|<a href="#Java基础">* Java基础</a><br><a href="#Java Core">* Java Core</a><br><a href="#JVM">* JVM</a><br><a href="#Java Web">* Java Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring Boot">Spring Boot</a><br><a href="#Spring Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat"></a><bar><a href="#Nginx"></a>|<a href="#架构设计">结构设计</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#其他">其他</a>|
+|<a href="#英语">英语</a>|<a href="#Java基础">Java基础</a><br><a href="#Java Core">Java Core</a><br><a href="#JVM">JVM</a><br><a href="#Java Web">Java Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring Boot">Spring Boot</a><br><a href="#Spring Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#架构设计">结构设计</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#其他">其他</a>|
 
 ## 英语
 * [计算机行业常用英语积累](english/english.md)
