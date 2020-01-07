@@ -26,7 +26,7 @@ keepalived实现的功能主要有三个：
 keepalived通过软件的方式在其内部模拟实现VRRP协议，然后借助于VRRP协议实现IP地址漂移。
 
 2. keepalived用来做什么
-Keepalived是基于VRRP协议的高级应用，作用于网络层、传输层和应用层交换机制的处理高可用的软件。主要用作RealServer的健康状态检查以及LoadBalance主机和BackUP主机之间failover的实现。
+Keepalived是基于VRRP协议的高级应用，作用于网络层、传输层和应用层交换机制的处理高可用的软件。主要用作RealServer的健康状态检查以及LoadBalance主机和BackUP主机之间failover【失效转移】的实现。
 
 Keepalived起初是为LVS设计的，专门用来监控集群系统中各个服务节点的状态。它根据layer3, 4 & 5交换机制检测每个服务节点的状态，如果某个服务节点出现异常，或工作出现故障，Keepalived将检测到，并将出现故障的服务节点从集群系统中剔除，而在故障节点恢复正常后，Keepalived又可以自动将此服务节点重新加入到服务器集群中，这些工作全部自动完成，不需要人工干涉，需要人工完成的只是修复出现故障的服务节点。
 

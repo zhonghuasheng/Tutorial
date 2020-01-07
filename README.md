@@ -267,6 +267,6 @@
 
 <center>
 
-![](tutorial-2020-01-06.png)
+![](tutorial-2020-01-07.png)
 
 </center>
