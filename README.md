@@ -1,18 +1,18 @@
-<h2 align="center">声明</h2>
-<h4 align="center">该文档为本人学习的总结，有些解决方案不一定适合所有情况，取者自思；学习的资料大多来源网上、书籍、视频，如果引用，我会注明来处，若原著不喜，麻烦告知，我定删除。另外，笔记都是闲暇之余总结，很多没有成体系，所以暂时没有发布，今年会陆陆续续发出来。我写了一个自动commit的脚本，国内国外都会定时同步合并我最新的笔记并发布到Tutorial这个repository。Wiki中也有一些详细的文章，同时Issue中记录的为一些面试题，喜欢的话可以Star下，也可以Fork走作为自己笔记的一部分，总之，生活不易，希望对大家学习有帮助。祝好！！！ https://github.com/zhonghuasheng/Tutorial</h4>
+<center>声明</center>
+<center>该文档为本人学习的总结，有些解决方案不一定适合所有情况，取者自思；学习的资料大多来源网上、书籍、视频，如果引用，我会注明来处，若原著不喜，麻烦告知，我定删除。另外，笔记都是闲暇之余总结，很多没有成体系，所以暂时没有发布，今年会陆陆续续发出来。我写了一个自动commit的脚本，国内国外都会定时同步合并我最新的笔记并发布到Tutorial这个repository。Wiki中也有一些详细的文章，同时Issue中记录的为一些面试题，喜欢的话可以Star下，也可以Fork走作为自己笔记的一部分，总之，生活不易，希望对大家学习有帮助。祝好！！！</center>
 
-<center>
+# 目录
 
 | 英语 | Java | Spring大家族 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 程序人生 |
 |:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语">英语</a>|<a href="#Java基础">Basic</a><br><a href="#Java Core">Core</a><br><a href="#JVM">JVM</a><br><a href="#Java Web">Web</a>|<a href="#Spring">Spring</a><br><a href="#Spring Boot">Spring Boot</a><br><a href="#Spring Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#原则">原则</a><br><a href="#安全">安全</a><br><a href="#高可用">高可用</a><br><a href="#扩展性">扩展性</a><br><a href="#伸缩性">伸缩性</a><br><a href="#性能">性能</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#其他">其他</a>|
+|<a href="#英语">英语</a>|<a href="#Java基础">Basic</a><br><a href="#Java Core">Core</a><br><a href="#JVM">JVM</a><br><a href="#Java Web">Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring Boot">Spring Boot</a><br><a href="#Spring Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#原则">原则</a><br><a href="#安全">安全</a><br><a href="#高可用">高可用</a><br><a href="#扩展性">扩展性</a><br><a href="#伸缩性">伸缩性</a><br><a href="#性能">性能</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#其他">其他</a>|
 
-## 英语
+# 英语
 * [计算机行业常用英语积累](english/english.md)
 
 ## Java
 
-### Java基础
+#### `Java基础`
 * [Java基础](java/basic/java-basic.md)
 * Java Web
     * [JSP基础](java/javaweb/jsp.md)
@@ -24,27 +24,26 @@
 * [JAVA8 新特性 - default方法](http://note.youdao.com/noteshare?id=89fa780dc27b2e39194a7d6ab740d674)
 * [Java中日期和MySQL中日期类型进行整合](http://note.youdao.com/noteshare?id=ccb3c824eb199d990b3cec84ecd815b5)
 
-### Java Core
+#### `Java Core`
 * [Java IO](java/basic/java-io-nio.md)
 * [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
 * [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
 * [线程安全](http://note.youdao.com/noteshare?id=6f65c98d2421430a5faa8e129ee77cb7)
 * [JDBC](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
 
-### Java虚拟机
+#### `Java虚拟机`
 * [深入理解JMM（Java虚拟机模型）](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972) - 2019/12/23
   * 计算机各部件速度的差异引出缓存 - 如何保证缓存一致性
   * JMM介绍：变量的各种操作、指令规范、三大特性
   * volatile关键字解读(可见性与指令重排)
   * HappenBefore规则
 
-### Java Web
+#### `Java Web`
 
 * [JSP基础](java/javaweb/jsp.md)
 * [JSP是不是被淘汰](https://github.com/zhonghuasheng/JAVA/wiki/%E5%AF%B9%E5%A4%A7%E5%9E%8BJAVA-Web%E9%A1%B9%E7%9B%AE%E4%B8%8B%E4%BD%BF%E7%94%A8JSP%E7%9A%84%E6%80%9D%E8%80%83)
 * [JSP Velocity FreeMarker对比](https://github.com/zhonghuasheng/JAVA/wiki/JSP---Velocity---FreeMarker%E5%AF%B9%E6%AF%94)
 * [JSTL库安装](https://www.runoob.com/jsp/jsp-jstl.html)
-
 ## Spring大家族
 
 ### Spring
