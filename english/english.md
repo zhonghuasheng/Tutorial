@@ -70,3 +70,4 @@
 * VisiualVM is a visual tool integrating commandline JDK tools and lightweight profileing capabilities. - VisualVM是一个集成JDK命令的轻量级可视化工具 - light是光的意思，lightweight轻量级(光很轻)，heavyweight重量级
 * The supreme happiness of life is the convication(信念) that we are loved. 生活中最大的幸福是坚信有人爱我们。
 * Cache Coherence 缓存一致性
+* failover 失效转移
