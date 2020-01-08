@@ -71,3 +71,5 @@
 * The supreme happiness of life is the convication(信念) that we are loved. 生活中最大的幸福是坚信有人爱我们。
 * Cache Coherence 缓存一致性
 * failover 失效转移
+* AB测试 比较AB两个哪个好的测试
+* polling 轮询
