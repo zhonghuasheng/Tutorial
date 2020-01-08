@@ -153,6 +153,7 @@
 
 #### `安全`
 * [如何设计一个对外安全的接口](architecture/如何设计一个对外安全的接口.md)
+* TODO[反爬虫]
 
 #### `高可用`
 * [异地多活](architecture/异地多活.md)
@@ -212,6 +213,7 @@
 * [为什么是3次握手4次挥手](https://github.com/zhonghuasheng/Tutorial/issues/21)
 * [从浏览器输入URL到页面渲染都发生了什么 - 结合Tomcat架构解析](http://note.youdao.com/noteshare?id=cca91d065dc509bae387a16925efa497)
 * [彻底了解Cookies](network/彻底了解cookies.md)
+* [WebSocket的使用场景](http://note.youdao.com/noteshare?id=46d6403c9651f0fe41473cb11d523870&sub=wcp157847407045929)
 
 ### 大数据
 * [Note](data/bigdata.md)
