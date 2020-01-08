@@ -103,8 +103,9 @@
   * [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
 
 #### `Netty`
-* [Netty](plugins/netty.md)
-* [Netty核心组件介绍及手写简易版Tomcat](http://note.youdao.com/noteshare?id=220ac83ee37543ea9d761699bf5915d8&sub=wcp157838393679928)
+* [Netty学习笔记](plugins/netty.md)
+* [Netty核心组件介绍](http://note.youdao.com/noteshare?id=220ac83ee37543ea9d761699bf5915d8&sub=wcp157838393679928)
+* <a href="https://github.com/zhonghuasheng/JAVA/tree/master/netty" target="_blank">基于Netty构建简易版HTTP服务</a>
 
 `数据访问`
 #### `MyBatis`
@@ -261,6 +262,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-01-07.png)
+![](tutorial-2020-01-08.png)
 
 </center>
