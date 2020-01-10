@@ -105,7 +105,8 @@
 #### `Netty`
 * [Netty学习笔记](plugins/netty.md)
 * [Netty核心组件介绍](http://note.youdao.com/noteshare?id=220ac83ee37543ea9d761699bf5915d8&sub=wcp157838393679928)
-* <a href="https://github.com/zhonghuasheng/JAVA/tree/master/netty" target="_blank">基于Netty构建简易版HTTP服务</a>
+* [基于Netty构建简易版HTTP服务](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
+* [基于Netty实现一个WebSocket服务,实现消息的主动推送](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
 
 `数据访问`
 #### `MyBatis`
@@ -214,6 +215,8 @@
 * [从浏览器输入URL到页面渲染都发生了什么 - 结合Tomcat架构解析](http://note.youdao.com/noteshare?id=cca91d065dc509bae387a16925efa497)
 * [彻底了解Cookies](network/彻底了解cookies.md)
 * [WebSocket的使用场景](http://note.youdao.com/noteshare?id=46d6403c9651f0fe41473cb11d523870&sub=wcp157847407045929)
+* [Http、TCP、Socket区别和使用场景](http://note.youdao.com/noteshare?id=d045b8abde4101cb28892b3dd33f24c4&sub=wcp1578547786163252)
+* [Socket粘包、拆包](http://note.youdao.com/noteshare?id=20da81a278dff7065c2ee932f1be41d6&sub=wcp1578550254412174)
 
 ### 大数据
 * [Note](data/bigdata.md)

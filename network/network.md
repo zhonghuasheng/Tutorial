@@ -5,3 +5,5 @@ WebSocket 是为了满足基于 Web 的日益增长的实时通信需求而产�
 * WebSocket与http长连接的区别 https://www.jianshu.com/p/0c61f0e0cd1a
 * Socket 与 WebSocket https://blog.zengrong.net/post/socket-and-websocket/
 * WebSocket（二）-WebSocket、Socket、TCP、HTTP区别 https://www.cnblogs.com/merray/p/7918977.html
+* TCP连接、Http连接与Socket连接的区别 http://note.youdao.com/noteshare?id=d045b8abde4101cb28892b3dd33f24c4&sub=wcp1578547786163252
+* Socket封包、拆包、粘包 http://note.youdao.com/noteshare?id=20da81a278dff7065c2ee932f1be41d6&sub=wcp1578550254412174
