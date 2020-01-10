@@ -73,3 +73,5 @@
 * failover 失效转移
 * AB测试 比较AB两个哪个好的测试
 * polling 轮询
+* pojo Plain Ordinary Java Object 简单的Java对象，也就是普通的JavaBeans，是为了避免和EJB混淆而创建的简称。
+* po Persisent Object持久化对象

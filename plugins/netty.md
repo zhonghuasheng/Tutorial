@@ -13,6 +13,10 @@
     * 文档说明介绍
         * https://www.jianshu.com/p/7522bda72a25
         * https://blog.csdn.net/huangpeigui/article/details/86596245
+* webSocket进阶篇——STOMP Over Websocket https://www.jianshu.com/p/32fae52c61f6
+* Netty 粘包/半包原理与拆包实战 https://blog.csdn.net/crazymakercircle/article/details/83957259
+* 如何用JAVA实现一款高可用的TCP数据传输服务器(一)——【基于netty4.x】 https://blog.csdn.net/qq_24874939/article/details/86475285 https://github.com/Siwash/netty_TCP
+* Linux下Netty实现高性能UDP服务(SO_REUSEPORT) https://www.jianshu.com/p/61df929aa98b
 
 ## Netty总结
 Netty 是一款提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。也就是说，Netty 是一个基于 NIO 的客户、服务器端编程框架，使用 Netty 可以确保你快速和简单地开发出一个网络应用。
