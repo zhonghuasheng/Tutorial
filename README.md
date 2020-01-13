@@ -19,7 +19,6 @@
     * [JSP基础](java/javaweb/jsp.md)
     * [Servlet基础](java/javaweb/servlet.md)
 * [Java集合](java/basic/java-collection.md)
-* [Java IO/NIO](java/basic/java-io-nio.md)
 * [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98)
 * [JAVA8+版本移除了永久带Permanent Generation](https://github.com/zhonghuasheng/Tutorial/wiki/JAVA8%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E5%B8%A6Permanent-Generation)
 * [JAVA8 新特性 - default方法](http://note.youdao.com/noteshare?id=89fa780dc27b2e39194a7d6ab740d674)
@@ -226,17 +225,6 @@
 * [Http、TCP、Socket区别和使用场景](http://note.youdao.com/noteshare?id=d045b8abde4101cb28892b3dd33f24c4&sub=wcp1578547786163252)
 * [Socket粘包、拆包](http://note.youdao.com/noteshare?id=20da81a278dff7065c2ee932f1be41d6&sub=wcp1578550254412174)
 
-### 大数据
-* [Note](data/bigdata.md)
-
-### APP
-* [混合开发](mobile/app.md)
-
-### Shell脚本
-* [Shell基础编程](shell/shell.md)
-
-### VUE
-* [Vue笔记](Vue.md)
 
 ### 程序人生
 #### `软文`
@@ -275,6 +263,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-01-12.png)
+![](tutorial-2020-01-13.png)
 
 </center>

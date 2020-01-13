@@ -75,3 +75,4 @@
 * polling 轮询
 * pojo Plain Ordinary Java Object 简单的Java对象，也就是普通的JavaBeans，是为了避免和EJB混淆而创建的简称。
 * po Persisent Object持久化对象
+* demultiplexer 信号分离器，多路分配器 reactor模式中的名词

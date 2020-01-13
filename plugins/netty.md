@@ -2,6 +2,7 @@
 
 
 ## 学习计划
+`入门阶段`
 * Netty 简单server和client示例 https://www.jianshu.com/p/3c0830e13467
 * 基于netty搭建websocket，实现消息的主动推送 https://www.jianshu.com/p/56216d1052d7
 * Netty实现简单HTTP代理服务器 https://www.cnblogs.com/w1570631036/p/9665385.html
@@ -17,9 +18,16 @@
 * Netty 粘包/半包原理与拆包实战 https://blog.csdn.net/crazymakercircle/article/details/83957259
 * 如何用JAVA实现一款高可用的TCP数据传输服务器(一)——【基于netty4.x】 https://blog.csdn.net/qq_24874939/article/details/86475285 https://github.com/Siwash/netty_TCP
 * Linux下Netty实现高性能UDP服务(SO_REUSEPORT) https://www.jianshu.com/p/61df929aa98b
+`深入学习`
+* BIO/NIO/AIO/异步/同步
+* Reactor模式/Proactor模式
+* 基于Netty实现简单的RPC
+* Netty NioEventGroup的单线程/多线程/主从线程模型
 
 ## Netty总结
 Netty 是一款提供异步的、事件驱动的网络应用程序框架和工具，用以快速开发高性能、高可靠性的网络服务器和客户端程序。也就是说，Netty 是一个基于 NIO 的客户、服务器端编程框架，使用 Netty 可以确保你快速和简单地开发出一个网络应用。
+Netty 基本上是作为架构的技术底层而存在的，主要完成高性能的网络通信。
+Channel 是对Java 底层Socket 连接的抽象
 
 ![](png/netty-architecture.png)
 
