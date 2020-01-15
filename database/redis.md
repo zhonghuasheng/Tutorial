@@ -22,6 +22,8 @@
 * Redis安全如何保证
 * Redis性能测试
 * 整理自己的RedisUtil https://www.runoob.com/redis/redis-java.html
+* Redis面试题汇总
+    * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
 
 
 ### 学习笔记

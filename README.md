@@ -138,7 +138,7 @@
 * [Mongodb](database/mongodb.md)
 
 ### Redis
-* [Redis基础只是](database/redis.md)
+* [Redis基础知识](database/redis.md)
 * [Redis使用单线程的原因](https://github.com/zhonghuasheng/Tutorial/issues/105)
 
 # 服务器
@@ -176,6 +176,7 @@
   * [阿里和微博的异地多活方案 - 思考较多](http://note.youdao.com/noteshare?id=ea3f9a9d404a8493eb8671759224e672&sub=wcp1578025746271204)
 * [削峰填谷](architecture/削峰填谷.md)
     * [58到家MQ如何快速实现流量削峰填谷](http://note.youdao.com/noteshare?id=5b75fab5a151731588d8c25472b52ece&sub=wcp1578276033980908)
+* [使用Nginx+Redis+Tomcat实现Session的全局共享、粘性Session](http://note.youdao.com/noteshare?id=61756a339ba0bd5175ec53340ac295ae&sub=wcp1579073336527942)
 
 #### `扩展性`
 #### `伸缩性`
@@ -263,6 +264,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-01-14.png)
+![](tutorial-2020-01-15.png)
 
 </center>
