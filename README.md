@@ -117,7 +117,7 @@
 
 `数据访问`
 #### `MyBatis`
-* [MyBatis](plugins/mybatis.md)
+* [MyBatis学习笔记](plugins/mybatis.md)
 
 #### `ELK`
 * TODO: [ELK](elasticsearch.md)
@@ -264,6 +264,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-01-15.png)
+![](tutorial-2020-01-16.png)
 
 </center>
