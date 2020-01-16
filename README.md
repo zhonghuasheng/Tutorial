@@ -152,7 +152,7 @@
 #### `Nginx`
 * [Nginx在CentOS中的安装](plugins/nginx.md##安装)
 * [Nginx反向代理服务器搭建](plugins/nginx.md)
-* TODO： [Nginx实现动静分离](plugins/nginx.md)
+* [Nginx实现动静分离](plugins/nginx.md)
 
 # 架构设计
 
