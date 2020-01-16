@@ -84,6 +84,10 @@
 * 为什么开启二级缓存需要对PO对象序列化？开启了二级缓存后，还需要将要缓存的pojo实现Serializable接口，为了将缓存数据取出执行反序列化操作，因为二级缓存数据存储介质多种多样，不一定只存在内存中，有可能存在硬盘中，如果我们要再取这个缓存的话，就需要反序列化了。所以mybatis中的pojo都去实现Serializable接口。
 * mybatis 也提供了对缓存的支持， 分为一级缓存和二级缓存。 但是在默认的情况下， 只开启一级缓存（一级缓存是对同一个 SqlSession 而言的）。
 * 刷新缓存是清空这个 SqlSession 的所有缓存， 不单单是某个键。
+
+    ![](png/mybatis-level1-cache.png)
+
+    ![](png/mybatis-level2-cache.png)
 * 一级缓存总结
     1. 在同一个 SqlSession 中, Mybatis 会把执行的方法和参数通过算法生成缓存的键值， 将键值和结果存放在一个 Map 中， 如果后续的键值一样， 则直接从 Map 中获取数据；
     2. 不同的 SqlSession 之间的缓存是相互隔离的；
