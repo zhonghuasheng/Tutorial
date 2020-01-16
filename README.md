@@ -117,7 +117,7 @@
 
 `数据访问`
 #### `MyBatis`
-* [MyBatis](plugins/mybatis.md)
+* [MyBatis学习笔记](plugins/mybatis.md)
 
 #### `ELK`
 * TODO: [ELK](elasticsearch.md)
