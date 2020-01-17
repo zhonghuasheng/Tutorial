@@ -135,7 +135,7 @@
 * [解决Postgresql RDS CPU使用率过高的问题](database/postgresql/PostgreSQL_CPU_Usage_High.md)
 
 ### Mongodb
-* [Mongodb](database/mongodb.md)
+* [Mongodb学习笔记](database/mongodb.md)
 
 ### Redis
 * [Redis基础知识](database/redis.md)
