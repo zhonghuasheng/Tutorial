@@ -117,7 +117,7 @@
 
 `数据访问`
 #### `MyBatis`
-* [MyBatis](plugins/mybatis.md)
+* [MyBatis学习笔记](plugins/mybatis.md)
 
 #### `ELK`
 * TODO: [ELK](elasticsearch.md)
@@ -135,7 +135,7 @@
 * [解决Postgresql RDS CPU使用率过高的问题](database/postgresql/PostgreSQL_CPU_Usage_High.md)
 
 ### Mongodb
-* [Mongodb](database/mongodb.md)
+* [Mongodb学习笔记](database/mongodb.md)
 
 ### Redis
 * [Redis基础知识](database/redis.md)
@@ -152,7 +152,7 @@
 #### `Nginx`
 * [Nginx在CentOS中的安装](plugins/nginx.md##安装)
 * [Nginx反向代理服务器搭建](plugins/nginx.md)
-* TODO： [Nginx实现动静分离](plugins/nginx.md)
+* [Nginx实现动静分离](plugins/nginx.md)
 
 # 架构设计
 

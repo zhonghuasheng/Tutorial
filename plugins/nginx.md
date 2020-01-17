@@ -1,3 +1,29 @@
+### 学习计划
+* Nginx常用来干什么
+* Nginx实现动静分离 https://www.jianshu.com/p/037a088eca4f
+
+### 学习笔记
+* Nginx实现动静分离笔记
+配置
+```
+#拦截静态资源
+location ~ .*\.(html|htm|gif|jpg|jpeg|bmp|png|ico|js|css)$ {
+    root /Users/dalaoyang/Downloads/static;
+}
+```
+```
+2020/01/16 16:56:06 [error] 32656#32656: *10 open() "/root/xxx/static/musicstore/static/js/jquery-3.4.1.min.js" failed (13: Permission denied), client: xx.xx.228.168, server: localhost, request: "GET /musicstore/static/js/jquery-3.4.1.min.js HTTP/1.1", host: "musicstore.anythy.cn", referrer: "http://musicstore.anythy.cn/musicstore/"
+```
+* 拦截的是监听端口下所有的符合规则的静态资源【能否拦截指定URL下的静态资源？】，从nginx日志中可以看到请求会按照url的路径在指定的静态资源文件夹下找到该文件，因此需要在static目录下按照url的规则建立。
+* 日志中出现了Permission denied的error，原因是nginx的进程用户是nginx，而我们创建的static文件夹路径的用户是root，因此需要修改用户。有两周方案，修改将ngix赋予static路径下所有文件及文件夹的可读权限，方案二修改nginx的进程用户`vim /etc/nginx/nginx.conf:`。应该采用方案一最小权限原则
+```
+# user www-data;
+user root;
+worker_processes auto;
+pid /run/nginx.pid;
+```
+实践发现，Niginx用户是不能Login的，导致了如果不赋予其足够的权限，它是访问不了root创建的文件夹，可放入/tmp目录下，谁都能访问。
+
 ## 安装
 ### 官方推荐安装
 * http://nginx.org/en/linux_packages.html#stable
