@@ -9,6 +9,7 @@
 * MyBatis示例 https://github.com/homejim/mybatis-examples
 * mybatis源码的中文注释以及mybatis的使用和源码解析 https://github.com/homejim/mybatis-cn
 * 【Java进阶】实现自己的ORM框架 https://blog.csdn.net/liyazhou0215/article/details/77431561
+* MyBatis Plus（简称MP）是一个 Mybatis 的增强工具，在 Mybatis 的基础上只做增强不做改变，为简化开发、提高效率而生
 
 ### 学习笔记
 * 【关注点】针对高级查询，Mybatis需要手动编写SQL语句，以及ResultMap。而Hibernate有良好的映射机制，开发者无需关心SQL的生成与结果映射，可以更专注于业务流程。【SQL优化方面】Hibernate的查询会将表中的所有字段查询出来，这一点会有性能消耗。Hibernate也可以自己写SQL来指定需要查询的字段，但这样就破坏了Hibernate开发的简洁性。而Mybatis的SQL是手动编写的，所以可以按需求指定查询的字段。但Hibernate具有自己的日志统计。Mybatis本身不带日志统计，使用Log4j进行日志记录。【扩展性】Hibernate与具体数据库的关联只需在XML文件中配置即可，所有的HQL语句与具体使用的数据库无关，移植性很好。MyBatis项目中所有的SQL语句都是依赖所用的数据库的，所以不同数据库类型的支持不好。【优势对比】MyBatis可以进行更为细致的SQL优化，可以减少查询字段。MyBatis容易掌握，而Hibernate门槛较高。
