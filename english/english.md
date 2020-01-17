@@ -78,3 +78,4 @@
 * demultiplexer 信号分离器，多路分配器 reactor模式中的名词
 * allocator 分配者
 * Cache Hit Ratio 缓存命中率，MyBatis中二级缓存log会输出
+* chunk 块，大块

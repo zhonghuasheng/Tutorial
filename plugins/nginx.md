@@ -22,6 +22,7 @@ user root;
 worker_processes auto;
 pid /run/nginx.pid;
 ```
+实践发现，Niginx用户是不能Login的，导致了如果不赋予其足够的权限，它是访问不了root创建的文件夹，可放入/tmp目录下，谁都能访问。
 
 ## 安装
 ### 官方推荐安装
