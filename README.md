@@ -211,6 +211,10 @@
 `行为型`
     * [解释器模式](https://github.com/zhonghuasheng/DesignPattern/wiki/%E8%A1%8C%E4%B8%BA%E5%9E%8B-%E8%A7%A3%E6%9E%90%E5%99%A8%E6%A8%A1%E5%BC%8F-Interpreter-Pattern)
 
+#### `数据结构`
+* [数据结构学习笔记](algorithm/数据结构.md)
+* [数组 八种常见的排序算法](https://github.com/zhonghuasheng/JAVA/blob/master/README.md#thinking)
+
 #### `算法`
 * [Letcode](letcode/note.md)
 * [拜占庭问题](https://github.com/zhonghuasheng/Tutorial/issues/48)
