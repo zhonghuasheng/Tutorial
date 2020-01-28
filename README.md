@@ -268,6 +268,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-01-28.png)
+![](tutorial-2020-01-29.png)
 
 </center>
