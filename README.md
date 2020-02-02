@@ -15,9 +15,6 @@
 
 #### `Java基础`
 * [Java基础](java/basic/java-basic.md)
-* Java Web
-    * [JSP基础](java/javaweb/jsp.md)
-    * [Servlet基础](java/javaweb/servlet.md)
 * [Java集合](java/basic/java-collection.md)
 * [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98)
 * [JAVA8+版本移除了永久带Permanent Generation](https://github.com/zhonghuasheng/Tutorial/wiki/JAVA8%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E5%B8%A6Permanent-Generation)
@@ -32,13 +29,12 @@
 * [JDBC](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
 
 #### `Java虚拟机`
-* [深入理解JMM（Java虚拟机模型）](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972) - 2019/12/23
-  * 计算机各部件速度的差异引出缓存 - 如何保证缓存一致性
-  * JMM介绍：变量的各种操作、指令规范、三大特性
-  * volatile关键字解读(可见性与指令重排)
-  * HappenBefore规则
+* [Java虚拟机概述](http://note.youdao.com/noteshare?id=04255aa8ae9ab45ed502296d57c736d3&sub=D4C06128EBBD414C91D85B7F89AB0C91)
+* [Java内存模型（JMM）概述](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972)
+* [volatile关键字解析](http://note.youdao.com/noteshare?id=b463861623604a614e0ceb2e27f4b36e&sub=ED4A85833F6F4531A65BBC382E218D32)
 
 #### `Java Web`
+* [Servlet基础](java/javaweb/servlet.md)
 * [JSP基础](java/javaweb/jsp.md)
 * [JSP是不是被淘汰](https://github.com/zhonghuasheng/JAVA/wiki/%E5%AF%B9%E5%A4%A7%E5%9E%8BJAVA-Web%E9%A1%B9%E7%9B%AE%E4%B8%8B%E4%BD%BF%E7%94%A8JSP%E7%9A%84%E6%80%9D%E8%80%83)
 * [JSP Velocity FreeMarker对比](https://github.com/zhonghuasheng/JAVA/wiki/JSP---Velocity---FreeMarker%E5%AF%B9%E6%AF%94)
@@ -268,6 +264,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-02-01.png)
+![](tutorial-2020-02-02.png)
 
 </center>
