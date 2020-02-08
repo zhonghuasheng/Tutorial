@@ -35,6 +35,7 @@
 * [Java内存区域和对象创建及内存分配](http://note.youdao.com/noteshare?id=c5cc62733e28ed05ea252db5243ca797&sub=3386EF7F877C493DACA2FDD53BC0E0E4)
 * [JVM垃圾回收机制](http://note.youdao.com/noteshare?id=210c03900e584c1001b4b16d4060dc89&sub=wcp1581062973917549)
 * [JVM堆内存(heap)及垃圾回收总结](http://note.youdao.com/noteshare?id=27f16d42fea30933884b640a941e8587&sub=wcp1580995061039682)
+* [Java对象的创建过程解析](http://note.youdao.com/noteshare?id=720b1f1bef16d494b767edeaf52e1eee&sub=wcp158116390844063)
 
 #### `Java Web`
 * [Servlet基础](java/javaweb/servlet.md)
