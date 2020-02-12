@@ -3,8 +3,6 @@
     * [进程与线程](#进程与线程)
     * [单线程与多线程](#单线程与多线程)
     * [实现线程的4中方式](#实现线程的4中方式)
-        * [Thread和Runnable的异同](#Thread和Runnable的异同)
-        * [thread.start()和runnable.run()的区别](#thread.start()和runnable.run()的区别)
 
 ## 基础概念
 
@@ -186,9 +184,34 @@ JVM 程序在什么情况下能够正常退出？
 The Java Virtual Machine exits when the only threads running are all daemon threads.
 上面这句话来自 JDK 官方文档，意思是：如果 JVM 中没有一个正在运行的非守护线程，这个时候，JVM 会退出。换句话说，守护线程拥有自动结束自己生命周期的特性，而非守护线程不具备这个特点
 
-
 ### 线程的基本操作
+* thread.start()线程启动运行
+* thread.run()在当前线程中运行run方法
+* Thread.currentThread()获取当前线程，getName()获取名字
+
 ### synchronized关键字
+> synchronized方法
+```java
+public synchronized void foo() {
+    System.out.println("synchronized methoed");
+}
+```
+> synchronized代码块
+```java
+public void foo() {
+    synchronized (this) {
+        System.out.println("synchronized methoed");
+    }
+}
+```
+* synchronized代码块中的this是指当前对象。也可以将this替换成其他对象，例如将this替换成obj，则foo2()在执行synchronized(obj)时就获取的是obj的同步锁。
+* synchronized代码块中XXClass.class是指这个类，新建多个实例来访问同步方法或同步代码块也会被阻塞
+* synchronized代码块可以更精确的控制冲突限制访问区域，有时候表现更高效率。
+> synchronized关键字使用原则
+1. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的该synchronized方法或者synchronized代码块的访问将被阻塞。
+2. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的非synchronized方法的访问将不会被阻塞。
+3. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的其他synchronized方法或代码块的访问将会被阻塞。
+
 ### 生产者消费者问题
 
 https://www.cnblogs.com/skywang12345/
