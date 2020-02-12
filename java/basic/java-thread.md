@@ -3,6 +3,14 @@
     * [进程与线程](#进程与线程)
     * [单线程与多线程](#单线程与多线程)
     * [实现线程的4中方式](#实现线程的4中方式)
+        * [thread.start()和runnable.run()的区别](#thread.start()和runnable.run()的区别)
+        * [Thread和Runnable的异同](#Thread和Runnable的异同)
+    * [线程的基本操作](#线程的基本操作)
+    * [线程的优先级与守护线程](#线程的优先级与守护线程)
+    * [线程的状态与转换](#线程的状态与转换)
+    * [synchronized关键字](#synchronized关键字)
+    * [实例锁与全局锁](#实例锁与全局锁)
+    * [wait和notify](#wait和notify)
 
 ## 基础概念
 
@@ -211,6 +219,269 @@ public void foo() {
 1. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的该synchronized方法或者synchronized代码块的访问将被阻塞。
 2. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的非synchronized方法的访问将不会被阻塞。
 3. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的其他synchronized方法或代码块的访问将会被阻塞。
+
+### 实例锁与全局锁
+> 实例锁：锁在某一个实例对象上。如果该类是单例，那么该锁也具有全局锁的概念。实例锁对应的就是synchronized关键字。
+```java
+synchronized(this) synchronized(obj)
+public synchronized void foo()
+```
+> 全局锁：该锁针对的是类，无论实例多少个对象，那么线程都共享该锁。全局锁对应的就是static synchronized（或者是锁在该类的class或者classloader对象上）。
+```java
+synchronized(XXXClass.class)
+public static synchronized void foo()
+```
+> 例子
+```java
+pulbic class Something {
+    public synchronized void isSyncA(){}
+    public synchronized void isSyncB(){}
+    public static synchronized void cSyncA(){}
+    public static synchronized void cSyncB(){}
+}
+```
+假设，Something有两个实例x和y。分析下面4组表达式获取的锁的情况。
+1. x.isSyncA()与x.isSyncB() 不能同时访问。实例锁，访问两个同步方法的对象是同一个对象x
+2. x.isSyncA()与y.isSyncA() 能同时访问。实例锁，访问同一个同步方法的对象是两个不同的对象，实例锁不是同一个
+3. x.cSyncA()与y.cSyncB() 不能同时访问。因为cSyncA()和cSyncB()都是static类型，x.cSyncA()相当于Something.isSyncA()，y.cSyncB()相当于Something.isSyncB()，因此它们共用一个同步锁，不能被同时反问。
+4. x.isSyncA()与Something.cSyncA() 可以被同时访问。因为isSyncA()是实例方法，x.isSyncA()使用的是对象x的锁；而cSyncA()是静态方法，Something.cSyncA()可以理解对使用的是“类的锁”。因此，它们是可以被同时访问的。
+```java
+public class SynchronizedLockExample {
+
+    public static void main(String[] args) {
+        SynchronizedLock x = new SynchronizedLock();
+        // x.syncA()与x.syncB()
+        new Thread(()-> {
+            try {
+                x.syncA();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Threadx ").start();
+        new Thread(()-> {
+            try {
+                x.syncB();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Thready ").start();
+        /** 实例锁。不能同时访问
+         * Threadx 0
+         * Threadx 1
+         * Threadx 2
+         * Thready 0
+         * Thready 1
+         * Thready 2
+         */
+        // x.syncA()与y.syncA()
+        SynchronizedLock y = new SynchronizedLock();
+        SynchronizedLock y2 = new SynchronizedLock();
+        new Thread(() -> {
+            try {
+                y.syncA();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Thready1").start();
+        new Thread(() -> {
+            try {
+                y2.syncA();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Thready2").start();
+        /**实例锁。可以同时访问，实例不是同一个对象锁
+         * Thready10
+         * Thready20
+         * Thready21
+         * Thready11
+         * Thready22
+         * Thready12
+         */
+        // x.syncC()与y.syncD()
+        SynchronizedLock x1 = new SynchronizedLock();
+        SynchronizedLock y3 = new SynchronizedLock();
+        new Thread(()-> {
+            try {
+                x1.syncC();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Threadx1 ").start();
+        new Thread(()-> {
+            try {
+                y3.syncD();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Thready3 ").start();
+        /** 全局锁。不能同时访问，static synchronized修饰的方法是全局静态的，与实例无关
+         * Threadx1 0
+         * Threadx1 1
+         * Threadx1 2
+         * Thready3 0
+         * Thready3 1
+         * Thready3 2
+         */
+        // x.syncA与SynchronizedLock.syncD
+        SynchronizedLock x3 = new SynchronizedLock();
+        new Thread(()-> {
+            try {
+                x3.syncA();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Theradx3").start();
+        new Thread(() -> {
+            try {
+                SynchronizedLock.syncD();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }, "Threadstatic ").start();
+        /** 可以同时访问。x.syncA是实例锁，SynchronizedLock.syncD是全局锁
+         * Theradx30
+         * Threadstatic 0
+         * Theradx31
+         * Threadstatic 1
+         * Theradx32
+         * Threadstatic 2
+         */
+    }
+}
+
+class SynchronizedLock {
+
+    public synchronized void syncA() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(Thread.currentThread().getName() + i);
+            Thread.sleep(1000);
+        }
+    }
+
+    public synchronized void syncB() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(Thread.currentThread().getName() + i);
+            Thread.sleep(1000);
+        }
+    }
+
+    public static synchronized void syncC() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(Thread.currentThread().getName() + i);
+            Thread.sleep(1000);
+        }
+    }
+
+    public static synchronized void syncD() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            System.out.println(Thread.currentThread().getName() + i);
+            Thread.sleep(1000);
+        }
+    }
+}
+```
+
+### wait和notify
+> wait, notify, notifyAll
+在Object.java中，定义了wait(), notify()和notifyAll()等接口。wait()的作用是让当前线程进入等待状态，同时，wait()也会让当前线程释放它所持有的锁。而notify()和notifyAll()的作用，则是唤醒当前对象上的等待线程；notify()是唤醒单个线程，而notifyAll()是唤醒所有的线程。
+
+Object类中关于等待/唤醒的API详细信息如下：
+* notify() -- 唤醒在此对象监视器上等待的单个线程。
+* notifyAll() -- 唤醒在此对象监视器上等待的所有线程。
+* wait() -- 让当前线程处于“等待(阻塞)状态”，“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法”，当前线程被唤醒(进入“就绪状态”)。
+* wait(long timeout) -- 让当前线程处于“等待(阻塞)状态”，“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量”，当前线程被唤醒(进入“就绪状态”)。
+* wait(long timeout, int nanos) -- 让当前线程处于“等待(阻塞)状态”，“直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量”，当前线程被唤醒(进入“就绪状态”)。
+```java
+public class NotifyExample {
+
+    public static void main(String[] args) {
+        Notify notify = new Notify();
+        new Thread(()-> {
+            synchronized (notify) {
+                while (notify.flag) {
+                    System.out.println("User A");
+                    try {
+                        notify.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            notify.call();
+            synchronized (notify) {
+                notify.notifyAll();
+            }
+        }, "User A").start();
+
+        new Thread(()-> {
+            synchronized (notify) {
+                while (notify.flag) {
+                    System.out.println("User B");
+                    try {
+                        notify.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            notify.call();
+            synchronized (notify) {
+                notify.notifyAll();
+            }
+        }, "User B").start();
+        /**
+         * Begin to call
+         * User A calling 0%
+         * User B
+         * User A calling 50%
+         * User A calling 100%
+         * End to call
+         * Begin to call
+         * User B calling 0%
+         * User B calling 50%
+         * User B calling 100%
+         * End to call
+         */
+    }
+}
+
+class Notify {
+    public boolean flag = false;
+    public void call() {
+        flag = true;
+        System.out.println("Begin to call");
+        for (int i = 0; i < 101; i+=50) {
+            System.out.println(Thread.currentThread().getName() + " calling " + i + "%");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("End to call");
+        flag = false;
+    }
+}
+```
+> 注意事项
+* “当前线程”在调用wait()时，必须拥有该对象的同步锁。该线程调用wait()之后，会释放该锁；然后一直等待直到“其它线程”调用对象的同步锁的notify()或notifyAll()方法。然后，该线程继续等待直到它重新获取“该对象的同步锁”，然后就可以接着运行。, synchronized(obj)，否则会出现`java.lang.IllegalMonitorStateException`
+* 调用notify时也需要获得该对象的“同步锁”，jdk中的注释：
+```md
+This method should only be called by a thread that is the owner of this object's monitor. A thread becomes the owner of the  object's monitor in one of three ways:
+1. By executing a synchronized instance method of that object. 通过获得该对象的同步锁
+2. By executing the body of a {@code synchronized} statement that synchronizes on the object. 在该对象的同步代码块中执行
+3. For objects of type {@code Class,} by executing a synchronized static method of that class. 通过执行全局锁的方法
+```
+* Only one thread at a time can own an object's monitor.
+
+> 为什么notify(), wait()等函数定义在Object中，而不是Thread中
+Object中的wait(), notify()等函数，和synchronized一样，会对“对象的同步锁”进行操作。
+wait()会使“当前线程”等待，因为线程进入等待状态，所以线程应该释放它锁持有的“同步锁”，否则其它线程获取不到该“同步锁”而无法运行！
+OK，线程调用wait()之后，会释放它锁持有的“同步锁”；而且，根据前面的介绍，我们知道：等待线程可以被notify()或notifyAll()唤醒。现在，请思考一个问题：notify()是依据什么唤醒等待线程的？或者说，wait()等待线程和notify()之间是通过什么关联起来的？答案是：依据“对象的同步锁”。
+负责唤醒等待线程的那个线程(我们称为“唤醒线程”)，它只有在获取“该对象的同步锁”(这里的同步锁必须和等待线程的同步锁是同一个)，并且调用notify()或notifyAll()方法之后，才能唤醒等待线程。虽然，等待线程被唤醒；但是，它不能立刻执行，因为唤醒线程还持有“该对象的同步锁”。必须等到唤醒线程释放了“对象的同步锁”之后，等待线程才能获取到“对象的同步锁”进而继续运行。
+
+总之，notify(), wait()依赖于“同步锁”，而“同步锁”是对象锁持有，并且每个对象有且仅有一个！这就是为什么notify(), wait()等函数定义在Object类，而不是Thread类中的原因。
 
 ### 生产者消费者问题
 
