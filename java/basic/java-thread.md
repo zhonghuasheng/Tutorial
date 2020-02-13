@@ -483,6 +483,43 @@ OK，线程调用wait()之后，会释放它锁持有的“同步锁”；而且
 
 总之，notify(), wait()依赖于“同步锁”，而“同步锁”是对象锁持有，并且每个对象有且仅有一个！这就是为什么notify(), wait()等函数定义在Object类，而不是Thread类中的原因。
 
+### 线程的让步yeild
+yield()的作用是让步。它能让当前线程由“运行状态”进入到“就绪状态”，从而让其它具有相同优先级的等待线程获取执行权；但是，并不能保证在当前线程调用yield()之后，其它具有相同优先级的线程就一定能获得执行权；也有可能是当前线程又进入到“运行状态”继续运行！
+```java
+public class YieldExample {
+
+    public static void main(String[] args) {
+        Yeild yeild = new Yeild();
+        new Thread(yeild::call, "yeild1 ").start();
+        new Thread(yeild::call, "yeild2 ").start();
+        new Thread(yeild::call, "yeild3 ").start();
+        new Thread(yeild::call, "yeild4 ").start();
+        new Thread(yeild::call, "yeild5 ").start();
+        new Thread(yeild::call, "yeild6 ").start();
+        new Thread(yeild::call, "yeild7 ").start();
+        new Thread(yeild::call, "yeild8 ").start();
+        new Thread(yeild::call, "yeild9 ").start();
+        new Thread(yeild::call, "yeild0 ").start();
+    }
+}
+
+class Yeild {
+
+    public synchronized void call() {
+        for (int i = 0; i < 20; i++) {
+            System.out.println(Thread.currentThread().getName() + i);
+            if(i % 4 == 0) {
+                Thread.yield();
+            }
+        }
+    }
+}
+```
+> yeild和wait的区别
+wait()的作用是让当前线程由“运行状态”进入“等待(阻塞)状态”的同时，也会释放同步锁。而yield()的作用是让步，它也会让当前线程离开“运行状态”。它们的区别是：
+1. wait()是让线程由“运行状态”进入到“等待(阻塞)状态”，而yield()是让线程由“运行状态”进入到“就绪状态”。
+2. wait()是会线程释放它所持有对象的同步锁，而yield()方法不会释放锁。
+
 ### 生产者消费者问题
 
 https://www.cnblogs.com/skywang12345/
