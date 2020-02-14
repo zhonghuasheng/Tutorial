@@ -216,9 +216,9 @@ public void foo() {
 * synchronized代码块中XXClass.class是指这个类，新建多个实例来访问同步方法或同步代码块也会被阻塞
 * synchronized代码块可以更精确的控制冲突限制访问区域，有时候表现更高效率。
 > synchronized关键字使用原则
-1. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的该synchronized方法或者synchronized代码块的访问将被阻塞。
-2. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的非synchronized方法的访问将不会被阻塞。
-3. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对该对象的其他synchronized方法或代码块的访问将会被阻塞。
+1. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的该synchronized方法或者synchronized代码块的访问将被阻塞。
+2. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的非synchronized方法的访问将不会被阻塞。
+3. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的其他synchronized方法或代码块的访问将会被阻塞。
 
 ### 实例锁与全局锁
 > 实例锁：锁在某一个实例对象上。如果该类是单例，那么该锁也具有全局锁的概念。实例锁对应的就是synchronized关键字。
@@ -529,11 +529,77 @@ sleep() 的作用是让当前线程休眠，即当前线程会从“运行状态
 > sleep() 与 wait()的比较
 我们知道，wait()的作用是让当前线程由“运行状态”进入“等待(阻塞)状态”的同时，也会释放同步锁。而sleep()的作用是也是让当前线程由“运行状态”进入到“休眠(阻塞)状态”。但是，wait()会释放对象的同步锁，而sleep()则不会释放锁。
 
-### 生产者消费者问题
+### Thread中的join
+When we call this method using a thread object, it suspends the execution of the calling thread until the object called finishes its execution.
+当我们调用某个线程的这个方法时，这个方法会挂起调用线程，直到被调用线程结束执行，调用线程才会继续执行。
+join() 一共有三个重载版本，分别是无参、一个参数、两个参数：
+```java
+public final void join() throws InterruptedException;
+public final synchronized void join(long millis) throws InterruptedException;
+public final synchronized void join(long millis, int nanos) throws InterruptedException;
+源码分析
+public final synchronized void join(long millis)
+ throws InterruptedException {
+     long base = System.currentTimeMillis();
+     long now = 0;
 
-https://www.cnblogs.com/skywang12345/
-https://www.cnblogs.com/walixiansheng/p/9588603.html
-https://segmentfault.com/u/niteip/articles?sort=vote
-https://www.cnblogs.com/qq1290511257/p/10645106.html
-https://www.cnblogs.com/developer_chan/p/10391365.html
-Java多线程中的钩子线程https://www.exception.site/java-concurrency/java-concurrency-hook-thread
+     if (millis < 0) {
+         throw new IllegalArgumentException("timeout value is negative");
+     }
+
+     if (millis == 0) {
+         while (isAlive()) {
+             wait(0);// 此处调用wait会让当前线程从运行状态变为阻塞状态，并让出对象锁
+         }
+     } else {
+         while (isAlive()) {
+             long delay = millis - now;
+             if (delay <= 0) {
+                 break;
+             }
+             wait(delay);
+             now = System.currentTimeMillis() - base;
+         }
+     }
+}
+```
+小结
+1. 三个方法都被final修饰，无法被子类重写。
+2. join(long), join(long, long) 是synchronized method，同步的对象是当前线程实例。
+3. 无参版本和两个参数版本最终都调用了一个参数的版本。join() 和 join(0) 是等价的，表示一直等下去；join(非0)表示等待一段时间。
+4. 从源码可以看到 join(0) 调用了Object.wait(0)，其中Object.wait(0) 会一直等待，直到被notify/中断才返回。
+while(isAlive())是为了防止子线程伪唤醒(spurious wakeup)，只要子线程没有TERMINATED的，父线程就需要继续等下去。
+5. join() 和 sleep() 一样，可以被中断（被中断时，会抛出 InterrupptedException 异常）；不同的是，join() 内部调用了 wait()，会出让锁，而 sleep() 会一直保持锁。
+
+### 线程的中断interrupted
+interrupt()的作用是中断本线程。
+本线程中断自己是被允许的；其它线程调用本线程的interrupt()方法时，会通过checkAccess()检查权限。这有可能抛出SecurityException异常。
+* 终止处于“阻塞状态”的线程: 通过“中断”方式终止处于“阻塞状态”的线程。当线程由于被调用了sleep(), wait(), join()等方法而进入阻塞状态；若此时调用线程的interrupt()将线程的中断标记设为true。由于处于阻塞状态，中断标记会被清除，同时产生一个InterruptedException异常。将InterruptedException放在适当的为止就能终止线程。
+```java
+@Override
+public void run() {
+    while (true) {
+        try {
+            // 执行任务...
+        } catch (InterruptedException ie) {
+            // InterruptedException在while(true)循环体内。
+            // 当线程产生了InterruptedException异常时，while(true)仍能继续运行！需要手动退出
+            break;
+        }
+    }
+}
+}
+```
+说明：在while(true)中不断的执行任务，当线程处于阻塞状态时，调用线程的interrupt()产生InterruptedException中断。中断的捕获在while(true)之外，这样就退出了while(true)循环！
+InterruptedException异常的捕获在whle(true)之内。当产生InterruptedException异常时，被catch处理之外，仍然在while(true)循环体内；要退出while(true)循环体，需要额外的执行退出while(true)的操作。thread在“等待(阻塞)状态”时，被interrupt()中断；此时，会清除中断标记(即isInterrupted()会返回false)，而且会抛出InterruptedException异常(该异常在while循环体内被捕获)
+
+### 生产者消费者问题
+所谓的生产者消费者模型，是通过一个容器来解决生产者和消费者的强耦合问题。通俗的讲，就是生产者在不断的生产，消费者也在不断的消费，可是消费者消费的产品是生产者生产的，这就必然存在一个中间容器，我们可以把这个容器想象成是一个货架，当货架空的时候，生产者要生产产品，此时消费者在等待生产者往货架上生产产品，而当货架满的时候，消费者可以从货架上拿走商品，生产者此时等待货架的空位，这样不断的循环。那么在这个过程中，生产者和消费者是不直接接触的，所谓的‘货架’其实就是一个阻塞队列，生产者生产的产品不直接给消费者消费，而是仍给阻塞队列，这个阻塞队列就是来解决生产者消费者的强耦合的。就是生产者消费者模型。
+
+# 引用
+* https://www.cnblogs.com/skywang12345/
+* https://www.cnblogs.com/walixiansheng/p/9588603.html
+* https://segmentfault.com/u/niteip/articles?sort=vote
+* https://www.cnblogs.com/qq1290511257/p/10645106.html
+* https://www.cnblogs.com/developer_chan/p/10391365.html
+* Java多线程中的钩子线程https://www.exception.site/java-concurrency/java-concurrency-hook-thread
