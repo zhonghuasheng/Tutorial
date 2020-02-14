@@ -32,7 +32,7 @@
 3. 进程是资源分配的最小单位，线程是程序执行的最小单位
 4. 一个线程可以创建和撤销另一个线程，同一个进程中的多个线程之间可以并发执行
 
-`并发`： 对于单核cpu来说，多线程并不是同时进行的，操作系统将时间分成了多个时间片，大概均匀的分配给线程，到达某个线程的时间段，该线程运行，其余时间待命，这样从微观上看，一个线程是走走停停的，宏观感官上，在某一时刻似乎所有线程都在运行。并发是针对时间片段来说的，在某个时间段内多个线程处于runnable到running之间，但每个时刻只有一个线程在running，这叫做并发。
+`并发`： 对于单核cpu来说，多线程并不是同时进行的，操作系统将时间分成了多个时间片(按时间均分或按优先级，JVM按优先级)，大概均匀的分配给线程，到达某个线程的时间段，该线程运行，其余时间待命，这样从微观上看，一个线程是走走停停的，宏观感官上，在某一时刻似乎所有线程都在运行。并发是针对时间片段来说的，在某个时间段内多个线程处于runnable到running之间，但每个时刻只有一个线程在running，这叫做并发。
 
 #### 单线程与多线程
 单线程就是进程中只有一个线程。单线程在程序执行时，所走的程序路径按照连续顺序排下来，前面的必须处理好，后面的才会执行。
@@ -765,4 +765,4 @@ public class UncaughtExceptionExample {
 * https://segmentfault.com/u/niteip/articles?sort=vote
 * https://www.cnblogs.com/qq1290511257/p/10645106.html
 * https://www.cnblogs.com/developer_chan/p/10391365.html
-* Java多线程中的钩子线程https://www.exception.site/java-concurrency/java-concurrency-hook-thread
+* https://www.exception.site/java-concurrency/java-concurrency-hook-thread
