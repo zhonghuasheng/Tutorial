@@ -2,19 +2,26 @@
 * [基础概念](#基础概念)
     * [进程与线程](#进程与线程)
     * [单线程与多线程](#单线程与多线程)
-    * [实现线程的4中方式](#实现线程的4中方式)
-        * [thread.start()和runnable.run()的区别](#thread.start()和runnable.run()的区别)
-        * [Thread和Runnable的异同](#Thread和Runnable的异同)
-    * [线程的基本操作](#线程的基本操作)
-    * [线程的优先级与守护线程](#线程的优先级与守护线程)
-    * [线程的状态与转换](#线程的状态与转换)
-    * [synchronized关键字](#synchronized关键字)
-    * [实例锁与全局锁](#实例锁与全局锁)
-    * [wait和notify](#wait和notify)
+* [实现线程的4中方式](#实现线程的4中方式)
+    * [thread.start()和runnable.run()的区别](#thread.start()和runnable.run()的区别)
+    * [Thread和Runnable的异同](#Thread和Runnable的异同)
+* [线程的基本操作](#线程的基本操作)
+* [线程的优先级与守护线程](#线程的优先级与守护线程)
+* [synchronized关键字](#synchronized关键字)
+* [实例锁与全局锁](#实例锁与全局锁)
+* [wait和notify](#wait和notify)
+* [线程的让步yeild](#线程的让步yeild)
+* [线程的休眠sleep](#线程的休眠sleep)
+* [Thread中的join](#Thread中的join)
+* [线程的中断interrupt](线程的中断interrupt)
+* [线程的状态与转换](#线程的状态与转换)
+* [生产者消费者问题](#生产者消费者问题)
+* [钩子线程](#钩子线程)
+* [线程中的异常](#线程中的异常)
 
-## 基础概念
+### 基础概念
 
-### 进程与线程
+#### 进程与线程
 `进程（Process）`是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。 在当代面向线程设计的计算机结构中，进程是线程的容器。程序是指令、数据及其组织形式的描述，进程是程序的实体。是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。程序是指令、数据及其组织形式的描述，进程是程序的实体。进程之间通过TCP/IP的端口来实现相互交互。
 
 `线程（thread）`是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务，多个线程共享本进程的资源。线程的通信就比较简单，有一大块共享的内存，只要大家的指针是同一个就可以看到各自的内存。
@@ -25,9 +32,9 @@
 3. 进程是资源分配的最小单位，线程是程序执行的最小单位
 4. 一个线程可以创建和撤销另一个线程，同一个进程中的多个线程之间可以并发执行
 
-`并发`： 对于单核cpu来说，多线程并不是同时进行的，操作系统将时间分成了多个时间片，大概均匀的分配给线程，到达某个线程的时间段，该线程运行，其余时间待命，这样从微观上看，一个线程是走走停停的，宏观感官上，在某一时刻似乎所有线程都在运行。并发是针对时间片段来说的，在某个时间段内多个线程处于runnable到running之间，但每个时刻只有一个线程在running，这叫做并发。
+`并发`： 对于单核cpu来说，多线程并不是同时进行的，操作系统将时间分成了多个时间片(按时间均分或按优先级，JVM按优先级)，大概均匀的分配给线程，到达某个线程的时间段，该线程运行，其余时间待命，这样从微观上看，一个线程是走走停停的，宏观感官上，在某一时刻似乎所有线程都在运行。并发是针对时间片段来说的，在某个时间段内多个线程处于runnable到running之间，但每个时刻只有一个线程在running，这叫做并发。
 
-### 单线程与多线程
+#### 单线程与多线程
 单线程就是进程中只有一个线程。单线程在程序执行时，所走的程序路径按照连续顺序排下来，前面的必须处理好，后面的才会执行。
 ```java
 // 单线程实例
@@ -151,19 +158,6 @@ public class NewThreadExecutorService {
 #### thread.start()和runnable.run()的区别
 Thread类继承了Runnable接口，调用start()方法会启动一个新的线程来执行相应的run()方法；run()方法和普通的成员方法一样，可以被重复调用，会在当前线程中执行该方法，而不会启动新的线程。(参考上面通过实现Runnable接口来实现新线程)
 
-### 线程的状态与转换
-线程共包括以下5种状态。
-1. 新建状态(New): 创建了线程对象但尚未调用start()方法时的状态。
-2. 就绪状态(Runnable): 也被称为“可执行状态”。线程对象被创建后，其它线程调用了该对象的start()方法，从而来启动该线程。例如，thread.start()。处于就绪状态的线程，随时可能被CPU调度执行。
-3. 阻塞状态(Blocked): 阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：
-    (01) 等待阻塞 -- 通过调用线程的wait()方法，让线程等待某工作的完成。
-    (02) 同步阻塞 -- 线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态。
-    (03) 其他阻塞 -- 通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。
-4. 等待状态(Waiting)：线程处于等待状态，处于该状态标识的当前线程需要等待其他线程做出一些特定的操作来唤醒自己。
-5. 超时等待状态(Time Waiting)：超时等待状态，与Waiting不同，在等待指定的时间后会自行返回。
-6. 终止状态(Terminated): 线程执行完了或者因异常退出了run()方法，该线程结束生命周期。
-![](img/thread-states.png)
-
 ### 线程的优先级与守护线程
 > 线程的优先级
 Java中的线程优先级的范围是1～10，默认的优先级是5，10极最高。线程的优先级具有以下特性：
@@ -219,6 +213,39 @@ public void foo() {
 1. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的该synchronized方法或者synchronized代码块的访问将被阻塞。
 2. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的非synchronized方法的访问将不会被阻塞。
 3. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的其他synchronized方法或代码块的访问将会被阻塞。
+
+> synchronized底层原理
+* 同步代码块：代码反编译后在代码块的前面会加上monitorenter，在代码块的最后加上monitorexit。
+```java
+public class SynchronizedDemo {
+    public void method() {
+        synchronized (this) {
+            System.out.println("Method 1 start");
+        }
+    }
+}
+```
+![](img/synchronized-block.jpg)
+
+每个对象有一个监视器锁(monitor)。当monitor被占用时就会处于锁定状态，线程执行monitorenter指令时尝试获取monitor的所有权，过程：
+1. 如果monitor的进入数为0，则该线程进入monitor，然后将进入数设置为1，该线程即为monitor的所有者。
+2. 如果线程已经占有该monitor，只是重新进入，则进入monitor的进入数加1。
+3. 如果其他线程已经占用了monitor，则该线程进入阻塞状态，直到monitor的进入数为0，再重新尝试获取monitor的所有权。
+执行monitorexit的线程必须是objectref所对应的monitor的所有者。
+指令执行时，monitor的进入数减1，如果减1后进入数为0，那线程退出monitor，不再是这个monitor的所有者。其他被这个monitor阻塞的线程可以尝试去获取这个 monitor 的所有权。
+通过这两段描述，我们应该能很清楚的看出Synchronized的实现原理，Synchronized的语义底层是通过一个monitor的对象来完成，其实wait/notify等方法也依赖于monitor对象，这就是为什么只有在同步的块或者方法中才能调用wait/notify等方法，否则会抛出java.lang.IllegalMonitorStateException的异常的原因。
+
+* 同步方法：
+```java
+public class SynchronizedMethod {
+    public synchronized void method() {
+        System.out.println("Hello World!");
+    }
+}
+```
+![](img/synchronized-method.jpg)
+
+从反编译的结果来看，方法的同步并没有通过指令monitorenter和monitorexit来完成(理论上其实也可以通过这两条指令来实现)，不过相对于普通方法，其常量池中多了ACC_SYNCHRONIZED标示符。JVM就是根据该标示符来实现方法的同步的：当方法调用时，调用指令将会检查方法的 ACC_SYNCHRONIZED 访问标志是否被设置，如果设置了，执行线程将先获取monitor，获取成功之后才能执行方法体，方法执行完后再释放monitor。在方法执行期间，其他任何线程都无法再获得同一个monitor对象。 其实本质上没有区别，只是方法的同步是一种隐式的方式来实现，无需通过字节码来完成。
 
 ### 实例锁与全局锁
 > 实例锁：锁在某一个实例对象上。如果该类是单例，那么该锁也具有全局锁的概念。实例锁对应的就是synchronized关键字。
@@ -593,8 +620,144 @@ public void run() {
 说明：在while(true)中不断的执行任务，当线程处于阻塞状态时，调用线程的interrupt()产生InterruptedException中断。中断的捕获在while(true)之外，这样就退出了while(true)循环！
 InterruptedException异常的捕获在whle(true)之内。当产生InterruptedException异常时，被catch处理之外，仍然在while(true)循环体内；要退出while(true)循环体，需要额外的执行退出while(true)的操作。thread在“等待(阻塞)状态”时，被interrupt()中断；此时，会清除中断标记(即isInterrupted()会返回false)，而且会抛出InterruptedException异常(该异常在while循环体内被捕获)
 
+### 线程的状态与转换
+线程共包括以下5种状态。
+1. 新建状态(New): 创建了线程对象但尚未调用start()方法时的状态。
+2. 就绪状态(Runnable): 也被称为“可执行状态”。线程对象被创建后，其它线程调用了该对象的start()方法，从而来启动该线程。例如，thread.start()。处于就绪状态的线程，随时可能被CPU调度执行。
+3. 阻塞状态(Blocked): 阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：
+    (01) 等待阻塞 -- 通过调用线程的wait()方法，让线程等待某工作的完成。
+    (02) 同步阻塞 -- 线程在获取synchronized同步锁失败(因为锁被其它线程所占用)，它会进入同步阻塞状态。
+    (03) 其他阻塞 -- 通过调用线程的sleep()或join()或发出了I/O请求时，线程会进入到阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。
+4. 等待状态(Waiting)：线程处于等待状态，处于该状态标识的当前线程需要等待其他线程做出一些特定的操作来唤醒自己。
+5. 超时等待状态(Time Waiting)：超时等待状态，与Waiting不同，在等待指定的时间后会自行返回。
+6. 终止状态(Terminated): 线程执行完了或者因异常退出了run()方法，该线程结束生命周期。
+![](img/java-thread-states.jpg)
+
+> 补充说明
+* Thread.sleep(long millis)，一定是当前线程调用此方法，当前线程进入TIMED_WAITING状态，但不释放对象锁，millis后线程自动苏醒进入就绪状态。作用：给其它线程执行机会的最佳方式。
+* Thread.yield()，一定是当前线程调用此方法，当前线程放弃获取的CPU时间片，但不释放锁资源，由运行状态变为就绪状态，让OS再次选择线程。作用：让相同优先级的线程轮流执行，但并不保证一定会轮流执行。实际中无法保证yield()达到让步目的，因为让步的线程还有可能被线程调度程序再次选中。Thread.yield()不会导致阻塞。该方法与sleep()类似，只是不能由用户指定暂停多长时间。
+* t.join()/t.join(long millis)，当前线程里调用其它线程t的join方法，当前线程进入WAITING/TIMED_WAITING状态，当前线程不会释放已经持有的对象锁。线程t执行完毕或者millis时间到，当前线程进入就绪状态。
+* obj.wait()，当前线程调用对象的wait()方法，当前线程释放对象锁，进入等待队列。依靠notify()/notifyAll()唤醒或者wait(long timeout) timeout时间到自动唤醒。
+* obj.notify()唤醒在此对象监视器上等待的单个线程，选择是任意性的。notifyAll()唤醒在此对象监视器上等待的所有线程。
+
 ### 生产者消费者问题
 所谓的生产者消费者模型，是通过一个容器来解决生产者和消费者的强耦合问题。通俗的讲，就是生产者在不断的生产，消费者也在不断的消费，可是消费者消费的产品是生产者生产的，这就必然存在一个中间容器，我们可以把这个容器想象成是一个货架，当货架空的时候，生产者要生产产品，此时消费者在等待生产者往货架上生产产品，而当货架满的时候，消费者可以从货架上拿走商品，生产者此时等待货架的空位，这样不断的循环。那么在这个过程中，生产者和消费者是不直接接触的，所谓的‘货架’其实就是一个阻塞队列，生产者生产的产品不直接给消费者消费，而是仍给阻塞队列，这个阻塞队列就是来解决生产者消费者的强耦合的。就是生产者消费者模型。
+```java
+public class Product {
+
+    private int size;
+    private final int capactiy = 100;
+
+    public synchronized void product(int n) {
+        while(size >= capactiy) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        size+=n;
+        System.out.println(Thread.currentThread().getName() + "生产" + n  + "个，剩余" + size);
+        notifyAll();
+    }
+
+    public synchronized void consume(int n) {
+        while ((size - n) < 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        size-=n;
+        System.out.println(Thread.currentThread().getName() + "消费" + n  + "个，剩余" + size);
+        notifyAll();
+    }
+}
+```
+
+### 钩子线程
+在线上Java程序中经常遇到进程程挂掉，一些状态没有正确的保存下来，这时候就需要在JVM关掉的时候执行一些清理现场的代码。Java中得ShutdownHook提供了比较好的方案。
+JDK在1.3之后提供了Java Runtime.addShutdownHook(Thread hook)方法，可以注册一个JVM关闭的钩子，这个钩子可以在以下几种场景被调用：
+1. 程序正常退出
+2. 使用System.exit()
+3. 终端使用Ctrl+C触发的中断
+4. 系统关闭
+5. 使用Kill pid命令干掉进程
+注：在使用kill -9 pid是不会JVM注册的钩子不会被调用。
+在JDK中方法的声明：
+public void addShutdownHook(Thread hook) 参数 hook – 一个初始化但尚未启动的线程对象，注册到JVM钩子的运行代码。
+```java
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("Begin to run");
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Hook");
+            }
+        }));
+        Scanner scanner = new Scanner(System.in);
+        // 按Ctrl + x会调用hook thread，idea中按了ctrl+d
+        System.out.println(scanner.next());
+        Thread.sleep(10000);
+        // 执行系统推出会调用hook thread
+        System.exit(0);
+        System.out.println("End to run");
+        // 系统正常退出会调用hook thread
+        /**
+         * egin to run
+         * ^D
+         * Hook
+         * Exception in thread "main" java.util.NoSuchElementException
+         * 	at java.util.Scanner.throwFor(Scanner.java:862)
+         * 	at java.util.Scanner.next(Scanner.java:1371)
+         * 	at com.zhonghuasheng.basic.java.thread.hook.HookThreadExample.main(HookThreadExample.java:16)
+         * ^D
+         */
+    }
+}
+```
+### 线程中的异常
+异常分为checked exception和unchecked exception。
+* checked exception: 在线程中遇到checked exception，我们可以直接catch住，然后处理。
+* unchecked exception: 可以通过thread.setUncaughtExceptionHandler来捕获
+```java
+public class UncaughtExceptionExample {
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 2; i > -1 ; i--) {
+                    System.out.println(10 / i);
+                }
+            }
+        }, "ThreadA ");
+        thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println("Caught exception in thread " + t.getName());
+                System.out.println("Exception is " + e.getMessage());
+            }
+        });
+        thread.start();
+        /**直接运行的结果
+         * 5
+         * Exception in thread "Thread-0" java.lang.ArithmeticException: / by zero
+         * 10
+         * 	at com.zhonghuasheng.basic.java.thread.exception.UncaughtExceptionExample$1.run(UncaughtExceptionExample.java:10)
+         * 	at java.lang.Thread.run(Thread.java:745)
+         ** 加了UncaughtExceptionHandler运行的结果
+         * 5
+         * 10
+         * Caught exception in thread ThreadA
+         * Exception is / by zero
+         *
+         * Process finished with exit code 0
+         */
+    }
+}
+```
 
 # 引用
 * https://www.cnblogs.com/skywang12345/
@@ -602,4 +765,4 @@ InterruptedException异常的捕获在whle(true)之内。当产生InterruptedExc
 * https://segmentfault.com/u/niteip/articles?sort=vote
 * https://www.cnblogs.com/qq1290511257/p/10645106.html
 * https://www.cnblogs.com/developer_chan/p/10391365.html
-* Java多线程中的钩子线程https://www.exception.site/java-concurrency/java-concurrency-hook-thread
+* https://www.exception.site/java-concurrency/java-concurrency-hook-thread
