@@ -16,6 +16,8 @@
 * [线程的中断interrupt](线程的中断interrupt)
 * [线程的状态与转换](#线程的状态与转换)
 * [生产者消费者问题](#生产者消费者问题)
+* [钩子线程](#钩子线程)
+* [线程中的异常](#线程中的异常)
 
 ### 基础概念
 
@@ -211,6 +213,39 @@ public void foo() {
 1. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的该synchronized方法或者synchronized代码块的访问将被阻塞。
 2. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的非synchronized方法的访问将不会被阻塞。
 3. 当一个线程访问一个对象的synchronized方法或者synchronized代码块时，其他线程对`该对象`的其他synchronized方法或代码块的访问将会被阻塞。
+
+> synchronized底层原理
+* 同步代码块：代码反编译后在代码块的前面会加上monitorenter，在代码块的最后加上monitorexit。
+```java
+public class SynchronizedDemo {
+    public void method() {
+        synchronized (this) {
+            System.out.println("Method 1 start");
+        }
+    }
+}
+```
+![](img/synchronized-block.jpg)
+
+每个对象有一个监视器锁(monitor)。当monitor被占用时就会处于锁定状态，线程执行monitorenter指令时尝试获取monitor的所有权，过程：
+1. 如果monitor的进入数为0，则该线程进入monitor，然后将进入数设置为1，该线程即为monitor的所有者。
+2. 如果线程已经占有该monitor，只是重新进入，则进入monitor的进入数加1。
+3. 如果其他线程已经占用了monitor，则该线程进入阻塞状态，直到monitor的进入数为0，再重新尝试获取monitor的所有权。
+执行monitorexit的线程必须是objectref所对应的monitor的所有者。
+指令执行时，monitor的进入数减1，如果减1后进入数为0，那线程退出monitor，不再是这个monitor的所有者。其他被这个monitor阻塞的线程可以尝试去获取这个 monitor 的所有权。
+通过这两段描述，我们应该能很清楚的看出Synchronized的实现原理，Synchronized的语义底层是通过一个monitor的对象来完成，其实wait/notify等方法也依赖于monitor对象，这就是为什么只有在同步的块或者方法中才能调用wait/notify等方法，否则会抛出java.lang.IllegalMonitorStateException的异常的原因。
+
+* 同步方法：
+```java
+public class SynchronizedMethod {
+    public synchronized void method() {
+        System.out.println("Hello World!");
+    }
+}
+```
+![](img/synchronized-method.jpg)
+
+从反编译的结果来看，方法的同步并没有通过指令monitorenter和monitorexit来完成(理论上其实也可以通过这两条指令来实现)，不过相对于普通方法，其常量池中多了ACC_SYNCHRONIZED标示符。JVM就是根据该标示符来实现方法的同步的：当方法调用时，调用指令将会检查方法的 ACC_SYNCHRONIZED 访问标志是否被设置，如果设置了，执行线程将先获取monitor，获取成功之后才能执行方法体，方法执行完后再释放monitor。在方法执行期间，其他任何线程都无法再获得同一个monitor对象。 其实本质上没有区别，只是方法的同步是一种隐式的方式来实现，无需通过字节码来完成。
 
 ### 实例锁与全局锁
 > 实例锁：锁在某一个实例对象上。如果该类是单例，那么该锁也具有全局锁的概念。实例锁对应的就是synchronized关键字。
@@ -637,6 +672,89 @@ public class Product {
         size-=n;
         System.out.println(Thread.currentThread().getName() + "消费" + n  + "个，剩余" + size);
         notifyAll();
+    }
+}
+```
+
+### 钩子线程
+在线上Java程序中经常遇到进程程挂掉，一些状态没有正确的保存下来，这时候就需要在JVM关掉的时候执行一些清理现场的代码。Java中得ShutdownHook提供了比较好的方案。
+JDK在1.3之后提供了Java Runtime.addShutdownHook(Thread hook)方法，可以注册一个JVM关闭的钩子，这个钩子可以在以下几种场景被调用：
+1. 程序正常退出
+2. 使用System.exit()
+3. 终端使用Ctrl+C触发的中断
+4. 系统关闭
+5. 使用Kill pid命令干掉进程
+注：在使用kill -9 pid是不会JVM注册的钩子不会被调用。
+在JDK中方法的声明：
+public void addShutdownHook(Thread hook) 参数 hook – 一个初始化但尚未启动的线程对象，注册到JVM钩子的运行代码。
+```java
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("Begin to run");
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Hook");
+            }
+        }));
+        Scanner scanner = new Scanner(System.in);
+        // 按Ctrl + x会调用hook thread，idea中按了ctrl+d
+        System.out.println(scanner.next());
+        Thread.sleep(10000);
+        // 执行系统推出会调用hook thread
+        System.exit(0);
+        System.out.println("End to run");
+        // 系统正常退出会调用hook thread
+        /**
+         * egin to run
+         * ^D
+         * Hook
+         * Exception in thread "main" java.util.NoSuchElementException
+         * 	at java.util.Scanner.throwFor(Scanner.java:862)
+         * 	at java.util.Scanner.next(Scanner.java:1371)
+         * 	at com.zhonghuasheng.basic.java.thread.hook.HookThreadExample.main(HookThreadExample.java:16)
+         * ^D
+         */
+    }
+}
+```
+### 线程中的异常
+异常分为checked exception和unchecked exception。
+* checked exception: 在线程中遇到checked exception，我们可以直接catch住，然后处理。
+* unchecked exception: 可以通过thread.setUncaughtExceptionHandler来捕获
+```java
+public class UncaughtExceptionExample {
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 2; i > -1 ; i--) {
+                    System.out.println(10 / i);
+                }
+            }
+        }, "ThreadA ");
+        thread.setUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println("Caught exception in thread " + t.getName());
+                System.out.println("Exception is " + e.getMessage());
+            }
+        });
+        thread.start();
+        /**直接运行的结果
+         * 5
+         * Exception in thread "Thread-0" java.lang.ArithmeticException: / by zero
+         * 10
+         * 	at com.zhonghuasheng.basic.java.thread.exception.UncaughtExceptionExample$1.run(UncaughtExceptionExample.java:10)
+         * 	at java.lang.Thread.run(Thread.java:745)
+         ** 加了UncaughtExceptionHandler运行的结果
+         * 5
+         * 10
+         * Caught exception in thread ThreadA
+         * Exception is / by zero
+         *
+         * Process finished with exit code 0
+         */
     }
 }
 ```
