@@ -6,7 +6,7 @@
 
 | 英语 | Java | Spring大家族 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 程序人生 |
 |:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语">英语</a>|<a href="#Java基础">Basic</a><br><a href="#Java-Core">Core</a><br><a href="#Java虚拟机">JVM</a><br><a href="#Java-Web">Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring-Boot">Spring Boot</a><br><a href="#Spring-Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#原则">原则</a><br><a href="#安全">安全</a><br><a href="#高可用">高可用</a><br><a href="#扩展性">扩展性</a><br><a href="#伸缩性">伸缩性</a><br><a href="#性能">性能</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#软文">软文</a><br><a href="#规范">规范</a><br><a href="#工具">工具</a>|
+|<a href="#英语">英语</a>|<a href="#Java基础">Basic</a><br><a href="#Java虚拟机">JVM</a><br><a href="#Java-Web">Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring-Boot">Spring Boot</a><br><a href="#Spring-Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#原则">原则</a><br><a href="#安全">安全</a><br><a href="#高可用">高可用</a><br><a href="#扩展性">扩展性</a><br><a href="#伸缩性">伸缩性</a><br><a href="#性能">性能</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#软文">软文</a><br><a href="#规范">规范</a><br><a href="#工具">工具</a>|
 
 # 英语
 * [计算机行业常用英语积累](english/english.md)
@@ -15,11 +15,10 @@
 
 #### `Java基础`
 * [Java基础](java/basic/java-basic.md)
-* [Java集合](java/basic/java-collection.md)
-* [Java多线程基础](java/basic/java-thread.md)
 * [JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
-
-#### `Java Core`
+* [Java集合](java/basic/java-collection.md)
+* [Java多线程系列](java/basic/java-thread.md)
+* [JUC系列](java/basic/java-thread-juc.md)
 * [Java IO基础](java/basic/java-io-nio.md)
 * [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
 * [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
