@@ -16,18 +16,14 @@
 #### `Java基础`
 * [Java基础](java/basic/java-basic.md)
 * [Java集合](java/basic/java-collection.md)
-* [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98)
-* [JAVA8+版本移除了永久带Permanent Generation](https://github.com/zhonghuasheng/Tutorial/wiki/JAVA8%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E5%B8%A6Permanent-Generation)
-* [JAVA8 新特性 - default方法](http://note.youdao.com/noteshare?id=89fa780dc27b2e39194a7d6ab740d674)
-* [Java中日期和MySQL中日期类型进行整合](http://note.youdao.com/noteshare?id=ccb3c824eb199d990b3cec84ecd815b5)
+* [Java多线程基础](java/basic/java-thread.md)
+* [JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
 
 #### `Java Core`
-* [Java IO](java/basic/java-io-nio.md)
+* [Java IO基础](java/basic/java-io-nio.md)
 * [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
 * [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
 * [线程安全](http://note.youdao.com/noteshare?id=6f65c98d2421430a5faa8e129ee77cb7)
-* [JDBC](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
-* [Java多线程笔记](java/basic/java-thread.md)
 
 #### `Java虚拟机`
 * [Java虚拟机概述](http://note.youdao.com/noteshare?id=04255aa8ae9ab45ed502296d57c736d3&sub=D4C06128EBBD414C91D85B7F89AB0C91)
