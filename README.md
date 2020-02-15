@@ -6,7 +6,7 @@
 
 | 英语 | Java | Spring大家族 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 程序人生 |
 |:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语">英语</a>|<a href="#Java基础">Basic</a><br><a href="#Java-Core">Core</a><br><a href="#Java虚拟机">JVM</a><br><a href="#Java-Web">Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring-Boot">Spring Boot</a><br><a href="#Spring-Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#原则">原则</a><br><a href="#安全">安全</a><br><a href="#高可用">高可用</a><br><a href="#扩展性">扩展性</a><br><a href="#伸缩性">伸缩性</a><br><a href="#性能">性能</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#软文">软文</a><br><a href="#规范">规范</a><br><a href="#工具">工具</a>|
+|<a href="#英语">英语</a>|<a href="#Java基础">Basic</a><br><a href="#Java虚拟机">JVM</a><br><a href="#Java-Web">Web</a><br>|<a href="#Spring">Spring</a><br><a href="#Spring-Boot">Spring Boot</a><br><a href="#Spring-Cloud">Spring Cloud</a>|<a href="#Keepalived">Keepalived</a><br><a href="#ActiveMQ">ActiveMQ</a><br><a href="#RabbitMQ">RabbitMQ</a><br><a href="#Netty">Netty</a><br><a href="#MyBatis">Mybatis</a>|<a href="#MySQL">MySQL</a><br><a href="#Postgresql">Postgresql</a><br><a href="#Mongodb">Mongodb</a><br><a href="#Redis">Redis</a>|<a href="#Tomcat">Tomcat</a><br><a href="#Nginx">Nginx</a>|<a href="#原则">原则</a><br><a href="#安全">安全</a><br><a href="#高可用">高可用</a><br><a href="#扩展性">扩展性</a><br><a href="#伸缩性">伸缩性</a><br><a href="#性能">性能</a><br>|<a href="#数据结构">数据结构</a><br><a href="#算法">算法</a>|<a href="#网络">网络</a>|<a href="#软文">软文</a><br><a href="#规范">规范</a><br><a href="#工具">工具</a>|
 
 # 英语
 * [计算机行业常用英语积累](english/english.md)
@@ -15,19 +15,14 @@
 
 #### `Java基础`
 * [Java基础](java/basic/java-basic.md)
+* [JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
 * [Java集合](java/basic/java-collection.md)
-* [Java基础面试题](https://github.com/zhonghuasheng/Tutorial/wiki/Java%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98)
-* [JAVA8+版本移除了永久带Permanent Generation](https://github.com/zhonghuasheng/Tutorial/wiki/JAVA8%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E7%A7%BB%E9%99%A4%E6%B0%B8%E4%B9%85%E5%B8%A6Permanent-Generation)
-* [JAVA8 新特性 - default方法](http://note.youdao.com/noteshare?id=89fa780dc27b2e39194a7d6ab740d674)
-* [Java中日期和MySQL中日期类型进行整合](http://note.youdao.com/noteshare?id=ccb3c824eb199d990b3cec84ecd815b5)
-
-#### `Java Core`
-* [Java IO](java/basic/java-io-nio.md)
+* [Java多线程系列](java/basic/java-thread.md)
+* [JUC系列](java/basic/java-thread-juc.md)
+* [Java IO基础](java/basic/java-io-nio.md)
 * [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
 * [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
 * [线程安全](http://note.youdao.com/noteshare?id=6f65c98d2421430a5faa8e129ee77cb7)
-* [JDBC](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
-* [Java多线程笔记](java/basic/java-thread.md)
 
 #### `Java虚拟机`
 * [Java虚拟机概述](http://note.youdao.com/noteshare?id=04255aa8ae9ab45ed502296d57c736d3&sub=D4C06128EBBD414C91D85B7F89AB0C91)
@@ -269,6 +264,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-02-14.png)
+![](tutorial-2020-02-15.png)
 
 </center>
