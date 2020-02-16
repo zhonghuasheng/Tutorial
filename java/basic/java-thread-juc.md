@@ -1,6 +1,8 @@
 # 目录
 * [什么是CAS](#什么是CAS)
 * [Unsafe类解读](#Unsafe类解读)
+* JUC原子类
+    * JUC原子类介绍
 
 ## 什么是CAS
 > CAS算法
@@ -57,9 +59,7 @@ AtomicInteger位于java.util.concurrent.atomic包下，是对int的封装，提�
 * CAS操作
 * value使用了volatile修饰
 
-
-
-2. AtomicInteger原理浅析
+* AtomicInteger原理浅析
 ```java
 public class AtomicInteger extends Number implements java.io.Serializable {
     private static final long serialVersionUID = 6214790243416807050L;
@@ -74,7 +74,7 @@ public class AtomicInteger extends Number implements java.io.Serializable {
                 (AtomicInteger.class.getDeclaredField("value"));
         } catch (Exception ex) { throw new Error(ex); }
     }
-
+    // volatile关键字修饰
     private volatile int value;
 }
 ```
@@ -100,11 +100,6 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 线程2在compareAndSwapInt操作中由于预期值和内存值都为1，因此成功将内存值更新为2
 线程1继续执行，在compareAndSwapInt操作中，预期值是1，而当前的内存值为2，CAS操作失败，什么都不做，返回false
 线程1重新通过getIntVolatile拿到最新的value为2，再进行一次compareAndSwapInt操作，这次操作成功，内存值更新为3
-> Unsafe
-* Unsafe类是在sun.misc包下，不属于Java标准。但是很多Java的基础类库，包括一些被广泛使用的高性能开发库都是基于Unsafe类开发的，比如Netty、Hadoop、Kafka等。
-* 使用Unsafe可用来直接访问系统内存资源并进行自主管理，Unsafe类在提升Java运行效率，增强Java语言底层操作能力方面起了很大的作用。
-* Unsafe可认为是Java中留下的后门，提供了一些低层次操作，如直接内存访问、线程调度等。
-* 官方并不建议使用Unsafe。
 
 ###
 
