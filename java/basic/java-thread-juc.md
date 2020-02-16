@@ -1,8 +1,22 @@
 # 目录
+* [Java为什么会有并发问题](#Java为什么会有并发问题)
 * [什么是CAS](#什么是CAS)
 * [Unsafe类解读](#Unsafe类解读)
-* JUC原子类
-    * JUC原子类介绍
+* [JUC原子类](#JUC原子类)
+    * [JUC原子类介绍](#JUC原子类介绍)
+    * [基础类型AtomicInteger](#基础类型AtomicInteger)
+
+## Java为什么会有并发问题
+> 出现的原因
+因为Java是一种多线程的处理模型。所以当一个请求过来的时候，Java会将产生一个线程来处理这个请求。如果多个线程访问同一个共享变量的时候，就会出现并发问题。所以，并发问题产生的条件之一是“共享变量”。那么什么样的变量是共享变量呢？这就涉及到Java内存模型JMM了，Java内存模型中，一个Java线程，要想获取到一个变量，需要先将变量从主内存放入工作内存，然后再通过工作内存获取，经历一个lock->read->load->use的过程。每一个线程都有这样一个过程才能获取到变量，这样自然就有可能出现A线程获取到变量，还未赋值回主内存，就被B线程读取或更改的场景，这样自然就会出现不一致问题。
+
+> 并发问题及一般解决方案
+* 可见性问题
+Java内存模型，如果线程A对变量obj的更改还未完成，线程B就获取到obj的值了，这样导致的数据不一致问题就属于可见性问题。要想符合可见性，则当一个线程修改了obj的值，新值对于其他线程来说是必须是可以立即可见的。可见性问题可以使用volatile关键字来解决。当一个变量被volatile修饰时，就不会从本地工作内存中获取了该变量的值了。volatile实际上是通过强制使用主内存中的值来解决可见性问题的。
+
+* 原子性问题
+但是volatile并没有完全解决并发问题，因为上述我们所假设的操作，都默认当成了原子操作。实际上，Java里面大量的运算并非原子操作。这就是原子性问题。
+解决原子性问题，可以使用Java并发包中提供的Atomic类，它的原理是CAS乐观锁。当然，对于可见性和原子性问题，最重量级的解决方案，同时也是一般程序员们最喜欢使用的方式，就是使用synchronized进行加锁了。synchronized的使用和其他相关的并发问题。
 
 ## 什么是CAS
 > CAS算法
@@ -54,6 +68,7 @@ CAS（比较并交换）是`CPU指令级`的操作，只有一步原子操作，
 4. 对象的属性修改类型: AtomicIntegerFieldUpdater, AtomicLongFieldUpdater, AtomicReferenceFieldUpdater 。
 这些类存在的目的是对相应的数据进行原子操作。所谓原子操作，是指操作过程不会被中断，保证数据操作是以原子方式进行的。
 
+#### 基础类型AtomicInteger
 > 原理解读（以AtomicInteger为例）
 AtomicInteger位于java.util.concurrent.atomic包下，是对int的封装，提供原子性的访问和更新操作，其原子性操作的实现是基于CAS。
 * CAS操作
@@ -100,10 +115,17 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 线程2在compareAndSwapInt操作中由于预期值和内存值都为1，因此成功将内存值更新为2
 线程1继续执行，在compareAndSwapInt操作中，预期值是1，而当前的内存值为2，CAS操作失败，什么都不做，返回false
 线程1重新通过getIntVolatile拿到最新的value为2，再进行一次compareAndSwapInt操作，这次操作成功，内存值更新为3
+> 其他
+AtomicLong是作用是对长整形进行原子操作。在32位操作系统中，64位的long 和 double 变量由于会被JVM当作两个分离的32位来进行操作，所以不具有原子性。而使用AtomicLong能让long的操作保持原子型。
 
-###
+#### 数组类型
+AtomicIntegerArray, AtomicLongArray, AtomicReferenceArray三个数组类型的原子类，原理和用法都是类似的。
+AtomicLong是作用是对长整形进行原子操作。而AtomicLongArray的作用则是对"长整形数组"进行原子操作。
+
 
 # 引用
+* Java为什么会有并发问题？ https://blog.csdn.net/somehow1002/article/details/97049957
+* Java并发的场景&原因&问题浅谈 https://blog.csdn.net/zangdaiyang1991/article/details/98481346
 * 什么是CAS https://www.jianshu.com/p/ab2c8fce878b
 * 一篇看懂Java中的Unsafe类 https://www.jb51.net/article/140726.htm
 * 浅谈AtomicInteger实现原理 https://www.jianshu.com/p/cea1f9619e8f
