@@ -14,31 +14,25 @@
 # Java
 
 #### `Java基础`
-* [Java基础](java/basic/java-basic.md)
-* [JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
-* [Java集合](java/basic/java-collection.md)
-* [Java多线程系列](java/basic/java-thread.md)
-* [JUC系列](java/basic/java-thread-juc.md)
-* [Java IO基础](java/basic/java-io-nio.md)
-* [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
-* [并行与并发的区别](http://note.youdao.com/noteshare?id=07f1542ba53ff20ccf6e036a1a8a52d1)
-* [线程安全](http://note.youdao.com/noteshare?id=6f65c98d2421430a5faa8e129ee77cb7)
+[Java基础](java/basic/java-basic.md)
+&emsp;[JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)
+&emsp;[Java集合](java/basic/java-collection.md)
+&emsp;[Java多线程系列](java/basic/java-thread.md)
+&emsp;[JUC系列](java/basic/java-thread-juc.md)
+&emsp;[Java IO基础](java/basic/java-io-nio.md)
 
 #### `Java虚拟机`
-* [Java虚拟机概述](http://note.youdao.com/noteshare?id=04255aa8ae9ab45ed502296d57c736d3&sub=D4C06128EBBD414C91D85B7F89AB0C91)
-* [Java内存模型（JMM）概述](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972)
-* [volatile关键字解析](http://note.youdao.com/noteshare?id=b463861623604a614e0ceb2e27f4b36e&sub=ED4A85833F6F4531A65BBC382E218D32)
-* [Java内存区域和对象创建及内存分配](http://note.youdao.com/noteshare?id=c5cc62733e28ed05ea252db5243ca797&sub=3386EF7F877C493DACA2FDD53BC0E0E4)
-* [JVM垃圾回收机制](http://note.youdao.com/noteshare?id=210c03900e584c1001b4b16d4060dc89&sub=wcp1581062973917549)
-* [JVM堆内存(heap)及垃圾回收总结](http://note.youdao.com/noteshare?id=27f16d42fea30933884b640a941e8587&sub=wcp1580995061039682)
-* [Java对象的创建过程解析](http://note.youdao.com/noteshare?id=720b1f1bef16d494b767edeaf52e1eee&sub=wcp158116390844063)
+[Java虚拟机概述](http://note.youdao.com/noteshare?id=04255aa8ae9ab45ed502296d57c736d3&sub=D4C06128EBBD414C91D85B7F89AB0C91)
+&emsp;[Java内存模型（JMM）概述](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972)
+&emsp;[volatile关键字解析](http://note.youdao.com/noteshare?id=b463861623604a614e0ceb2e27f4b36e&sub=ED4A85833F6F4531A65BBC382E218D32)
+&emsp;[Java内存区域和对象创建及内存分配](http://note.youdao.com/noteshare?id=c5cc62733e28ed05ea252db5243ca797&sub=3386EF7F877C493DACA2FDD53BC0E0E4)
+&emsp;[JVM垃圾回收机制](http://note.youdao.com/noteshare?id=210c03900e584c1001b4b16d4060dc89&sub=wcp1581062973917549)
+&emsp;[JVM堆内存(heap)及垃圾回收总结](http://note.youdao.com/noteshare?id=27f16d42fea30933884b640a941e8587&sub=wcp1580995061039682)
+&emsp;[Java对象的创建过程解析](http://note.youdao.com/noteshare?id=720b1f1bef16d494b767edeaf52e1eee&sub=wcp158116390844063)
 
 #### `Java Web`
-* [Servlet基础](java/javaweb/servlet.md)
-* [JSP基础](java/javaweb/jsp.md)
-* [JSP是不是被淘汰](https://github.com/zhonghuasheng/JAVA/wiki/%E5%AF%B9%E5%A4%A7%E5%9E%8BJAVA-Web%E9%A1%B9%E7%9B%AE%E4%B8%8B%E4%BD%BF%E7%94%A8JSP%E7%9A%84%E6%80%9D%E8%80%83)
-* [JSP Velocity FreeMarker对比](https://github.com/zhonghuasheng/JAVA/wiki/JSP---Velocity---FreeMarker%E5%AF%B9%E6%AF%94)
-* [JSTL库安装](https://www.runoob.com/jsp/jsp-jstl.html)
+[Servlet基础](java/javaweb/servlet.md)
+&emsp;[JSP基础](java/javaweb/jsp.md)
 
 # Spring大家族
 
@@ -264,6 +258,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-02-15.png)
+![](tutorial-2020-02-16.png)
 
 </center>
