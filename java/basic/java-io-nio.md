@@ -8,6 +8,7 @@ IO是Java中的一种输入和输出的功能，Java中对这种操作叫做对�
 ## 学习计划
 * [讲的最好的同步/异步/阻塞/非阻塞/BIO/NIO/AIO的文章](http://note.youdao.com/noteshare?id=e00d8caf0973471780b8ca880e1c5bf9&sub=wcp1578879502523399)
 * [零拷贝](http://note.youdao.com/noteshare?id=13101142e0a628da85eca4a52df1596b&sub=wcp1579073093657123)
+* [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
 
 ## 学习笔记
 NIO是同步的IO，是因为程序需要IO操作时，必须获得了IO权限后亲自进行IO操作才能进行下一步操作。AIO是对NIO的改进（所以AIO又叫NIO.2），它是基于Proactor模型的。每个socket连接在事件分离器注册 IO完成事件 和 IO完成事件处理器。程序需要进行IO时，向分离器发出IO请求并把所用的Buffer区域告知分离器，分离器通知操作系统进行IO操作，操作系统自己不断尝试获取IO权限并进行IO操作（数据保存在Buffer区），操作完成后通知分离器；分离器检测到 IO完成事件，则激活 IO完成事件处理器，处理器会通知程序说“IO已完成”，程序知道后就直接从Buffer区进行数据的读写。
