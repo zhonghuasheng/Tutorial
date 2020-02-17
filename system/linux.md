@@ -52,25 +52,25 @@ http://cn.linux.vbird.org/linux_server/0380mail.php
 * 配置shadowsocks
 * vi /etc/shadowsocks.json
   ```json
-  {
-    "server":"0.0.0.0",
-    "server_port":xx,
-    "local_port":1080,
-    "password":"1234567890",
-    "timeout":600,
-    "method":"aes-256-cfb"
-  }
+{
+  "server":"0.0.0.0",
+  "server_port":xx,
+  "local_port":1080,
+  "password":"1234567890",
+  "timeout":600,
+  "method":"aes-256-cfb"
+}
   ```
 * 将shadowsocks加入系统服务
 * vi /etc/systemd/system/shadowsocks.service
   ```xml
-  [Unit]
-  Description=Shadowsocks
-  [Service]
-  TimeoutStartSec=0
-  ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
-  [Install]
-  WantedBy=multi-user.target
+[Unit]
+Description=Shadowsocks
+[Service]
+TimeoutStartSec=0
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
+[Install]
+WantedBy=multi-user.target
   ```
   ```shell
   # 设置开机自启命令
