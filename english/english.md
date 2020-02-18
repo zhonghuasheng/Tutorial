@@ -79,3 +79,5 @@
 * allocator 分配者
 * Cache Hit Ratio 缓存命中率，MyBatis中二级缓存log会输出
 * chunk 块，大块
+* fair 合理的，公正的
+* reentrant 可重入的
