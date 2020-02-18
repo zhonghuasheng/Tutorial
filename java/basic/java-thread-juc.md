@@ -1,6 +1,22 @@
 # 目录
+* [Java为什么会有并发问题](#Java为什么会有并发问题)
 * [什么是CAS](#什么是CAS)
 * [Unsafe类解读](#Unsafe类解读)
+* [JUC原子类](#JUC原子类)
+    * [JUC原子类介绍](#JUC原子类介绍)
+    * [基础类型AtomicInteger](#基础类型AtomicInteger)
+
+## Java为什么会有并发问题
+> 出现的原因
+因为Java是一种多线程的处理模型。所以当一个请求过来的时候，Java会将产生一个线程来处理这个请求。如果多个线程访问同一个共享变量的时候，就会出现并发问题。所以，并发问题产生的条件之一是“共享变量”。那么什么样的变量是共享变量呢？这就涉及到Java内存模型JMM了，Java内存模型中，一个Java线程，要想获取到一个变量，需要先将变量从主内存放入工作内存，然后再通过工作内存获取，经历一个lock->read->load->use的过程。每一个线程都有这样一个过程才能获取到变量，这样自然就有可能出现A线程获取到变量，还未赋值回主内存，就被B线程读取或更改的场景，这样自然就会出现不一致问题。
+
+> 并发问题及一般解决方案
+* 可见性问题
+Java内存模型，如果线程A对变量obj的更改还未完成，线程B就获取到obj的值了，这样导致的数据不一致问题就属于可见性问题。要想符合可见性，则当一个线程修改了obj的值，新值对于其他线程来说是必须是可以立即可见的。可见性问题可以使用volatile关键字来解决。当一个变量被volatile修饰时，就不会从本地工作内存中获取了该变量的值了。volatile实际上是通过强制使用主内存中的值来解决可见性问题的。
+
+* 原子性问题
+但是volatile并没有完全解决并发问题，因为上述我们所假设的操作，都默认当成了原子操作。实际上，Java里面大量的运算并非原子操作。这就是原子性问题。
+解决原子性问题，可以使用Java并发包中提供的Atomic类，它的原理是CAS乐观锁。当然，对于可见性和原子性问题，最重量级的解决方案，同时也是一般程序员们最喜欢使用的方式，就是使用synchronized进行加锁了。synchronized的使用和其他相关的并发问题。
 
 ## 什么是CAS
 > CAS算法
@@ -52,14 +68,13 @@ CAS（比较并交换）是`CPU指令级`的操作，只有一步原子操作，
 4. 对象的属性修改类型: AtomicIntegerFieldUpdater, AtomicLongFieldUpdater, AtomicReferenceFieldUpdater 。
 这些类存在的目的是对相应的数据进行原子操作。所谓原子操作，是指操作过程不会被中断，保证数据操作是以原子方式进行的。
 
+#### 基础类型AtomicInteger
 > 原理解读（以AtomicInteger为例）
 AtomicInteger位于java.util.concurrent.atomic包下，是对int的封装，提供原子性的访问和更新操作，其原子性操作的实现是基于CAS。
 * CAS操作
 * value使用了volatile修饰
 
-
-
-2. AtomicInteger原理浅析
+* AtomicInteger原理浅析
 ```java
 public class AtomicInteger extends Number implements java.io.Serializable {
     private static final long serialVersionUID = 6214790243416807050L;
@@ -74,7 +89,7 @@ public class AtomicInteger extends Number implements java.io.Serializable {
                 (AtomicInteger.class.getDeclaredField("value"));
         } catch (Exception ex) { throw new Error(ex); }
     }
-
+    // volatile关键字修饰
     private volatile int value;
 }
 ```
@@ -100,15 +115,67 @@ public final int getAndAddInt(Object var1, long var2, int var4) {
 线程2在compareAndSwapInt操作中由于预期值和内存值都为1，因此成功将内存值更新为2
 线程1继续执行，在compareAndSwapInt操作中，预期值是1，而当前的内存值为2，CAS操作失败，什么都不做，返回false
 线程1重新通过getIntVolatile拿到最新的value为2，再进行一次compareAndSwapInt操作，这次操作成功，内存值更新为3
-> Unsafe
-* Unsafe类是在sun.misc包下，不属于Java标准。但是很多Java的基础类库，包括一些被广泛使用的高性能开发库都是基于Unsafe类开发的，比如Netty、Hadoop、Kafka等。
-* 使用Unsafe可用来直接访问系统内存资源并进行自主管理，Unsafe类在提升Java运行效率，增强Java语言底层操作能力方面起了很大的作用。
-* Unsafe可认为是Java中留下的后门，提供了一些低层次操作，如直接内存访问、线程调度等。
-* 官方并不建议使用Unsafe。
+> 其他
+AtomicLong是作用是对长整形进行原子操作。在32位操作系统中，64位的long 和 double 变量由于会被JVM当作两个分离的32位来进行操作，所以不具有原子性。而使用AtomicLong能让long的操作保持原子型。
 
-###
+#### 数组类型
+AtomicIntegerArray, AtomicLongArray, AtomicReferenceArray三个数组类型的原子类，原理和用法都是类似的。
+AtomicLong是作用是对长整形进行原子操作。而AtomicLongArray的作用则是对"长整形数组"进行原子操作。
+
 
 # 引用
+* Java为什么会有并发问题？ https://blog.csdn.net/somehow1002/article/details/97049957
+* Java并发的场景&原因&问题浅谈 https://blog.csdn.net/zangdaiyang1991/article/details/98481346
 * 什么是CAS https://www.jianshu.com/p/ab2c8fce878b
 * 一篇看懂Java中的Unsafe类 https://www.jb51.net/article/140726.htm
 * 浅谈AtomicInteger实现原理 https://www.jianshu.com/p/cea1f9619e8f
+并发的三种场景
+分工
+分工是多线程并发最基本的场景，各司其职，完成各自的工作。分工，就是线程各司其职，完成不同的工作。分工，也是有很多模式的。比如有:
+
+生产者-消费者模式；
+MapReduce模式，把工作拆分成多份，多个线程共同完成后，再组合结果，Java8中的stream与Fork/Join就是这种模式的体现；
+Thread-Per-Message模式，服务端就是这种模式，收到消息给不同的Thread进行处理
+同步
+有分工就要有同步，不同工人之间要协作，不同线程也是。一个线程的执行条件往往依赖于另一线程的执行结果。
+
+线程之间最基本的通信机制是管程模式与wait/notify,除此外还有多个工具类，如：
+
+Future及其衍生的工具类FutureTask/CompletableFuture等，可以完成异步编程；
+CountDownLatch/CyclicBarrier可以实现特定场景的协作；
+Semaphore提供了经典的PV同步原语，还可以作为限流器使用；
+ReentrantLock与Condtion,对管程同步的扩展；
+互斥
+多线程访问相同的共享变量，就需要做互斥处理。分工与协作强调的是性能，互斥问题强调的是正确，即线程安全问题。Java解决互斥问题提供了很多思路与工具。
+
+避免共享，没有共享，没有竞态，就没有伤害，如ThreadLocal；
+没有改变，如果大家都不做改变，都是只读的，一起也没有错；
+Copy-on-write，你变你的，我变我的，每变一次都生成新的副本，只要不冲突就可以并行；
+CAS，写入前要看一看，有没有物逝人非（变量和自己读取时一样），没有再写入，否则再做一变；
+Lock，最终手段，但也不想做得太绝，够用就行，ReadWriteLock/StampedLock，够用就行
+
+并发问题产生的原因
+缓存导致的可见性问题
+在运行时，同一份数据就出现了两份，一个在内存，一个在CPU缓存。每个CPU中有各自的数据缓存(JMM内存模型)。
+
+线程切换带来的原子性问题
+计算机看起来可以同时运行多于自身核数的线程，是因为现代操作系统的分时切换机制。分时机制提高了CPU的使用率，也可以保证多线程可以相对公平地获取CPU。但分时机制导致了一个不可避免的问题，就是线程切换。发生线程切换时，被休眠的线程会暂存现场，包括PC(程序计数器)与栈等。等到此线程再次被唤醒，可能发现这个世界已经物是人非了，因为一条高级语言指令可能对应多条CPU指令。
+
+编译优化带来的有序性问题
+JAVA为了优化性能，可能对指令进行重排，这些重排在大部分时候是无害的。但是有些时候，可能导致意想不到的Bug。由重排引起的一个经典问题是双重量检查创建单例。
+
+
+并发的三种问题
+安全性问题
+并发程序因为可见性、原子性及有序性问题等导致的正确性问题
+
+活跃性问题
+指的是某个操作无法执行下去，如死锁等导致的问题
+
+性能问题
+一般都是由锁的滥用引起的。
+性能方面有三个主要的指标：吞吐、时延及并发量。
+
+吞吐，指单位时间处理的请求数;
+时延，指单次处理的平均耗时;
+并发，同一时刻可以接入的请求数

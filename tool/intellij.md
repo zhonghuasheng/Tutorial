@@ -1,4 +1,5 @@
 ## 常用设置
+* 插件 Lombook， Easy Code(https://blog.csdn.net/qq_38225558/article/details/84479653)
 
 ### 显示空格
 ```
