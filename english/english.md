@@ -81,3 +81,4 @@
 * chunk 块，大块
 * fair 合理的，公正的
 * reentrant 可重入的
+* AQS AbstractQueuedSynchronizer类，是Java中独占锁和共享锁的公共父类，锁的许多公共方法都是在这个类中实现
