@@ -46,10 +46,24 @@ CAS（比较并交换）是`CPU指令级`的操作，只有一步原子操作，
     * 只能保证一个共享变量的原子操作
 
 ## Unsafe类解读
-* Unsafe类是在sun.misc包下，不属于Java标准。但是很多Java的基础类库，包括一些被广泛使用的高性能开发库都是基于Unsafe类开发的，比如Netty、Hadoop、Kafka等。
+* Unsafe类是在sun.misc包下，不属于Java标准。该类封装了许多类似指针操作，可以直接进行内存管理、操纵对象、阻塞/唤醒线程等操作。Java本身不直接支持指针的操作，所以这也是该类命名为Unsafe的原因之一。但是很多Java的基础类库，包括一些被广泛使用的高性能开发库都是基于Unsafe类开发的，比如Netty、Hadoop、Kafka等。
 * 使用Unsafe可用来直接访问系统内存资源并进行自主管理，Unsafe类在提升Java运行效率，增强Java语言底层操作能力方面起了很大的作用。
 * Unsafe可认为是Java中留下的后门，提供了一些低层次操作，如直接内存访问、线程调度等。
 * 官方并不建议使用Unsafe。
+
+J.U.C中的许多CAS方法，内部其实都是Unsafe类在操作。
+比如AtomicBoolean的compareAndSet方法：
+```java
+public final boolean compareAndSet(boolean expect, boolean update) {
+    int e = expect ? 1 : 0;
+    int u = update ? 1 : 0;
+    return unsafe.compareAndSwapInt(this, valueOffset, e, u);
+}
+compareAndSwapInt(Object o, long offset, int expected, int x);
+// o是需要修改的对象 offset需要修改的字段到对象头的偏移量（通过偏移量可以快速定位修改的是哪个字段） expected 期望值 x要设置的值
+```
+
+unsafe.compareAndSwapInt方法是个native方法。（如果对象中的字段值与期望值相等，则将字段值修改为x，然后返回true；否则返回false)：
 
 > Unsafe的大部分API都是native的方法，主要包括以下几类：
 1. Class相关。主要提供Class和它的静态字段的操作方法。
@@ -120,7 +134,12 @@ AtomicLong是作用是对长整形进行原子操作。在32位操作系统中�
 
 #### 数组类型
 AtomicIntegerArray, AtomicLongArray, AtomicReferenceArray三个数组类型的原子类，原理和用法都是类似的。
+这三种类型大同小异，AtomicIntegerArray对应AtomicInteger，AtomicLongArray对应AtomicLong，AtomicReferenceArray对应AtomicReference。
 AtomicLong是作用是对长整形进行原子操作。而AtomicLongArray的作用则是对"长整形数组"进行原子操作。
+unsafe是通过Unsafe.getUnsafe()返回的一个Unsafe对象。通过Unsafe的CAS函数对long型数组的元素进行原子操作。
+其实阅读源码也可以发现，这些数组原子类与对应的普通原子类相比，只是多了通过索引找到内存中元素地址的操作而已。
+注意：原子数组并不是说可以让线程以原子方式一次性地操作数组中所有元素的数组。而是指对于数组中的每个元素，可以以原子方式进行操作。
+
 
 
 # 引用
