@@ -37,27 +37,10 @@
 # Spring大家族
 
 #### `Spring`
-`历史（有关Spring的历史）`
-* [Spring历史版本以及现在的帝国](http://note.youdao.com/noteshare?id=80509c0296c54ccb86c1848b95c9c530)
-* [为什么要有Spring 这里主要是引入Spring IOC](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2)
-* [为什么要有Spring AOP](http://note.youdao.com/noteshare?id=21f2b64abb67a24ad45baca5456648a5)
+[Spring4基础知识系列](java/spring/spring.md)
 
 `控制反转`
-* [手写一个Spring IOC的简单实现](https://github.com/zhonghuasheng/JAVA/tree/master/basic/src/main/java/com/zhonghuasheng/ioc)
 * [Spring注解大全](java/spring/spring.md/#Spring注解)
-
-`依赖注入`
-* [Spring依赖注入之Setter注入 - Setter Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/setterinject)
-* [Spring依赖注入之构造函数注入 - Constructor Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/constructorinject)
-* [Spring自动装配]() ***[byName](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/autowirebyname)*** ***[byType](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/autowirebytype)***
-     ***[constructor](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/constructor)***
-     ***[no](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/no)***
-* [Spring通过注解实现自动装配-example1](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample)
-     ***[@Resource](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample/resource)***
-     ***[@Qualifier](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample/qualifier)***
-     ***[@Autowired](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample/autowired)***
-* [Spring通过注解实现自动装配-example2-@Service @Repository的使用](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autodetection)
-
 
 #### `Spring Boot`
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
