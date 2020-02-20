@@ -1,37 +1,27 @@
 `目录`
-# Spring
-http://blog.csdn.net/yangyangiud/article/details/52368712
-## Factory Pattern
-### Simple Factory
-### Factory Method
-### Abstract Factory
+## Spring
+* [为什么要有Spring](http://note.youdao.com/noteshare?id=a61d1330cec20afe21d369f0526756a2&sub=wcp1556526473148138)
+* [为什么要有Spring AOP](http://note.youdao.com/noteshare?id=21f2b64abb67a24ad45baca5456648a5&sub=wcp1556587241813493)
+* [关于Spring IOC和AOP的理解](http://note.youdao.com/noteshare?id=d0aa79a9af96f02aad6e25c1d3f192b3&sub=wcp1582173498187944)
+* [Spring历史版本变迁和如今的生态帝国](http://note.youdao.com/noteshare?id=80509c0296c54ccb86c1848b95c9c530&sub=wcp15565934311825)
+* [手写一个Spring IOC的简单实现](https://github.com/zhonghuasheng/JAVA/tree/master/basic/src/main/java/com/zhonghuasheng/ioc)
+* [什么是Spring]()
+* []()
+* []()
 
-## IOC/DI
-### IOC简介
-### 注入方式(常用的有三种)
-### IOC实现基本原理
+`依赖注入`
+* [Spring依赖注入之Setter注入 - Setter Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/setterinject)
+* [Spring依赖注入之构造函数注入 - Constructor Injection](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/springdiwithxmlexample/constructorinject)
+* [Spring自动装配]() ***[byName](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/autowirebyname)*** ***[byType](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/autowirebytype)***
+     ***[constructor](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/constructor)***
+     ***[no](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autowiringusingxml/no)***
+* [Spring通过注解实现自动装配-example1](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample)
+     ***[@Resource](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample/resource)***
+     ***[@Qualifier](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample/qualifier)***
+     ***[@Autowired](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/annotationinjectexample/autowired)***
+* [Spring通过注解实现自动装配-example2-@Service @Repository的使用](https://github.com/zhonghuasheng/JAVA/tree/master/spring4/src/main/java/com/zhonghuasheng/spring4/autodetection)
 
-## AOP
-### AOP引入
-### JDK代理
-### CGLib代理
-### 模拟Spring-IOC
-### 模拟Spring-AOP
 
-## Spring 基础
-### Hello Spring
-### Spring Singleton
-### Spring Factory Method
-### Spring Inject Method
-
-## Spring Liferay Cycle
-## Spring Autowire
-## Abstract Parent Import
-## Spring Annotation
-## Spring Collections
-
-### Spring AOP
-#### Spring AOP引入
 
 `正文`
 
