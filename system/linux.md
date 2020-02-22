@@ -54,9 +54,9 @@ http://cn.linux.vbird.org/linux_server/0380mail.php
   ```json
 {
   "server":"0.0.0.0",
-  "server_port":xx,
+  "server_port":0,
   "local_port":1080,
-  "password":"1234567890",
+  "password":"xxx",
   "timeout":600,
   "method":"aes-256-cfb"
 }
@@ -68,7 +68,7 @@ http://cn.linux.vbird.org/linux_server/0380mail.php
 Description=Shadowsocks
 [Service]
 TimeoutStartSec=0
-ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
+ExecStart=/usr/local/bin/ssserver -c /etc/shadowsocks.json
 [Install]
 WantedBy=multi-user.target
   ```
@@ -84,6 +84,8 @@ WantedBy=multi-user.target
   ```
 * 客户端
 * 创建一个sh脚本，加入 `nohup sslocal -s remoteserverip -p remoteserverport -b 127.0.0.1 -l localserverport -k password -m aes-256-cfb >/dev/null 2>&1 &`
+
+nohup sslocal -s  3.14.3.65 -p 15432 -b 127.0.0.1 -l 1080 -k abc123_ -m aes-256-cfb >ssl.log 2>&1 &
 
 # 记录服务器CPU和内存的实时使用情况
 ```shell

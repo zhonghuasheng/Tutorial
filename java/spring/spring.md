@@ -10,6 +10,7 @@
 * [Spring Java配置](http://note.youdao.com/noteshare?id=4808a867c7b646f7f4d41a1bbe2f79fa&sub=wcp1582272695540930)
 * [Spring Bean Scope](http://note.youdao.com/noteshare?id=f0c541d742d9548342dbca9e04607758&sub=wcp1582292894805554)
 * [Spring AOP与AspectJ的对比](http://note.youdao.com/noteshare?id=b75baf23ad8073d69527838449b259c1&sub=wcp1582290319293279)
+* [Spring EL和资源调用](http://note.youdao.com/noteshare?id=35b5a39e2859023b508d417f34925398&sub=wcp1582372537958305)
 
 
 ### 依赖注入
