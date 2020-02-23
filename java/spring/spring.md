@@ -11,6 +11,8 @@
 * [Spring Bean Scope](http://note.youdao.com/noteshare?id=f0c541d742d9548342dbca9e04607758&sub=wcp1582292894805554)
 * [Spring AOP与AspectJ的对比](http://note.youdao.com/noteshare?id=b75baf23ad8073d69527838449b259c1&sub=wcp1582290319293279)
 * [Spring EL和资源调用](http://note.youdao.com/noteshare?id=35b5a39e2859023b508d417f34925398&sub=wcp1582372537958305)
+* [Spring Profile](http://note.youdao.com/noteshare?id=3828c670a4a3f8ee15030da5aa33b601&sub=wcp1582426672342855)
+* [Spring Event](http://note.youdao.com/noteshare?id=cfcfc768052b2ad41af7d58a380d0428&sub=wcp1582441131568780)
 
 
 ### 依赖注入
