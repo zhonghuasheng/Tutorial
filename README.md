@@ -34,8 +34,6 @@
 [Servlet基础](java/javaweb/servlet.md)
 &emsp;[JSP基础](java/javaweb/jsp.md)
 
-# Spring大家族
-
 #### `Spring`
 [Spring4基础知识系列](java/spring/spring.md)
 
