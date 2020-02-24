@@ -37,9 +37,6 @@
 #### `Spring`
 [Spring4基础知识系列](java/spring/spring.md)
 
-`控制反转`
-* [Spring注解大全](java/spring/spring.md/#Spring注解)
-
 #### `Spring Boot`
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
 * [SpringBoot基础](spring-boot/1-springboot-basic.md)
