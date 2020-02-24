@@ -34,13 +34,8 @@
 [Servlet基础](java/javaweb/servlet.md)
 &emsp;[JSP基础](java/javaweb/jsp.md)
 
-# Spring大家族
-
 #### `Spring`
 [Spring4基础知识系列](java/spring/spring.md)
-
-`控制反转`
-* [Spring注解大全](java/spring/spring.md/#Spring注解)
 
 #### `Spring Boot`
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
@@ -241,6 +236,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-02-23.png)
+![](tutorial-2020-02-24.png)
 
 </center>
