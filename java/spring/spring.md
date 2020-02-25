@@ -17,6 +17,7 @@
 * [Spring多线程](http://note.youdao.com/noteshare?id=b1dbd6b066db81f7e4d7436aac1e7af7&sub=wcp1582507689758259)
 * [Spring Schedule](http://note.youdao.com/noteshare?id=2f6e090483fdadb277460faee41bd213&sub=wcp1582507714943294)
 * [Spring Condition](http://note.youdao.com/noteshare?id=cd966fbce76b5b57ee1afee0a2e7f388&sub=wcp1582507730857453)
+* [Spring组合注解](http://note.youdao.com/noteshare?id=6f847f37be5b0d7b42132ea9f069c7d5&sub=wcp1582507747315363)
 
 
 ### 依赖注入
