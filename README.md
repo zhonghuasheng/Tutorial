@@ -35,25 +35,16 @@
 &emsp;[JSP基础](java/javaweb/jsp.md)
 
 #### `Spring`
-[Spring4基础知识系列](java/spring/spring.md)
-
-#### `Spring Boot`
-* [SpringBoot历史](spring-boot/0-springboot-history.md)
-* [SpringBoot基础](spring-boot/1-springboot-basic.md)
-* [SpringBoot统一结果处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
-* [SpringBoot统一异常处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
-* [SpringBoot统计在线人数](https://github.com/zhonghuasheng/Tutorial/wiki/SpringBoot%E7%BB%9F%E8%AE%A1%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0)
-* [SpringBoot + Redis + 自定义注解 + 拦截器 实现接口幂等性校验](https://github.com/zhonghuasheng/Spring-Boot/blob/master/springbootidempotence/README.md)
-* [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
-
-#### `Spring Cloud`
+[Spring4基础知识系列](java/spring/spring.md#Spring)
+&emsp;[SpringMVC基础知识系列](java/spring/spring.md#SpringMVC)
+&emsp;[SpringBoot基础知识系列](java/spring/spring.md#SpringBoot)
 
 # 中间件
 
 `控制层`
 
 #### `Keepalived`
-* [Keepalived原理 + 配置 + 主从切换 + 通知](plugins/keepalived.md)
+* [Keepalived系列](plugins/keepalived.md)
 
 `消息&通信`
 * [到底什么时候该使用MQ？](http://note.youdao.com/noteshare?id=30a11e46aaef3f00d2ecfb84692ca294&sub=wcp157828038663078)
@@ -62,30 +53,15 @@
   * [ActiveMQ](plugins/activemq.md)
 
 #### `RabbitMQ`
-  * [RabbitMQ](plugins/rabbitmq.md)
-  * [RabbitMQ基础概念](http://note.youdao.com/noteshare?id=3ee2c852ecf09522bd0dd974921e415d)
-  * [RabbitMQ消息发送-Exchange-fanout示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/fanout)
-  * [RabbitMQ消息发送-Exchange-direct示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/direct)
-  * [RabbitMQ消息发送-Exchange-topic示例](https://github.com/zhonghuasheng/JAVA/tree/master/rabbitmq/src/main/java/com/zhonghuasheng/rabbitmq/topic)
-  * [RabbtiMQ延迟队列-消息延迟推送](https://www.cnblogs.com/haixiang/p/10966985.html)
+  * [RabbitMQ系列](plugins/rabbitmq.md)
 
 #### `Netty`
 *学习计划和笔记*
-* [Netty学习计划和笔记](plugins/netty.md)
-
-*入门小例子*
-* [Netty核心组件介绍](http://note.youdao.com/noteshare?id=220ac83ee37543ea9d761699bf5915d8&sub=wcp157838393679928)
-* [Netty入门小例子](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
-* [基于Netty构建简易版HTTP服务](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
-* [基于Netty实现一个WebSocket服务,实现消息的主动推送（聊天）](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
-* [基于Netty实现自定义TCP数据格式的数据接收发送](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
-* [基于Netty实现UDP服务](https://github.com/zhonghuasheng/JAVA/tree/master/netty)
-
-*深入学习*
+* [Netty系列](plugins/netty.md)
 
 `数据访问`
 #### `MyBatis`
-* [MyBatis学习笔记](plugins/mybatis.md)
+* [MyBatis系列](plugins/mybatis.md)
 
 #### `ELK`
 * TODO: [ELK](elasticsearch.md)
