@@ -24,7 +24,7 @@
 * [SpringMVC初始化无web.xml项目](http://note.youdao.com/noteshare?id=205b607e70b9b0f0b9e131d0cce812fe&sub=wcp1582775530722662)
 * [SpringMVC常用注解](http://note.youdao.com/noteshare?id=2ba40b0807fd025783c50dd0295426b0&sub=wcp1582785745286940)
 * [SpringMVC配置返回JSON数据格式](http://note.youdao.com/noteshare?id=56597a6ac75b39ee8676090b039ac9da&sub=wcp158285925711064)
-* [SpringMVC基本配置-静态资源映射]()
+* [SpringMVC基本配置-静态资源映射](http://note.youdao.com/noteshare?id=353a5add7736bb43d2d8385d9da9b316&sub=wcp1582804386017933)
 * [SpringMVC基本配置-过滤器]()
 * [SpringMVC基本配置-拦截器配置]()
 * [SpringMVC基础配置-@ControllerAdvice注解]()
