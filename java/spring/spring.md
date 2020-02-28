@@ -26,7 +26,7 @@
 * [SpringMVC配置返回JSON数据格式](http://note.youdao.com/noteshare?id=56597a6ac75b39ee8676090b039ac9da&sub=wcp158285925711064)
 * [SpringMVC基本配置-静态资源映射](http://note.youdao.com/noteshare?id=353a5add7736bb43d2d8385d9da9b316&sub=wcp1582804386017933)
 * [SpringMVC基本配置-过滤器]()
-* [SpringMVC基本配置-拦截器配置]()
+* [SpringMVC基本配置-拦截器配置](http://note.youdao.com/noteshare?id=43f57fe16f133916f14fd1285ffe1d8d&sub=wcp1582868210157413)
 * [SpringMVC基础配置-@ControllerAdvice注解]()
 * [SpringMVC基础配置-ViewController]()
 * [SpringMVC基础配置-路径匹配参数配置]()
