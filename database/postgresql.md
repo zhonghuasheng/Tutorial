@@ -1,3 +1,7 @@
+### 学习笔记
+* [Postgresql在Linux中的安装以及常用命令](database/postgresql/postgresql_note.md)
+* [解决Postgresql RDS CPU使用率过高的问题](database/postgresql/PostgreSQL_CPU_Usage_High.md)
+
 Default path: /var/lib/pgsql/9.5/data
 
 1. [How to install postgresql in linux](./file/postgresql/postgresql_note.md#how-to-install-postgresql-in-linux)
