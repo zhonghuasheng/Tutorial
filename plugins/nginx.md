@@ -1,6 +1,9 @@
 ### 学习计划
 * Nginx常用来干什么
 * Nginx实现动静分离 https://www.jianshu.com/p/037a088eca4f
+* [Nginx在CentOS中的安装](plugins/nginx.md##安装)
+* [Nginx反向代理服务器搭建](plugins/nginx.md)
+* [Nginx实现动静分离](plugins/nginx.md)
 
 ### 学习笔记
 * Nginx实现动静分离笔记

@@ -25,7 +25,6 @@
 * Redis面试题汇总
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
 
-
 ### 学习笔记
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
     *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
@@ -215,6 +214,8 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 
 * 如何解决DB和缓存一致性问题？
 答：当修改了数据库后，有没有及时修改缓存。这种问题，以前有过实践，修改数据库成功，而修改缓存失败的情况，最主要就是缓存服务器挂了。而因为网络问题引起的没有及时更新，可以通过重试机制来解决。而缓存服务器挂了，请求首先自然也就无法到达，从而直接访问到数据库。那么我们在修改数据库后，无法修改缓存，这时候可以将这条数据放到数据库中，同时启动一个异步任务定时去检测缓存服务器是否连接成功，一旦连接成功则从数据库中按顺序取出修改数据，依次进行缓存最新值的修改。
+
+[Redis使用单线程的原因](https://github.com/zhonghuasheng/Tutorial/issues/105)
 
 # 引用
 * [Redis教程](http://runoob.com/redis)

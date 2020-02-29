@@ -12,6 +12,13 @@
 * 虚拟机执行子系统
 
 ### 学习笔记
+* [Java虚拟机概述](http://note.youdao.com/noteshare?id=04255aa8ae9ab45ed502296d57c736d3&sub=D4C06128EBBD414C91D85B7F89AB0C91)
+* [Java内存模型（JMM）概述](http://note.youdao.com/noteshare?id=853bd6ff9802006899b9e0837fece691&sub=wcp1576467027359972)
+* [volatile关键字解析](http://note.youdao.com/noteshare?id=b463861623604a614e0ceb2e27f4b36e&sub=ED4A85833F6F4531A65BBC382E218D32)
+* [Java内存区域和对象创建及内存分配](http://note.youdao.com/noteshare?id=c5cc62733e28ed05ea252db5243ca797&sub=3386EF7F877C493DACA2FDD53BC0E0E4)
+* [JVM垃圾回收机制](http://note.youdao.com/noteshare?id=210c03900e584c1001b4b16d4060dc89&sub=wcp1581062973917549)
+* [JVM堆内存(heap)及垃圾回收总结](http://note.youdao.com/noteshare?id=27f16d42fea30933884b640a941e8587&sub=wcp1580995061039682)
+* [Java对象的创建过程解析](http://note.youdao.com/noteshare?id=720b1f1bef16d494b767edeaf52e1eee&sub=wcp158116390844063)
 
 ## 走近Java
 1. 微软公司曾今是Java技术的铁杆支持者，令Java从跨平台技术变为绑定在Windows上的技术是微软的主要目的，然而后期Sun公司控告微软，致使微软不得不在后期产品中逐步移除Java平台，也间接导致.NET平台的产生，2002年微软发布.NET技术平台，这才有了后期的.NET与Java之争。
