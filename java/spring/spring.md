@@ -33,8 +33,7 @@
 * [SpringMVC基础配置-路径匹配参数配置](http://note.youdao.com/noteshare?id=452d39e440514114c27624af34460beb&sub=wcp1582893962706623)
 * [SpringMVC文件上传](http://note.youdao.com/noteshare?id=1336c8afd5a0feecbd4fce53e3c7bdf0&sub=wcp1582955118268508)
 * [SpringMVC JSON数据与对象T的转换](http://note.youdao.com/noteshare?id=d0ae808a1bdc1c0b445f3ecee2ab141d&sub=wcp1582966629731695)
-* [SpringMVC服务端消息推送]()
-* [SpringMVC测试]()
+* [SpringMVC测试](http://note.youdao.com/noteshare?id=1691d99d1263f3d5ff241db2da0a54cc&sub=wcp1582972184053369)
 
 ### SpringBoot
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
