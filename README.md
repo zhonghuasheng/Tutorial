@@ -33,13 +33,13 @@
 * [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)
 
 ## 架构设计
-* `原则`: &emsp;[系统设计注意事项](architecture/系统设计注意事项.md)
-* `安全`: &emsp;[系统架构安全设计](architecture/系统架构安全设计.md)
-* `高可用`: &emsp;[系统架构高可用设计](architecture/系统架构高可用设计.md)
-* `扩展性`: &emsp;[系统架构扩展性设计](architecture/系统架构扩展性设计.md)
-* `伸缩性`: &emsp;[系统架构伸缩性设计](architecture/系统架构伸缩性设计.md)
-* `性能`: &emsp;[系统架构性能设计](architecture/系统架构性能设计.md)
-* `其他`: &emsp;[系统架构设计其他注意事项](architecture/系统架构设计其他注意事项.md)
+* `设计原则`: &emsp;[系统设计注意事项](architecture/系统设计注意事项.md)
+* `系统安全`: &emsp;[系统架构安全设计](architecture/系统架构安全设计.md)
+* `高可用性`: &emsp;[系统架构高可用设计](architecture/系统架构高可用设计.md)
+* `高扩展性`: &emsp;[系统架构扩展性设计](architecture/系统架构扩展性设计.md)
+* `高伸缩性`: &emsp;[系统架构伸缩性设计](architecture/系统架构伸缩性设计.md)
+* `系统性能`: &emsp;[系统架构性能设计](architecture/系统架构性能设计.md)
+* `其他事项`: &emsp;[系统架构设计其他注意事项](architecture/系统架构设计其他注意事项.md)
 
 ## 内功
 * `设计模式`: [23种设计模式](algorithm/设计模式.md)
