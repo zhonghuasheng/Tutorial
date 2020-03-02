@@ -96,7 +96,7 @@ windows中的换行符为 CRLF，而在Linux下的换行符为LF，所以在执�
 
 ```
 rm -rf .git // 删除.git
-git config –global core.autocrlf false //禁用自动转换
+git config –-global core.autocrlf false //禁用自动转换
 git init //初始化git库
 git add –all //提交所有修改到暂存区
 ```

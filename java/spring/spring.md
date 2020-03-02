@@ -40,6 +40,8 @@
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
 * [SpringBoot基础](spring-boot/1-springboot-basic.md)
 * [SpringBoot-HelloWorld]()
+* SpringBoot页面模板
+    * [SpringBoot Thymeleaf的使用]
 * [SpringBoot Data]()
     * [Spring Data JDBC]()
     * [Spring Data JDBC Extension]()
@@ -53,6 +55,10 @@
     * [Spring for Apache Hadoop]()
 * [SpringBoot Security]()
 * [SpringBoot Session]()
+* [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
+
+> SpringBoot百问
+* []()
 
 > SpringBoot实战技巧系列
 * [SpringBoot统一结果处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
@@ -60,3 +66,4 @@
 * [SpringBoot统计在线人数](https://github.com/zhonghuasheng/Tutorial/wiki/SpringBoot%E7%BB%9F%E8%AE%A1%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0)
 * [SpringBoot + Redis + 自定义注解 + 拦截器 实现接口幂等性校验](https://github.com/zhonghuasheng/Spring-Boot/blob/master/springbootidempotence/README.md)
 * [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
+
