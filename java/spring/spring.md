@@ -53,6 +53,7 @@
     * [Spring Data Elasticsearch]()
     * [Spring Data Spark]()
     * [Spring for Apache Hadoop]()
+    * [SpringBoot MyBatis](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
 * [SpringBoot Security]()
 * [SpringBoot Session]()
 * [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
