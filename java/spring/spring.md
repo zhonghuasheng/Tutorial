@@ -67,3 +67,4 @@
 * [SpringBoot + Redis + 自定义注解 + 拦截器 实现接口幂等性校验](https://github.com/zhonghuasheng/Spring-Boot/blob/master/springbootidempotence/README.md)
 * [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
 
+* Log4j2详解 https://www.cnblogs.com/keeya/p/10101547.html

@@ -59,6 +59,8 @@
 * [雅虎前端34条军规](http://note.youdao.com/noteshare?id=b59d0da4f7bb2b7ba5f73129d85b1ba1)
 * [Google Java Coding Style](https://google.github.io/styleguide/javaguide.html)
 * [阿里巴巴代码规范](https://github.com/alibaba/p3c/blob/master/%E9%98%BF%E9%87%8C%E5%B7%B4%E5%B7%B4Java%E5%BC%80%E5%8F%91%E6%89%8B%E5%86%8C%EF%BC%88%E8%AF%A6%E5%B0%BD%E7%89%88%EF%BC%89.pdf)
+* [给函数取一个好的名字](http://note.youdao.com/noteshare?id=74f3c5fae9fc26473e7046a700cdad12&sub=wcp1581864078132689)
+* [Java命名规范参考](http://note.youdao.com/noteshare?id=c0ca7331624eb2f19b06f623a1b832ae&sub=2F7223EB9D9E4072B60A1FB578BF0AFA)
 
 > `工具`
 * [API测试工具](tool/api-testing-tool.md)
