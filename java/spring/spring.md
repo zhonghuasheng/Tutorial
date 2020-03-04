@@ -40,6 +40,7 @@
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
 * [SpringBoot基础](spring-boot/1-springboot-basic.md)
 * [SpringBoot-HelloWorld]()
+* [SpringBoot AOP](http://note.youdao.com/noteshare?id=167ce48253b948332badd22fd35e14ce&sub=9A67CA36E2BA43A9BEEEC13BA3B5FA36)
 * SpringBoot页面模板
     * [SpringBoot Thymeleaf的使用]
 * [SpringBoot Data]()
