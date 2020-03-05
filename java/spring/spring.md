@@ -39,6 +39,7 @@
 > SpringBoot基础知识系列
 * [SpringBoot历史](spring-boot/0-springboot-history.md)
 * [SpringBoot基础](spring-boot/1-springboot-basic.md)
+* [SpringBoot运行原理](http://note.youdao.com/noteshare?id=2c7f983f4eff820ba695f1bf47a85925&sub=wcp1583375011581975)
 * [SpringBoot-HelloWorld]()
 * [SpringBoot AOP](http://note.youdao.com/noteshare?id=167ce48253b948332badd22fd35e14ce&sub=9A67CA36E2BA43A9BEEEC13BA3B5FA36)
 * SpringBoot页面模板
@@ -55,7 +56,8 @@
     * [Spring Data Spark]()
     * [Spring for Apache Hadoop]()
     * [SpringBoot MyBatis](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
-* [SpringBoot Security]()
+* [SpringBoot Security]() https://www.jianshu.com/p/6a7dcef02bd5
+* [SpringBoot Shiro]
 * [SpringBoot Session]()
 * [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
 
