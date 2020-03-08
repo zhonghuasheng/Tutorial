@@ -26,6 +26,47 @@
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
 
 ### 学习笔记
+> 安装
+```
+wget http://download.redis.io/releases/redis-5.0.7.tar.gz
+tar -zxvf redis-5.0.7.tar.gz
+mv redis-5.0.7 /usr/local/redis 不需要先创建/usr/local.redis文件夹
+cd /usr/local/redis
+make
+make install
+vi redis.conf
+  * bind 0.0.0.0 开发访问
+  * daemonize yes 设置后台运行
+redis-server ./redis.conf 启动
+redis-cli 进入命令行，进行简单的命令操作
+vi redis.conf
+  > requirepass password 修改密码
+redis-cli 再次进入cmd
+  > shutdown save 关闭redis，同时持久化当前数据
+redis-server ./redis.conf 再次启动redis
+redis-cli 进入命令行
+  > auth password
+将redis配置成系统服务，redis/utils中自带命令，我们只需修改参数
+  /usr/local/redis/utils/./install_server.sh
+  [root~ utils]# ./install_server.sh
+  Welcome to the redis service installer
+  Please select the redis port for this instance: [6379] 默认端口不管
+  Selecting default: 6379
+  Please select the redis config file name [/etc/redis/6379.conf] /usr/local/redis/redis.conf 修改配置文件路径
+  Please select the redis log file name [/var/log/redis_6379.log] /usr/local/redis/redis.log 修改日志文件路径
+  Please select the data directory for this instance [/var/lib/redis/6379] /usr/local/redis/data 修改数据存储路径
+  Please select the redis executable path [/usr/local/bin/redis-server]
+  Selected config:
+  Port           : 6379
+  Config file    : /usr/local/redis/redis.conf
+  Log file       : /usr/local/redis/redis.log
+  Data dir       : /usr/local/redis/data
+  Executable     : /usr/local/bin/redis-server
+  Cli Executable : /usr/local/bin/redis-cli
+chkconfig --list | grep redis 查看redis服务配置项
+  redis_6379      0:off   1:off   2:on    3:on    4:on    5:on    6:off
+  服务名是redis_6379
+```
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
     *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
         ```
