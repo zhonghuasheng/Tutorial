@@ -67,6 +67,7 @@ chkconfig --list | grep redis 查看redis服务配置项
   redis_6379      0:off   1:off   2:on    3:on    4:on    5:on    6:off
   服务名是redis_6379
 ```
+> 基础
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
     *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
         ```
@@ -117,6 +118,10 @@ chkconfig --list | grep redis 查看redis服务配置项
     ```
     auth "password" 验证密码
     select index 切换到指定的数据库
+    keys * 显示所有key
+    incr key 将key的值加一，是原子操作
+    decr key 将key的值加一，会出现复数，是原子操作
+    del key 删除key
     ```
 * Redis SAVE 命令用于创建当前数据库的备份，该命令将在 redis 安装目录中创建dump.rdb文件，也可以指定目录` CONFIG GET dir 输出的 redis 安装目录为 /usr/local/redis/bin`。创建 redis 备份文件也可以使用命令 BGSAVE，该命令在后台执行。
 * Redis 通过监听一个 TCP 端口或者 Unix socket 的方式来接收来自客户端的连接，当一个连接建立后，Redis 内部会进行以下一些操作：
