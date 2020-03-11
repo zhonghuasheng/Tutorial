@@ -1,3 +1,7 @@
+## 本着学习自用的态度
+* 参考文章：https://segmentfault.com/a/1190000021220727?utm_source=tag-newest
+* 激活工具：链接：https://pan.baidu.com/s/1gzjNQe2bJ-wQeRTT_mdFGg 提取码：gf3j
+
 ## 常用设置
 * 插件 Lombook， Easy Code(https://blog.csdn.net/qq_38225558/article/details/84479653)
 
