@@ -160,3 +160,40 @@ pid /run/nginx.pid;
    /usr/local/webserver/nginx/sbin/nginx -s reopen            # 重启 Nginx
    /usr/local/webserver/nginx/sbin/nginx -s stop              # 停止 Nginx
    ```
+### Nginx通过域名转发请求
+```
+server {
+    listen       80;
+    server_name  musicstore.anythy.cn;
+
+    access_log  /var/log/nginx/musicstore.host.access.log  main;
+
+    location /musicstore/ {
+        proxy_set_header  Host  $host;
+        proxy_set_header  X-real-ip $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass   http://xx.107.153.xx:8018/;
+    }
+
+    location ~ .*\.(jpg|jpeg|png|ico|js|css|gif)$ {
+        root /tmp/static;
+    }
+    location s.anythy.cn.*\.(jpg|jpeg|png|ico|js|css|gif)$ {
+        root /tmp/static;
+    }
+}
+
+server {
+    listen       80;
+    server_name  seckill.anythy.cn;
+
+    access_log  /var/log/nginx/musicstore.host.access.log  main;
+
+    location / {
+        proxy_set_header  Host  $host;
+        proxy_set_header  X-real-ip $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass   http://xx.107.153.xx:8019/;
+    }
+}
+```
