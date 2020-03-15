@@ -84,10 +84,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-<<<<<<< 00ed86d19efec83e5dbc51d8415bf5605725c877
 ![](tutorial-2020-03-15.png)
-=======
-![](tutorial-2020-03-14.png)
->>>>>>> docs(tech skills): update the picture of skill stack tutorial-2020-03-14.png
 
 </center>
