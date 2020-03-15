@@ -71,5 +71,5 @@
 * [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
 * SpringBoot打成war包并修改war包名用于迭代开发
 * SpringBoot项目war包部署到tomcat，解决路径问题
-
+* [SpringBoot中使用Redis做页面缓存](https://github.com/zhonghuasheng/JAVA/commit/340d764e21902797630ea6a42136ec1fc909023b)
 * Log4j2详解 https://www.cnblogs.com/keeya/p/10101547.html
