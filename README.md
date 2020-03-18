@@ -78,7 +78,7 @@
 * [疯狂面试题](tool/interview.md)
 
 > `实战训练`
-* [我也写份秒杀商城](system/秒杀.md)
+* [秒杀商城](https://github.com/zhonghuasheng/JAVA/tree/master/seckill)
 
 <center>
 <h2 align="center">技术栈</h2>
