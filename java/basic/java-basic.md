@@ -844,8 +844,30 @@ x.equals(null); // false;
 
 **2. 等价与相等**
 
-- 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
-- 对于引用类型，== 判断两个变量是否引用同一个对象，而 equals() 判断引用的对象是否等价。
+1. 基础数据类型没有equals方法，只能使用==来判断，判断的时候是判断值是否相等
+2. 引用类型可以使用==和equalls。如果对象不重写Object中的equals方法，那么==和equals没有区别，因为Object中的equals也是使用==来判断；如果重写了equals方法，那就使用对象重写的equals方法来判断。==比较的是两个对象在堆中存放数据的内存地址是否相等。
+3. String需要拿来特殊说明，String是Java中不需要new就可以产生对象的特例。使用String来申明一个变量的时候，JVM会在常量池中查找是否已经存在这个值，如果存在就把内存地址返回给变量；如果不存在，会新开辟一个空间来存储这个值，然后把内存地址返回。那么我们再来看String中==和equals的区别，String中使用==比较的是内存地址是否相等，String重写了Object中的equals方法，使用equals时先比较对象是否相等，如果相等就返回true；否则比较值是否相等。
+    public boolean equals(Object anObject) {
+        if (this == anObject) {
+            return true;
+        }
+        if (anObject instanceof String) {
+            String anotherString = (String)anObject;
+            int n = value.length;
+            if (n == anotherString.value.length) {
+                char v1[] = value;
+                char v2[] = anotherString.value;
+                int i = 0;
+                while (n-- != 0) {
+                    if (v1[i] != v2[i])
+                        return false;
+                    i++;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
 
 ```java
 Integer x = new Integer(1);
