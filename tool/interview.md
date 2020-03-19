@@ -81,12 +81,30 @@ JDK ：英文名称（Java Development Kit），Java 开发工具包。jdk 是�
 
 这个问题需要分两种情况来思考：对象有没有重写equals方法。如果没有，那默认使用Object中的equals做判断，Object中的equals使用的==来判断，比较的是对象在堆中的内存地址。如果对象为String类型，那么equals为true；否则不一定相等。Java中的HashCode是通过一定的规则将与对象相关的信息（内存地址，对象的字段等）映射成一个数值，这个数值称为散列值。我们知道这个hashCode的生成规则之后就不难理解为什么JDK要求（没有强制）当重写了hashCode之后要重写equals方法，来保证当两个对象的hashCode相同时，equals也为true。
 
-4. final 在 Java 中有什么作用？
-5. Java 中的 Math. round(-1. 5) 等于多少？
-6. String 属于基础的数据类型吗？
-7. Java 中操作字符串都有哪些类？它们之间有什么区别？
-8. String str="i"与 String str=new String(“i”)一样吗？
-9. 如何将字符串反转？
+> final 在 Java 中有什么作用？
+
+final在Java中可以用来修饰类，方法，变量。被final修饰的类表示该类不能被继承；被final修饰的方法表示该方法不能被重写；被final修饰的变量只能被赋值一次不能被修改。
+
+> Java 中的 Math. round(-1. 5) 等于多少？
+-1
+
+> String 属于基础的数据类型吗？
+String是属于final修饰的Java类，不属于基础数据类型，基础数据类型bbcsdlif。
+
+> Java中操作字符串都有哪些类？它们之间有什么区别？
+主要有三种：String, StringBuffer, StringBuilder
+String是不可变的对象，每次对String类型的改变都可能会生成一个新的对象
+StringBuffer和StringBuilder是可以改变的对象。
+对于操作效率：StringBuilder > StringBuffer > String
+对于线程安全：StringBuffer是线程安全的，可用于多线程（关键方法基本都使用synchronized关键字修饰）；StringBuilder是非线程安全的，用于单线程
+不频繁的字符串操作使用String
+
+> String str="i"与 String str=new String(“i”)一样吗？
+String str = "i";JVM会在堆内存中开辟一个空间存i这个值，然后返回地址给str; new String("i")如果字符串池中没有i的话会创建两个对象，"i"创建一个对象，new String()创建一个对象。
+
+> 如何将字符串反转？
+最直接的是使用StringBuffer的reverse方法，实现方式是使用倒序遍历；另外可以将字符串转换为char[]数组（toCharArray），倒序遍历数组
+
 10. String 类的常用方法都有哪些？
 11. 抽象类必须要有抽象方法吗？
 12. 普通类和抽象类有哪些区别？
