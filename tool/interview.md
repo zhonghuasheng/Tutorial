@@ -3,20 +3,108 @@
 * [面试技巧](#面试技巧)
 
 ### 面试题
-* [什么是面向对象](https://github. com/zhonghuasheng/Tutorial/issues/188)
 * [SpringMVC 说说过滤器、监听器、拦截器有啥区别]()
 * [SpringBoot系列](https://github. com/zhonghuasheng/Tutorial/issues?q=label%3ASpringBoot+)
     * [SpringBoot 的启动原理](https://github. com/zhonghuasheng/Tutorial/issues/185)
-一、Java 基础
-1. JDK 和 JRE 有什么区别？
-2. == 和 equals 的区别是什么？
-3. 两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？
-4. final 在 Java 中有什么作用？
-5. Java 中的 Math. round(-1. 5) 等于多少？
-6. String 属于基础的数据类型吗？
-7. Java 中操作字符串都有哪些类？它们之间有什么区别？
-8. String str="i"与 String str=new String(“i”)一样吗？
-9. 如何将字符串反转？
+#### Java 基础
+> 什么是面向对象?
+
+先讲一下面向过程与面向对象编程
+1. 对比说明面向对象的优点
+2. 说说面向对象的三个特征：封装、继承、多态
+先讲一下面向过程:
+面向过程就是分析出解决问题所需要的步骤，然后用函数把这些步骤一步一步实现，使用的时候一个一个依次调用就可以了；面向对象是把构成问题事物分解成各个对象，建立对象的目的不是为了完成一个步骤，而是为了描叙某个事物在整个解决问题的步骤中的行为。
+
+可以拿生活中的实例来理解面向过程与面向对象，例如五子棋，面向过程的设计思路就是首先分析问题的步骤：1、开始游戏，2、黑子先走，3、绘制画面，4、判断输赢，5、轮到白子，6、绘制画面，7、判断输赢，8、返回步骤2，9、输出最后结果。把上面每个步骤用不同的方法来实现。
+
+如果是面向对象的设计思想来解决问题。面向对象的设计则是从另外的思路来解决问题。整个五子棋可以分为1、黑白双方，这两方的行为是一模一样的，2、棋盘系统，负责绘制画面，3、规则系统，负责判定诸如犯规、输赢等。第一类对象（玩家对象）负责接受用户输入，并告知第二类对象（棋盘对象）棋子布局的变化，棋盘对象接收到了棋子的变化就要负责在屏幕上面显示出这种变化，同时利用第三类对象（规则系统）来对棋局进行判定。
+
+可以明显地看出，面向对象是以功能来划分问题，而不是步骤。同样是绘制棋局，这样的行为在面向过程的设计中分散在了多个步骤中，很可能出现不同的绘制版本，因为通常设计人员会考虑到实际情况进行各种各样的简化。而面向对象的设计中，绘图只可能在棋盘对象中出现，从而保证了绘图的统一。
+
+我们再来说一说面向对象都有哪些优点：
+1. 代码开发模块化，更容易维护和修改
+2. 代码复用性强
+3. 增加了代码的可读性
+4. 相对来说代码的可靠性和灵活性也得到了增强
+
+面向对象的三个特征
+封装
+封装给对象提供了隐藏内部特性和行为的能力。对象提供一些能被其他对象访问的方法来改变它内部的数据。首先Java中提供了4中修饰符来修饰方法default, public, protected, private，对对象赋予了不同的访问权限；另外，对于对象内部的属性，通常写成私有的，然后通过setter方法来赋值，getter方法来取值，避免了直接与对象内部属性的操作。
+继承
+继承给对象提供了从基类获取字段和方法的能力，继承提供了代码的重用性，也可以在不修改类的情况下给现存类添加新特性。
+多态
+多态提供了同一个行为具有多个不同表现形式或形态的能力（say()）。是指一个类实例（对象）的相同方法在不同情形有不同表现形式。多态机制使具有不同内部结构的对象可以共享相同的外部接口。这意味着，虽然针对不同对象的具体操作不同，但通过一个公共的类，它们（那些操作）可以通过相同的方式予以调用。
+多态的优点：
+消除类型之间的耦合关系
+可替换性
+可扩充性
+接口性
+灵活性
+简化性
+
+> JDK 和 JRE 有什么区别？
+
+JVM ：英文名称（Java Virtual Machine），就是我们耳熟能详的 Java 虚拟机。它只认识 xxx.class 这种类型的文件，它能够将 class 文件中的字节码指令进行识别并调用操作系统向上的 API 完成动作。所以说，jvm 是 Java 能够跨平台的核心，具体的下文会详细说明。
+JRE ：英文名称（Java Runtime Environment），我们叫它：Java 运行时环境。它主要包含两个部分，jvm 的标准实现和 Java 的一些基本类库。它相对于 jvm 来说，多出来的是一部分的 Java 类库。
+JDK ：英文名称（Java Development Kit），Java 开发工具包。jdk 是整个 Java 开发的核心，它集成了 jre 和一些好用的小工具。例如：javac.exe，java.exe，jar.exe 等。
+显然，这三者的关系是：一层层的嵌套关系。JDK>JRE>JVM。
+
+> == 和 equals 的区别是什么？
+
+1. 基础数据类型没有equals方法，只能使用==来判断，判断的时候是判断值是否相等
+2. 引用类型可以使用==和equalls。如果对象不重写Object中的equals方法，那么==和equals没有区别，因为Object中的equals也是使用==来判断；如果重写了equals方法，那就使用对象重写的equals方法来判断。==比较的是两个对象在堆中存放数据的内存地址是否相等。
+3. String需要拿来特殊说明，String是Java中不需要new就可以产生对象的特例。使用String来申明一个变量的时候，JVM会在常量池中查找是否已经存在这个值，如果存在就把内存地址返回给变量；如果不存在，会新开辟一个空间来存储这个值，然后把内存地址返回。那么我们再来看String中==和equals的区别，String中使用==比较的是内存地址是否相等，String重写了Object中的equals方法，使用equals时先比较对象是否相等，如果相等就返回true；否则比较值是否相等。
+```
+    public boolean equals(Object anObject) {
+        if (this == anObject) {
+            return true;
+        }
+        if (anObject instanceof String) {
+            String anotherString = (String)anObject;
+            int n = value.length;
+            if (n == anotherString.value.length) {
+                char v1[] = value;
+                char v2[] = anotherString.value;
+                int i = 0;
+                while (n-- != 0) {
+                    if (v1[i] != v2[i])
+                        return false;
+                    i++;
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+```
+> 两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？
+
+这个问题需要分两种情况来思考：对象有没有重写equals方法。如果没有，那默认使用Object中的equals做判断，Object中的equals使用的==来判断，比较的是对象在堆中的内存地址。如果对象为String类型，那么equals为true；否则不一定相等。Java中的HashCode是通过一定的规则将与对象相关的信息（内存地址，对象的字段等）映射成一个数值，这个数值称为散列值。我们知道这个hashCode的生成规则之后就不难理解为什么JDK要求（没有强制）当重写了hashCode之后要重写equals方法，来保证当两个对象的hashCode相同时，equals也为true。
+
+> final 在 Java 中有什么作用？
+
+final在Java中可以用来修饰类，方法，变量。被final修饰的类表示该类不能被继承；被final修饰的方法表示该方法不能被重写；被final修饰的变量只能被赋值一次不能被修改。
+
+> Java 中的 Math. round(-1. 5) 等于多少？
+-1
+
+> String 属于基础的数据类型吗？
+String是属于final修饰的Java类，不属于基础数据类型，基础数据类型bbcsdlif。
+
+> Java中操作字符串都有哪些类？它们之间有什么区别？
+主要有三种：String, StringBuffer, StringBuilder
+String是不可变的对象，每次对String类型的改变都可能会生成一个新的对象
+StringBuffer和StringBuilder是可以改变的对象。
+对于操作效率：StringBuilder > StringBuffer > String
+对于线程安全：StringBuffer是线程安全的，可用于多线程（关键方法基本都使用synchronized关键字修饰）；StringBuilder是非线程安全的，用于单线程
+不频繁的字符串操作使用String
+
+> String str="i"与 String str=new String(“i”)一样吗？
+String str = "i";JVM会在堆内存中开辟一个空间存i这个值，然后返回地址给str; new String("i")如果字符串池中没有i的话会创建两个对象，"i"创建一个对象，new String()创建一个对象。
+
+> 如何将字符串反转？
+最直接的是使用StringBuffer的reverse方法，实现方式是使用倒序遍历；另外可以将字符串转换为char[]数组（toCharArray），倒序遍历数组
+
 10. String 类的常用方法都有哪些？
 11. 抽象类必须要有抽象方法吗？
 12. 普通类和抽象类有哪些区别？
@@ -25,7 +113,7 @@
 15. Java 中 IO 流分为几种？
 16. BIO、NIO、AIO 有什么区别？
 17. Files的常用方法都有哪些？
-二、多线程
+#### 多线程
 18. 并行和并发有什么区别？
 19. 线程和进程的区别？
 20. 守护线程是什么？
