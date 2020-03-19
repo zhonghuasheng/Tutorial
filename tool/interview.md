@@ -77,7 +77,10 @@ JDK ：英文名称（Java Development Kit），Java 开发工具包。jdk 是�
         return false;
     }
 ```
-3. 两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？
+> 两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？
+
+这个问题需要分两种情况来思考：对象有没有重写equals方法。如果没有，那默认使用Object中的equals做判断，Object中的equals使用的==来判断，比较的是对象在堆中的内存地址。如果对象为String类型，那么equals为true；否则不一定相等。Java中的HashCode是通过一定的规则将与对象相关的信息（内存地址，对象的字段等）映射成一个数值，这个数值称为散列值。我们知道这个hashCode的生成规则之后就不难理解为什么JDK要求（没有强制）当重写了hashCode之后要重写equals方法，来保证当两个对象的hashCode相同时，equals也为true。
+
 4. final 在 Java 中有什么作用？
 5. Java 中的 Math. round(-1. 5) 等于多少？
 6. String 属于基础的数据类型吗？
