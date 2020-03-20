@@ -27,7 +27,7 @@
 ## 数据库
 * `关系型数据库`: &emsp;[数据库理论基础](database/database.md)&emsp;[MySQL](database/mysql.md)&emsp;[Postgresql](database/postgresql.md)
 * `非关系型数据库`: &emsp;[Mongodb学习笔记](database/mongodb.md)
-* `内存数据库`: &emsp;[Redis基础知识](database/redis.md)
+* `内存数据库`: &emsp;[Redis系列](database/redis.md)
 
 ## 服务器
 * [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)

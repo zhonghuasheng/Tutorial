@@ -99,3 +99,4 @@ for (( i = 0; i < 3000; i++ )) do
     sleep 1
 done
 ```
+* cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格

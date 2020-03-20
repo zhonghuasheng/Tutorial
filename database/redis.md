@@ -26,47 +26,107 @@
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
 
 ### 学习笔记
+> Redis的介绍、优缺点、使用场景
+  * Redis是什么： 开源的，基于键值的存储服务系统，支持多种数据类型，性能高，功能丰富
+  * 特性（主要有8个特性）：
+    * 速度快：官方给出的结果是10W OPS，每秒10W的读写。数据存储在内存中；使用C语言开发；Redis使用单线程，减少上下文切换。本质原因是计算机存储介质的速度，内存比硬盘优几个数量级）。MemoryCache可以使用多核，性能上优于Redis。
+    * 持久化：Redis所有的数据保持在内存中，对数据的更新将异步地保存到磁盘上。断掉，宕机？ RDB快照/AOF日志模式来确保。MemoryCache不提供持久化
+    * 多种数据结构：Redis提供字符串，HashTable, 链表，集合，有序集合；另外新版本的redis提供BitMaps位图，HyperLogLog超小内存唯一值计数，GEORedis3.2提供的地理位置定位。相比memocache只提供字符串的key-value结构
+    * 支持多种编程语言：Java,PHP,Ruby,Lua,Node
+    * 功能丰富: 发布订阅，支持Lua脚本，支持简单事务，支持pipline来提高客户端的并发效率
+    * 简单：单机核心代码23000行，让开发者容易吃透和定制化；不依赖外部库；单线程模型
+    * 主从复制：主服务器的数据可以同步到从服务器上，为高可用提供可能
+    * 高可用、分布式：2.8版本后提供Redis-Sentinel支持高可用；3.0版本支持分布式
+  * 典型应用场景：
+    * 缓存系统：缓存一些数据减少对数据库的访问，提高响应速度
+    * 计数器：类似微博的转发数，评论数，incr/decr的操作是原子性的不会出错
+    * 消息队列系统：发布订阅的模型，消息队列不是很强
+    * 排行版： 提供的有序集合能提供排行版的功能，例如粉丝数，关注数
+    * 实时系统：利用位图实现布隆过滤器
+
 > 安装
-```
-wget http://download.redis.io/releases/redis-5.0.7.tar.gz
-tar -zxvf redis-5.0.7.tar.gz
-mv redis-5.0.7 /usr/local/redis 不需要先创建/usr/local.redis文件夹
-cd /usr/local/redis
-make
-make install
-vi redis.conf
-  * bind 0.0.0.0 开发访问
-  * daemonize yes 设置后台运行
-redis-server ./redis.conf 启动
-redis-cli 进入命令行，进行简单的命令操作
-vi redis.conf
-  > requirepass password 修改密码
-redis-cli 再次进入cmd
-  > shutdown save 关闭redis，同时持久化当前数据
-redis-server ./redis.conf 再次启动redis
-redis-cli 进入命令行
-  > auth password
-将redis配置成系统服务，redis/utils中自带命令，我们只需修改参数
-  /usr/local/redis/utils/./install_server.sh
-  [root~ utils]# ./install_server.sh
-  Welcome to the redis service installer
-  Please select the redis port for this instance: [6379] 默认端口不管
-  Selecting default: 6379
-  Please select the redis config file name [/etc/redis/6379.conf] /usr/local/redis/redis.conf 修改配置文件路径
-  Please select the redis log file name [/var/log/redis_6379.log] /usr/local/redis/redis.log 修改日志文件路径
-  Please select the data directory for this instance [/var/lib/redis/6379] /usr/local/redis/data 修改数据存储路径
-  Please select the redis executable path [/usr/local/bin/redis-server]
-  Selected config:
-  Port           : 6379
-  Config file    : /usr/local/redis/redis.conf
-  Log file       : /usr/local/redis/redis.log
-  Data dir       : /usr/local/redis/data
-  Executable     : /usr/local/bin/redis-server
-  Cli Executable : /usr/local/bin/redis-cli
-chkconfig --list | grep redis 查看redis服务配置项
-  redis_6379      0:off   1:off   2:on    3:on    4:on    5:on    6:off
-  服务名是redis_6379
-```
+* Linux中安装
+    ```
+    wget http://download.redis.io/releases/redis-5.0.7.tar.gz
+    tar -zxvf redis-5.0.7.tar.gz
+    mv redis-5.0.7 /usr/local/redis 不需要先创建/usr/local.redis文件夹
+    cd /usr/local/redis
+    make
+    make install
+    vi redis.conf
+    * bind 0.0.0.0 开发访问
+    * daemonize yes 设置后台运行
+    redis-server ./redis.conf 启动
+    redis-cli 进入命令行，进行简单的命令操作
+    vi redis.conf
+    > requirepass password 修改密码
+    redis-cli 再次进入cmd
+    > shutdown save 关闭redis，同时持久化当前数据
+    redis-server ./redis.conf 再次启动redis
+    redis-cli 进入命令行
+    > auth password
+    将redis配置成系统服务，redis/utils中自带命令，我们只需修改参数
+    /usr/local/redis/utils/./install_server.sh
+    [root~ utils]# ./install_server.sh
+    Welcome to the redis service installer
+    Please select the redis port for this instance: [6379] 默认端口不管
+    Selecting default: 6379
+    Please select the redis config file name [/etc/redis/6379.conf] /usr/local/redis/redis.conf 修改配置文件路径
+    Please select the redis log file name [/var/log/redis_6379.log] /usr/local/redis/redis.log 修改日志文件路径
+    Please select the data directory for this instance [/var/lib/redis/6379] /usr/local/redis/data 修改数据存储路径
+    Please select the redis executable path [/usr/local/bin/redis-server]
+    Selected config:
+    Port           : 6379
+    Config file    : /usr/local/redis/redis.conf
+    Log file       : /usr/local/redis/redis.log
+    Data dir       : /usr/local/redis/data
+    Executable     : /usr/local/bin/redis-server
+    Cli Executable : /usr/local/bin/redis-cli
+    chkconfig --list | grep redis 查看redis服务配置项
+    redis_6379      0:off   1:off   2:on    3:on    4:on    5:on    6:off
+    服务名是redis_6379
+    ```
+* 可执行文件说明
+  * redis-server: Redis服务器，启动Redis的
+  * redis-cli: Redis命令行客户端连接
+  * redis-benchmark: 对Redis做性能测试
+  * redis-check-aof: AOF文件修复工具
+  * redis-check-dump: RDB文件检查工具
+  * redis-sentinel: Sentinel服务器（2.8以后）
+* 启动方式
+  * redis-server: 最简单的默认启动，使用redis的默认参数
+  * 动态参数启动：redis-server --port yourorderpoint
+  * 配置文件的方式： redis-server configpath
+  * 比较：
+    * 生产环境选择配置启动；单机多实例配置文件可以选择配置文件分开
+* Redis客户端返回值
+  * 状态回复：ping->pong
+  * 错误恢复：执行错误的回复
+  * 整数回复：例如incr会返回一个整数
+  * 字符串回复： get
+  * 多行字符串回复：mget
+* 常用配置
+  * daemonize: 是否是守护进程（y/n）
+  * port端口：默认是6379
+  * logfile：Redis系统日志
+  * dir:Redis工作目录
+* 常用命令
+    ```
+    redis-cli -h x.x.x.x -p x 连接
+    auth "password" 验证密码
+    exit 退出
+    select index 切换到指定的数据库
+    keys * 显示所有key
+    incr key 将key的值加一，是原子操作
+    decr key 将key的值加一，会出现复数，是原子操作
+    del key 删除key
+    config get * 获取配置信息
+    set key value插入值
+    get key获取值
+    del key删除key
+    cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格
+    ```
+> Redis API的使用和理解
 > 基础
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
     *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
@@ -114,15 +174,7 @@ chkconfig --list | grep redis 查看redis服务配置项
     * 在事务执行过程，其他客户端提交的命令请求不会插入到事务执行命令序列中。
 * Redis事务从开始到执行会经历以下三个阶段：开始事务 -> 命令入队 -> 执行事务。单个 Redis 命令的执行是原子性的，但 Redis 没有在事务上增加任何维持原子性的机制，所以 Redis 事务的执行并不是原子性的。事务可以理解为一个打包的批量执行脚本，但批量指令并非原子化的操作，中间某条指令的失败不会导致前面已做指令的回滚，也不会造成后续的指令不做。这是官网上的说明 From redis docs on transactions: It's important to note that even when a command fails, all the other commands in the queue are processed – Redis will not stop the processing of commands.
 * Redis 脚本使用 Lua 解释器来执行脚本。 Redis 2.6 版本通过内嵌支持 Lua 环境。执行脚本的常用命令为 EVAL。
-* 常用命令
-    ```
-    auth "password" 验证密码
-    select index 切换到指定的数据库
-    keys * 显示所有key
-    incr key 将key的值加一，是原子操作
-    decr key 将key的值加一，会出现复数，是原子操作
-    del key 删除key
-    ```
+
 * Redis SAVE 命令用于创建当前数据库的备份，该命令将在 redis 安装目录中创建dump.rdb文件，也可以指定目录` CONFIG GET dir 输出的 redis 安装目录为 /usr/local/redis/bin`。创建 redis 备份文件也可以使用命令 BGSAVE，该命令在后台执行。
 * Redis 通过监听一个 TCP 端口或者 Unix socket 的方式来接收来自客户端的连接，当一个连接建立后，Redis 内部会进行以下一些操作：
     * 首先，客户端 socket 会被设置为非阻塞模式，因为 Redis 在网络事件处理上采用的是非阻塞多路复用模型。
