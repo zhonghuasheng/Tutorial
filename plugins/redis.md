@@ -166,7 +166,40 @@
     lindex key index #取第index的值
     llen key #算出列表的长度
     lset key index newValue #修改index的值为newValue
-
+    blpop key timeout #lpop阻塞版本，timeout是阻塞时间，timeout=0表示死等，lpop会立马返回，有时候数据更新不那么及时，或者消息队列中消息未及时处理，我们可以使用这个
+    brpop key timeout
+    lpush + LPOP = STACK
+    lpush + RPOP = QUEUE
+    lpush  + ltrim = 有序的集合
+    lpush + brpop = 消息队列
+    sadd key value #不支持插入重复元素，失败返回0
+    srem key element #删除集合中的element元素
+    smembers key #查看集合元素
+    sinter key1 key2 #取出相同：交集
+    sdiff key1 key2 #取出key1中key2没有的元素：差集
+    sunion key1 key2 #取出二者所有的元素：并集
+    sdiff|sinter|sunion store key #将结果存到key中，有时候计算一次耗时
+    scard key #计算集合大小
+    sismember key element #判断element是否在集合中
+    srandmember #返回所有元素，结果是无序的，小心使用，可能结果很大
+    smembers key #获取集合中的所有元素
+    spop ke #从集合中随机弹出一个元素
+    scan
+    SADD = Tagging
+    SPOP/SRANDMEMBER = Random item
+    SADD + SINTER = Social Graph
+    zadd key score element #添加score和element O(logN): 使用xx和跳表的数据结构
+    zrem key element #删除元素
+    zscore key element #返回元素的分数
+    zincrby key increScore element #增加或减少元素分数
+    zcard key #返回元素的总个数
+    zrank key element #获取element的排名
+    zrange key start end [withscores] #返回指定索引范围内的升序元素
+    zrangebyscore key minScore maxScore [withscore] #返回分数在minScore和maxScore之间的元素
+    zcount key minScore maxScore #返回有序集合内在指定分数范围内的个数
+    zremrangebyrank key start end #删除指定排名内的元素
+    zremrangebyscore key minScore maxScore #删除指定分数内的元素
+    zrevrang/zrevrange/集合间的操作zsetunion
     ```
 > 数据结构和内部编码
 
@@ -185,21 +218,15 @@
 
   * `list`
     * Redis 列表是简单的字符串列表，按照插入顺序排序。列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)。
-        ```
-        lpush test1 value1
-        lpush test1 value2
-        lpush test1 value3
-        // 遍历
-        lrange test1 0 10
-        ```
-    * Redis 的 Set 是 string 类型的无序集合。集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。
-        ```
-        sadd key value1
-        sadd key value2
-        sadd key value3
-        smembers key
-        ```
-    * Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。
+    * 实战：微博按时间顺序展示消息
+
+  * `set`
+    * 是 string 类型的无序集合，不允许插入重复元素，插入重复元素失败返回0。集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。
+    * 实战：抽奖系统（量不是很大的时候）；like,star可以放到集合中；标签tag
+
+  * `zset`
+    * 有序集合：有序且无重复元素，和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。
+    * 实战：排行榜
 * Redis 与其他 key - value 缓存产品有以下三个特点：
     * Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
     * Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。
