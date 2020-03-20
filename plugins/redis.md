@@ -116,18 +116,28 @@
     auth "password" 验证密码
     exit 退出
     select index 切换到指定的数据库
-    keys * 显示所有key
+    keys * 显示所有key，如果键值对多不建议使用，keys会遍历所有key，可以在从节点使用;时间复杂度O(N)
+    dbsize 算出所有的key的数量，只是数量;时间复杂度O(1)
+    exists key key是否存在，存在返回1，不存在返回0；时间复杂度O(1)
     incr key 将key的值加一，是原子操作
     decr key 将key的值加一，会出现复数，是原子操作
-    del key 删除key
+    del key 删除key，删除成功返回1，失败返回0;时间复杂度O(1)
+    expire key seconds 设置过期时间，过期之后就不存在了；时间复杂度O(1)
+    ttl key 查看key剩余的过期时间，key不存在返回-2；key存在没设置过期时间返回-1；
+    persist key 去掉key的过期时间，再查看ttl key，返回值是-1，表示key存在并且没有设置过期时间
+    type key 查看类型；时间复杂度O(1)
     config get * 获取配置信息
     set key value插入值
+    sadd myset 1 2 3 4 插入set
     get key获取值
     del key删除key
     cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格
+
     ```
-> Redis API的使用和理解
-> 基础
+> 数据结构和内部编码
+
+![](png/redis-data-type-structure.PNG)
+
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
     *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
         ```
