@@ -6,7 +6,7 @@
 
 | 英语 | Java | Spring生态 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 程序人生 |
 |:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语">英语</a>|<a href="#Java">Basic</a><br><a href="#Java">JVM</a><br><a href="#Java">Web</a><br>|<a href="#Java">Spring</a><br><a href="#Java">Spring Boot</a><br><a href="#Java">Spring Cloud</a>|<a href="#中间件">Keepalived</a><br><a href="#中间件">ActiveMQ</a><br><a href="#中间件">RabbitMQ</a><br><a href="#中间件">Netty</a><br><a href="#中间件">Mybatis</a>|<a href="#数据库">MySQL</a><br><a href="#数据库">Postgresql</a><br><a href="#数据库">Mongodb</a><br><a href="#数据库">Redis</a>|<a href="#服务器">Tomcat</a><br><a href="#服务器">Nginx</a>|<a href="#架构设计">原则</a><br><a href="#架构设计">安全</a><br><a href="#架构设计">高可用</a><br><a href="#架构设计">扩展性</a><br><a href="#架构设计">伸缩性</a><br><a href="#架构设计">性能</a><br>|<a href="#内功">数据结构</a><br><a href="#内功">算法</a><br><a href="#内功">设计模式</a>|<a href="#网络">网络</a>|<a href="#程序人生">软文</a><br><a href="#程序人生">规范</a><br><a href="#程序人生">工具</a><br><a href="#程序人生">面试集锦</a><br><a href="#程序人生">实战训练</a>|
+|<a href="#英语">英语</a>|<a href="#Java">Basic</a><br><a href="#Java">JVM</a><br><a href="#Java">Web</a><br>|<a href="#Java">Spring</a><br><a href="#Java">Spring Boot</a><br><a href="#Java">Spring Cloud</a>|<a href="#中间件">Keepalived</a><br><a href="#中间件">ActiveMQ</a><br><a href="#中间件">RabbitMQ</a><br><a href="#中间件">Netty</a><br><a href="#中间件">Mybatis</a><br><a href="#数据库">Redis</a>|<a href="#数据库">MySQL</a><br><a href="#数据库">Postgresql</a><br><a href="#数据库">Mongodb</a>|<a href="#服务器">Tomcat</a><br><a href="#服务器">Nginx</a>|<a href="#架构设计">原则</a><br><a href="#架构设计">安全</a><br><a href="#架构设计">高可用</a><br><a href="#架构设计">扩展性</a><br><a href="#架构设计">伸缩性</a><br><a href="#架构设计">性能</a><br>|<a href="#内功">数据结构</a><br><a href="#内功">算法</a><br><a href="#内功">设计模式</a>|<a href="#网络">网络</a>|<a href="#程序人生">软文</a><br><a href="#程序人生">规范</a><br><a href="#程序人生">工具</a><br><a href="#程序人生">面试集锦</a><br><a href="#程序人生">实战训练</a>|
 
 ## 英语
 * [计算机行业常用英语积累](tool/english.md)
@@ -22,12 +22,12 @@
 * `负载均衡`: &emsp;[Keepalived系列](plugins/keepalived.md)
 * `消息通信`: &emsp;[消息通信基础](http://note.youdao.com/noteshare?id=30a11e46aaef3f00d2ecfb84692ca294&sub=wcp157828038663078)&emsp;[ActiveMQ系列](plugins/activemq.md)&emsp;[RabbitMQ系列](plugins/rabbitmq.md) &emsp;[Netty系列](plugins/netty.md)
 * `数据访问`: &emsp;[MyBatis系列](plugins/mybatis.md)
+* `数据缓存`: &emsp;[Redis系列](plugins/redis.md)
 * `搜索引擎`: &emsp;[ELK](elasticsearch.md)
 
 ## 数据库
 * `关系型数据库`: &emsp;[数据库理论基础](database/database.md)&emsp;[MySQL](database/mysql.md)&emsp;[Postgresql](database/postgresql.md)
 * `非关系型数据库`: &emsp;[Mongodb学习笔记](database/mongodb.md)
-* `内存数据库`: &emsp;[Redis基础知识](database/redis.md)
 
 ## 服务器
 * [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)
@@ -84,6 +84,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-03-19.png)
+![](tutorial-2020-03-20.png)
 
 </center>

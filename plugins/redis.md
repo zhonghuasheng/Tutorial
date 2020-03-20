@@ -26,76 +26,207 @@
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
 
 ### 学习笔记
+> Redis的介绍、优缺点、使用场景
+  * Redis是什么： 开源的，基于键值的存储服务系统，支持多种数据类型，性能高，功能丰富
+  * 特性（主要有8个特性）：
+    * 速度快：官方给出的结果是10W OPS，每秒10W的读写。数据存储在内存中；使用C语言开发；Redis使用单线程，减少上下文切换。本质原因是计算机存储介质的速度，内存比硬盘优几个数量级）。MemoryCache可以使用多核，性能上优于Redis。
+    * 持久化：Redis所有的数据保持在内存中，对数据的更新将异步地保存到磁盘上。断掉，宕机？ RDB快照/AOF日志模式来确保。MemoryCache不提供持久化
+    * 多种数据结构：Redis提供字符串，HashTable, 链表，集合，有序集合；另外新版本的redis提供BitMaps位图，HyperLogLog超小内存唯一值计数，GEORedis3.2提供的地理位置定位。相比memocache只提供字符串的key-value结构
+    * 支持多种编程语言：Java,PHP,Ruby,Lua,Node
+    * 功能丰富: 发布订阅，支持Lua脚本，支持简单事务，支持pipline来提高客户端的并发效率
+    * 简单：单机核心代码23000行，让开发者容易吃透和定制化；不依赖外部库；单线程模型
+    * 主从复制：主服务器的数据可以同步到从服务器上，为高可用提供可能
+    * 高可用、分布式：2.8版本后提供Redis-Sentinel支持高可用；3.0版本支持分布式
+  * 典型应用场景：
+    * 缓存系统：缓存一些数据减少对数据库的访问，提高响应速度
+    * 计数器：类似微博的转发数，评论数，incr/decr的操作是原子性的不会出错
+    * 消息队列系统：发布订阅的模型，消息队列不是很强
+    * 排行版： 提供的有序集合能提供排行版的功能，例如粉丝数，关注数
+    * 实时系统：利用位图实现布隆过滤器
+
 > 安装
-```
-wget http://download.redis.io/releases/redis-5.0.7.tar.gz
-tar -zxvf redis-5.0.7.tar.gz
-mv redis-5.0.7 /usr/local/redis 不需要先创建/usr/local.redis文件夹
-cd /usr/local/redis
-make
-make install
-vi redis.conf
-  * bind 0.0.0.0 开发访问
-  * daemonize yes 设置后台运行
-redis-server ./redis.conf 启动
-redis-cli 进入命令行，进行简单的命令操作
-vi redis.conf
-  > requirepass password 修改密码
-redis-cli 再次进入cmd
-  > shutdown save 关闭redis，同时持久化当前数据
-redis-server ./redis.conf 再次启动redis
-redis-cli 进入命令行
-  > auth password
-将redis配置成系统服务，redis/utils中自带命令，我们只需修改参数
-  /usr/local/redis/utils/./install_server.sh
-  [root~ utils]# ./install_server.sh
-  Welcome to the redis service installer
-  Please select the redis port for this instance: [6379] 默认端口不管
-  Selecting default: 6379
-  Please select the redis config file name [/etc/redis/6379.conf] /usr/local/redis/redis.conf 修改配置文件路径
-  Please select the redis log file name [/var/log/redis_6379.log] /usr/local/redis/redis.log 修改日志文件路径
-  Please select the data directory for this instance [/var/lib/redis/6379] /usr/local/redis/data 修改数据存储路径
-  Please select the redis executable path [/usr/local/bin/redis-server]
-  Selected config:
-  Port           : 6379
-  Config file    : /usr/local/redis/redis.conf
-  Log file       : /usr/local/redis/redis.log
-  Data dir       : /usr/local/redis/data
-  Executable     : /usr/local/bin/redis-server
-  Cli Executable : /usr/local/bin/redis-cli
-chkconfig --list | grep redis 查看redis服务配置项
-  redis_6379      0:off   1:off   2:on    3:on    4:on    5:on    6:off
-  服务名是redis_6379
-```
-> 基础
+* Linux中安装
+    ```
+    wget http://download.redis.io/releases/redis-5.0.7.tar.gz
+    tar -zxvf redis-5.0.7.tar.gz
+    mv redis-5.0.7 /usr/local/redis 不需要先创建/usr/local.redis文件夹
+    cd /usr/local/redis
+    make
+    make install
+    vi redis.conf
+    * bind 0.0.0.0 开发访问
+    * daemonize yes 设置后台运行
+    redis-server ./redis.conf 启动
+    redis-cli 进入命令行，进行简单的命令操作
+    vi redis.conf
+    > requirepass password 修改密码
+    redis-cli 再次进入cmd
+    > shutdown save 关闭redis，同时持久化当前数据
+    redis-server ./redis.conf 再次启动redis
+    redis-cli 进入命令行
+    > auth password
+    将redis配置成系统服务，redis/utils中自带命令，我们只需修改参数
+    /usr/local/redis/utils/./install_server.sh
+    [root~ utils]# ./install_server.sh
+    Welcome to the redis service installer
+    Please select the redis port for this instance: [6379] 默认端口不管
+    Selecting default: 6379
+    Please select the redis config file name [/etc/redis/6379.conf] /usr/local/redis/redis.conf 修改配置文件路径
+    Please select the redis log file name [/var/log/redis_6379.log] /usr/local/redis/redis.log 修改日志文件路径
+    Please select the data directory for this instance [/var/lib/redis/6379] /usr/local/redis/data 修改数据存储路径
+    Please select the redis executable path [/usr/local/bin/redis-server]
+    Selected config:
+    Port           : 6379
+    Config file    : /usr/local/redis/redis.conf
+    Log file       : /usr/local/redis/redis.log
+    Data dir       : /usr/local/redis/data
+    Executable     : /usr/local/bin/redis-server
+    Cli Executable : /usr/local/bin/redis-cli
+    chkconfig --list | grep redis 查看redis服务配置项
+    redis_6379      0:off   1:off   2:on    3:on    4:on    5:on    6:off
+    服务名是redis_6379
+    ```
+* 可执行文件说明
+  * redis-server: Redis服务器，启动Redis的
+  * redis-cli: Redis命令行客户端连接
+  * redis-benchmark: 对Redis做性能测试
+  * redis-check-aof: AOF文件修复工具
+  * redis-check-dump: RDB文件检查工具
+  * redis-sentinel: Sentinel服务器（2.8以后）
+* 启动方式
+  * redis-server: 最简单的默认启动，使用redis的默认参数
+  * 动态参数启动：redis-server --port yourorderpoint
+  * 配置文件的方式： redis-server configpath
+  * 比较：
+    * 生产环境选择配置启动；单机多实例配置文件可以选择配置文件分开
+* Redis客户端返回值
+  * 状态回复：ping->pong
+  * 错误恢复：执行错误的回复
+  * 整数回复：例如incr会返回一个整数
+  * 字符串回复： get
+  * 多行字符串回复：mget
+* 常用配置
+  * daemonize: 是否是守护进程（y/n）
+  * port端口：默认是6379
+  * logfile：Redis系统日志
+  * dir:Redis工作目录
+* 常用命令：在线练习http://try.redis.io/
+    ```
+    redis-cli -h x.x.x.x -p x 连接
+    auth "password" 验证密码
+    exit 退出
+    select index 切换到指定的数据库
+    keys * 显示所有key，如果键值对多不建议使用，keys会遍历所有key，可以在从节点使用;时间复杂度O(N)
+    dbsize 算出所有的key的数量，只是数量;时间复杂度O(1)
+    exists key key是否存在，存在返回1，不存在返回0；时间复杂度O(1)
+    incr key 将key的值加一，是原子操作
+    decr key 将key的值加一，会出现复数，是原子操作
+    del key 删除key，删除成功返回1，失败返回0;时间复杂度O(1)
+    expire key seconds 设置过期时间，过期之后就不存在了；时间复杂度O(1)
+    ttl key 查看key剩余的过期时间，key不存在返回-2；key存在没设置过期时间返回-1；
+    persist key 去掉key的过期时间，再查看ttl key，返回值是-1，表示key存在并且没有设置过期时间
+    type key 查看类型；时间复杂度O(1)
+    config get * 获取配置信息
+    set key value插入值
+    sadd myset 1 2 3 4 插入set
+    get key获取值
+    del key删除key
+    cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格
+    setnx key value #key不存在，才设置
+    set key value xx #可以存在，才设置
+    set key value [exporation EX seconds | PX milliseconds] [NX|EX]
+    mget key1 key2 key3 批量获取 1次mget=1次网络时间+n次命令时间;时间复杂度O(n)
+    mset key1 value1 key2 value2 批量插入；时间复杂度O(n)
+    n次get = n次网络时间 + n次命令时间，mget一次就能完成，省去大量的网络时间
+    getset key newvalue # set key newvalue并返回旧的value
+    append key value #将value追加到旧的value
+    strlen key #获取value的长度，中文占2个字节
+    incrbyfloat key 3.5 #增加key对应的值
+    set/get/del, incr(自增1)/decr(自减1)/incrby(incrby key n自增n)/decrby
+    getrange key start end #获取value从start到end的值
+    setrange key index value #设置指定下标为一个新的值
+    hset key field value #给key的field设置值
+    hget key field #获取key的field的值
+    hdel key field #删除key的field的值
+    hgetall key #获取key的所有值
+    hexists key field # 判断key的field是否存在
+    hlen key #获取key field的数量
+    hmset key field1 value1 field2 value2
+    hmget key field1 field2
+    hsetnx/hincrby/hdecry/hincrbyfloat
+    lpush key value1 value2...valueN #从左边插入
+    rpush key value1 value2...valueN #从右边插入
+    linsert key before|after value newValue
+    rinsert key before|after value newValue
+    lpop key #从左边弹出一个item
+    rpop key #从右边弹出一个item
+    lrem key count value #若count等于0或者不填，表示删除所有的value值相等的item;若count>0,表示从左到右删除最多count个value相等的item;若count<0,表示从右到左，删除最多Math.abs(count)个value相等的项
+    ltrim key start end #按照索引范围修剪列表，可以用来慢删除，因为全删除可能会阻塞redis
+    lrang key start end #获取key中从start到end的值
+    lindex key index #取第index的值
+    llen key #算出列表的长度
+    lset key index newValue #修改index的值为newValue
+    blpop key timeout #lpop阻塞版本，timeout是阻塞时间，timeout=0表示死等，lpop会立马返回，有时候数据更新不那么及时，或者消息队列中消息未及时处理，我们可以使用这个
+    brpop key timeout
+    lpush + LPOP = STACK
+    lpush + RPOP = QUEUE
+    lpush  + ltrim = 有序的集合
+    lpush + brpop = 消息队列
+    sadd key value #不支持插入重复元素，失败返回0
+    srem key element #删除集合中的element元素
+    smembers key #查看集合元素
+    sinter key1 key2 #取出相同：交集
+    sdiff key1 key2 #取出key1中key2没有的元素：差集
+    sunion key1 key2 #取出二者所有的元素：并集
+    sdiff|sinter|sunion store key #将结果存到key中，有时候计算一次耗时
+    scard key #计算集合大小
+    sismember key element #判断element是否在集合中
+    srandmember #返回所有元素，结果是无序的，小心使用，可能结果很大
+    smembers key #获取集合中的所有元素
+    spop ke #从集合中随机弹出一个元素
+    scan
+    SADD = Tagging
+    SPOP/SRANDMEMBER = Random item
+    SADD + SINTER = Social Graph
+    zadd key score element #添加score和element O(logN): 使用xx和跳表的数据结构
+    zrem key element #删除元素
+    zscore key element #返回元素的分数
+    zincrby key increScore element #增加或减少元素分数
+    zcard key #返回元素的总个数
+    zrank key element #获取element的排名
+    zrange key start end [withscores] #返回指定索引范围内的升序元素
+    zrangebyscore key minScore maxScore [withscore] #返回分数在minScore和maxScore之间的元素
+    zcount key minScore maxScore #返回有序集合内在指定分数范围内的个数
+    zremrangebyrank key start end #删除指定排名内的元素
+    zremrangebyscore key minScore maxScore #删除指定分数内的元素
+    zrevrang/zrevrange/集合间的操作zsetunion
+    ```
+> 数据结构和内部编码
+
+![](png/redis-data-type-structure.PNG)
+
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
-    *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
-        ```
-        set key "value"
-        get key
-        ```
-    *  Redis hash 是一个键值(key=>value)对集合。Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。
-        ```
-        HMSET key field1 value1 field2 value2
-        HMGET key field1
-        > return value1
-        ```
+  * `string`
+    * redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
+    * 使用场景：缓存/计数器/分布式锁...
+    * 常用命令：
+    * 实战：实现分布式的id生成器，可以使用incr的思路，但是实际中会比这复杂
+
+  * `hash`
+    * 是一个键值(key=>value)对集合。Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。
+    * 实战：统计用户主页的访问量， hincrby user:1:info pageview count
+
+  * `list`
     * Redis 列表是简单的字符串列表，按照插入顺序排序。列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)。
-        ```
-        lpush test1 value1
-        lpush test1 value2
-        lpush test1 value3
-        // 遍历
-        lrange test1 0 10
-        ```
-    * Redis 的 Set 是 string 类型的无序集合。集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。
-        ```
-        sadd key value1
-        sadd key value2
-        sadd key value3
-        smembers key
-        ```
-    * Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。
+    * 实战：微博按时间顺序展示消息
+
+  * `set`
+    * 是 string 类型的无序集合，不允许插入重复元素，插入重复元素失败返回0。集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是 O(1)。
+    * 实战：抽奖系统（量不是很大的时候）；like,star可以放到集合中；标签tag
+
+  * `zset`
+    * 有序集合：有序且无重复元素，和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。
+    * 实战：排行榜
 * Redis 与其他 key - value 缓存产品有以下三个特点：
     * Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
     * Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。
@@ -114,15 +245,7 @@ chkconfig --list | grep redis 查看redis服务配置项
     * 在事务执行过程，其他客户端提交的命令请求不会插入到事务执行命令序列中。
 * Redis事务从开始到执行会经历以下三个阶段：开始事务 -> 命令入队 -> 执行事务。单个 Redis 命令的执行是原子性的，但 Redis 没有在事务上增加任何维持原子性的机制，所以 Redis 事务的执行并不是原子性的。事务可以理解为一个打包的批量执行脚本，但批量指令并非原子化的操作，中间某条指令的失败不会导致前面已做指令的回滚，也不会造成后续的指令不做。这是官网上的说明 From redis docs on transactions: It's important to note that even when a command fails, all the other commands in the queue are processed – Redis will not stop the processing of commands.
 * Redis 脚本使用 Lua 解释器来执行脚本。 Redis 2.6 版本通过内嵌支持 Lua 环境。执行脚本的常用命令为 EVAL。
-* 常用命令
-    ```
-    auth "password" 验证密码
-    select index 切换到指定的数据库
-    keys * 显示所有key
-    incr key 将key的值加一，是原子操作
-    decr key 将key的值加一，会出现复数，是原子操作
-    del key 删除key
-    ```
+
 * Redis SAVE 命令用于创建当前数据库的备份，该命令将在 redis 安装目录中创建dump.rdb文件，也可以指定目录` CONFIG GET dir 输出的 redis 安装目录为 /usr/local/redis/bin`。创建 redis 备份文件也可以使用命令 BGSAVE，该命令在后台执行。
 * Redis 通过监听一个 TCP 端口或者 Unix socket 的方式来接收来自客户端的连接，当一个连接建立后，Redis 内部会进行以下一些操作：
     * 首先，客户端 socket 会被设置为非阻塞模式，因为 Redis 在网络事件处理上采用的是非阻塞多路复用模型。
@@ -261,7 +384,19 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 * 如何解决DB和缓存一致性问题？
 答：当修改了数据库后，有没有及时修改缓存。这种问题，以前有过实践，修改数据库成功，而修改缓存失败的情况，最主要就是缓存服务器挂了。而因为网络问题引起的没有及时更新，可以通过重试机制来解决。而缓存服务器挂了，请求首先自然也就无法到达，从而直接访问到数据库。那么我们在修改数据库后，无法修改缓存，这时候可以将这条数据放到数据库中，同时启动一个异步任务定时去检测缓存服务器是否连接成功，一旦连接成功则从数据库中按顺序取出修改数据，依次进行缓存最新值的修改。
 
-[Redis使用单线程的原因](https://github.com/zhonghuasheng/Tutorial/issues/105)
+### 百问
+> Redis单线程为什么这么快
+Redis单线程模型
+快的原因有主要三点：
+1. 纯内存操作：Redis是基于内存的，所有的命令都在内存中完成，内存的响应速度相比硬盘是非常快的
+2. 非阻塞IO（Redis的非阻塞IO是什么样子的？）
+3. 单线程避免了线程的切换和竞态消耗
+其实也有不是单线程，再操作 fysnc file descriptor/close file descriptor时是另外一个线程在做
+
+> Redis使用注意的点
+1. 由于是单线程模型，因此一次只运行一条命令
+2. 拒绝长（慢）命令：keys, flushall,flushdb, slow lua script, mutil/exec, operate big value(collection)
+
 
 # 引用
 * [Redis教程](http://runoob.com/redis)
