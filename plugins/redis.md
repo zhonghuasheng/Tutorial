@@ -110,7 +110,7 @@
   * port端口：默认是6379
   * logfile：Redis系统日志
   * dir:Redis工作目录
-* 常用命令
+* 常用命令：在线练习http://try.redis.io/
     ```
     redis-cli -h x.x.x.x -p x 连接
     auth "password" 验证密码
@@ -132,6 +132,40 @@
     get key获取值
     del key删除key
     cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格
+    setnx key value #key不存在，才设置
+    set key value xx #可以存在，才设置
+    set key value [exporation EX seconds | PX milliseconds] [NX|EX]
+    mget key1 key2 key3 批量获取 1次mget=1次网络时间+n次命令时间;时间复杂度O(n)
+    mset key1 value1 key2 value2 批量插入；时间复杂度O(n)
+    n次get = n次网络时间 + n次命令时间，mget一次就能完成，省去大量的网络时间
+    getset key newvalue # set key newvalue并返回旧的value
+    append key value #将value追加到旧的value
+    strlen key #获取value的长度，中文占2个字节
+    incrbyfloat key 3.5 #增加key对应的值
+    set/get/del, incr(自增1)/decr(自减1)/incrby(incrby key n自增n)/decrby
+    getrange key start end #获取value从start到end的值
+    setrange key index value #设置指定下标为一个新的值
+    hset key field value #给key的field设置值
+    hget key field #获取key的field的值
+    hdel key field #删除key的field的值
+    hgetall key #获取key的所有值
+    hexists key field # 判断key的field是否存在
+    hlen key #获取key field的数量
+    hmset key field1 value1 field2 value2
+    hmget key field1 field2
+    hsetnx/hincrby/hdecry/hincrbyfloat
+    lpush key value1 value2...valueN #从左边插入
+    rpush key value1 value2...valueN #从右边插入
+    linsert key before|after value newValue
+    rinsert key before|after value newValue
+    lpop key #从左边弹出一个item
+    rpop key #从右边弹出一个item
+    lrem key count value #若count等于0或者不填，表示删除所有的value值相等的item;若count>0,表示从左到右删除最多count个value相等的item;若count<0,表示从右到左，删除最多Math.abs(count)个value相等的项
+    ltrim key start end #按照索引范围修剪列表，可以用来慢删除，因为全删除可能会阻塞redis
+    lrang key start end #获取key中从start到end的值
+    lindex key index #取第index的值
+    llen key #算出列表的长度
+    lset key index newValue #修改index的值为newValue
 
     ```
 > 数据结构和内部编码
@@ -139,17 +173,17 @@
 ![](png/redis-data-type-structure.PNG)
 
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
-    *  redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
-        ```
-        set key "value"
-        get key
-        ```
-    *  Redis hash 是一个键值(key=>value)对集合。Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。
-        ```
-        HMSET key field1 value1 field2 value2
-        HMGET key field1
-        > return value1
-        ```
+  * `string`
+    * redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
+    * 使用场景：缓存/计数器/分布式锁...
+    * 常用命令：
+    * 实战：实现分布式的id生成器，可以使用incr的思路，但是实际中会比这复杂
+
+  * `hash`
+    * 是一个键值(key=>value)对集合。Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。
+    * 实战：统计用户主页的访问量， hincrby user:1:info pageview count
+
+  * `list`
     * Redis 列表是简单的字符串列表，按照插入顺序排序。列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)。
         ```
         lpush test1 value1
@@ -323,7 +357,19 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 * 如何解决DB和缓存一致性问题？
 答：当修改了数据库后，有没有及时修改缓存。这种问题，以前有过实践，修改数据库成功，而修改缓存失败的情况，最主要就是缓存服务器挂了。而因为网络问题引起的没有及时更新，可以通过重试机制来解决。而缓存服务器挂了，请求首先自然也就无法到达，从而直接访问到数据库。那么我们在修改数据库后，无法修改缓存，这时候可以将这条数据放到数据库中，同时启动一个异步任务定时去检测缓存服务器是否连接成功，一旦连接成功则从数据库中按顺序取出修改数据，依次进行缓存最新值的修改。
 
-[Redis使用单线程的原因](https://github.com/zhonghuasheng/Tutorial/issues/105)
+### 百问
+> Redis单线程为什么这么快
+Redis单线程模型
+快的原因有主要三点：
+1. 纯内存操作：Redis是基于内存的，所有的命令都在内存中完成，内存的响应速度相比硬盘是非常快的
+2. 非阻塞IO（Redis的非阻塞IO是什么样子的？）
+3. 单线程避免了线程的切换和竞态消耗
+其实也有不是单线程，再操作 fysnc file descriptor/close file descriptor时是另外一个线程在做
+
+> Redis使用注意的点
+1. 由于是单线程模型，因此一次只运行一条命令
+2. 拒绝长（慢）命令：keys, flushall,flushdb, slow lua script, mutil/exec, operate big value(collection)
+
 
 # 引用
 * [Redis教程](http://runoob.com/redis)
