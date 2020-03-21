@@ -364,6 +364,13 @@ for(0->100) {
   ![](png/redis-aof-append-block.png)
   * 单机多实例部署
 
+> Redis主从复制
+* 主从复制：单机故障/容量瓶颈/QPS瓶颈；一个master可以有多个slave，一个slave只能有一个master，数据必须是单流向，从master流向slave
+* 复制的配置:
+  * 使用slaeof命令，在从redis中执行slave masterip:port使其成为master的从服务器，就能从master拉取数据了；执行slaveof no one清除掉不成为从节点，但是数据不清楚；
+  * 修改配置， slaveof ip port / slave-read-only yes(从节点只做都操作)；配置要更改的话，要重启，所以选择的时候谨慎
+* 全量复制和部分复制
+* 故障处理
 
 
 
