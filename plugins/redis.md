@@ -227,6 +227,158 @@
   * `zset`
     * 有序集合：有序且无重复元素，和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序。zset的成员是唯一的,但分数(score)却可以重复。
     * 实战：排行榜
+
+> Redis客户端： Java的Jedis(Socket通信)，Python的redis-py
+
+### 瑞士军刀
+> 慢查询
+* 生命周期
+
+![](png/redis-cmd-lifecycle.png)
+
+两点说明：
+  1. 慢查询发生在第3阶段，比如keys *等这些需要扫描全表的操作
+  2. 客户端超时不一定慢查询，但慢查询是客户端超时的一个可能因素
+* 两个配置
+  * slowlog-log-slower-than=n(微秒)：命令执行时间超过x微秒，会被丢到一个固定长度的慢查询queue中；n<0表示不配置
+  * slowlog-max-len: 先进先出的队列，固定长度，保存在内存中（重启redis会消失）
+  * 配置方法
+    * 默认值
+      * config get slowlog-max-len=128
+      * config get slowlog-log-slower-than=10000
+    * 修改配置文件重启
+    * 动态配置
+      * config set slowlog-max-len 1000
+      * config set slowlog-log-slower-than 1000
+  * 常用命令
+    * slowlog get [n]:获取慢查询队列
+    * slowlog len： 获取慢查询队列的长度
+    * slowlog reset: 清空慢查询队列
+  * 运维经验
+    * slowlog-max-len不要设置过大，默认10ms,通常设置1ms，根据QPS来设置
+    * slowlog-log-slower-than不要设置过小，通常设置1000左右
+    * 定期持久化慢查询
+
+> pipeline流水线（批量操作）
+当遇到批量网络命令的时候，n次时间=n次网络时间+n次命令时间。举个例子，北京到上海的距离是1300公里，光速是3万公里/秒，假设光纤传输速度是光速的2/3，也就是万公里/秒，那么一次命令的传输时间是 1300/20000*2（来回）=13毫秒，
+什么是pipeline流水线，1次pipeline(n条命令)=1次网络时间+n次命令时间;pipeline命令在redis服务端会被拆分，因此pipeline命令不是一个原子的命令。注意每次pipeline携带数据量；pipeline每次只能作用在一个Redis节点上；M操作和pipeline的区别，M(mset)操作是redis的原生命令，是原子操作，pipeline不是原子操作。
+```java
+for(int i = 0; i < 10000; i++>) {
+    jedis.hset(key, field, value); //1万次hset差不多要50秒
+for(0->100) {
+  Pipeline pipeline = jedis.pipelined();
+  for(0->100) {
+    pipeline.hset(key,field,value);
+  }
+  pipeline.syncAndReturnAll(); //拆分100次，每次100个命令，大概需要0.7秒
+}
+```
+
+> 发布订阅：类似生产者消费者模型
+
+* 角色：发布者（publisher)，频道(channel)，订阅者(subscriber); 发布者将消息发布到频道中，订阅者订阅相关的频道;
+* API： publish/subscribe/unsubscribe
+  * publish channel message : publish sohu:tv "hello world"
+  * subscribe sohu:tv
+  * unsubscribe [channel]
+  * psubscribe [pattern] #订阅模式 sohu*
+
+> bitmap:位图：数据量很大的时候节省存储内存，数据量小了，不节省
+
+> hyperloglog（算法，数据结构）:
+  * 极小空间完成独立数量统计，本质是个string
+  * api: pfadd key element[s]:向hyperloglog添加元素  pfcount key[s]:计算hyperloglog的独立总数 pfmerge key1 key2合并
+
+> GEO: 3.2提供的用于计算地理位置信息；数据类型是zset，可以使用zset的删除命令
+  * 使用场景：微信摇一摇看附近好友
+  * api:
+    * geo key longitude latitude member #增加地理位置信息
+    * geopos key member[n] #获取地理位置信息
+    * geodist key member1 membe2 [unit] m米 km千米 mi英里 ft尺 获取两地位置的距离
+    * georadius #算出指定范围内的地址位置信息的集合，语法复杂了点
+
+### Redis持久化
+* 持久化的作用：redis所有数据保存在内存中，对数据的更新将异步地保存到磁盘上。
+* 主流数据库持久化实现方式：快照（MySQL Dump/Redis RDB），写日志(MySQL Binlog/Redis AOF)
+* RDB:
+  * 创建RDB文件（二进制文件）到硬盘中，启动后载入RDB文件到内存
+  * 三种触发机制
+    * save(同步) - 会产生阻塞
+      * 文件策略：如存在老的RDB文件，新的替换老的，新的会先生成到一个临时文件
+    * bgsave(异步) - 不会阻塞
+      * 客户端执行bgsave之后，redis会使用linux的一个fork()命令生成主进程的一个子进程（fork的操作会执行一个内存页的拷贝，使用copy-on-write策略），子进程会创建RDB文件，创建完毕后将成功的消息返回给redis。fork()出来的子进程执行快的话不会阻塞主进程，否则也会阻塞redis，阻塞的实际点就是生成出来这个子进程。由于是异步，在创建的过程中还有其他命令在执行，如何保证RDB文件是最新的呢？在数据量大的时候bgsave才能突出优点。
+
+      | 命令 | save | bgsave |
+      |:-----|:-----|:-------|
+      |IO类型|同步|异步|
+      |阻塞|是|是（阻塞发生在fork子进程|
+      |复杂度|O(n)|O(n)|
+      |优点|不会消耗额外内存|不阻塞客户端命令|
+      |缺点|阻塞客户端命令|需要fork,消耗内存|
+
+    * 自动触发：多少秒内有多少changes会异步(bgsave)生成一个RDB文件，如60秒内有1W条changes，默认的规则，可以改；不是很好吧，无法控制频率；另外两条是900秒内有1条changes, 300秒内有10条changes；
+    * 配置
+      * dbfilename dump.rdb
+      * dir ./
+      * stop-writes-on-bgsave-error yes 当bgsave发生错误是停止写RDB文件
+      * rdbcompression yes 采用压缩格式
+      * rdbchecksum yes 采用校验和
+    * 其他不能忽视的点:
+      * 全量复制；debug reload；shutdown save会执行rdb文件的生成
+* AOF：
+  * RDB现存问题：耗时，耗性能(fork,IO)，不可控(突然宕机)
+  * AOF：redis中的cmd会先刷新到缓冲区，然后更具配置AOF的策略，异步存追加到AOF文件中，发生宕机后，可以通过AOF恢复，基本上数据是完整的
+  * AOF的三种策略(配置的三种属性)
+    * always：来一条命令写一条；不丢失数据，IO开销较大
+    * everysec：每秒把缓冲区fsync到AOF文件；丢1秒数据
+    * no：操作系统决定什么时候把缓冲区同步到AOF就什么时候追加；不用配置，但是不可控，取决于操作系统
+  * AOF重写
+    * 如果AOF文件很大的话，恢复会很慢，AOF的重写是优化一些命名，使其变成1条，对于过期数据没必要Log,本质是把过期的没有用的，重复的过滤掉，以此减少磁盘占用量，加速恢复。极端的例子，1亿次incr，实际只需要set counter n就够了
+    * 重写的两种方式
+      * bgrewriteaof：异步执行，redis fork出一个子进程，然后进行AOF重写
+      * AOF重写配置
+        * auto-aof-rewrite-min-size: AOF文件到达多大的时候才开始重写
+        * auto-aof-rewrite-percentage: AOF文件的增长率到达了多大才开始重写
+  * 统计
+    * aof_current_size AOF当前尺寸 字节
+    * aof_base_size AOF上次重启和重写的尺寸 字节，方便自动重写判断
+  * 重写触发机制(同时满足如下两条)
+    * aof_current_size > auto-aof-rewrite-min-size
+    * (aof_current_size - aof_base_size) / aof_base_size > auto-aof-rewrite-percentage
+  * 其他配置
+    * appendonly yes
+    * appendfilename ""
+    * appendfsync everysec
+    * dir /xx
+    * no-appendfsync-on-rewrite yes AOF在重启之后恢复，要权衡是否开启AOF日志追加的功能，这个时候IO很大，如果设置为yes，也就意味着在恢复之前的日志数据会丢失
+* RDB & AOF最佳策略：RDB优先于AOF先启用
+  * RDB：建议关掉，集中管理，在从节点开RDB
+  * AOF：建议开启，每秒刷盘
+  * 最佳策略：小分片（log文件分片）
+* 常见问题
+  * fork操作：是一个同步操作，做一个内存页的拷贝；与内存量息息相关，内存越大，耗时越长；执行info命令，有个latest_fork_usec的值，看下上次fork执行耗时
+  * 进程外开销：
+    * CPU：RDB AOF文件生成，属于CPU密集型操作（不要和CPU密集型应用部署在一起，减少RDB AOF频率）；内存：fork内存开销；硬盘：IO开销大，选用SSD磁盘
+  * AOF追加阻塞：主线程将命令刷到AOF缓冲区，同步线程同步命令到硬盘，同时主线程会对比上次fsync的时间，如果大于2秒就阻塞主线程，否则不阻塞，主线程这么做是为了达到每秒刷盘的目的，让子线程完成AOF，以此来达到数据同步。AOF发生阻塞怎么定位：redis日志/info persistence(aof_delayed_fsync累计阻塞次数,是累计，不好分清什么时候发生阻塞)
+
+  ![](png/redis-aof-append-block.png)
+  * 单机多实例部署
+
+> Redis主从复制
+* 主从复制：单机故障/容量瓶颈/QPS瓶颈；一个master可以有多个slave，一个slave只能有一个master，数据必须是单流向，从master流向slave
+* 复制的配置:
+  * 使用slaeof命令，在从redis中执行slave masterip:port使其成为master的从服务器，就能从master拉取数据了；执行slaveof no one清除掉不成为从节点，但是数据不清楚；
+  * 修改配置， slaveof ip port / slave-read-only yes(从节点只做都操作)；配置要更改的话，要重启，所以选择的时候谨慎
+* 全量复制和部分复制
+* 故障处理
+
+
+
+
+
+
+
+
 * Redis 与其他 key - value 缓存产品有以下三个特点：
     * Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
     * Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。
