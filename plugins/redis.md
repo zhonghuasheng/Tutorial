@@ -200,6 +200,7 @@
     zremrangebyrank key start end #删除指定排名内的元素
     zremrangebyscore key minScore maxScore #删除指定分数内的元素
     zrevrang/zrevrange/集合间的操作zsetunion
+    info replication 查看分片，能够获取到主从的数量和状态
     ```
 > 数据结构和内部编码
 
@@ -369,8 +370,18 @@ for(0->100) {
 * 复制的配置:
   * 使用slaeof命令，在从redis中执行slave masterip:port使其成为master的从服务器，就能从master拉取数据了；执行slaveof no one清除掉不成为从节点，但是数据不清楚；
   * 修改配置， slaveof ip port / slave-read-only yes(从节点只做都操作)；配置要更改的话，要重启，所以选择的时候谨慎
-* 全量复制和部分复制
-* 故障处理
+* 全量复制
+  * run_id(使用info server可以看到run_id),重启之后run_id就没有了，当从服务器去复制主服务器，主服务器run_id会在从服务器上做一个标识，当从服务器发现主服务器的run_id发生了变化，说明主服务器发生了变化（重启或者什么的），那么从服务器就要把主服务器的数据都同步过来
+  * 偏移量：部分复制中的一个依据，后面说
+
+  ![](png/redis-full-reclipate.png)
+  * 解析下上面的全量复制的过程，slave向master发送psync的命令要去master全量复制数据（PSYNC <MASTER_RUN_ID> <OFFSET>，其中?表示我不知道master的runId啊，第一次连嘛，-1表示我都要，这时候slava咱啥也不知道），master大人收到了小弟的请求之后，大方的把自己的runId/offset发了过去，小弟收到后先存下来；在master大人把自个的信息发给小弟之后，立马投入了创建快照RDB的工作，一个bgsave命令立马开工，RDB生产了就发给slave；咦，细心的我们发现你这不对啊，你master创建快照到创建完成这之间新增的数据咋办，master吭吭了两声，我在开始快照的那一刻，后期的所有写命令都额外往buffer中存了一份，来保证我给你的是完整的，当我发送完RDB之后，立马给你发buffer；slave小弟内心对master大人产生了膜拜之情，收到了RDB/buffer之后，先把自己的老数据flush掉，然后load RDB,把最新的buffer刷一遍，分分钟让自己向master看齐。
+  * 开销：bgsave时间， RDB文件网络传输时间，从节点清空数据时间，从节点加载RDB的时间，可能的AOF重写时间
+* 部分复制：
+
+  ![](png/redis-part-replication.png)
+  * 解释下上面的部分复制的过程，当遇到网络抖动，那这段时间内数据在slave上就会发生丢失，那么这些数据slave是不知道的，在2.8之前redis会重新做一次全量复制，但是很显然这样做开销很大，2.8之后提出部分复制的功能；当matster发现slave连接不上的时候，master在进行写操作的时候，也会往缓冲区写，等到下一次slave连上之后，slave会发送一条pysnc {offset}{runId}的命令，其中offset是slave自己的，相当于告诉master我的偏移量是多少，master判断slave的offset在缓冲区内（缓冲区有start/end offset）就向slave发送continue命令，然后把这部分数据发送给slave；当master发现slave这个offset偏移量很大的时候，也就意味着slave丢失了很多数据，那么就进行一次全量复制
+* 故障处理:
 
 
 
