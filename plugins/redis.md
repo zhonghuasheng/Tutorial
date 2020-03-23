@@ -382,8 +382,29 @@ for(0->100) {
   ![](png/redis-part-replication.png)
   * 解释下上面的部分复制的过程，当遇到网络抖动，那这段时间内数据在slave上就会发生丢失，那么这些数据slave是不知道的，在2.8之前redis会重新做一次全量复制，但是很显然这样做开销很大，2.8之后提出部分复制的功能；当matster发现slave连接不上的时候，master在进行写操作的时候，也会往缓冲区写，等到下一次slave连上之后，slave会发送一条pysnc {offset}{runId}的命令，其中offset是slave自己的，相当于告诉master我的偏移量是多少，master判断slave的offset在缓冲区内（缓冲区有start/end offset）就向slave发送continue命令，然后把这部分数据发送给slave；当master发现slave这个offset偏移量很大的时候，也就意味着slave丢失了很多数据，那么就进行一次全量复制
 * 故障处理:
+  * master/slave宕机的情况，主从模式没有实现故障的完全自动转移
+  * 常见问题：
+    * 读写分离：读流量分摊到从节点，可能遇到复制数据延迟，也可能读到过期的数据，从节点故障怎么办
+    * 主从配置不一致：主从maxmemory不一致，可能会丢失数据；主从内存不一致
+    * 规避全量复制：第一次不可避免；小主节点，低峰处理（夜间）；主节点重启后runId发生了变化
+    * 规避复制风暴
+      * 单机主节点复制风暴，如果是1主N从，当master重启之后，所有的slave都会发生全量复制，可想而知这样非常容易造成redis服务的不可用
 
-
+> Redis Sentinel
+* 主从复制高可用？
+  * 手动故障转移，例如选出新的slave做master；写能力和存储能力受限；
+* 架构说明
+  * Redis Sentinel是一个监控redis主从以及实施故障转移的工具，sentinel不是一个是多个的（会选举出一个master sentinel），这样可以保证sentinel的高可用和公平（不是一个sentinel判断不可用就不可用），可以把Redis Sentinel看成一个redis的额外进程，用来监控reids服务的可用与不可用；客户端不再记住redis的地址，而是记录sentinel的地址，sentinel知道谁是真的master;当多个sentinel发现并确认master有问题，sentinel内部会先选出来一个领导，让这个领导来完成故障的转移（因为执行slave no noe/new master这些命令只需要一个sentinel就够了），sentinel从slave中选举一个作为master，然后通知其他的slave去新的master获取数据。sentinel可以监控多套master-slave，
+* 安装配置
+  * 配置开启主从节点
+  * 配置开启sentinel监控主节点（sentinel是特殊的redis）：sentinel默认端口是23679
+    ```
+    sentinel monitor mymaster 127.0.0.1 7000 2 监控的主节点名字是mymaster，2表示2个sentinel觉得当前master有问题提才发生故障转移
+    sentinel down-after-milliseconds mymaster 30000 表示30秒不通之后就停掉master
+    sentinel parallel-syncs mymaster 1 表示每次并发的复制是1个在复制，这样可以减少master的压力
+    sentinel failover-timeout mymaster 180000 故障转移时间
+    ```
+* 实现原理
 
 
 
@@ -556,9 +577,15 @@ Redis单线程模型
 3. 单线程避免了线程的切换和竞态消耗
 其实也有不是单线程，再操作 fysnc file descriptor/close file descriptor时是另外一个线程在做
 
+> Redis如何处理过期数据？Slave不能处理数据，那数据过期了怎么办？
+
+> 1主2从的模式中，当master挂掉之后怎么办？
+这种典型的模式就不上图了，master读写，slave1/2只读，当master挂掉之后，redis服务不可用，需要立马手动处理。两种处理方式，第一种是把master重新启动起来，不用改变现有的主从结构，缺点是什么呢，master重新启动并完成RDB/AOF的恢复是个耗时的过程，另外会造成slave1/2发生全量复制；第二种就是重新选举新的master，具体怎么做呢？选折其中一个slave，执行命令 slave no one来解除自己是从服务器的身份，使其称为一个master，注意的点是这个slave要改成读写模式；连到另一个slave，执行slave new master，让它去找master。整个过程是一个手动的过程，Redis Sentinel就是这样一个功能，自动完成切换，帅的一比。
+
 > Redis使用注意的点
 1. 由于是单线程模型，因此一次只运行一条命令
 2. 拒绝长（慢）命令：keys, flushall,flushdb, slow lua script, mutil/exec, operate big value(collection)
+
 
 
 # 引用
