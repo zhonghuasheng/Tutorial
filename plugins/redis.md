@@ -18,6 +18,7 @@
 * Redis脚本，为什么需要脚本，能干什么
 * Redis日志配置
 * Redis持久化，数据备份与恢复
+    * [SpringBoot + Jedis + 1主2从3哨兵 实现Redis的高可用](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-redis)
 * Redis常用命令
 * Redis安全如何保证
 * Redis性能测试
