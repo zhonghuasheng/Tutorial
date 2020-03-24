@@ -18,6 +18,7 @@
 * Redis脚本，为什么需要脚本，能干什么
 * Redis日志配置
 * Redis持久化，数据备份与恢复
+    * [SpringBoot + Jedis + 1主2从3哨兵 实现Redis的高可用](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-redis)
 * Redis常用命令
 * Redis安全如何保证
 * Redis性能测试
@@ -404,11 +405,43 @@ for(0->100) {
     sentinel parallel-syncs mymaster 1 表示每次并发的复制是1个在复制，这样可以减少master的压力
     sentinel failover-timeout mymaster 180000 故障转移时间
     ```
-* 实现原理
+* 实现原理: redis sentinel做失败判定和故障转移
+  * redis sentinel内部有三个定时任务
+    * 1. 每10秒每个sentinel对master和slave执行info：可以从replication中发现slave节点，确认主从关系
+    * 2. 每2秒每个sentinel通过master节点的channel交换信息（pub/sub): 什么意思呢，master节点上有个发布订阅的频道用于sentinel节点进行信息交换，利用的原理就是每个sentinel发布一个信息其他sentinel都可以收到这样一个原理，这个信息都包含当前sentinel节点的信息，以及它当前对master/slave做出的判断。这个频道是啥呢，_sentinel_:hello，这个名字内部规定的
+    * 3. 每1秒每个sentinel对其他sentinel和redis执行ping操作-心跳检测，是失败判断的依据
+* 主观下线和客观下线：
+  * sentinel monitor <mastername> <ip> <port> <quorun> quorum是法定人数，有quorum个sentinel认为master不可用了那么master就会被客观下线
+  * sentinel down-after-milliseconds <mastername> <timeout> 一个sentinel如果在timeout毫秒内没收到master的回复就做主动下线的操作
+  * 主观下线：每个sentinel节点对redis节点失败都有自己的判断，这里的节点可以是master，也可以是slave
+  * 客观下线：所有的sentinel节点对某个redis节点认为失败的个数达到quorum个才下线
+* 领导者选举
+  * 为啥要选领导者，因为只需要一个sentinel节点就能完成故障转移。怎么选举呢？
+    * 每个做完主观下线的sentinel节点（就是发现某个节点不可用了，并发出了自己的判断的节点）都会向其他sentinel节点发送sentinel is-master-down-by-addr命令，要求将自己设置为领导者。那么收到这个命令的sentinel如果在之前没有同意过其他sentinel的话，就会同意这个请求，否则拒绝，换句话说每个sentinel只有一个同意票，这个同意票给第一个问自己的节点。好了，票发完了，如果这个sentinel节点发现自己拥有的票数超过sentinel集合半数并且操作quorum，那么它将成为领导者；如果此过程有多个sentinel节点成为领导者，那么过段时间将重新进行一次选举。领导者选举使用的是一个Raft算法，以上是抽象过程。所以sentinel的个数（>=3最好为奇数）和quorum的个数需要合理配置。
+* 故障转移（sentinel领导者节点完成）
+  * 1. 从slave节点中选举一个“合适的”节点作为新的master节点
+  * 2. 对上面的slave节点执行slaveof no one命令让其成为master节点
+  * 3. 向剩余的slave节点发送命令，让它们成为新的master节点的slave节点，复制规则和parallel-syncs（允许并行复制的个数）参数有关。复制的过程master是做了优化的，只需要一个RDB的生成，然后同时向slave节点发送RDB和buffer，有一定的开销，特别是网络
+  * 4. 更新对原来master节点配置为slave，并保持对其“关注”，当其恢复后命令它去复制新的master节点
+  * `如何选择合适的slave的节点`
+    * 1. 选择slave-priority(slave节点优先级)最高的slave节点，如果存在就返回，不存在则继续。一般不配置这个参数，什么情况下配置呢，当有一台slave节点的机器配置很高，我们希望当master挂了之后它能成为新的master时，做这个设置。
+    * 2. 选择复制偏移量最大的slave节点（复制的最完整），如果存在则返回，不存在则继续。
+    * 3. 选择runId最小的slave节点。runId最小就是最早的slave节点，假设它复制的最多。
 
+> 运维和开发
+  * 节点运维：上下和下线
+    * 机器下线：机器因为不能用了或者过保等什么原因要换机器
+    * 机器性能不足：例如CPU、内存、硬盘、网络等
+    * 节点自生保障：例如服务不稳定等
+      * sentinel failover <masterName> 主节点主动故障转移，已经选举了sentinel领导者，所以上述过程可以省略
+      * 从节点下线：临时下线还是永久下线。永久下线可能要清理掉一些配置文件，从节点下线的时候也要考虑读写分离的情况，因为这时候有可能正在读。
+      * 节点上线： 主节点执行sentinel failover进行替换，从节点slaveof即可，sentinel节点可以感知
 
-
-
+> JedisSentinelPool的实现
+看源代码
+* + switch-master: 切换主节点
+* + convert-to-slave: 切换从节点
+* + sdown：主观下线
 
 
 * Redis 与其他 key - value 缓存产品有以下三个特点：
