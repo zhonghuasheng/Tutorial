@@ -4,6 +4,7 @@
 
 ## 常用设置
 * 插件 Lombook， Easy Code(https://blog.csdn.net/qq_38225558/article/details/84479653)
+* RestfulToolkit 将url收集显示，点击url可转到代码
 
 ### 显示空格
 ```
