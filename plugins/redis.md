@@ -417,7 +417,7 @@ for(0->100) {
   * 客观下线：所有的sentinel节点对某个redis节点认为失败的个数达到quorum个才下线
 * 领导者选举
   * 为啥要选领导者，因为只需要一个sentinel节点就能完成故障转移。怎么选举呢？
-    * 每个做完主观下线的sentinel节点（就是发现某个节点不可用了，并发出了自己的判断的节点）都会向其他sentinel节点发送sentinel is-master-down-by-addr命令，要求将自己设置为领导者。那么收到这个命令的sentinel如果在之前没有同意过其他sentinel的话，就会同意这个请求，否则拒绝，换句话说每个sentinel只有一个同意票，这个同意票给第一个问自己的节点。好了，票发完了，如果这个sentinel节点发现自己拥有的票数超过sentinel集合半数并且操作quorum，那么它将成为领导者；如果此过程有多个sentinel节点成为领导者，那么过段时间将重新进行一次选举。领导者选举使用的是一个Raft算法，以上是抽象过程。所以sentinel的个数和quorum的个数需要合理配置。
+    * 每个做完主观下线的sentinel节点（就是发现某个节点不可用了，并发出了自己的判断的节点）都会向其他sentinel节点发送sentinel is-master-down-by-addr命令，要求将自己设置为领导者。那么收到这个命令的sentinel如果在之前没有同意过其他sentinel的话，就会同意这个请求，否则拒绝，换句话说每个sentinel只有一个同意票，这个同意票给第一个问自己的节点。好了，票发完了，如果这个sentinel节点发现自己拥有的票数超过sentinel集合半数并且操作quorum，那么它将成为领导者；如果此过程有多个sentinel节点成为领导者，那么过段时间将重新进行一次选举。领导者选举使用的是一个Raft算法，以上是抽象过程。所以sentinel的个数（>=3最好为奇数）和quorum的个数需要合理配置。
 * 故障转移（sentinel领导者节点完成）
   * 1. 从slave节点中选举一个“合适的”节点作为新的master节点
   * 2. 对上面的slave节点执行slaveof no one命令让其成为master节点
@@ -427,6 +427,21 @@ for(0->100) {
     * 1. 选择slave-priority(slave节点优先级)最高的slave节点，如果存在就返回，不存在则继续。一般不配置这个参数，什么情况下配置呢，当有一台slave节点的机器配置很高，我们希望当master挂了之后它能成为新的master时，做这个设置。
     * 2. 选择复制偏移量最大的slave节点（复制的最完整），如果存在则返回，不存在则继续。
     * 3. 选择runId最小的slave节点。runId最小就是最早的slave节点，假设它复制的最多。
+
+> 运维和开发
+  * 节点运维：上下和下线
+    * 机器下线：机器因为不能用了或者过保等什么原因要换机器
+    * 机器性能不足：例如CPU、内存、硬盘、网络等
+    * 节点自生保障：例如服务不稳定等
+      * sentinel failover <masterName> 主节点主动故障转移，已经选举了sentinel领导者，所以上述过程可以省略
+      * 从节点下线：临时下线还是永久下线。永久下线可能要清理掉一些配置文件，从节点下线的时候也要考虑读写分离的情况，因为这时候有可能正在读。
+      * 节点上线： 主节点执行sentinel failover进行替换，从节点slaveof即可，sentinel节点可以感知
+
+> JedisSentinelPool的实现
+看源代码
+* + switch-master: 切换主节点
+* + convert-to-slave: 切换从节点
+* + sdown：主观下线
 
 
 * Redis 与其他 key - value 缓存产品有以下三个特点：
