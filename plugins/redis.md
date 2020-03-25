@@ -523,6 +523,7 @@ for(0->100) {
       cluster notes 查看集群的node几点情况
       cluster slots 查看slots的分布
       cluster info 查看当前集群的状态，这个命令可以看到集群是否属于可用状态
+      redis-cli -c -p x 注意加-c，表示集群
       ```
       ![](png/redis-cluster-nodes.png)
       开始的一串字符是`nodeid`, 整行表示的意识是我的nodeId是多少，哪个ip的那个端口，我是主还是从，是从的话从的谁（谁的nodeId），是主的话还能看到slots的分布情况
