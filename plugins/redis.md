@@ -443,6 +443,97 @@ for(0->100) {
 * + convert-to-slave: 切换从节点
 * + sdown：主观下线
 
+> Redis Cluster
+* 为什么需要集群
+  * 并发量/
+  * 数据量： 业务需要500G怎么办，机器内存是16~256G
+  * 网络流量
+  Redis 3.0版本提供了分布式技术
+* 数据分布
+  * 数据分区
+  > 两种方式
+  * 顺序分区
+  * 哈希分区
+    * 节点取余分区
+      * 新增节点之后基本所有数据要产生飘逸，一般产生多倍扩容节点，飘逸量少
+    * 一致性哈希分区
+      * 解决了哈希分区中新增节点造成书飘逸的问题
+    * 虚拟槽分区
+      * 好复杂没咋懂
+* 搭建集群
+  * 原生安装(模拟3主3从)
+    * 1. 配置开启节点 enable-sync yes
+      ```
+      port ${port}
+      daemonize yes
+      dir "/path"
+      dbfilename "dump-${port}.rdb"
+      logfile "${port}.log"
+      cluster-enabled yes
+      cluster-config-file nodes-${port}.conf #redis启动后这个nodes-port.conf会自动生成
+      ```
+      开启命令 redis-server redis-7000.conf / redis-server redis-7001.conf /...,
+      此时开启的节点都是相互孤立的没有任何通信,
+      查看当前状态
+      ```shell
+      127.0.0.1:7000> cluster info
+      cluster_state:fail
+      cluster_slots_assigned:0
+      cluster_slots_ok:0
+      cluster_slots_pfail:0
+      cluster_slots_fail:0
+      cluster_known_nodes:1
+      cluster_size:0
+      cluster_current_epoch:0
+      cluster_my_epoch:0
+      cluster_stats_messages_sent:0
+      cluster_stats_messages_received:0
+      ```
+      显示当前是cluster状态
+
+      ![](png/redis-cluster.png)
+    * 2. meet(节点的握手)
+      ```shell
+      redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7001
+      [root@xx cluster]# redis-cli -p 7000 cluster meet 47.x.x.16 7001
+      OK
+      [root@xx cluster]# redis-cli -p 7000 cluster nodes
+      862e370d2342cf6bf883421003846e171770234e :7000@17000 myself,master - 0 0 0 connected
+      886b6e6c29f985f7f85acb1bf548d0937918eca3 4.x.x.6:7001@17001 handshake - 0 0 0 connected
+
+      redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7002
+      redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7003
+      redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7004
+      redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7005
+      ```
+    * 3. 指派槽
+      ```xml
+      redis-cli -h 127.0.0.1 -p 7000 cluster addslots {0...5461}
+      redis-cli -h 127.0.0.1 -p 7001 cluster addslots {5462...10922}
+      redis-cli -h 127.0.0.1 -p 7002 cluster addslots {10923...16383}
+      ```
+    * 4. 主从关系的分配
+      ```xml
+      redis-cli -h 127.0.0.1 -p 7003 cluster replicate ${node-id-7000}
+      redis-cli -h 127.0.0.1 -p 7004 cluster replicate ${node-id-7001}
+      redis-cli -h 127.0.0.1 -p 7005 cluster replicate ${node-id-7002}
+      ```
+    * 常用命令
+      ```shell
+      cluster notes 查看集群的node几点情况
+      cluster slots 查看slots的分布
+      cluster info 查看当前集群的状态，这个命令可以看到集群是否属于可用状态
+      redis-cli -c -p x 注意加-c，表示集群
+      ```
+      ![](png/redis-cluster-nodes.png)
+      开始的一串字符是`nodeid`, 整行表示的意识是我的nodeId是多少，哪个ip的那个端口，我是主还是从，是从的话从的谁（谁的nodeId），是主的话还能看到slots的分布情况
+  * 官方工具安装
+* 集群伸缩
+* 客户端路由
+* 集群原理
+* 开发运维常见问题
+
+
 
 * Redis 与其他 key - value 缓存产品有以下三个特点：
     * Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
