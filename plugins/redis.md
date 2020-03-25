@@ -528,6 +528,7 @@ for(0->100) {
       ![](png/redis-cluster-nodes.png)
       开始的一串字符是`nodeid`, 整行表示的意识是我的nodeId是多少，哪个ip的那个端口，我是主还是从，是从的话从的谁（谁的nodeId），是主的话还能看到slots的分布情况
   * 官方工具安装
+    * redis-trib.rb实现对redis集群的自动化安装
 * 集群伸缩
 * 客户端路由
 * 集群原理
@@ -710,6 +711,16 @@ Redis单线程模型
 1. 由于是单线程模型，因此一次只运行一条命令
 2. 拒绝长（慢）命令：keys, flushall,flushdb, slow lua script, mutil/exec, operate big value(collection)
 
+> Redis Sentinel和Redis Cluster的区别
+1、sentinel
+实现高可用，但是没有分区
+监控，能持续监控Redis的主从实例是否正常工作；
+通知，当被监控的Redis实例出问题时，能通过API通知系统管理员或其他程序；
+自动故障恢复，如果主实例无法正常工作，Sentinel将启动故障恢复机制把一个从实例提升为主实例，其他的从实例将会被重新配置到新的主实例，且应用程序会得到一个更换新地址的通知。
+Redis Sentinel是一个分布式系统，可以部署多个Sentinel实例来监控同一组Redis实例，它们通过Gossip协议来确定一个主实例宕机，通过Agreement协议来执行故障恢复和配置变更。
+
+2、cluster
+redis3.0以后推出了cluster，具有Sentinel的监控和自动Failover能力，同时提供一种官方的分区解决方案
 
 
 # 引用
