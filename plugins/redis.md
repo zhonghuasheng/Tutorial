@@ -25,6 +25,7 @@
 * 整理自己的RedisUtil https://www.runoob.com/redis/redis-java.html
 * Redis面试题汇总
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
+* 系列文章 https://www.cnblogs.com/jack1995/p/10915801.html
 
 ### 学习笔记
 > Redis的介绍、优缺点、使用场景
@@ -506,6 +507,7 @@ for(0->100) {
       redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7004
       redis-cli -h 127.0.0.1 -p 7000 cluster meet 127.0.0.1 7005
       ```
+      这地方注意啊，手动配置的时候有个巨坑（坑了我1天）：在redis cluster架构中，每个redis要开发两个端口，比如一个是6379，那么另一个就是加10000之后的端口号，比如16379。16379端口是用来进行节点间通信的，也就是cluster bus集群总线，cluster bus的通信用来进行故障检测、配置更新、故障转移授权等操作。
     * 3. 指派槽
       ```xml
       redis-cli -h 127.0.0.1 -p 7000 cluster addslots {0...5461}
