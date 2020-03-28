@@ -4,22 +4,31 @@
 * [百问](#百问)
 
 ### 学习计划
-* Redis的介绍、优缺点、使用场景
-* Redis入门使用 https://www.runoob.com/redis
-* Redis各个数据类型及其使用场景 https://www.runoob.com/redis/redis-data-types.html
-    * Redis字符串（String）https://www.runoob.com/redis/redis-strings.html
-    * Redis哈希（Hash）https://www.runoob.com/redis/redis-hashes.html
-    * Redis列表（List）https://www.runoob.com/redis/redis-lists.html
-    * Redis集合（Set）https://www.runoob.com/redis/redis-sets.html
-    * Redis有序集合（sorted set）https://www.runoob.com/redis/redis-sorted-sets.html
-* Redis HyperLogLog
-* Redis的发布与订阅，具体实践
-* Redis事务
-* Redis脚本，为什么需要脚本，能干什么
-* Redis日志配置
-* Redis持久化，数据备份与恢复
+* [Redis的介绍、优缺点、使用场景](#Redis的介绍、优缺点、使用场景)
+    * Linux中的安装
+    * 常用命令
+* [Redis各个数据类型及其使用场景](#数据结构和内部编码)
+    * Redis字符串（String）
+    * Redis哈希（Hash）
+    * Redis列表（List）
+    * Redis集合（Set）
+    * Redis有序集合（sorted set）
+* [Redis - 瑞士军刀](#瑞士军刀)
+    * 慢查询
+    * pipeline流水线
+    * 发布订阅
+    * bitmap
+    * HyperLogLog算法
+    * GEO
+* [Redis持久化，数据备份与恢复](#Redis持久化)
+    * RDB
+    * AOF
     * [SpringBoot + Jedis + 1主2从3哨兵 实现Redis的高可用](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-redis)
-* Redis常用命令
+    * [SpringBoot + Jedis + Redis Cluster代码案例](https://github.com/zhonghuasheng/JAVA/blob/master/springboot/springboot-redis/src/test/java/JedisClusterTest.java)
+* [高可用](#高可用)
+    * [主从复制](#Redis主从复制)
+    * [Redis Sentinel](#Redis-Sentinel)
+    * [Redis Cluster](#Redis-Cluster)
 * Redis安全如何保证
 * Redis性能测试
 * 整理自己的RedisUtil https://www.runoob.com/redis/redis-java.html
@@ -28,10 +37,10 @@
 * 系列文章 https://www.cnblogs.com/jack1995/p/10915801.html
 
 ### 学习笔记
-> Redis的介绍、优缺点、使用场景
+#### Redis的介绍、优缺点、使用场景
   * Redis是什么： 开源的，基于键值的存储服务系统，支持多种数据类型，性能高，功能丰富
   * 特性（主要有8个特性）：
-    * 速度快：官方给出的结果是10W OPS，每秒10W的读写。数据存储在内存中；使用C语言开发；Redis使用单线程，减少上下文切换。本质原因是计算机存储介质的速度，内存比硬盘优几个数量级）。MemoryCache可以使用多核，性能上优于Redis。
+    * 速度快：官方给出的结果是10W OPS，每秒10W的读写(为什么是10W，因为内存的相应时间是100纳秒-10万分之一秒)。数据存储在内存中；使用C语言开发；Redis使用单线程，减少上下文切换。本质原因是计算机存储介质的速度，内存比硬盘优几个数量级）。MemoryCache可以使用多核，性能上优于Redis。
     * 持久化：Redis所有的数据保持在内存中，对数据的更新将异步地保存到磁盘上。断掉，宕机？ RDB快照/AOF日志模式来确保。MemoryCache不提供持久化
     * 多种数据结构：Redis提供字符串，HashTable, 链表，集合，有序集合；另外新版本的redis提供BitMaps位图，HyperLogLog超小内存唯一值计数，GEORedis3.2提供的地理位置定位。相比memocache只提供字符串的key-value结构
     * 支持多种编程语言：Java,PHP,Ruby,Lua,Node
@@ -44,7 +53,7 @@
     * 计数器：类似微博的转发数，评论数，incr/decr的操作是原子性的不会出错
     * 消息队列系统：发布订阅的模型，消息队列不是很强
     * 排行版： 提供的有序集合能提供排行版的功能，例如粉丝数，关注数
-    * 实时系统：利用位图实现布隆过滤器
+    * 实时系统：利用位图实现布隆过滤器，秒杀等
 
 > 安装
 * Linux中安装
@@ -116,6 +125,7 @@
     ```
     redis-cli -h x.x.x.x -p x 连接
     auth "password" 验证密码
+    redis-cli --raw可以避免中文乱码
     exit 退出
     select index 切换到指定的数据库
     keys * 显示所有key，如果键值对多不建议使用，keys会遍历所有key，可以在从节点使用;时间复杂度O(N)
@@ -204,7 +214,7 @@
     zrevrang/zrevrange/集合间的操作zsetunion
     info replication 查看分片，能够获取到主从的数量和状态
     ```
-> 数据结构和内部编码
+#### 数据结构和内部编码
 
 ![](png/redis-data-type-structure.PNG)
 
@@ -263,6 +273,7 @@
     * 定期持久化慢查询
 
 > pipeline流水线（批量操作）
+
 当遇到批量网络命令的时候，n次时间=n次网络时间+n次命令时间。举个例子，北京到上海的距离是1300公里，光速是3万公里/秒，假设光纤传输速度是光速的2/3，也就是万公里/秒，那么一次命令的传输时间是 1300/20000*2（来回）=13毫秒，
 什么是pipeline流水线，1次pipeline(n条命令)=1次网络时间+n次命令时间;pipeline命令在redis服务端会被拆分，因此pipeline命令不是一个原子的命令。注意每次pipeline携带数据量；pipeline每次只能作用在一个Redis节点上；M操作和pipeline的区别，M(mset)操作是redis的原生命令，是原子操作，pipeline不是原子操作。
 ```java
@@ -367,7 +378,9 @@ for(0->100) {
   ![](png/redis-aof-append-block.png)
   * 单机多实例部署
 
-> Redis主从复制
+#### 高可用
+
+##### Redis主从复制
 * 主从复制：单机故障/容量瓶颈/QPS瓶颈；一个master可以有多个slave，一个slave只能有一个master，数据必须是单流向，从master流向slave
 * 复制的配置:
   * 使用slaeof命令，在从redis中执行slave masterip:port使其成为master的从服务器，就能从master拉取数据了；执行slaveof no one清除掉不成为从节点，但是数据不清楚；
@@ -392,7 +405,7 @@ for(0->100) {
     * 规避复制风暴
       * 单机主节点复制风暴，如果是1主N从，当master重启之后，所有的slave都会发生全量复制，可想而知这样非常容易造成redis服务的不可用
 
-> Redis Sentinel
+##### Redis-Sentinel
 * 主从复制高可用？
   * 手动故障转移，例如选出新的slave做master；写能力和存储能力受限；
 * 架构说明
@@ -444,7 +457,7 @@ for(0->100) {
 * + convert-to-slave: 切换从节点
 * + sdown：主观下线
 
-> Redis Cluster
+##### Redis-Cluster
 * 为什么需要集群
   * 并发量/
   * 数据量： 业务需要500G怎么办，机器内存是16~256G
@@ -536,28 +549,13 @@ for(0->100) {
 * 集群原理
 * 开发运维常见问题
 
-
-
-* Redis 与其他 key - value 缓存产品有以下三个特点：
-    * Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。
-    * Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。
-    * Redis支持数据的备份，即master-slave模式的数据备份。
-    * 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。
-    * 原子 – Redis的所有操作都是原子性的，意思就是要么成功执行要么失败完全不执行。单个操作是原子性的。多个操作也支持事务，即原子性，通过MULTI和EXEC指令包起来。
-    * 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。
-* Redis Cli中输入ping，服务端返回PONG，说明能够ping通
-* Redis 总共支持四个级别：debug、verbose、notice、warning，默认为 notice
-* 指定 Redis 最大内存限制maxmemory，Redis 在启动时会把数据加载到内存中，达到最大内存后，Redis 会先尝试清除已到期或即将到期的 Key，当此方法处理 后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis 新的 vm 机制，会把 Key 存放内存，Value 会存放在硬盘swap区
-* redis-cli --raw可以避免中文乱码
-* `DEL runoobkey`在以上实例中 DEL 是一个命令， runoobkey 是一个键。 如果键被删除成功，命令执行后输出 (integer) 1，否则将输出 (integer) 0
+##### Redis事务
 * Redis 事务可以一次执行多个命令， 并且带有以下三个重要的保证：
     * 批量操作在发送 EXEC 命令前被放入队列缓存。
     * 收到 EXEC 命令后进入事务执行，事务中任意命令执行失败，其余的命令依然被执行。
     * 在事务执行过程，其他客户端提交的命令请求不会插入到事务执行命令序列中。
 * Redis事务从开始到执行会经历以下三个阶段：开始事务 -> 命令入队 -> 执行事务。单个 Redis 命令的执行是原子性的，但 Redis 没有在事务上增加任何维持原子性的机制，所以 Redis 事务的执行并不是原子性的。事务可以理解为一个打包的批量执行脚本，但批量指令并非原子化的操作，中间某条指令的失败不会导致前面已做指令的回滚，也不会造成后续的指令不做。这是官网上的说明 From redis docs on transactions: It's important to note that even when a command fails, all the other commands in the queue are processed – Redis will not stop the processing of commands.
-* Redis 脚本使用 Lua 解释器来执行脚本。 Redis 2.6 版本通过内嵌支持 Lua 环境。执行脚本的常用命令为 EVAL。
 
-* Redis SAVE 命令用于创建当前数据库的备份，该命令将在 redis 安装目录中创建dump.rdb文件，也可以指定目录` CONFIG GET dir 输出的 redis 安装目录为 /usr/local/redis/bin`。创建 redis 备份文件也可以使用命令 BGSAVE，该命令在后台执行。
 * Redis 通过监听一个 TCP 端口或者 Unix socket 的方式来接收来自客户端的连接，当一个连接建立后，Redis 内部会进行以下一些操作：
     * 首先，客户端 socket 会被设置为非阻塞模式，因为 Redis 在网络事件处理上采用的是非阻塞多路复用模型。
     * 然后为这个 socket 设置 TCP_NODELAY 属性，禁用 Nagle 算法
@@ -629,7 +627,7 @@ PONG
 ### I/O多路复用技术(multiplexing)
 关于I/O多路复用(又被称为“事件驱动”)，首先要理解的是，操作系统为你提供了一个功能，当你的某个socket可读或者可写的时候，它可以给你一个通知。这样当配合非阻塞的socket使用时，只有当系统通知我哪个描述符可读了，我才去执行read操作，可以保证每次read都能读到有效数据而不做纯返回-1和EAGAIN的无用功。写操作类似。操作系统的这个功能通过select/poll/epoll/kqueue之类的系统调用函数来使用，这些函数都可以同时监视多个描述符的读写就绪状况，这样，多个描述符的I/O操作都能在一个线程内并发交替地顺序完成，这就叫I/O多路复用，这里的“复用”指的是复用同一个线程。
 
-下面举一个例子，模拟一个tcp服务器处理30个客户socket。假设你是一个老师，让30个学生解答一道题目，然后检查学生做的是否正确，你有下面几个选择：1. 第一种选择：按顺序逐个检查，先检查A，然后是B，之后是C、D。。。这中间如果有一个学生卡主，全班都会被耽误。这种模式就好比，你用循环挨个处理socket，根本不具有并发能力。2. 第二种选择：你创建30个分身，每个分身检查一个学生的答案是否正确。 这种类似于为每一个用户创建一个进程或者线程处理连接。3. 第三种选择，你站在讲台上等，谁解答完谁举手。这时C、D举手，表示他们解答问题完毕，你下去依次检查C、D的答案，然后继续回到讲台上等。此时E、A又举手，然后去处理E和A。。。 这种就是IO复用模型，Linux下的select、poll和epoll就是干这个的。将用户socket对应的fd注册进epoll，然后epoll帮你监听哪些socket上有消息到达，这样就避免了大量的无用操作。此时的socket应该采用非阻塞模式。这样，整个过程只在调用select、poll、epoll这些调用的时候才会阻塞，收发客户消息是不会阻塞的，整个进程或者线程就被充分利用起来，这就是事件驱动，所谓的reactor模式。
+下面举一个例子，模拟一个tcp服务器处理30个客户socket。假设你是一个老师，让30个学生解答一道题目，然后检查学生做的是否正确，你有下面几个选择：1. 第一种选择：按顺序逐个检查，先检查A，然后是B，之后是C、D。。。这中间如果有一个学生卡住，全班都会被耽误。这种模式就好比，你用循环挨个处理socket，根本不具有并发能力。2. 第二种选择：你创建30个分身，每个分身检查一个学生的答案是否正确。 这种类似于为每一个用户创建一个进程或者线程处理连接。3. 第三种选择，你站在讲台上等，谁解答完谁举手。这时C、D举手，表示他们解答问题完毕，你下去依次检查C、D的答案，然后继续回到讲台上等。此时E、A又举手，然后去处理E和A。。。 这种就是IO复用模型，Linux下的select、poll和epoll就是干这个的。将用户socket对应的fd注册进epoll，然后epoll帮你监听哪些socket上有消息到达，这样就避免了大量的无用操作。此时的socket应该采用非阻塞模式。这样，整个过程只在调用select、poll、epoll这些调用的时候才会阻塞，收发客户消息是不会阻塞的，整个进程或者线程就被充分利用起来，这就是事件驱动，所谓的reactor模式。
 
 ### 什么时候适合用缓存
 * 数据访问频率
@@ -679,7 +677,7 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 
 * 缓存击穿
 ```
-缓存击穿，是指一个key非常热点，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。
+缓存击穿，是指存在hot key，在不停的扛着大并发，大并发集中对这一个点进行访问，当这个key在失效的瞬间，持续的大并发就穿破缓存，直接请求数据库，就像在一个屏障上凿开了一个洞。
 ```
 小编在做电商项目的时候，把这货就成为“爆款”。
 其实，大多数情况下这种爆款很难对数据库服务器造成压垮性的压力。达到这个级别的公司没有几家的。所以，务实主义的小编，对主打商品都是早早的做好了准备，让缓存永不过期。即便某些商品自己发酵成了爆款，也是直接设为永不过期就好了。
@@ -692,22 +690,34 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 2）缓存中没有数据，第1个进入的线程，获取锁并从数据库去取数据，没释放锁之前，其他并行进入的线程会等待100ms，再重新去缓存取数据。这样就防止都去数据库重复取数据，重复往缓存中更新数据情况出现。
 3）当然这是简化处理，理论上如果能根据key值加锁就更好了，就是线程A从数据库取key1的数据并不妨碍线程B取key2的数据，上面代码明显做不到这点。
 
-* 如何解决DB和缓存一致性问题？
+> 如何解决DB和缓存一致性问题？
 答：当修改了数据库后，有没有及时修改缓存。这种问题，以前有过实践，修改数据库成功，而修改缓存失败的情况，最主要就是缓存服务器挂了。而因为网络问题引起的没有及时更新，可以通过重试机制来解决。而缓存服务器挂了，请求首先自然也就无法到达，从而直接访问到数据库。那么我们在修改数据库后，无法修改缓存，这时候可以将这条数据放到数据库中，同时启动一个异步任务定时去检测缓存服务器是否连接成功，一旦连接成功则从数据库中按顺序取出修改数据，依次进行缓存最新值的修改。
 
 ### 百问
-> Redis单线程为什么这么快
-Redis单线程模型
+> Redis番外篇
+Redis 最开始的设计可能就是想做一个缓存来用。但是分布式环境复杂，暴露的问题可能比较多，所以 Redis 就要做集群。做集群后，可能和 Memcahed 效果类似了，我们要超越它，所以可能就有了多数据类型的存储结构。光做缓存，如何已宕机数据就丢失了。我们的口号是超越 Memcahed，所以我们要支持数据持久化。于是可能就有了 AOF 和 RDB，就可以当数据库来用来。这样 Redis 的高效可靠的设计，所以它又可以用来做消息中间件。这就是 Redis 的三大特点，可以用来做：缓存、数据库和消息中间件。
+
+再来说说，Redis 如何设计成但进程单线程的？
+
+根据官方的测试结果《How fast is Redis？》来看，在操作内存的情况下，CPU 并不能起到决定性的作用，反而可能带来一些其他问题。比如锁，CPU 切换带来的性能开销等。这一点我们可以根据官方的测试报告，提供的数据来证明。而且官方提供的数据是可以达到100000+的QPS（每秒内查询次数），这个数据并不比采用单进程多线程 Memcached 差！所以在基于内存的操作，CPU不是 Redis 瓶颈的情况下，官方采用来单进程单线程的设计。
+
+> Redis单线程为什么这么快？
 快的原因有主要三点：
-1. 纯内存操作：Redis是基于内存的，所有的命令都在内存中完成，内存的响应速度相比硬盘是非常快的
-2. 非阻塞IO（Redis的非阻塞IO是什么样子的？）
-3. 单线程避免了线程的切换和竞态消耗
-其实也有不是单线程，再操作 fysnc file descriptor/close file descriptor时是另外一个线程在做
+1. 纯内存操作：Redis是基于内存的，所有的命令都在内存中完成，内存的响应速度相比硬盘是非常快的，内存的响应时间大约是100纳秒，Redis官方给出的OPS是10W
+2. 编程语言：Redis采用C语言编写，不依赖第三方类库，执行速度快
+3. 线程模型：Redis使用单线程操作，避免了线程的切换和竞态消耗
+4. 采用了非阻塞IO多路复用机制：多路I/O复用模型是利用 select、poll、epoll 可以同时监察多个流的 I/O 事件的能力，在空闲的时候，会把当前线程阻塞掉，当有一个或多个流有 I/O 事件时，就从阻塞态中唤醒，于是程序就会轮询一遍所有的流（epoll 是只轮询那些真正发出了事件的流），并且只依次顺序的处理就绪的流，这种做法就避免了大量的无用操作。这里“多路”指的是多个网络连接，“复用”指的是复用同一个线程。加上Redis自身的事件处理模型将epoll中的连接，读写，关闭都转换为了事件，不在I/O上浪费过多的时间
+5. 由于是单线程，所以就存在一个顺序读写的问题，顺序读写比随机读写的速度快。
+6. Redis的数据结构是经过专门的研究和设计的，所以操作起来简单且快。
+最后，再说一点，Redis 是单进程和单线程的设计，并不是说它不能多进程多线程。比如备份时会 fork 一个新进程来操作；再比如基于 COW 原理的 RDB 操作就是多线程的。
 
 > Redis如何处理过期数据？Slave不能处理数据，那数据过期了怎么办？
 
 > 1主2从的模式中，当master挂掉之后怎么办？
 这种典型的模式就不上图了，master读写，slave1/2只读，当master挂掉之后，redis服务不可用，需要立马手动处理。两种处理方式，第一种是把master重新启动起来，不用改变现有的主从结构，缺点是什么呢，master重新启动并完成RDB/AOF的恢复是个耗时的过程，另外会造成slave1/2发生全量复制；第二种就是重新选举新的master，具体怎么做呢？选折其中一个slave，执行命令 slave no one来解除自己是从服务器的身份，使其称为一个master，注意的点是这个slave要改成读写模式；连到另一个slave，执行slave new master，让它去找master。整个过程是一个手动的过程，Redis Sentinel就是这样一个功能，自动完成切换，帅的一比。
+
+> Redis分布式锁你真的会用吗？
+https://www.xttblog.com/?p=4598
 
 > Redis使用注意的点
 1. 由于是单线程模型，因此一次只运行一条命令
@@ -720,6 +730,14 @@ Redis单线程模型
 通知，当被监控的Redis实例出问题时，能通过API通知系统管理员或其他程序；
 自动故障恢复，如果主实例无法正常工作，Sentinel将启动故障恢复机制把一个从实例提升为主实例，其他的从实例将会被重新配置到新的主实例，且应用程序会得到一个更换新地址的通知。
 Redis Sentinel是一个分布式系统，可以部署多个Sentinel实例来监控同一组Redis实例，它们通过Gossip协议来确定一个主实例宕机，通过Agreement协议来执行故障恢复和配置变更。
+
+> Redis集群间是怎么通信的？
+Redis Cluster特点如下：
+* 所有的节点相互连接；
+* 集群消息通信通过集群总线通信，，集群总线端口大小为客户端服务端口+10000，这个10000是固定值；
+* 节点与节点之间通过二进制协议进行通信；
+* 客户端和集群节点之间通信和通常一样，通过文本协议进行；
+* 集群节点不会代理查询；
 
 2、cluster
 redis3.0以后推出了cluster，具有Sentinel的监控和自动Failover能力，同时提供一种官方的分区解决方案
