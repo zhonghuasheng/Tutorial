@@ -84,5 +84,3 @@ sslocal -s ip -p remotepot -k pwd -m rc4-md5 -l localport -b 0.0.0.0 &
 
 #!/bin/sh
 nohup java -jar -Dserver.port=9999  /root/luke/ci/services/musicstore-1.0-SNAPSHOT.jar &
-
-mysql57-community-release-el7-10.noarch.rpm
