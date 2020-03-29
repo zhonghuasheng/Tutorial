@@ -195,7 +195,7 @@
     sismember key element #判断element是否在集合中
     srandmember #返回所有元素，结果是无序的，小心使用，可能结果很大
     smembers key #获取集合中的所有元素
-    spop ke #从集合中随机弹出一个元素
+    spop key #从集合中随机弹出一个元素
     scan
     SADD = Tagging
     SPOP/SRANDMEMBER = Random item
@@ -213,6 +213,7 @@
     zremrangebyscore key minScore maxScore #删除指定分数内的元素
     zrevrang/zrevrange/集合间的操作zsetunion
     info replication 查看分片，能够获取到主从的数量和状态
+    config get databases 获取所有数据库
     ```
 #### 数据结构和内部编码
 
@@ -310,6 +311,19 @@ for(0->100) {
     * geopos key member[n] #获取地理位置信息
     * geodist key member1 membe2 [unit] m米 km千米 mi英里 ft尺 获取两地位置的距离
     * georadius #算出指定范围内的地址位置信息的集合，语法复杂了点
+
+* 总结下Redis数据结构和类型的常见用法
+
+| 类型 | 简介 | 特性 | 使用场景 |
+|:----|:----|:----|:----|
+| String | 二进制安全 | 可以包含任何数据，比如JPG图片或者序列化的对象，一个键最大能存储512M | |
+| Hash | 键值对集合，即编程中的Map | 适合存储对象，并且可以向数据库中那样update一个属性（Memcache中需要将字符串反序列化成对象之后再修改属性，然后序列化回去）| 存取/读取/修改 用户信息 |
+| List | 双向链表 | 增删快，提供了操作某一元段元素的API | 1. 最新消息，按照时间线显示<br> 2. 消息队列 |
+| Set | 哈希表实现，元素不重复 | 添加/删除/修改的复杂度都是O（1），为集合提供求交集/并集/差集的操作 | 1. 打label/tag，如文章<br>2. 查找共同好友<br>3. 抽奖系统<br>|
+| Zset | 将Set中的元素增加一个double类型的权重score，按照score排序 | 数据插入集合就好序了 | 排行榜 |
+| Hyperloglog | 本质是string | 极小空间完成独立数据量统计 | 统计基数，不完全正确 |
+| GEO | 数据类型是zset | 存储地理位置信息，并提供计算距离等操作 | 微信摇一摇查看附近好友 |
+| Bitmap | 位图 | 数据量很大的时候节省存储内存，数据量小了不节省 | 1. 设置用户的状态<br>2. BitMap解决海量数据寻找重复、判断个别元素是否在 |
 
 ### Redis持久化
 * 持久化的作用：redis所有数据保存在内存中，对数据的更新将异步地保存到磁盘上。
@@ -581,50 +595,6 @@ for(0->100) {
 ### 其他
 * Redis设置port为6379的原因
 
-### Redis中关于密码
-
-设置密码
-redis> CONFIG SET requirepass secret_password   # 将密码设置为 secret_password
-
-OK
-
-redis> QUIT                                     # 退出再连接，让新密码对客户端生效
-
-[huangz@mypad]$ redis
-
-redis> PING                                     # 未验证密码，操作被拒绝
-
-(error) ERR operation not permitted
-
-redis> AUTH wrong_password_testing              # 尝试输入错误的密码
-
-(error) ERR invalid password
-
-redis> AUTH secret_password                     # 输入正确的密码
-
-OK
-
-redis> PING                                     # 密码验证成功，可以正常操作命令了
-
-PONG
-
-清空密码
-
-redis> CONFIG SET requirepass ""   # 通过将密码设为空字符来清空密码
-
-OK
-
-redis> QUIT
-
-$ redis                            # 重新进入客户端
-
-redis> PING                        # 执行命令不再需要密码，清空密码操作成功
-
-PONG
-
-### Redis中查看所有数据库的命令
-* config get databases
-
 ### I/O多路复用技术(multiplexing)
 关于I/O多路复用(又被称为“事件驱动”)，首先要理解的是，操作系统为你提供了一个功能，当你的某个socket可读或者可写的时候，它可以给你一个通知。这样当配合非阻塞的socket使用时，只有当系统通知我哪个描述符可读了，我才去执行read操作，可以保证每次read都能读到有效数据而不做纯返回-1和EAGAIN的无用功。写操作类似。操作系统的这个功能通过select/poll/epoll/kqueue之类的系统调用函数来使用，这些函数都可以同时监视多个描述符的读写就绪状况，这样，多个描述符的I/O操作都能在一个线程内并发交替地顺序完成，这就叫I/O多路复用，这里的“复用”指的是复用同一个线程。
 
@@ -675,6 +645,8 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 * 缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。
 * 如果缓存数据库是分布式部署，将热点数据均匀分布在不同搞得缓存数据库中。
 * 设置热点数据永远不过期。
+* redis 持久化，一旦重启，自动从磁盘上加载数据，快速恢复缓存数据。
+
 
 * 缓存击穿
 ```
@@ -782,6 +754,32 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
 
 Redis集群采用gossip（流言）协议来通信，Gossip协议的主要职责就是信息交换。信息交换的载体就是节点彼此发送的Gossip消息，常用的Gossip消息可分为：ping消息、pong消息、meet消息、fail消息。集群中的每个节点都会单独开辟一个TCP通道，用于节点之间的彼此通信，通信端口是在基础端口的基础上加上1万，每个节点在固定周期内通过特定规则选择几个节点发送ping消息，接收到ping消息的节点用pong消息作为响应。ping消息发送封装了自身节点和部分其他节点的状态数据，pong消息：当接收到ping、meet消息时，作为响应消息回复给发送方确认消息正常通信。pong消息内部封装了自身状态数据。节点也可以向集群内广播自身的pong消息来通知整个集群对自身状态进行更新，一段时间后整个集群达到了状态的一致性。
 PS：定时任务默认每秒执行10次，每秒会随机选取5个节点找出最久没有通信的节点发送ping消息，用于保证Gossip信息交换的随机性
+
+> Reids Key是如何寻址的？
+分布式寻址算法
+
+hash 算法（大量缓存重建）
+一致性 hash 算法（自动缓存迁移）+ 虚拟节点（自动负载均衡）
+redis cluster 的 hash slot 算法
+hash 算法
+
+来了一个 key，首先计算 hash 值，然后对节点数取模。然后打在不同的 master 节点上。一旦某一个 master 节点宕机，所有请求过来，都会基于最新的剩余 master 节点数去取模，尝试去取数据。这会导致大部分的请求过来，全部无法拿到有效的缓存，导致大量的流量涌入数据库。
+
+一致性 hash 算法
+
+一致性 hash 算法将整个 hash 值空间组织成一个虚拟的圆环，整个空间按顺时针方向组织，下一步将各个 master 节点（使用服务器的 ip 或主机名）进行 hash。这样就能确定每个节点在其哈希环上的位置。
+
+来了一个 key，首先计算 hash 值，并确定此数据在环上的位置，从此位置沿环顺时针“行走”，遇到的第一个 master 节点就是 key 所在位置。
+
+在一致性哈希算法中，如果一个节点挂了，受影响的数据仅仅是此节点到环空间前一个节点（沿着逆时针方向行走遇到的第一个节点）之间的数据，其它不受影响。增加一个节点也同理。
+
+燃鹅，一致性哈希算法在节点太少时，容易因为节点分布不均匀而造成缓存热点的问题。为了解决这种热点问题，一致性 hash 算法引入了虚拟节点机制，即对每一个节点计算多个 hash，每个计算结果位置都放置一个虚拟节点。这样就实现了数据的均匀分布，负载均衡。
+
+redis cluster 的 hash slot 算法
+
+redis cluster 有固定的 16384 个 hash slot，对每个 key 计算 CRC16 值，然后对 16384 取模，可以获取 key 对应的 hash slot。
+
+redis cluster 中每个 master 都会持有部分 slot，比如有 3 个 master，那么可能每个 master 持有 5000 多个 hash slot。hash slot 让 node 的增加和移除很简单，增加一个 master，就将其他 master 的 hash slot 移动部分过去，减少一个 master，就将它的 hash slot 移动到其他 master 上去。移动 hash slot 的成本是非常低的。客户端的 api，可以对指定的数据，让他们走同一个 hash slot，通过 hash tag 来实现。
 
 > 如何解决DB和缓存一致性问题？
 
