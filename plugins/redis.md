@@ -183,7 +183,7 @@
     lpush + LPOP = STACK
     lpush + RPOP = QUEUE
     lpush  + ltrim = 有序的集合
-    lpush + brpop = 消息队列
+    lpush + rpop = 消息队列
     sadd key value #不支持插入重复元素，失败返回0
     srem key element #删除集合中的element元素
     smembers key #查看集合元素
@@ -756,3 +756,24 @@ XX：key存在时设置value，成功返回OK，失败返回(nil)
 案例：设置name=p7+，失效时长100s，不存在时设置
 1.1.1.1:6379> set name p7+ ex 100 nx
 ```
+
+> 假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如何将它们全部找出来？
+
+可以使用keys [pattern]来列举出来，由于Redis是单线程的，在使用keys命令的时候会导致线程阻塞一段时间，我们也可以使用scan指令以无阻塞的方式取出来，但会有一定重复的概率，客户端去重就可以了。如果是主从模式的话，可以在从服务器执行keys命令，尽量不影响现有业务。
+
+> 使用过Redis做异步队列么，你是怎么用的？
+
+> Redis如何实现延时队列？
+
+> RDB的原理是什么？
+
+你给出两个词汇就可以了，fork和cow。fork是指redis通过创建子进程来进行RDB操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。
+
+> Pipeline有什么好处，为什么要用pipeline？
+
+可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。使用redis-benchmark进行压测的时候可以发现影响redis的QPS峰值的一个重要因素是pipeline批次指令的数目。
+
+> 是否使用过Redis集群，集群的高可用怎么保证，集群的原理是什么？
+* Redis Sentinal 着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。
+* Redis Cluster 着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。
+
