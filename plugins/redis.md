@@ -742,6 +742,17 @@ Redis Cluster特点如下：
 2、cluster
 redis3.0以后推出了cluster，具有Sentinel的监控和自动Failover能力，同时提供一种官方的分区解决方案
 
+> Redis分布式锁/Redis的setnx命令如何设置key的失效时间（同时操作setnx和expire
 
-# 引用
-* [Redis教程](http://runoob.com/redis)
+Redis的setnx命令是当key不存在时设置key，但setnx不能同时完成expire设置失效时长，不能保证setnx和expire的原子性。我们可以使用set命令完成setnx和expire的操作，并且这种操作是原子操作。
+下面是set命令的可选项：
+```shell
+set key value [EX seconds] [PX milliseconds] [NX|XX]
+EX seconds：设置失效时长，单位秒
+PX milliseconds：设置失效时长，单位毫秒
+NX：key不存在时设置value，成功返回OK，失败返回(nil)
+XX：key存在时设置value，成功返回OK，失败返回(nil)
+
+案例：设置name=p7+，失效时长100s，不存在时设置
+1.1.1.1:6379> set name p7+ ex 100 nx
+```
