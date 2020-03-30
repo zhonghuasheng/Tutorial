@@ -815,3 +815,4 @@ redis cluster 中每个 master 都会持有部分 slot，比如有 3 个 master�
     以上就是Redis和MySQL数据一致性详解。
 
 > redis 的过期策略都有哪些？内存淘汰机制都有哪些？手写一下 LRU 代码实现？
+参考[Redis过期策略](#redis/redis过期策略.md)
