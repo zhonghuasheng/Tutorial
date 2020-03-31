@@ -34,7 +34,8 @@
 * 整理自己的RedisUtil https://www.runoob.com/redis/redis-java.html
 * Redis面试题汇总
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
-* 系列文章 https://www.cnblogs.com/jack1995/p/10915801.html
+    * 系列文章 https://www.cnblogs.com/jack1995/category/1076657.html
+* [Redis常用客户端总结](redis/redis常用客户端使用总结.md)
 
 ### 学习笔记
 #### Redis的介绍、优缺点、使用场景
