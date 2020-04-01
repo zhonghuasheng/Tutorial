@@ -1,3 +1,31 @@
+## 目录
+* [CentOS中安装MySQL](#CentOS中安装MySQL)
+
+### 番外篇
+* 数据库的扩展没有web服务器那样容易
+* sql查询速度，服务器硬件，网卡流量，磁盘IO，大表，大事务会对数据库性能造成影响，idle空闲时间
+* max_connection默认是100，连接数超过100的话后面的请求会等待connection，如果超时就返回5XX错误
+* SSK fashionIO磁盘
+* 大表对DDL操作的影响
+  * MySQL 5.5前，建立索引会锁表
+  * MySQL 5.5后，不会缩表但会引起主从延迟
+  * 修改表结构需要长时间缩表
+  * 采用分库分表来拆分成多个小表
+    * 分表主键的选择
+    * 分表后跨分区数据的查询和统计
+  * 对大表的历史数据归档-可以减少对前后端业务的影响
+    * 归档时间点的选择
+    * 如何进行归档操作
+  * 大事务：运行时间长，操作的数据比较多的事务，例如余额宝计算用户昨天的收益，特别是理财产品买的多的情况下，回滚所需的时间长
+
+### 常用命令
+```sql
+show variables like '%isolation%' --查看数据库事务隔离级别的设置
+```
+
+### 注意点
+* 最好不要在主库上做数据库备份，大型活动前取消这类计划
+
 ### CentOS中安装MySQL
 * 查看官方文档 https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
 * 下载MySQL yum包 http://dev.mysql.com/downloads/repo/yum/（要查看系统的版本 uname -a）
