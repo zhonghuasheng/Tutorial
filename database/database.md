@@ -36,7 +36,22 @@
         * NAS：Network-Attached Storage 使用网络连接，使用NFS或SMB协议来访问
     * 网络接口性能对数据库的影响：延迟、带宽（也叫吞吐量）、网络的质量（抖动、丢包）；根据需求使用万兆交换机；尽可能多网络隔离，不暴露数据库在外网上
   2. 操作系统
-    * windows对schema大小写不敏感，linux对大小写敏感。
+    * windows对schema大小写不敏感，linux对大小写敏感。建议数据库/表都小写，通过配置参数来强制要求小写也可以。
+    * centos优化
+      * 内核相关参数 /etc/sysctl.conf
+        * net.core.somaxconn=65535 每个端口监听的个数
+        * net.core.netdev_max_backlog=65535
+        * net.ipv4.tcp_max_syn_backlog=65535
+        * net.ipv4.tcp_fin_timeout=10 TCP等待时间加速回收速度 net.ipv4.tcp_tw_reuse=1 net.ipv4.tcp_tw_recycle=1
+        * net.ipv4.tcp_keepalive_time=120秒
+      * 增加资源限制
+        * /etc/security/limit.conf 打开文件数的限制，添加到limit.conf文件的末尾就可以了
+          * soft nofile 65535
+          * hard nofile 65535
+      * 磁盘调度策略
+      * 文件系统对性能的影响
+        * Linux文件系统有EXT3/EXT4/XFS都有日志功能，传说XFS性能高
+        * Windows文件系统有FAT/NTFS
   3. 数据库存储引擎
     * MyISAM：不支持事务，表级锁
     * InoDB: 事务存储引擎，完美支持行级锁，事务ACID特性
