@@ -24,14 +24,34 @@
   1. 服务器硬件：CPU/网络/磁盘
     * CPU
         * 如何选择CPU？计算密集型/存储密集型（亚马逊上选服务器的时候选），CPU的核数，频率。MySQL的版本，老版本对多核支持不太好。32位还是64位的CPU，现在默认的是64位。64位CPU上运行32位架构的操作系统。
+        * 对于并发比较高的场景CPU的数量比频率重要；对于CPU密集型场景和复杂SQL则频率越高越好。两者都是的话，CPU核数多且频率高越贵哦
     * 内存：选择服务器所支持最高的频率
         * MyLSam: 索引缓存到内存中，数据通过操作系统来缓存
         * InnoDB: 同时在缓存中存储索引和数据，提高效率
     * 磁盘：容量/传输速度/访问时间/主轴转速（7000/1.5W）/物理尺寸
-        * 传统磁盘：便宜，效率低，读写慢
-
-    的风格和你们，。
-  2. 服务器操作系统
+        * 传统磁盘：便宜，效率低，读写慢。RAID0可以把一些小的磁盘构建磁盘阵列，但是数据可能会丢失；RAID1可以对磁盘做镜像，对数据安全性高，磁盘利用率低；RAID5通过分布式奇偶校验块把数据分散到多个磁盘上，如果任何一个盘数据丢失，都可以从奇偶校验块重建，如果都丢失是无法恢复的；RAID10分片镜像
+        * SSD：相比机械硬盘有更好的随机读写性能；固态存储吞吐量大，更好支持并发；使用SATA接口（6G/S）
+        * PCI-E SSD需要特殊的接口和独立的驱动，闪存技术
+        * SAN: Storage Area Network 通过光纤接入服务器。适合做数据库备份
+        * NAS：Network-Attached Storage 使用网络连接，使用NFS或SMB协议来访问
+    * 网络接口性能对数据库的影响：延迟、带宽（也叫吞吐量）、网络的质量（抖动、丢包）；根据需求使用万兆交换机；尽可能多网络隔离，不暴露数据库在外网上
+  2. 操作系统
+    * windows对schema大小写不敏感，linux对大小写敏感。建议数据库/表都小写，通过配置参数来强制要求小写也可以。
+    * centos优化
+      * 内核相关参数 /etc/sysctl.conf
+        * net.core.somaxconn=65535 每个端口监听的个数
+        * net.core.netdev_max_backlog=65535
+        * net.ipv4.tcp_max_syn_backlog=65535
+        * net.ipv4.tcp_fin_timeout=10 TCP等待时间加速回收速度 net.ipv4.tcp_tw_reuse=1 net.ipv4.tcp_tw_recycle=1
+        * net.ipv4.tcp_keepalive_time=120秒
+      * 增加资源限制
+        * /etc/security/limit.conf 打开文件数的限制，添加到limit.conf文件的末尾就可以了
+          * soft nofile 65535
+          * hard nofile 65535
+      * 磁盘调度策略
+      * 文件系统对性能的影响
+        * Linux文件系统有EXT3/EXT4/XFS都有日志功能，传说XFS性能高
+        * Windows文件系统有FAT/NTFS
   3. 数据库存储引擎
     * MyISAM：不支持事务，表级锁
     * InoDB: 事务存储引擎，完美支持行级锁，事务ACID特性
