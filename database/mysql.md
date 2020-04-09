@@ -79,14 +79,42 @@
     * date: 存储用户生日的时候，占3个字节
     * time：存储时间部分
 
+#### MySQL的复制功能
+* MySQL的复制是基于二进制日志增量进行的，会导致备库与主库存在数据不一致的问题
+* 复制解决了什么问题
+  * 实现在不同服务器上的数据分布
+  * 实现数据读取的负载均衡
+    * 需要其他组件配合完成，利用DNS轮询的方式把程序的读连接到不同的备份数据库，利用LVS，haproxy这样的代理方式
+* 复制
+  * 基于SQL语句的复制
+    * 二进制日志格式使用的是statement
+  * 基于行的复制
+    * 二进制日志格式使用的是基于行的日志格式
+
+#### MySQL日志
+* MySQL服务层日志
+  * 二进制日志/慢查询日志/通用日志
+    * 二进制日志：记录了所有对mysql数据库的修改事件，包括增删改查事件和对表结构的修改事件。有个binlog的工具
+    * 二进制日志格式
+      * 基于段的格式 binlog_format=STATEMENT，日志量相对较小，节约磁盘和网络i/o
+      * 基于行的格式 默认格式，binlog_format=ROW。假设一SQL语句修改了1W天数据的情况下，基于段的日志只会记录这个SQL语句，基于行的日志会有1W条记录分别记录每一行的数据修改，可以避免主从复制不一致的的情况。binlog_row_image不同配置参数会导致日志量过大 ，建议设置成minimal，由mysql决定使用段还是行
+* MySQL存储引擎层日志
+  * innodb中的重做日志/回滚日志
+
+#### 索引
+* 作用：告诉存储引擎怎么快速的找到数据
+
 ### 常用命令
 ```sql
-show variables like '%isolation%' --查看数据库事务隔离级别的设置
+show variables like '%isolation' --查看数据库事务隔离级别的设置
+show variables like 'binlog_format' --查看二进制日志格式
 show create table tablename\G
 ```
 
 ### 注意点
 * 最好不要在主库上做数据库备份，大型活动前取消这类计划
+* 如何为innodb选择主键
+  * 主键应该尽可能的小，主键应该是顺序增长的（提升数据的插入效率）
 
 ### CentOS中安装MySQL
 * 查看官方文档 https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
