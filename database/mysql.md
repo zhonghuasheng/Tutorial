@@ -180,9 +180,14 @@
     * 5. 将结果返回给客户端
 * 确定查询处理各阶段所消耗的时间
   * 使用profile
-    * set profilling=1，启动profiling，这是一个session级别的设置，使用show profiles查看每一个查询所消耗的时间，show profile for query N, n是上一个query的id
+    * set profilling=1，启动profiling，这是一个session级别的设置，使用show profiles查看每一个查询所消耗的时间，show profile for query N, n是上一个query的id。也可以使用show profile cpu for query N来查看cpu的情况
 
     ![](img/mysql_profile_demo.png)
+  * performance_schema是mysql5.6之后的查询性能分析工具，推荐使用
+* 如何优化not in和<>查询
+  * not in的话可以使用left join或者right join来替代，不然它会扫描多次not in的表
+  * 使用汇总表优化查询
+    * select count(*) from X;创建一个汇总表，不是太好，不能实时
 
 ### 常用命令
 ```sql
@@ -197,6 +202,9 @@ select object_type,object_schema,object_name,index_name,count_star,count_read,CO
 * 最好不要在主库上做数据库备份，大型活动前取消这类计划
 * 如何为innodb选择主键
   * 主键应该尽可能的小，主键应该是顺序增长的（提升数据的插入效率）
+* 大表的数据修改最好要分批处理
+* 在线修改表结构
+  * 新建一个表，在老表上建立触发器，将老表的数据同步到新表，等到老表和新表数据一致时，在老表上建立一个排他锁，将新表命名为老表的名字。有工具实现 pt-online-schema-change
 
 ### CentOS中安装MySQL
 * 查看官方文档 https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
