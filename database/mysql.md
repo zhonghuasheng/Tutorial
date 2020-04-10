@@ -121,18 +121,90 @@
   * 缺点
     * 索引会增加写操作的成本
     * 太多的索引会增加查询优化器的选择时间
+* 索引优化策略
+  * 索引列上不能使用表达式或者函数，即使使用了存储引擎也不会使用这个索引，这时索引就没有意义了
+  * 选择索引列的顺序
+    * 经常会被使用的列优先
+    * 选择性高的列优先
+    * 宽度小的列优先
+  * 覆盖索引
+    * 可以优化缓存，减少磁盘IO操作
+    * 可以减少随机IO，变随机IO操作为顺序IO操作
+    * 可以避免对Innodb主键索引的二次查询
+    * 不能使用双%号的like查询
+  * mysql允许在同一列创建多个索引
+  * 建立了主键索引，就没必要再建立唯一索引了，因为主键索引就是一个非空的唯一索引
+    * 检测和删除重复/冗余的索引 pt-duplicate-key-checker h=127.0.0.1
+  * 查找未被使用过的索引，可以通过如下SQL查找，如果read和fetch都为0的话，那就是未被使用过的
+    ```sql
+    select object_type,object_schema,object_name,index_name,count_star,count_read,COUNT_FETCH from performance_schema.table_io_waits_summary_by_index_usage;
+    ```
+  * 更新索引统计信息及减少索引碎片
+    * analyze table table_name / optimize table table_name
+
+#### SQL查询优化
+* 如何获取
+  * 终端用户反馈存在性能的SQL
+  * 通过慢查询日志获取存在性能问题的SQL
+    * 慢查询日志性能开销低，主要在IO和磁盘上
+    * show_query_log 启动停止记录慢查询日志，设置为on,这是个动态的参数
+    * show_query_log_file 指定慢查询日志的存储路径及文件，默认和日志存储在一起，建议分开
+    * long_query_time 单位是秒，可以设置为微秒，带小数，超过设置阀值的SQL就会被记录到慢查询中，默认为10秒
+    * log_queries_not_using_indexes 是否记录未使用索引的SQL
+  * 实时获取存在性能问题的SQL
+    * information_schema.PROCESSLIST表
+      * select * from processlist where time>=?;
+* 常用的慢查询日志分析工具（mysqldumpslow）
+  * mysqldumpslow -s r -t 10s slow-mysql.log 猜测这个工具是从日志中过滤数据，类似linux命令
+  * pt-query-digest工具
+* 查询慢的原因
+  * 步骤
+    * 1. 客户端发送SQL请求给服务器
+    * 2. 服务器检查是否可以在查询缓存中命中该SQL
+      * query_cache_type 设置查询缓存是否可用
+      * query_cache_size 设置查询缓存的内存大小
+      * query_cache_limit 设置查询缓存可用存储的最大值，缓存太大就不会存储了，如果预先知道查询结果大，就加上SQL_NO_CACHE来提高效率
+      * query_cache_wlock_invalidate 如果某个表被锁住了，是否返回缓存中的数据，默认是关闭的
+      * query_cache_min_res_unit 设置查询缓存分配的内存块的最小单位
+      * > 读写比较频繁的话建议关闭缓存同时设置cache size为0
+    * 3. 服务器进行SQL解析，预处理，再由优化器生成对应的执行计划
+      * SQL解析
+        * 对SQL语句进行解析，并生成一颗对应的“解析树”，也会对SQL语句进行校验，看参数是否正确等
+      * 优化
+        * 重新定义表的关联顺序
+        * 将外连接转换为内连接
+        * 使用等价变换规则（a=5 && a>5 -> a>=5）
+        * 优化count(), min()和max()
+        * 提前终止查询，如果碰到某个不符合条件
+    * 4. 跟踪执行计划，调用存储引擎API来查询数据，有时需要在内存中过滤数据
+    * 5. 将结果返回给客户端
+* 确定查询处理各阶段所消耗的时间
+  * 使用profile
+    * set profilling=1，启动profiling，这是一个session级别的设置，使用show profiles查看每一个查询所消耗的时间，show profile for query N, n是上一个query的id。也可以使用show profile cpu for query N来查看cpu的情况
+
+    ![](img/mysql_profile_demo.png)
+  * performance_schema是mysql5.6之后的查询性能分析工具，推荐使用
+* 如何优化not in和<>查询
+  * not in的话可以使用left join或者right join来替代，不然它会扫描多次not in的表
+  * 使用汇总表优化查询
+    * select count(*) from X;创建一个汇总表，不是太好，不能实时
 
 ### 常用命令
 ```sql
 show variables like '%isolation' --查看数据库事务隔离级别的设置
 show variables like 'binlog_format' --查看二进制日志格式
-show create table tablename\G
+show create table tablename\G --显示表结构
+select object_type,object_schema,object_name,index_name,count_star,count_read,COUNT_FETCH from performance_schema.table_io_waits_summary_by_index_usage --查找未被使用的索引
+
 ```
 
 ### 注意点
 * 最好不要在主库上做数据库备份，大型活动前取消这类计划
 * 如何为innodb选择主键
   * 主键应该尽可能的小，主键应该是顺序增长的（提升数据的插入效率）
+* 大表的数据修改最好要分批处理
+* 在线修改表结构
+  * 新建一个表，在老表上建立触发器，将老表的数据同步到新表，等到老表和新表数据一致时，在老表上建立一个排他锁，将新表命名为老表的名字。有工具实现 pt-online-schema-change
 
 ### CentOS中安装MySQL
 * 查看官方文档 https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/
