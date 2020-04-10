@@ -121,6 +121,27 @@
   * 缺点
     * 索引会增加写操作的成本
     * 太多的索引会增加查询优化器的选择时间
+* 索引优化策略
+  * 索引列上不能使用表达式或者函数，即使使用了存储引擎也不会使用这个索引，这时索引就没有意义了
+  * 选择索引列的顺序
+    * 经常会被使用的列优先
+    * 选择性高的列优先
+    * 宽度小的列优先
+  * 覆盖索引
+    * 可以优化缓存，减少磁盘IO操作
+    * 可以减少随机IO，变随机IO操作为顺序IO操作
+    * 可以避免对Innodb主键索引的二次查询
+    * 不能使用双%号的like查询
+  * mysql允许在同一列创建多个索引
+  * 建立了主键索引，就没必要再建立唯一索引了，因为主键索引就是一个非空的唯一索引
+    * 检测和删除重复/冗余的索引 pt-duplicate-key-checker h=127.0.0.1
+  * 查找未被使用过的索引，可以通过如下SQL查找，如果read和fetch都为0的话，那就是未被使用过的
+    ```sql
+    select object_type,object_schema,object_name,index_name,count_star,count_read,COUNT_FETCH from performance_schema.table_io_waits_summary_by_index_usage;
+    ```
+  * 更新索引统计信息及减少索引碎片
+    * analyze table table_name / optimize table table_name
+
 
 ### 常用命令
 ```sql
