@@ -60,6 +60,7 @@
 * [SpringBoot Shiro]
 * [SpringBoot Session]()
 * [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
+* [SpringBoot Swagger](spring-boot/springboot-note.md#swagger)
 
 > SpringBoot百问
 
