@@ -10,7 +10,13 @@ IO是Java中的一种输入和输出的功能，Java中对这种操作叫做对�
 * [讲的最好的同步/异步/阻塞/非阻塞/BIO/NIO/AIO的文章](http://note.youdao.com/noteshare?id=e00d8caf0973471780b8ca880e1c5bf9&sub=wcp1578879502523399)
 * [零拷贝](http://note.youdao.com/noteshare?id=13101142e0a628da85eca4a52df1596b&sub=wcp1579073093657123)
 * [如何学习Java的NIO](http://note.youdao.com/noteshare?id=5ea48ae4fd97f7a7bb4bd9d036ba4d11)
-
+* [一篇文章读懂阻塞，非阻塞，同步，异步](https://www.jianshu.com/p/b8203d46895c)
+  * 结合代码来理解，这篇文章提到了底层的原理，但是不够深入
+  * https://blog.csdn.net/qq_41936805/article/details/94675873 帮助理解多路复用
+  * http://www.imooc.com/article/255865 有代码可以看下
+* [操作系统IO处理过程](https://blog.csdn.net/hutongling/article/details/69944456)
+* [Java IO层次体系结构](https://blog.csdn.net/qq_21870555/article/details/82999195)
+* [IO多路复用](https://www.jianshu.com/p/397449cadc9a)
 
 ## 学习笔记
 NIO是同步的IO，是因为程序需要IO操作时，必须获得了IO权限后亲自进行IO操作才能进行下一步操作。AIO是对NIO的改进（所以AIO又叫NIO.2），它是基于Proactor模型的。每个socket连接在事件分离器注册 IO完成事件 和 IO完成事件处理器。程序需要进行IO时，向分离器发出IO请求并把所用的Buffer区域告知分离器，分离器通知操作系统进行IO操作，操作系统自己不断尝试获取IO权限并进行IO操作（数据保存在Buffer区），操作完成后通知分离器；分离器检测到 IO完成事件，则激活 IO完成事件处理器，处理器会通知程序说“IO已完成”，程序知道后就直接从Buffer区进行数据的读写。
@@ -104,6 +110,11 @@ Java采用unicode编码，2个字节表示1个字符
 
 于是，NIO 横空出世。
 
+### 总结
+Java中的IO/NIO：多路复用 IO 模型
+1、多路复用 IO 模型是目前使用得比较多的模型。Java NIO 实际上就是多路复用 IO。在多路复用 IO 模型中，会有一个线程不断去轮询多个 socket 的状态，只有当 socket 真正有读写事件时，才真正调用实际的 IO 读写操作。因为在多路复用 IO 模型中，只需要使用一个线程就可以管理多个socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，并且只有在真正有 socket 读写事件进行时，才会使用 IO 资源，所以它大大减少了资源占用。在 Java NIO 中，是通过 selector.select()去查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这种方式会导致用户线程的阻塞。多路复用 IO 模式，通过一个线程就可以管理多个 socket，只有当 socket 真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用 IO 比较适合连接数比较多的情况。
+2、另外多路复用 IO 为何比非阻塞 IO 模型的效率高是因为在非阻塞 IO 中，不断地询问 socket 状态时通过用户线程去进行的，而在多路复用 IO 中，轮询每个 socket 状态是内核在进行的，这个效率要比用户线程要高的多。
+3、不过要注意的是，多路复用 IO 模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件逐一进行响应。因此对于多路复用 IO 模型来说，一旦事件响应体很大，那么就会导致后续的事件迟迟得不到处理，并且会影响新的事件轮询。
 
 # Reference
 * [Java IO详解](https://www.jianshu.com/p/aea76bc0e6d1)
