@@ -83,3 +83,4 @@
 * fair 合理的，公正的
 * reentrant 可重入的
 * AQS AbstractQueuedSynchronizer类，是Java中独占锁和共享锁的公共父类，锁的许多公共方法都是在这个类中实现
+* DMA: Direct Memory Access 直接存储器访问。他的作用就是不需要经过CPU进行数据传输
