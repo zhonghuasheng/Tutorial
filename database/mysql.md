@@ -246,3 +246,19 @@ mysql -uroot -p123456 -Ddbname<C:\a.sql
 ```
 source C:\a.sql
 ```
+
+### 关键字解读
+* COLLATE(英文是校对的意思)
+COLLATE通常是和数据编码（CHARSET）相关的，一般来说每种CHARSET都有多种它所支持的COLLATE，并且每种CHARSET都指定一种COLLATE为默认值。例如Latin1编码的默认COLLATE为latin1_swedish_ci，GBK编码的默认COLLATE为gbk_chinese_ci，utf8mb4编码的默认值为utf8mb4_general_ci。所谓utf8_unicode_ci，其实是用来排序的规则。对于mysql中那些字符类型的列，如VARCHAR，CHAR，TEXT类型的列，都需要有一个COLLATE类型来告知mysql如何对该列进行排序和比较。简而言之，COLLATE会影响到ORDER BY语句的顺序，会影响到WHERE条件中大于小于号筛选出来的结果，会影响**DISTINCT**、**GROUP BY**、**HAVING**语句的查询结果。另外，mysql建索引的时候，如果索引列是字符类型，也会影响索引创建，只不过这种影响我们感知不到。总之，凡是涉及到字符类型比较或排序的地方，都会和COLLATE有关。
+很多COLLATE都带有_ci字样，这是Case Insensitive的缩写，即大小写无关，也就是说"A"和"a"在排序和比较的时候是一视同仁的。selection * from table1 where field1="a"同样可以把field1为"A"的值选出来。与此同时，对于那些_cs后缀的COLLATE，则是Case Sensitive，即大小写敏感的。
+设置COLLATE可以在示例级别、库级别、表级别、列级别、以及SQL指定。
+* utf8mb4
+mysql中有utf8和utf8mb4两种编码，在mysql中请大家忘记**utf8**，永远使用**utf8mb4**。这是mysql的一个遗留问题，mysql中的utf8最多只能支持3bytes长度的字符编码，对于一些需要占据4bytes的文字，mysql的utf8就不支持了，要使用utf8mb4才行。
+
+* mysql中int(3)与int(11)有什么区别吗？
+注意：这里的M代表的并不是存储在数据库中的具体的长度，以前总是会误以为int(3)只能存储3个长度的数字，int(11)就会存储11个长度的数字，这是大错特错的。
+其实当我们在选择使用int的类型的时候，不论是int(3)还是int(11)，它在数据库里面存储的都是4个字节的长度，在使用int(3)的时候如果你输入的是10，会默认给你存储位010,也就是说这个3代表的是默认的一个长度，当你不足3位时，会帮你不全，当你超过3位时，就没有任何的影响。
+前天组管问我 int(10)与int(11)有什么区别，当时觉得就是长度的区别吧，现在看，他们之间除了在存储的时候稍微有点区别外，在我们使用的时候是没有任何区别的。int(10)也可以代表2147483647这个值int(11)也可以代表。
+要查看出不同效果记得在创建类型的时候加 zerofill这个值，表示用0填充，否则看不出效果的。
+我们通常在创建数据库的时候都不会加入这个选项，所以可以说他们之间是没有区别的。
+另外如果想用正整数就使用`UNSIGNED`关键字加在column上
