@@ -142,3 +142,9 @@ total requests: wc -l access_log.2019-0*
 awk '/keywords/' access_log* | head -10
 awk '/keywords/{print $5,$6}' access_log* | head -10 // 查找包含keywords的关键字并打印第5/6列
 ```
+
+### 百问
+> 65535怎么来的
+计算机是按照二进制储存数据的，一般用 unsigned int 这种数据类型来储存正整数
+在计算机中，每个整数都是用 16 位 2 进制数来表示的，所以最大的数就是 16 个 1，也就是 11111111 11111111
+把二进制数 11111111 11111111 转化位十进制数就是 65535
