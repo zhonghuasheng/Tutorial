@@ -5,6 +5,10 @@
 * 使用代理下载文件 wget -e use_proxy=yes -e http_proxy=x.x.x.x:1080
 * 设置ulimit sudo sh -c "ulimit -n 65535 && exec su userA"
 ## 网络篇
+### ssh
+* lsof -i:22
+* 安装基础工具
+* sudo apt-get install openssh-server openssh-client
 ### 查看所有开放的端口
 * 可以通过`netstat -anp`来查看哪些端口被打开
     * -a 显示所有
