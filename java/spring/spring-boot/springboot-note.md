@@ -68,3 +68,6 @@ public class Swagger2Config {
 ### 常见问题
 * Mapped Statements collection does not contain value for
     多数时mapper文件的问题，文件名/方法名/在properties中定义的扫描文件等
+* SpringBoot读取配置的两种方式
+  * 通过ConfigurableApplicationContext对象来读取 - 代码读取
+  * 通过配置@Value注解到bean上读取
