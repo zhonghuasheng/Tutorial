@@ -146,6 +146,9 @@ total requests: wc -l access_log.2019-0*
 awk '/keywords/' access_log* | head -10
 awk '/keywords/{print $5,$6}' access_log* | head -10 // 查找包含keywords的关键字并打印第5/6列
 ```
+### vim编辑文件
+* 现在还不是在编辑模式,需要在键盘上输入i键进入
+* 比如删除第六行,将光标移至要删除的第六行,连续输入两次小写的d,即dd
 
 ### 百问
 > 65535怎么来的
