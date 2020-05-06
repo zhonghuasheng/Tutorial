@@ -1,4 +1,9 @@
 ### 配置与安装
+tar -zxvf apache-maven-3.5.3-bin.tar.gz /usr/local/
+vi ~/.bashrc
+export M2_HOME=/usr/local/apache-maven-3.5.3
+export PATH=${M2_HOME}/bin:$PATH
+
 ### 添加阿里镜像
 找到.m2/settings.xml文件
 
