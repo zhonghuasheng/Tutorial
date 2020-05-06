@@ -146,9 +146,23 @@ total requests: wc -l access_log.2019-0*
 awk '/keywords/' access_log* | head -10
 awk '/keywords/{print $5,$6}' access_log* | head -10 // 查找包含keywords的关键字并打印第5/6列
 ```
+### vim编辑文件
+* 现在还不是在编辑模式,需要在键盘上输入i键进入
+* 比如删除第六行,将光标移至要删除的第六行,连续输入两次小写的d,即dd
 
 ### 百问
 > 65535怎么来的
 计算机是按照二进制储存数据的，一般用 unsigned int 这种数据类型来储存正整数
 在计算机中，每个整数都是用 16 位 2 进制数来表示的，所以最大的数就是 16 个 1，也就是 11111111 11111111
 把二进制数 11111111 11111111 转化位十进制数就是 65535
+
+> Linux下profile和bashrc区别
+1. /etc/profile
+用来设置系统环境参数，比如$PATH. 这里面的环境变量是对系统内所有用户生效的。
+2. /etc/bashrc
+这个文件设置系统bash shell相关的东西，对系统内所有用户生效。只要用户运行bash命令，那么这里面的东西就在起作用。
+3. ~/.bash_profile
+用来设置一些环境变量，功能和/etc/profile 类似，但是这个是针对用户来设定的，也就是说，你在/home/user1/.bash_profile 中设定了环境变量，那么这个环境变量只针对 user1 这个用户生效.
+4. ~/.bashrc
+作用类似于/etc/bashrc, 只是针对用户自己而言，不对其他用户生效。
+另外/etc/profile中设定的变量(全局)的可以作用于任何用户,而~/.bashrc等中设定的变量(局部)只能继承/etc/profile中的变量,他们是”父子”关系.
