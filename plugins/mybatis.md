@@ -102,3 +102,13 @@
     * 由于在更新时会刷新缓存， 因此需要注意使用场合：查询频率很高， 更新频率很低时使用， 即经常使用 select, 相对较少使用delete, insert, update。
     * 缓存是以 namespace 为单位的，不同 namespace 下的操作互不影响。但刷新缓存是刷新整个 namespace 的缓存， 也就是你 update 了一个， 则整个缓存都刷新了。
     * 最好在 「只有单表操作」 的表的 namespace 使用缓存， 而且对该表的操作都在这个 namespace 中。 否则可能会出现数据不一致的情况。
+
+* list in
+    * XXXMapper.java中 getXXX(@Param("ids") List<Long> ids)
+    * XXXMapper.xml中：
+        ```
+        SELECT a, b, c FROM table WHERE id IN
+        <foreach item="id" collection="ids" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+        ```
