@@ -33,3 +33,4 @@ ribbon是一个负载均衡客户端，可以很好的控制htt和tcp的一些�
 
 ### 笔记
 * SpringCloud是需要SpringBoot做基础的，因此在选择好SpringCloud的版本之后，要查看该版本依赖的是哪个SpringBoot版本，不能随便选择SpringBoot的版本，否则容易遇到意想不到的错误
+* SpringCloud Feign中，如果A服务通过Feign调用B服务，需要传递多个参数时，需要将参数组装成一个DTO来传递，否则会报参数找不到的错误
