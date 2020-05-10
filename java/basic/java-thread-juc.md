@@ -5,6 +5,7 @@
 * [JUC原子类](#JUC原子类)
     * [JUC原子类介绍](#JUC原子类介绍)
     * [基础类型AtomicInteger](#基础类型AtomicInteger)
+* [线程池](#线程池)
 
 ## Java为什么会有并发问题
 > 出现的原因
@@ -140,7 +141,69 @@ unsafe是通过Unsafe.getUnsafe()返回的一个Unsafe对象。通过Unsafe的CA
 其实阅读源码也可以发现，这些数组原子类与对应的普通原子类相比，只是多了通过索引找到内存中元素地址的操作而已。
 注意：原子数组并不是说可以让线程以原子方式一次性地操作数组中所有元素的数组。而是指对于数组中的每个元素，可以以原子方式进行操作。
 
+## 线程池
+java.util.concurrent包提供了现成的线程池的实现
 
+![](img/java-thread-pool-class.jpg)
+![](img/java-thread-pool-method.jpg)
+
+大概步骤为以下3步：
+1. 调用执行器类（Executors）的静态方法来创建线程池
+2. 调用线程池的submit方法提交Runnable或Callable对象
+3. 当不需要添加更多的任务时，调用shutdown关闭入口
+```java
+//创建线程池对象
+ExecutorService service = Executors.newCachedThreadPool();
+//创建一个用于递增输出i值的runnable对象
+Runnable runnable = new Runnable() {
+    @Override
+    public void run() {
+        for (int i = 0; i < 400; i++) {
+            System.out.println(i);
+        }
+    }
+};
+//调用线程池的submit方法传入runnable(传入的runnable将会自动执行)
+service.submit(runnable);
+service.submit(runnable);
+//当不需要传入更多的任务时调用shutdown方法来关闭入口
+service.shutdown();
+```
+需要注意的是如果希望直接停止线程池的一切任务是无法通过shutdown来操作的，因为shutdown仅仅是关闭了入口，但是已经加入的任务还是会继续执行的，这时我们可以调用线程池的shutdownNow方法来操作，shutdownNow的作用是用来关闭线程池的入口并且会尝试终止所有当前线程池内的任务。
+```java
+//用来关闭线程池入口以及终止所有正在执行的任务
+service.shutdownNow();
+```
+service的submit方法会返回一个Future<?>类型的对象然而这是一个怎样的类型呢？让我们来看一下api中的方法摘要：
+![](img/java-thread-future-api.png)
+从方法摘要中可以看出该对象用于在加入线程池以后能够对此任务进行取消，查看状态等操作，如果说在加入线程池以后有可能会取消此任务的话就需要，在submit的时候就需要保存好Future对象。
+
+> 为什么要用线程池:
+* 池化技术应用：线程池、数据库连接池、http连接池等等。
+* 池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。
+* 线程池提供了一种限制、管理资源的策略。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。
+
+使用线程池的好处：
+* `降低资源消耗`：通过重复利用已创建的线程降低线程创建和销毁造成的消耗。
+* `提高响应速度`：当任务到达时，可以不需要等待线程创建就能立即执行。
+* `提高线程的可管理性`：线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，监控和调优。
+
+Java里面线程池的顶级接口是Executor，但是严格意义上讲Executor并不是一个线程池，而只是一个执行线程的工具。真正的线程池接口是ExecutorService。
+
+![](img/java-thread-executor-framework.png)
+
+  * 主线程首先要创建实现Runnable或Callable接口的任务对象。
+  * 把创建完成的实现Runnable/Callable接口的对象直接交给ExecutorService执行：
+  * ExecutorService.execute(Runnable command)或者ExecutorService.sumbit(Runnable command)或ExecutorService.sumbit(Callable <T> task).
+  * 如果执行ExecutorService.submit(...)，ExecutorService将返回一个实现Future接口的对象。最后，主线程可以执行FutureTask.get()方法来等待任务执行完成。主线程也可以执行FutureTask.cancel()来取消次任务的执行。
+
+![](img/java-thread-pool-process.png)
+
+> 有一个简单且使用面比较广的公式：
+* CPU密集型任务（N+1）：这种任务消耗的主要是CPU资源，可以将线程数设置为N（CPU核心数）+1，比CPU核心数多出来一个线程是为了防止线程偶发的缺页中断，或者其他原因导致的任务暂停而带来的影响。一旦任务停止，CPU就会出于空闲状态，而这种情况下多出来一个线程就可以充分利用CPU的空闲时间。
+* I/O密集型（2N）：这种任务应用起来，系统大部分时间用来处理I/O交互，而线程在处理I/O的是时间段内不会占用CPU来处理，这时就可以将CPU交出给其他线程使用。因此在I/O密集型任务的应用中，可以配置多一些线程，具体计算方是2N。
+
+> 策略处理
 
 # 引用
 * Java为什么会有并发问题？ https://blog.csdn.net/somehow1002/article/details/97049957
