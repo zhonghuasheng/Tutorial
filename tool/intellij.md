@@ -5,7 +5,7 @@
 ## 常用设置
 * 插件 Lombook， Easy Code(https://blog.csdn.net/qq_38225558/article/details/84479653)
 * RestfulToolkit 将url收集显示，点击url可转到代码
-* Grep Console插件能让你的Console丰富多彩，并且还能够过滤控制台输出
+* Grep Console插件能让你的Console丰富多彩，并且还能够过滤控制台输出(过滤的时候先选中要过滤的关键字，然后右键选择Grep)
 * Rainbow Brackets 让花括号用不同的颜色标记，别于代码阅读区分
 * SequenceDiagram:一键生成时序图.一般用它来生成简单的方法时序图，方便我们阅读代码，特别是在代码的调用层级比较多的时候。
 使用方法很简单，选中方法名（注意不要选类名），然后点击鼠标右键，选择 Sequence Diagram 选项即可！
