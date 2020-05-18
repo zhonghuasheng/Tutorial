@@ -261,3 +261,11 @@ JAVA为了优化性能，可能对指令进行重排，这些重排在大部分�
 吞吐，指单位时间处理的请求数;
 时延，指单次处理的平均耗时;
 并发，同一时刻可以接入的请求数
+
+SpringBoot中使用HikariPool线程池，号称最快的，在我们关闭程序是，会打印log:
+```java
+sconnected from the target VM, address: '127.0.0.1:57835', transport: 'socket'
+2020-05-18 21:28:54.525  INFO 15232 --- [extShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-05-18 21:28:54.526  INFO 15232 --- [extShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-05-18 21:28:55.925  INFO 15232 --- [extShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+```
