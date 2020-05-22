@@ -1,5 +1,21 @@
 ## 目录
+* [番外篇](#番外篇)
+    * [MySQL体系结构](#)MySQL体系结构
+    * [MySQL基准测试](#MySQL基准测试)
+    * [数据库结构优化](#数据库结构优化)
+    * [MySQL的复制功能](#MySQL的复制功能)
+    * [MySQL日志](#MySQL日志)
+    * [索引](#索引)
+    * [SQL查询优化](#SQL查询优化)
+    * [数据库监控](#数据库监控)
+* [常用命令](#常用命令)
+* [常用函数](#常用函数)
+* [使用技巧](#注意点)
 * [CentOS中安装MySQL](#CentOS中安装MySQL)
+* [查看MySql数据库物理文件存放位置](#查看MySql数据库物理文件存放位置)
+* [Mysql执行sql文件](#Mysql执行sql文件)
+* [关键字解读](#关键字解读)
+* [性能查询](#性能查询)
 
 ### 番外篇
 * 数据库的扩展没有web服务器那样容易
@@ -19,7 +35,7 @@
   * 大事务：运行时间长，操作的数据比较多的事务，例如余额宝计算用户昨天的收益，特别是理财产品买的多的情况下，回滚所需的时间长
 
 #### MySQL体系结构
-* MySQL最大的特点-插件式存储引擎，能够将数据的插入，提取相分离
+* MySQL最大的特点-插件式存储引擎(存储引擎可选)，能够将数据的插入，提取相分离
 
 #### MySQL基准测试
 * 基准测试是对机器性能的测试，不同于普通的压力测试，不需要关心业务逻辑，类似redis-benchmark
@@ -204,6 +220,9 @@ select object_type,object_schema,object_name,index_name,count_star,count_read,CO
 
 ```
 
+### 常用函数
+
+
 ### 注意点
 * 最好不要在主库上做数据库备份，大型活动前取消这类计划
 * 如何为innodb选择主键
@@ -269,3 +288,8 @@ mysql中有utf8和utf8mb4两种编码，在mysql中请大家忘记**utf8**，永
 首先要确定mysql版本
 4.0版本以下，varchar(50)，指的是50字节，如果存放UTF8汉字时，只能存16个（每个汉字3字节）
 5.0版本以上，varchar(50)，指的是50字符，无论存放的是数字、字母还是UTF8汉字（每个汉字3字节），都可以存放50个
+
+## 性能查询
+show variables like 'optimizer_trace';
+set session optimizer_trace="enabled=on", end_markers_in_json=on;
+set optimizer_trace_max_mem_size=100000;
