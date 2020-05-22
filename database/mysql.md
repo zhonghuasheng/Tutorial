@@ -1,5 +1,22 @@
 ## 目录
+* [番外篇](#番外篇)
+    * [MySQL体系结构](#)MySQL体系结构
+    * [MySQL基准测试](#MySQL基准测试)
+    * [数据库结构优化](#数据库结构优化)
+    * [MySQL的复制功能](#MySQL的复制功能)
+    * [MySQL日志](#MySQL日志)
+    * [索引](#索引)
+    * [SQL查询优化](#SQL查询优化)
+    * [数据库监控](#数据库监控)
+* [常用命令](#常用命令)
+* [常用函数](#常用函数)
+* [使用技巧](#注意点)
 * [CentOS中安装MySQL](#CentOS中安装MySQL)
+* [查看MySql数据库物理文件存放位置](#查看MySql数据库物理文件存放位置)
+* [Mysql执行sql文件](#Mysql执行sql文件)
+* [关键字解读](#关键字解读)
+* [性能查询](#性能查询)
+* [百问](#百问)
 
 ### 番外篇
 * 数据库的扩展没有web服务器那样容易
@@ -19,7 +36,7 @@
   * 大事务：运行时间长，操作的数据比较多的事务，例如余额宝计算用户昨天的收益，特别是理财产品买的多的情况下，回滚所需的时间长
 
 #### MySQL体系结构
-* MySQL最大的特点-插件式存储引擎，能够将数据的插入，提取相分离
+* MySQL最大的特点-插件式存储引擎(存储引擎可选)，能够将数据的插入，提取相分离
 
 #### MySQL基准测试
 * 基准测试是对机器性能的测试，不同于普通的压力测试，不需要关心业务逻辑，类似redis-benchmark
@@ -143,7 +160,23 @@
     ```
   * 更新索引统计信息及减少索引碎片
     * analyze table table_name / optimize table table_name
+* 索引规则
+* mysql多列索引[组合索引]的生效规则
+    * `组合索引的生效原则是 从前向后依次生效，如果中间某个索引没有使用， 那么断点前面的索引部分起作用，断点后面的索引没有起作用，即最左优先原则`
+    ```SQL
+    例如创建多列索引（a,b,c)
+    where a=3 and b=45 and c=5...
+    这种三个索引顺序使用中间没有断点，全部发挥作用；
 
+    where a=3 and c=5...
+    这种情况下b就是断点，a发挥了效果，c没有效果;
+
+    where b=3 and c=4...
+    这种情况下a就是断点，在a后面的索引都没有发挥作用，这种写法联合索引没有发挥任何效果；
+
+    where b=45 and a=3 and c=5...
+    这个跟第一个一样，全部发挥作用，abc只要用上了就行，跟写的顺序无关;
+    ```
 #### SQL查询优化
 * 如何获取
   * 终端用户反馈存在性能的SQL
@@ -202,6 +235,26 @@ show variables like 'binlog_format' --查看二进制日志格式
 show create table tablename\G --显示表结构
 select object_type,object_schema,object_name,index_name,count_star,count_read,COUNT_FETCH from performance_schema.table_io_waits_summary_by_index_usage --查找未被使用的索引
 
+```
+
+### 常用函数
+> replace: 替换特定的字符串
+```SQL
+语法：replace(object,search,replace)
+  语义：把object对象中出现的的search全部替换成replace。
+  实例：
+  update hellotable set 'helloCol' = replace('helloCol','helloSearch','helloReplace')
+  比如将日期中的：号替换成空: REPLACE(datetime, ':', '')
+```
+> replace into
+```SQL
+replace into函数
+为什么会接触到replace into函数，是因为业务需要向数据库中插入数据，前提是重复的不能再次插入。以前用where解决的，今天才知道还有一个更简洁的方法replace。
+replace具备替换拥有唯一索引或者主键索引重复数据的能力，也就是如果使用replace into插入的数据的唯一索引或者主键索引与之前的数据有重复的情况，将会删除原先的数据，然后再进行添加。
+语法：replace into table( col1, col2, col3 ) values ( val1, val2, val3 )
+语义：向table表中col1, col2, col3列replace数据val1，val2，val3
+实例：
+REPLACE INTO users (id,name,age) VALUES(123, ‘chao’, 50);
 ```
 
 ### 注意点
@@ -269,3 +322,24 @@ mysql中有utf8和utf8mb4两种编码，在mysql中请大家忘记**utf8**，永
 首先要确定mysql版本
 4.0版本以下，varchar(50)，指的是50字节，如果存放UTF8汉字时，只能存16个（每个汉字3字节）
 5.0版本以上，varchar(50)，指的是50字符，无论存放的是数字、字母还是UTF8汉字（每个汉字3字节），都可以存放50个
+
+## 性能查询
+show variables like 'optimizer_trace';
+set session optimizer_trace="enabled=on", end_markers_in_json=on;
+set optimizer_trace_max_mem_size=100000;
+
+## 百问
+1. MYSQL 索引长度的限制
+```
+  myisam表，单列索引，最大长度不能超过 1000 bytes；
+  innodb表，单列索引，最大长度不能超过 767 bytes；
+  utf8 编码时   一个字符占三个字节
+  varchar  型能建立索引的最大长度分别为
+  myisam   1000/3   333
+  innodb     767/3    255
+  utf8mb4 编码时   一个字符占四个字节
+  varchar  型能建立索引的最大长度分别为
+  myisam   1000/4   250
+  innodb     767/4    191
+```
+2.
