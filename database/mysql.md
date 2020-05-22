@@ -16,6 +16,7 @@
 * [Mysql执行sql文件](#Mysql执行sql文件)
 * [关键字解读](#关键字解读)
 * [性能查询](#性能查询)
+* [百问](#百问)
 
 ### 番外篇
 * 数据库的扩展没有web服务器那样容易
@@ -159,7 +160,23 @@
     ```
   * 更新索引统计信息及减少索引碎片
     * analyze table table_name / optimize table table_name
+* 索引规则
+* mysql多列索引[组合索引]的生效规则
+    * `组合索引的生效原则是 从前向后依次生效，如果中间某个索引没有使用， 那么断点前面的索引部分起作用，断点后面的索引没有起作用，即最左优先原则`
+    ```SQL
+    例如创建多列索引（a,b,c)
+    where a=3 and b=45 and c=5...
+    这种三个索引顺序使用中间没有断点，全部发挥作用；
 
+    where a=3 and c=5...
+    这种情况下b就是断点，a发挥了效果，c没有效果;
+
+    where b=3 and c=4...
+    这种情况下a就是断点，在a后面的索引都没有发挥作用，这种写法联合索引没有发挥任何效果；
+
+    where b=45 and a=3 and c=5...
+    这个跟第一个一样，全部发挥作用，abc只要用上了就行，跟写的顺序无关;
+    ```
 #### SQL查询优化
 * 如何获取
   * 终端用户反馈存在性能的SQL
@@ -221,7 +238,24 @@ select object_type,object_schema,object_name,index_name,count_star,count_read,CO
 ```
 
 ### 常用函数
-
+> replace: 替换特定的字符串
+```SQL
+语法：replace(object,search,replace)
+  语义：把object对象中出现的的search全部替换成replace。
+  实例：
+  update hellotable set 'helloCol' = replace('helloCol','helloSearch','helloReplace')
+  比如将日期中的：号替换成空: REPLACE(datetime, ':', '')
+```
+> replace into
+```SQL
+replace into函数
+为什么会接触到replace into函数，是因为业务需要向数据库中插入数据，前提是重复的不能再次插入。以前用where解决的，今天才知道还有一个更简洁的方法replace。
+replace具备替换拥有唯一索引或者主键索引重复数据的能力，也就是如果使用replace into插入的数据的唯一索引或者主键索引与之前的数据有重复的情况，将会删除原先的数据，然后再进行添加。
+语法：replace into table( col1, col2, col3 ) values ( val1, val2, val3 )
+语义：向table表中col1, col2, col3列replace数据val1，val2，val3
+实例：
+REPLACE INTO users (id,name,age) VALUES(123, ‘chao’, 50);
+```
 
 ### 注意点
 * 最好不要在主库上做数据库备份，大型活动前取消这类计划
@@ -293,3 +327,19 @@ mysql中有utf8和utf8mb4两种编码，在mysql中请大家忘记**utf8**，永
 show variables like 'optimizer_trace';
 set session optimizer_trace="enabled=on", end_markers_in_json=on;
 set optimizer_trace_max_mem_size=100000;
+
+## 百问
+1. MYSQL 索引长度的限制
+```
+  myisam表，单列索引，最大长度不能超过 1000 bytes；
+  innodb表，单列索引，最大长度不能超过 767 bytes；
+  utf8 编码时   一个字符占三个字节
+  varchar  型能建立索引的最大长度分别为
+  myisam   1000/3   333
+  innodb     767/3    255
+  utf8mb4 编码时   一个字符占四个字节
+  varchar  型能建立索引的最大长度分别为
+  myisam   1000/4   250
+  innodb     767/4    191
+```
+2.
