@@ -256,6 +256,24 @@ replace具备替换拥有唯一索引或者主键索引重复数据的能力，�
 实例：
 REPLACE INTO users (id,name,age) VALUES(123, ‘chao’, 50);
 ```
+> 截取字符串
+```SQL
+-- 从左开始截取字符串: left(str, legth)
+SELECT LEFT('www.baidu.com', 8); --www.baid
+-- 从右开始截取字符串: right(str, length)
+SELECT RIGHT('www.baidu.com', 8); --aidu.com
+-- 截取特定长度的字符串
+----- substring(str, pos) 从pos位置开始算起，从1开始
+SELECT SUBSTRING('www.baidu.com', 3); --w.baidu.com
+SELECT SUBSTRING('www.baidu.com', -3); --com 从倒数第三个位置开始
+----- substring(str, pos, length) 从pos位置开始，截取length长度
+SELECT SUBSTRING('www.baidu.com', 3, 3); -- w.b
+SELECT SUBSTRING('www.baidu.com', -4, 2); --.c
+-- 按关键字截取 substring_index(str, delim, count) str被截取的字符串，提取的关键字，关键字出现的次数
+SELECT SUBSTRING_INDEX('www.baidu.com', '.', 2); --截取第二个.之前的所有字符 www.baidu
+SELECT SUBSTRING_INDEX('www.baidu.com', '.', -2); --截取倒数第二个.之后的所有字符串 baidu.com
+SELECT SUBSTRING_INDEX('www.baidu.com', 'xxx', 1); --截取关键字不存在返回原字符串 1还是代表首次出现的位置，也可以换乘其他值
+```
 
 ### 注意点
 * 最好不要在主库上做数据库备份，大型活动前取消这类计划
