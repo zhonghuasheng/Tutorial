@@ -62,6 +62,11 @@
 * [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
 * [SpringBoot Swagger](spring-boot/springboot-note.md#swagger)
 
+### SpringCloud
+> SpringCloud微服务系列
+* [Spring Cloud注册中心 - Eureka](spring-cloud/spring-cloud-eureka.md)
+* [Spring Cloud熔断器 - Hystrix](spring-cloud/spring-cloud-hystrix.md)
+
 > SpringBoot百问
 
 > SpringBoot实战技巧系列
