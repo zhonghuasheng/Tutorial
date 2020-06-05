@@ -1,22 +1,23 @@
 ## 目录
-* [番外篇](#番外篇)
-    * [MySQL体系结构](#)MySQL体系结构
-    * [MySQL基准测试](#MySQL基准测试)
-    * [数据库结构优化](#数据库结构优化)
-    * [MySQL的复制功能](#MySQL的复制功能)
-    * [MySQL日志](#MySQL日志)
-    * [索引](#索引)
-    * [SQL查询优化](#SQL查询优化)
-    * [数据库监控](#数据库监控)
-* [常用命令](#常用命令)
-* [常用函数](#常用函数)
-* [使用技巧](#注意点)
-* [CentOS中安装MySQL](#CentOS中安装MySQL)
-* [查看MySql数据库物理文件存放位置](#查看MySql数据库物理文件存放位置)
-* [Mysql执行sql文件](#Mysql执行sql文件)
-* [关键字解读](#关键字解读)
-* [性能查询](#性能查询)
-* [百问](#百问)
+- [目录](#目录)
+  - [番外篇](#番外篇)
+    - [MySQL体系结构](#mysql体系结构)
+    - [MySQL基准测试](#mysql基准测试)
+    - [数据库结构优化](#数据库结构优化)
+    - [MySQL的复制功能](#mysql的复制功能)
+    - [MySQL日志](#mysql日志)
+    - [索引](#索引)
+    - [SQL查询优化](#sql查询优化)
+    - [数据库监控](#数据库监控)
+  - [常用命令](#常用命令)
+  - [常用函数](#常用函数)
+  - [注意点](#注意点)
+  - [CentOS中安装MySQL](#centos中安装mysql)
+  - [查看MySql数据库物理文件存放位置](#查看mysql数据库物理文件存放位置)
+  - [Mysql执行sql文件](#mysql执行sql文件)
+  - [关键字解读](#关键字解读)
+- [性能查询](#性能查询)
+- [百问](#百问)
 
 ### 番外篇
 * 数据库的扩展没有web服务器那样容易
@@ -345,6 +346,7 @@ mysql中有utf8和utf8mb4两种编码，在mysql中请大家忘记**utf8**，永
 show variables like 'optimizer_trace';
 set session optimizer_trace="enabled=on", end_markers_in_json=on;
 set optimizer_trace_max_mem_size=100000;
+show status like 'Threads%';
 
 ## 百问
 1. MYSQL 索引长度的限制
