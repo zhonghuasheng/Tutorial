@@ -5,7 +5,7 @@
 * 微服务时代 运维监控是难点
 
 * [Spring Cloud注册中心 - Eureka](spring-cloud-eureka.md)
-* [Spring Cloud熔断器 - Hystrix]()
+* [Spring Cloud熔断器 - Hystrix](spring-cloud-hystrix.md)
 
 ### 笔记
 * SpringCloud是需要SpringBoot做基础的，因此在选择好SpringCloud的版本之后，要查看该版本依赖的是哪个SpringBoot版本，不能随便选择SpringBoot的版本，否则容易遇到意想不到的错误
