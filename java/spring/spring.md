@@ -61,6 +61,7 @@
 * [SpringBoot Session]()
 * [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
 * [SpringBoot Swagger](spring-boot/springboot-note.md#swagger)
+* [SpringBoot实现定时任务的4中方式](spring-boot/springboot-scheduled-task.md)
 
 ### SpringCloud
 > SpringCloud微服务系列
