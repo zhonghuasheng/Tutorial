@@ -1,5 +1,5 @@
 ## 本着学习自用的态度
-* 参考文章：https://www.cnblogs.com/leton/p/12037696.html
+* 参考文章：https://www.cnblogs.com/lubians/articles/12179654.html
 * 激活工具：链接：https://pan.baidu.com/s/1gzjNQe2bJ-wQeRTT_mdFGg 提取码：gf3j
 
 ## 常用设置
