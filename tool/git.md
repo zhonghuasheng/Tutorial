@@ -158,3 +158,22 @@ done
 #当前是master文件夹，最后切换到master分支
 git checkout master
 ```
+
+### github和gitee双提交
+* 使本地库同时关联GitHub和码云，需要用不同的名称来标识不同的远程库，git给远程库起的默认名称是 origin，就是我们平时fetch/rebase origin那种
+先删除 origin
+`git remote rm origin`
+然后关联GitHub的远程库：
+`git remote add github git@github.com:xxx(用户名)/xxx(本地库名).git`
+然后关联码云的远程库：
+`git remote add gitee git@gitee.com:xxx(用户名)/xxx(本地库名).git`
+然后使用 git remote -v 来查看远程库信息，看到以下信息即表示成功：
+`gitee git@gitee.com:xxx/xxx.git (fetch)`
+`gitee git@gitee.com:xxx/xxx.git (push)`
+`github git@github.com:xxx/xxx.git (fetch)`
+`github git@github.com:xxx/xxx.git (push)`
+```
+git fetch github master:master
+git rebase github/master
+git push github/master
+```
