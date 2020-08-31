@@ -68,6 +68,9 @@ Java内存模型(Java Memory Model，JMM)是java虚拟机规范定义的，用�
     * App ClassLoader：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。
         * 除了Java默认提供的三个ClassLoader之外，用户还可以根据需要定义自已的ClassLoader，而这些自定义的ClassLoader都必须继承自java.lang.ClassLoader类，也包括Java提供的另外二个ClassLoader（Extension ClassLoader和App ClassLoader）在内，但是Bootstrap ClassLoader不继承自ClassLoader，因为它不是一个普通的Java类，底层由C++编写，已嵌入到了JVM内核当中，当JVM启动后，Bootstrap ClassLoader也随着启动，负责加载完核心类库后，并构造Extension ClassLoader和App ClassLoader类加载器。
 
+### 堆内内存与堆外内存
+堆内拷贝到堆外的原因： 操作系统把内存中的数据写入磁盘或网络时，要求数据所在的内存区域不能变动，但是JVM的GC机制会对内存进行整理，导致数据内存地址发生变化，所以无奈，JDK只能先拷贝到堆外内存（不受GC影响），然后把这个地址发给操作系统。
+
 # *JDK*
 ### JDK中自带的工具
 #### `version 1.8`
