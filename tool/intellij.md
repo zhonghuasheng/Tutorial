@@ -1,3 +1,7 @@
+## 目录
+
+* [idea moudle没有蓝色的小方块](#ideamoudle没有蓝色的小方块)
+
 ## 本着学习自用的态度
 * 参考文章：https://www.cnblogs.com/lubians/articles/12179654.html
 * 激活工具：链接：https://pan.baidu.com/s/1gzjNQe2bJ-wQeRTT_mdFGg 提取码：gf3j
@@ -68,3 +72,8 @@ File -> Project Structure -> Project Settings -> Modules
 选中 mian folder，然后邮件设置为Sources
 保存
 ```
+
+### idea moudle没有蓝色的小方块
+* https://blog.csdn.net/wt_better/article/details/86380826
+1. 右边Maven -> Generate Source and Update Project
+2. 更新.idea中的modules.xml
