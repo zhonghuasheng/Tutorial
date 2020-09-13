@@ -112,3 +112,5 @@
           #{id}
         </foreach>
         ```
+* 处理and
+    当遇到sql中这样写WHERE ( au_state = '1' OR au_state = '2' ) ，mybatis中queryWrapper.and(Wrapper -> Wrapper.eq(PcmArticle::getAuState, "1").or().eq(PcmArticle::getAuState, "2"));
