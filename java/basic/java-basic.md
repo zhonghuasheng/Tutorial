@@ -35,6 +35,7 @@
     * [Java 各版本的新特性](#java-各版本的新特性)
     * [Java 与 C++ 的区别](#java-与-c-的区别)
     * [JRE or JDK](#jre-or-jdk)
+    * [Lambda表达式](#Lambda表达式)
 * [参考资料](#参考资料)
 <!-- GFM-TOC -->
 
@@ -1531,6 +1532,21 @@ Java 注解是附加在代码中的一些元信息，用于一些工具在编译
 
 - JRE is the JVM program, Java application need to run on JRE.
 - JDK is a superset of JRE, JRE + tools for developing java programs. e.g, it provides the compiler "javac"
+
+## Lambda表达式
+Lambda 表达式是一种匿名函数(对 Java 而言这并不完全正确，但现在姑且这么认为)，简单地说，它是没有声明的方法，也即没有访问修饰符、返回值声明和名字。
+Java 中的 Lambda 表达式通常使用 `(argument) -> (body)` 语法书写，例如：
+```java
+(arg1, arg2...) -> { body }
+(type1 arg1, type2 arg2...) -> { body }
+
+
+(int a, int b) -> {  return a + b; }
+() -> System.out.println("Hello World");
+(String s) -> { System.out.println(s); }
+() -> 42
+() -> { return 3.1415 };
+```
 
 # 参考资料
 
