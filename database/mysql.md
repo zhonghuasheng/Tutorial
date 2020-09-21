@@ -344,6 +344,7 @@ mysql中有utf8和utf8mb4两种编码，在mysql中请大家忘记**utf8**，永
 5.0版本以上，varchar(50)，指的是50字符，无论存放的是数字、字母还是UTF8汉字（每个汉字3字节），都可以存放50个
 
 ## 性能查询
+MySQL性能优化的核心要素：合理利用索引，降低锁影响，提高事务并发度
 show variables like 'optimizer_trace';
 set session optimizer_trace="enabled=on", end_markers_in_json=on;
 set optimizer_trace_max_mem_size=100000;
