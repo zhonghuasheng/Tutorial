@@ -11,3 +11,5 @@
 * 代码行统计工具
   * cloc.exe windows中cmd使用cloc.exe folderPath/
   * IDEA plugin statistic
+* Java诊断工具
+  *  阿里JAVA诊断工具Arthas

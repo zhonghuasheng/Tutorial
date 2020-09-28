@@ -63,6 +63,8 @@
 * [Java命名规范参考](http://note.youdao.com/noteshare?id=c0ca7331624eb2f19b06f623a1b832ae&sub=2F7223EB9D9E4072B60A1FB578BF0AFA)
 
 > `工具`
+* [Java诊断工具]
+    * [阿里JAVA诊断工具Arthas](tool/tools.md)
 * [API测试工具](tool/api-testing-tool.md)
 * [流量统计，网站分析](tool/common-tools.md)
 * [日志管理工具](tool/cronolog.md)
