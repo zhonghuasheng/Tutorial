@@ -134,7 +134,38 @@
 > Java线程执行native方法时程序计数器为空，如何确保native执行完后的程序执行的位置
 native是非java代码编写的，比如C,C++, 它们无法在java编译时生成字节码，即JVM获取不到native实现，只能通过系统指令去调用native方法,所以执行native时程序计数器值为空undefined。native方法由原生平台直接执行，native方法执行后会退出(栈帧pop)，方法退出返回到被调用的地方继续执行程序。
 
-115. 解释下同步/异步，阻塞/非阻塞
+* 网络IO是什么？
+```
+可以理解为socket和fd(file descriptor文件描述符)
+
+10中网络ID
+单线程同步 -> NTP
+多线程同步 -> Natty
+单线程异步 -> Redis
+半同步半异步 -> Natty
+多进程同步 -> fastcgi
+多线程异步 -> memcached
+多进程异步 -> nginx
+每请求每进程（现场）-> Apache/CGI
+微进程框架 -> erlang/go/lua
+协议框架 -> libco/ntyco/libgo
+
+单线程 epoll -> redis
+多线程 epoll -> memcached
+多进程 epoll -> nginx
+
+epoll底层数据结构是红黑树，还有一个就绪队列。
+while(1) {
+    epoll_wait(epfd, events, 1024, -1)
+}
+epoll中的三个函数
+epoll_create() 创建一个网络IO
+epoll_ctl() 控制connection的
+epoll_wait() 多长时间去轮询一次，看有没有数据
+服务器端有个事件循环一直在监听有没有数据（缺点是一直占一个cpu）
+```
+
+* 解释下同步/异步，阻塞/非阻塞
 ```
 妈妈让我去厨房烧一锅水，准备下饺子
 阻塞：水只要没烧开，我就干瞪眼看着这个锅，沧海桑田，日新月异，我自岿然不动，厨房就是我的家，烧水是我的宿命。
