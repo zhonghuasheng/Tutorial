@@ -226,13 +226,15 @@
 * Reids支持5中存储的数据格式： String, Hash, List, Set, Sorted Set
   * `string`
     * redis 的 string 可以包含任何数据。比如jpg图片或者序列化的对象，最大能存储 512MB。
-    * 使用场景：缓存/计数器/分布式锁...
+    * 使用场景：缓存/计数器/分布式锁/Web集群session共享/分布式系统全局序号（不用每次都拿，一次拿1000个放到内存中）...
     * 常用命令：
     * 实战：实现分布式的id生成器，可以使用incr的思路，但是实际中会比这复杂
+    * 
 
   * `hash`
     * 是一个键值(key=>value)对集合。Redis hash 是一个 string 类型的 field 和 value 的映射表，hash 特别适合用于存储对象。
     * 实战：统计用户主页的访问量， hincrby user:1:info pageview count
+    * Redis集群架构下不太适合
 
   * `list`
     * Redis 列表是简单的字符串列表，按照插入顺序排序。列表最多可存储 232 - 1 元素 (4294967295, 每个列表可存储40多亿)。
