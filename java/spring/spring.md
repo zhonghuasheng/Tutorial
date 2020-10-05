@@ -76,7 +76,5 @@
 * [SpringBoot统计在线人数](https://github.com/zhonghuasheng/Tutorial/wiki/SpringBoot%E7%BB%9F%E8%AE%A1%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0)
 * [SpringBoot + Redis + 自定义注解 + 拦截器 实现接口幂等性校验](https://github.com/zhonghuasheng/Spring-Boot/blob/master/springbootidempotence/README.md)
 * [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
-* SpringBoot打成war包并修改war包名用于迭代开发
-* SpringBoot项目war包部署到tomcat，解决路径问题
 * [SpringBoot中使用Redis做页面缓存](https://github.com/zhonghuasheng/JAVA/commit/340d764e21902797630ea6a42136ec1fc909023b)
-* Log4j2详解 https://www.cnblogs.com/keeya/p/10101547.html
+* [SpringBoot + Redis Lua脚本实现分布式锁 + 解决电商超卖问题](https://github.com/zhonghuasheng/JAVA/blob/master/springboot/springboot-redis-lock/src/main/java/com/zhonghuasheng/redis/config/RedisRepository.java)
