@@ -12,5 +12,104 @@
 2. 释放/死锁：释放锁的线程必须是加锁的线程；服务器宕机情况下，也能释放锁
 3. 容错：只要多数（一半以上）redis节点在使用，client就可以获取和释放锁
 
+### 实现方式
+1. Redis中的Redlock
+2. 参考代码
+```lua
+// 释放锁
+if redis.call('get',KEYS[1]) == ARGV[1] then
+    return redis.call('del', KEYS[1]);
+else
+    return 0;
+end;
+```
+
+```lua
+// 减库存
+if (redis.call('exists', KEYS[1]) == 1) then
+    local stock = tonumber(redis.call('get', KEYS[1]));
+    if (stock == -1) then
+        return -1;
+    end;
+    if (stock > 0) then
+        redis.call('incrby', KEYS[1], -1);
+        return stock;
+    end;
+    return 0;
+end;
+return -1;
+```
+
+```java
+
+@Slf4j
+@Component
+public class RedisRepository {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    /**
+     * 设置RedisTemplate的序列化
+     * @param redisTemplate
+     */
+    public RedisRepository(RedisTemplate redisTemplate) {
+        RedisSerializer redisSerializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(redisSerializer);
+        redisTemplate.setValueSerializer(redisSerializer);
+        redisTemplate.setHashKeySerializer(redisSerializer);
+        redisTemplate.setHashValueSerializer(redisSerializer);
+        this.redisTemplate = redisTemplate;
+    }
+
+
+    /**
+     * 获取分布式锁
+     * @param key 锁
+     * @param requestId 锁标识
+     * @param expireTime 过期时间（毫秒）
+     * @return 加锁是否成功
+     */
+    public boolean lock(String key, String requestId, int expireTime) {
+        if (null == key || null == requestId || expireTime < 0) {
+            return false;
+        }
+
+        boolean locked = false;
+        int tryCount = 3;
+        while (!locked && tryCount > 0) {
+            locked = redisTemplate.opsForValue().setIfAbsent(key, requestId, expireTime, TimeUnit.MICROSECONDS);
+            tryCount--;
+
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                log.error("获取分布式锁失败, {}", e);
+            }
+        }
+
+        return locked;
+    }
+
+    /**
+     * @param key 锁
+     * @param requestId 锁标识
+     * @return 释放锁是否成功
+     */
+    public boolean unlockLua(String key, String requestId) {
+        if (null == key || null == requestId) {
+            return false;
+        }
+
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript();
+        // 用于解锁的lua脚本位置
+        redisScript.setScriptText("if redis.call('get',KEYS[1]) == ARGV[1] then return redis.call('del',KEYS[1]) else return 0 end");
+        redisScript.setResultType(Long.class);
+        // 没有指定序列化方式，默认使用上面配置的
+        Object result = redisTemplate.execute(redisScript, Arrays.asList(key), requestId);
+        return result.equals(Long.valueOf(1));
+    }
+```
+
 ### 参考文章
 * https://cloud.tencent.com/developer/article/1431873
