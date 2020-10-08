@@ -62,15 +62,6 @@
 * [SpringBoot Log4j2](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
 * [SpringBoot Swagger](spring-boot/springboot-note.md#swagger)
 * [SpringBoot实现定时任务的4中方式](spring-boot/springboot-scheduled-task.md)
-
-### SpringCloud
-> SpringCloud微服务系列
-* [Spring Cloud注册中心 - Eureka](spring-cloud/spring-cloud-eureka.md)
-* [Spring Cloud熔断器 - Hystrix](spring-cloud/spring-cloud-hystrix.md)
-
-> SpringBoot百问
-
-> SpringBoot实战技巧系列
 * [SpringBoot统一结果处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%A4%84%E7%90%86%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C)
 * [SpringBoot统一异常处理](https://github.com/zhonghuasheng/Spring-Boot/wiki/SpringBoot%E7%BB%9F%E4%B8%80%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)
 * [SpringBoot统计在线人数](https://github.com/zhonghuasheng/Tutorial/wiki/SpringBoot%E7%BB%9F%E8%AE%A1%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0)
@@ -78,3 +69,10 @@
 * [SpringBoot集成SSL，实现HTTP到HTTPS的自动跳转](/java/spring-boot/springboot-ssl.md)
 * [SpringBoot中使用Redis做页面缓存](https://github.com/zhonghuasheng/JAVA/commit/340d764e21902797630ea6a42136ec1fc909023b)
 * [SpringBoot + Redis Lua脚本实现分布式锁 + 解决电商超卖问题](https://github.com/zhonghuasheng/JAVA/blob/master/springboot/springboot-redis-lock/src/main/java/com/zhonghuasheng/redis/config/RedisRepository.java)
+* [SpringBoot启动后按顺序自动执行](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-basic/src/main/java/com/zhonghuasheng/basic/runner)
+
+### SpringCloud
+> SpringCloud微服务系列
+* [Spring Cloud注册中心 - Eureka](spring-cloud/spring-cloud-eureka.md)
+* [Spring Cloud熔断器 - Hystrix](spring-cloud/spring-cloud-hystrix.md)
+
