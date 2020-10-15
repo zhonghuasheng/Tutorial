@@ -72,6 +72,8 @@
 * [SpringBoot启动后按顺序自动执行](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-basic/src/main/java/com/zhonghuasheng/basic/runner)
 
 ### SpringCloud
+> 微服务基础知识
+* [服务注册与发现](spring-cloud/micro-service-register-discovery.md)
 > SpringCloud微服务系列
 * [Spring Cloud注册中心 - Eureka](spring-cloud/spring-cloud-eureka.md)
 * [Spring Cloud熔断器 - Hystrix](spring-cloud/spring-cloud-hystrix.md)
