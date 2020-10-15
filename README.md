@@ -45,6 +45,7 @@
 * `设计模式`: [23种设计模式](algorithm/设计模式.md)
 * `数据结构`: [数据结构系列](algorithm/数据结构.md)
 * `算法`: [算法系列](algorithm/algorithm.md)
+* `操作系统`: [操作系统](algorithm/system.md)
 
 ## 网络
 * `常见网络问题`: [常见网络问题系列](network/network.md)
@@ -86,6 +87,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-10-12.png)
+![](tutorial-2020-10-15.png)
 
 </center>
