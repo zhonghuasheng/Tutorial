@@ -45,6 +45,7 @@
 * `设计模式`: [23种设计模式](algorithm/设计模式.md)
 * `数据结构`: [数据结构系列](algorithm/数据结构.md)
 * `算法`: [算法系列](algorithm/algorithm.md)
+* `操作系统`: [操作系统](algorithm/system.md)
 
 ## 网络
 * `常见网络问题`: [常见网络问题系列](network/network.md)
@@ -63,6 +64,8 @@
 * [Java命名规范参考](http://note.youdao.com/noteshare?id=c0ca7331624eb2f19b06f623a1b832ae&sub=2F7223EB9D9E4072B60A1FB578BF0AFA)
 
 > `工具`
+* [Java诊断工具]
+    * [阿里JAVA诊断工具Arthas](tool/tools.md)
 * [API测试工具](tool/api-testing-tool.md)
 * [流量统计，网站分析](tool/common-tools.md)
 * [日志管理工具](tool/cronolog.md)
@@ -84,6 +87,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-09-03.png)
+![](tutorial-2020-10-15.png)
 
 </center>
