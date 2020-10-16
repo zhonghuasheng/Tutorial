@@ -60,5 +60,36 @@ RUNTIME 在运行时有效，注解不仅被保存到class文件中，jvm加载c
 这3个生命周期分别对应于：Java源文件 -> .class文件 -> 内存中的字节码
 ```
 
+* `@Inherited`
+
+@Inherited是一个标记注解，用来指定该注解可以被继承。使用@Inherited注解的Class类，表示这个注解可以被用于该Class类的子类。
+
+* `@Repeatable`
+
+@Repeatable注解是Java8新增的，解决了在方法，变量或者类上重复使用注解的问题
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Values {
+    Value[] value();
+}
+
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Repeatable(Values.class)
+public @interface Value {
+    String value() default "value";
+}
+
+public class AnnotationClass {
+
+    @Value("hello") // 这里通过反射获取方法的注解class是Values，而不是Value
+    @Value("world")
+    public void test(String var1, String var2) {
+        System.out.println(var1 + " " + var2);
+    }
+}
+```
+
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
