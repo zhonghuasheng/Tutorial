@@ -40,6 +40,7 @@ javadoc -d doc MyDocumented.java DocumentedTest.java
 * `@Target`
 
 @Target 注解用来指定一个注解的使用范围，即被 @Target 修饰的注解可以用在什么地方。@Target 注解有一个成员变量（value）用来设置适用目标，value 是 java.lang.annotation.ElementType 枚举类型的数组，下表为 ElementType 常用的枚举常量:
+```
 PACKAGE 用于包
 TYPE 用于类、接口（包括注解类型）或enum声明
 CONSTRUCTOR 用于构造方法
@@ -47,10 +48,17 @@ METHOD 用于方法
 FIELD 用于成员变量（包括枚举常量）
 LOCAL_VARIABLE 用于局部变量
 PARAMETER 用于类型参数（JDK1.8新增）
+```
 
 * `@Retention`
 
-
+@Retention用于描述注解的生命周期，也就是该注解被保留的时间长短。@Rentention注解中的成员变量value用来设置保留策略，value是java.lang.annotation.RententionPolicy枚举类型，RententionPolicy有3个枚举常量：
+```
+SOURCE 在源文件中有效，当Java文件编译成class文件的时候，注解被遗弃
+CLASS 在class文件中有效， 但jvm加载class文件时被遗弃，这是默认的生命周期
+RUNTIME 在运行时有效，注解不仅被保存到class文件中，jvm加载class文件之后，仍然存在
+这3个生命周期分别对应于：Java源文件 -> .class文件 -> 内存中的字节码
+```
 
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
