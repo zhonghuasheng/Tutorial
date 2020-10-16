@@ -39,7 +39,17 @@ javadoc -d doc MyDocumented.java DocumentedTest.java
 
 * `@Target`
 
-@Target 注解用来指定一个注解的使用范围，即被 @Target 修饰的注解可以用在什么地方。@Target 注解有一个成员变量（value）用来设置适用目标，value 是 java.lang.annotation.ElementType 枚举类型的数组，下表为 ElementType 常用的枚举常量
+@Target 注解用来指定一个注解的使用范围，即被 @Target 修饰的注解可以用在什么地方。@Target 注解有一个成员变量（value）用来设置适用目标，value 是 java.lang.annotation.ElementType 枚举类型的数组，下表为 ElementType 常用的枚举常量:
+PACKAGE 用于包
+TYPE 用于类、接口（包括注解类型）或enum声明
+CONSTRUCTOR 用于构造方法
+METHOD 用于方法
+FIELD 用于成员变量（包括枚举常量）
+LOCAL_VARIABLE 用于局部变量
+PARAMETER 用于类型参数（JDK1.8新增）
+
+* `@Retention`
+
 
 
 ### 参考文章
