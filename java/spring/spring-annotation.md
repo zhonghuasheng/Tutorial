@@ -91,5 +91,9 @@ public class AnnotationClass {
 }
 ```
 
+* `@Native`
+
+使用@Native注解修饰的成员变量，便是可以被本地代码引用
+
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
