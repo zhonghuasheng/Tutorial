@@ -276,5 +276,21 @@ public class AnnotationClass {
     }
     ```
 
+#### SpringCloud常用注解有哪些
+
+* SpringCloud
+    * @SpringBootApplication是Sprnig Boot项目的核心注解,目的是开启自动配置
+    * @EnableDiscoveryClient注解基于spring-cloud-common依赖，并且在classpath中实现
+    * @EnableEurekaClient注解基于spring-cloud-netflix依赖，只能在eureka中使用
+    * @EnableEurekaServer 把当前微服务标记为Eureka注册中心 接收其他微服务的注册
+    * @LoadBalanced:　　该注解写在配置RestTemplate的配置类方法上来启动ribbon负载均衡
+    * @EnableFeignClients:　　写在主程序上来支持feign
+    * @HystrixCommand（fallbackMethod=“你的方法”）
+    * @EnableCircuitBreaker :　　启用对Hystrix熔断机制的支持
+    * @FeignClient(value="服务名",fallbackFactory=实现FallbackFactory的类.class):　　实现服务降级
+    * @EnableHystrixDashboard: 　　加在主程序上启动服务监控
+    * @FeignClient（value=“服务名”）:　　写在接口上 来调用远程服务
+    * @EnableZuulProxy:　　写在主程序上启动zuul路由访问功能
+
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
