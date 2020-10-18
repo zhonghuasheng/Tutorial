@@ -135,6 +135,7 @@
 native是非java代码编写的，比如C,C++, 它们无法在java编译时生成字节码，即JVM获取不到native实现，只能通过系统指令去调用native方法,所以执行native时程序计数器值为空undefined。native方法由原生平台直接执行，native方法执行后会退出(栈帧pop)，方法退出返回到被调用的地方继续执行程序。
 * [介绍下cap理论](../architecture/CAP.md)
 * [Java, Spring, SpringBoot, SpringCloud常用注解](../java/spring/spring-annotation.md)
+* [这次彻底理解BIO，NIO，多路复用是什么](../architecture/io-multiplexing.md)
 
 * 网络IO是什么？
 ```
