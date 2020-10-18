@@ -98,18 +98,45 @@ public class AnnotationClass {
 #### Spring常用的注解有哪些
 
 * 声明bean的注解
-    * @Component 组件，没有明确的角色
-    * @Controller 在展示层使用，控制器的声明
-    * @RestController 在展示层使用，返回的是JSON格式的数据
-    * @Service 在业务逻辑层使用
-    * @Repository 在数据访问层使用
+    * @Component 组件，没有明确的角色。作用及范围：把对象加载到spring容器中，最基础的存在，很多的注解都是继承它的，只有一个属性值，默认值是“
+    * @Controller 在展示层使用，控制器的声明。作用及范围：作用在控制器上的注解，与Service一样，业务领域区分。可以返回string跳转jsp,ftl,html等模板页面，也可以返回实体对象
+    * @RestController 在展示层使用，返回的是JSON格式的数据。等同于@Controller + @ResponseBody
+    * @Service 在业务逻辑层使用。作用及范围：一般用于service层的注解，继承了Component组件，本质上一样，方便做业务范围区分而已。
+    * @Repository 在数据访问层使用。作用及范围：作用于dao层的注解，很多经常用JPA的同学都清楚这个东西，与Service本质上一样，业务领域上区别而已
+    ```
+    @Repository(value="userDao")注解是告诉Spring，让Spring创建一个名字叫“userDao”的UserDaoImpl实例。当Service需要使用Spring创建的名字叫“userDao”的UserDaoImpl实例时，就可以使用@Resource(name = "userDao")注解告诉Spring，Spring把创建好的userDao注入给Service即可。
+    ```
 * 注入bean的注解
-    * @Autowired 由Spring提供
-    * @Resource 由JSR-250提供
-    * @Inject 由JSR-330提供
+    * @Autowired 作用及范围：它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作，其实就是获取容器中的对象。通过@Autowired的使用来消除set,get方法。
+    ```
+    注意事项：
+    在使用@Autowired时，首先在容器中查询对应类型的bean
+    如果查询结果刚好为一个，就将该bean装配给@Autowired指定的数据
+    如果查询的结果不止一个，那么@Autowired会根据名称来查找。
+    如果查询的结果为空，那么会抛出异常。解决方法时，使用required=false
+    ```
+    * @Resource 由JSR-250提供，根据名称进行自动装配的，一般会指定一个name属性，可以作用在变量、setter方法上。
+    * @Inject 由JSR-330提供需要导入javax.inject.Inject;实现注入，根据类型byType进行自动装配的，如果需要按名称进行装配，则需要配合@Named，可以作用在变量、setter方法、构造函数上。很少用。
 * java配置类相关注解
-    * @Configuration 声明当前类为配置类，相当于xml形式的Spring配置
-    * @Bean 注解在方法上，声明当前方法的返回值为一个bean, 替代xml的方式
+    * @Configuration 声明当前类为配置类，相当于xml形式的Spring配置。用于定义配置类，可替换xml配置文件，被注解的类内部包含有一个或多个被@Bean注解的方法
+    * @Bean 注解在方法上，声明当前方法的返回值为一个bean, 替代xml的方式。@Bean：Spring的@Bean注解用于告诉方法，产生一个Bean对象，然后这个Bean对象交给Spring管理。产生这个Bean对象的方法Spring只会调用一次，随后这个Spring将会将这个Bean对象放在自己的IOC容器中。SpringIOC 容器管理一个或者多个bean，这些bean都需要在@Configuration注解下进行创建，在一个方法上使用@Bean注解就表明这个方法需要交给Spring进行管理。
+    ```
+    @Configuration
+    public class AppConfig {
+        // 未指定bean 的名称，默认采用的是 "方法名" + "首字母小写"的配置方式
+        @Bean
+        public MyBean myBean(){
+            return new MyBean();
+        }
+    }
+
+    public class MyBean {
+
+        public MyBean(){
+            System.out.println("MyBean Initializing");
+        }
+    }
+    ```
         * @Scope注解设置Spring容器如何新建Bean实例
             * Singleton 默认模式，单例，一个Spring容器中只有一个bean实例
             * Protetype 每次调用新建一个bean
@@ -118,8 +145,7 @@ public class AnnotationClass {
             * GlobalSession（给每个global http session新建一个bean实例）
         * @PostConstruct由JSR-250提供，在构造函数执行完之后执行，等价于xml中bean配置的的initMethod
         * @PreDestory由JSR-250提供，在Bean销毁之前执行，等价于xml中bean配置的destroyMethod
-    * @Configuration 声明当前类为配置类，其中内部组合了@Component注解，表明这个类是一个bean
-    * @ComponentScan用于对Component进行扫描，替代xml的方式
+     * @ComponentScan用于对Component进行扫描，替代xml的方式。作用及范围：扫描当前类下面的所有对象，为什么说Component是最基础的东西，就是要给这个注解扫描，非常巧妙的设计，可以扫描多个包。
     * @WishlyConfiguration为@Configuration与@ComponentScan的组合注解，用的很少
 * 切面（AOP）相关注解
     * @Aspect声明一个切面（类上），使用@After，@Before，@Around定义建言（advice），可直接将拦截规则（切点）作为参数。在java配置类中使用@EnableAspectJAutoProxy注解开启Spring对AspectJ代理的支持（类上）
@@ -129,28 +155,126 @@ public class AnnotationClass {
         * @PointCut声明切点
 * 环境切换
     * @Profile通过设定Environment的ActiveProfiles来设定当前context需要使用的配置环境（类或者方法上）
+    ```java
+    @PropertySource("classpath:/user.properties")
+    @Configuration
+    public class MainConfigOfProfile implements EmbeddedValueResolverAware{
+
+        @Profile("test")
+        @Bean("testUser")
+        public User testUser()  {
+        User a =new User();
+            return a;
+        }
+
+        @Profile("dev")
+        @Bean("devUser")
+        public User devUser()  {
+        User a =new User();
+            return a;
+        }
+    }
+    ```
     * @Conditional使用此注解定义激活bean的条件，通过实现Condition接口，并重写matches方法，从而决定该bean是否被实例化（方法上）
+    ```java
+    @Configuration
+    public class BeanConfig {
+
+        //只有一个类时，大括号可以省略
+        //如果WindowsCondition的实现方法返回true，则注入这个bean    
+        @Conditional({WindowsCondition.class})
+        @Bean(name = "bill")
+        public Window window(){
+            return new Window();
+        }
+
+        //如果LinuxCondition的实现方法返回true，则注入这个bean
+        @Conditional({LinuxCondition.class})
+        @Bean("linux")
+        public Linex linux(){
+            return new Linex();
+        }
+    }
+    ```
 * 配置注解
     * @Value注解
-        * 普通字符串 `@Value("xxxx")`
-        * 操作系统属性 `@Value("#{systemProperties['os.name']}")`
-        * 注入表达式 `@Value("#{T(java.lang.Math).random() * 100}")`
-        * 注入bean属性 `@Value("#{xxxClass.name})`
-        * 注入文件资源
         ```java
-        @Value("classpath:com/zhonghausheng/value/test.txt")
-        Resource file;
+        @Value("normal")
+        private String normal; // 注入普通字符串
+
+        @Value("#{systemProperties['os.name']}")
+        private String systemPropertiesName; // 注入操作系统属性
+
+        @Value("#{ T(java.lang.Math).random() * 100.0 }")
+        private double randomNumber; //注入表达式结果
+
+        @Value("#{beanInject.another}")
+        private String fromAnotherBean; // 注入其他Bean属性：注入beanInject对象的属性another，类具体定义见下面
+
+        @Value("classpath:com/hry/spring/configinject/config.txt")
+        private Resource resourceFile; // 注入文件资源
+
+        @Value("http://www.baidu.com")
+        private Resource testUrl; // 注入URL资源
         ```
-        * 注入url
-        ```java
-        @Value("http://")
-        Resource url;
-        ```
-        * 配置文件
-        ```java
-        @Value("${book.name}")
-        String bookName;
-        ```
-    * @PropertySource加载配置文件（类上），`@PropertySource("classpath:com/zhonghuasheng/value/test.properties")`
+    * @PropertySource加载配置文件（类上）
+    ```java
+    @PropertySource(value = {"classpath:test.properties"})
+    @Component
+    @ConfigurationProperties(prefix = "test")
+    public class Test {
+        private Integer id;
+        private String lastName;
+    }
+    ```
+
+* 异步相关
+    * @EnableAsync 配置在类上，开启对异步任务的支持
+    * @Async在实际执行的bean方法使用该注解来申明其是一个异步任务（方法上或类上的所有方法都将异步，需要@EnableAsync开启异步任务）
+* 定时任务
+    * @EnableScheduling 配置在类上，开启计划任务的支持
+    * @Scheduled声明这是一个任务，包括cron, fixDelay, fixRate等类型，用于方法上，需要先开启计划任务的支持
+* Enable*注解
+    * @EnableAspectJAutoProxy开启对AspectJ自动代理的支持
+    * @EnableAsync开启异步方法的支持
+    * @EnableScheduling开启计划任务的支持
+    * @EnableWebMvc开启Web MVC的配置支持
+    * @EnableConfigurationProperties开启对@ConfigurationProperties注解配置Bean的支持
+    * @EnableJpaRepositories开启对SpringData JPA Repository的支持
+    * @EnableTransactionmanagement开启注解式事务的支持
+    * @EnableCaching开启注解式的缓存支持
+* 持久层注解
+    * @TableField(value="数据表字段", exist=true/false) 表示该属性为数据库表字段
+    * @TableName：数据库表相关
+    * @TableId：表主键标识
+    * @JsonIgnore：作用是json序列化时将Java bean中的一些属性忽略掉,序列化和反序列化都受影响
+    * @JsonProperty用于将参数中的字段转换为DTO的字段
+* 其他注解
+    * @CrossOrigin用于class和method上用来支持跨域请求
+    * @ExceptionHandler用于方法级别，声明对Exception的处理逻辑
+    * @ControllerAdvice全局异常处理，全局数据绑定，全局数据预处理
+    ```java
+    @ControllerAdvice
+    public class MyGlobalExceptionHandler {
+        @ExceptionHandler(Exception.class)
+        public ModelAndView customException(Exception e) {
+            ModelAndView mv = new ModelAndView();
+            mv.addObject("message", e.getMessage());
+            mv.setViewName("error");
+            return mv;
+        }
+    }
+
+    @ControllerAdvice
+    public class MyGlobalExceptionHandler {
+        @ModelAttribute(name = "md")
+        public Map<String,Object> mydata() {
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("gender", "女");
+            return map;
+        }
+    }
+    ```
+
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
