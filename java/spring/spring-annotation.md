@@ -95,5 +95,62 @@ public class AnnotationClass {
 
 使用@Native注解修饰的成员变量，便是可以被本地代码引用
 
+#### Spring常用的注解有哪些
+
+* 声明bean的注解
+    * @Component 组件，没有明确的角色
+    * @Controller 在展示层使用，控制器的声明
+    * @RestController 在展示层使用，返回的是JSON格式的数据
+    * @Service 在业务逻辑层使用
+    * @Repository 在数据访问层使用
+* 注入bean的注解
+    * @Autowired 由Spring提供
+    * @Resource 由JSR-250提供
+    * @Inject 由JSR-330提供
+* java配置类相关注解
+    * @Configuration 声明当前类为配置类，相当于xml形式的Spring配置
+    * @Bean 注解在方法上，声明当前方法的返回值为一个bean, 替代xml的方式
+        * @Scope注解设置Spring容器如何新建Bean实例
+            * Singleton 默认模式，单例，一个Spring容器中只有一个bean实例
+            * Protetype 每次调用新建一个bean
+            * Request（web项目中，给每个http request新建一个bean）
+            * Session（web项目中，给每个http session新建一个bean）
+            * GlobalSession（给每个global http session新建一个bean实例）
+        * @PostConstruct由JSR-250提供，在构造函数执行完之后执行，等价于xml中bean配置的的initMethod
+        * @PreDestory由JSR-250提供，在Bean销毁之前执行，等价于xml中bean配置的destroyMethod
+    * @Configuration 声明当前类为配置类，其中内部组合了@Component注解，表明这个类是一个bean
+    * @ComponentScan用于对Component进行扫描，替代xml的方式
+    * @WishlyConfiguration为@Configuration与@ComponentScan的组合注解，用的很少
+* 切面（AOP）相关注解
+    * @Aspect声明一个切面（类上），使用@After，@Before，@Around定义建言（advice），可直接将拦截规则（切点）作为参数。在java配置类中使用@EnableAspectJAutoProxy注解开启Spring对AspectJ代理的支持（类上）
+        * @After在方法执行之后执行（方法上）
+        * @Before在方法执行前执行（方法上）
+        * @Around在方法执行之前与之后执行（方法上）
+        * @PointCut声明切点
+* 环境切换
+    * @Profile通过设定Environment的ActiveProfiles来设定当前context需要使用的配置环境（类或者方法上）
+    * @Conditional使用此注解定义激活bean的条件，通过实现Condition接口，并重写matches方法，从而决定该bean是否被实例化（方法上）
+* 配置注解
+    * @Value注解
+        * 普通字符串 `@Value("xxxx")`
+        * 操作系统属性 `@Value("#{systemProperties['os.name']}")`
+        * 注入表达式 `@Value("#{T(java.lang.Math).random() * 100}")`
+        * 注入bean属性 `@Value("#{xxxClass.name})`
+        * 注入文件资源
+        ```java
+        @Value("classpath:com/zhonghausheng/value/test.txt")
+        Resource file;
+        ```
+        * 注入url
+        ```java
+        @Value("http://")
+        Resource url;
+        ```
+        * 配置文件
+        ```java
+        @Value("${book.name}")
+        String bookName;
+        ```
+    * @PropertySource加载配置文件（类上），`@PropertySource("classpath:com/zhonghuasheng/value/test.properties")`
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
