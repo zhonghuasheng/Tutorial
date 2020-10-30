@@ -4,6 +4,10 @@
 * 如何跟踪业务的处理顺序和结果？
 * 微服务时代 运维监控是难点
 
+* [Spring Cloud架构的各个组件的原理分析](http://note.youdao.com/noteshare?id=fb41aeb44300dc2f82b230b16f4b51f9&sub=393903C6584B4367A5038703D0D212B2)
+```
+文中讲了Doubbo, Spring, SpringBoot, SpringCloud的发展，及SpringBoot/Cloud产生的原因，SpringCloud各个组件
+```
 * [Spring Cloud注册中心 - Eureka](spring-cloud-eureka.md)
 * [Spring Cloud熔断器 - Hystrix](spring-cloud-hystrix.md)
 

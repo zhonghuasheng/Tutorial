@@ -331,6 +331,18 @@ for(0->100) {
 | GEO | 数据类型是zset | 存储地理位置信息，并提供计算距离等操作 | 微信摇一摇查看附近好友 |
 | Bitmap | 位图 | 数据量很大的时候节省存储内存，数据量小了不节省 | 1. 设置用户的状态<br>2. BitMap解决海量数据寻找重复、判断个别元素是否在 |
 
+* String 简单动态字符串 Simple Dynamic String, SDS
+```
+Redis没有直接使用C语言的传统字符串表示，而是自己构建了一种名为简单动态字符串（Simple Dynamic String, SDS）的抽象类型，并将SDS用作Redis的默认字符串表示。
+每个sds.h/sdshdr结构表示一个SDS值：
+struct sdshdr {
+  int len; // 记录buf数组中已经使用的字节数量
+  int free; // 记录buf数组中未使用字节的数量
+  char buf[]; // 字节数组，用于保存字符串。SDS遵循C字符串以空字符结尾的惯例
+}
+```
+
+
 ### Redis持久化
 * 持久化的作用：redis所有数据保存在内存中，对数据的更新将异步地保存到磁盘上。
 * 主流数据库持久化实现方式：快照（MySQL Dump/Redis RDB），写日志(MySQL Binlog/Redis AOF)
