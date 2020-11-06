@@ -137,6 +137,9 @@ native是非java代码编写的，比如C,C++, 它们无法在java编译时生�
 * [Java, Spring, SpringBoot, SpringCloud常用注解](../java/spring/spring-annotation.md)
 * [这次彻底理解BIO，NIO，多路复用是什么](../architecture/io-multiplexing.md)
 
+### 计算机
+* 为什么CPU的缓存还是那么小？
+
 * 网络IO是什么？
 ```
 可以理解为socket和fd(file descriptor文件描述符)

@@ -8,6 +8,7 @@ rm -f $(date -d last-day +%Y-%m-%d.png)
 wget http://assets.processon.com/chart_image/5c9867cde4b0afc7441ea764.png
 mv 5c9867cde4b0afc7441ea764.png $TODAY_PNG
 cd /root/luke/ci/Tutorial
+git checkout develop
 git pull --all
 rm -f $YESTERDAY_PNG
 cp /root/luke/ci/$TODAY_PNG /root/luke/ci/Tutorial/
