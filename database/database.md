@@ -77,4 +77,18 @@
 * [分库分表 如何做到永不迁移数据和避免热点](https://github.com/zhonghuasheng/Tutorial/wiki/%E5%88%86%E5%BA%93%E5%88%86%E8%A1%A8-%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E6%B0%B8%E4%B8%8D%E8%BF%81%E7%A7%BB%E6%95%B0%E6%8D%AE%E5%92%8C%E9%81%BF%E5%85%8D%E7%83%AD%E7%82%B9)
 
 ### 百问
-> Select count(1) 和count(col),count(*)区别
+1. Select count(1) 和count(col),count(*)区别
+2. 千万级别的数据，如何更改表字段长度？
+```
+今天遇到一个场景，有一个表tableA创建时间比较长了，现在有3亿的数据，其中有个字段fieldA是varchar(255)，现在呢有个新需求，要求A中能存500个长度的数据。直接改fieldA表字段，肯定不行，预计这个表修改需要执行1个多小时。我试了下，弄张新表tableB，然后修改fieldA字段长度，然后同步tableA的数据到tableB，估计也得需要1个小时。
+create tableB like tableA; -> 改字段长度
+insert into tableB select * from tableA; -> 改tableA的名字，然后把tableB改成tableA
+你不可能在线上直接改啊(为什么？因为mysql DDL会锁表)，只能改业务代码来实现，采用的方案是另起一张新表一个id字段指向原表的id，然后加个A字段在新表，然后做一些逻辑处理。可能你感觉到这个方案不好，我也觉得不好，但在这种业务中是最快的，互联网项目往往讲究实用。解决完之后，我并没有就此放过，而是搜了一把网上的解决方案。
+我们分析下直接在原表中改字段长度对应的DDL执行步骤：
+1. 按照原始表的表结构和DDL语句，新建一个不可见的临时表(tmp_table)
+2. 在原始表上加write lock，阻塞所有更新操作
+3. 执行insert into tmp_table select * from origin_table
+4. rename原始表和tmp_table，最后drop原始表
+5. 释放write lock
+所以问题就在锁表，如果不锁表，就好啦，其实已经有这样的工具啦 -> MySQL 8.0 Online DDL和pt-osc、gh-ost，其基本思路都是通过增量的数据迁移来解决全量同步时对服务器性能的影响，缺点是更耗时。
+```
