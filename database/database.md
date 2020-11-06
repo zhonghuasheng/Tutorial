@@ -91,4 +91,5 @@ insert into tableB select * from tableA; -> 改tableA的名字，然后把tableB
 4. rename原始表和tmp_table，最后drop原始表
 5. 释放write lock
 所以问题就在锁表，如果不锁表，就好啦，其实已经有这样的工具啦 -> MySQL 8.0 Online DDL和pt-osc、gh-ost，其基本思路都是通过增量的数据迁移来解决全量同步时对服务器性能的影响，缺点是更耗时。
+PS: 阿里云RDS支持Online DDL
 ```
