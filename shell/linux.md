@@ -150,6 +150,11 @@ awk '/keywords/{print $5,$6}' access_log* | head -10 // 查找包含keywords的�
 * 现在还不是在编辑模式,需要在键盘上输入i键进入
 * 比如删除第六行,将光标移至要删除的第六行,连续输入两次小写的d,即dd
 
+### CentOS查看实时网络带宽占用
+* 安装iftop， yum install iftop
+* 查看网卡 ifconfig
+* iftop -i eth0
+
 ### 百问
 > 65535怎么来的
 计算机是按照二进制储存数据的，一般用 unsigned int 这种数据类型来储存正整数
