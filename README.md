@@ -89,6 +89,6 @@
 <h2 align="center">技术栈</h2>
 <center>
 
-![](tutorial-2020-10-31.png)
+![](tool/tutorial-2020-10-31.png)
 
 </center>
