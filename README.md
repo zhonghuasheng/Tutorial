@@ -2,37 +2,37 @@
 
 本项目为个人学习之总结，内容大多来源网上、书籍、视频，若引用不当，麻烦告知，我定删除。喜欢的话可以`Star`下，生活不易，希望对读者有帮助。祝好！！！
 
-# 目录
+### 目录
 
 | 英语 | Java | Spring生态 | 中间件 | 数据库 | 服务器 | 架构设计 | 内功 | 网络 | 程序人生 |
 |:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语">英语</a>|<a href="#Java">Basic</a><br><a href="#Java">JVM</a><br><a href="#Java">Web</a><br>|<a href="#Java">Spring</a><br><a href="#Java">Spring Boot</a><br><a href="#Java">Spring Cloud</a>|<a href="#中间件">Keepalived</a><br><a href="#中间件">ActiveMQ</a><br><a href="#中间件">RabbitMQ</a><br><a href="#中间件">Netty</a><br><a href="#中间件">Mybatis</a><br><a href="#中间件">Redis</a>|<a href="#数据库">MySQL</a><br><a href="#数据库">Postgresql</a><br><a href="#数据库">Mongodb</a>|<a href="#服务器">Tomcat</a><br><a href="#服务器">Nginx</a><br><a href="#服务器">Linux</a>|<a href="#架构设计">原则</a><br><a href="#架构设计">安全</a><br><a href="#架构设计">高可用</a><br><a href="#架构设计">扩展性</a><br><a href="#架构设计">伸缩性</a><br><a href="#架构设计">性能</a><br>|<a href="#内功">数据结构</a><br><a href="#内功">算法</a><br><a href="#内功">设计模式</a>|<a href="#网络">网络</a>|<a href="#程序人生">软文</a><br><a href="#程序人生">规范</a><br><a href="#程序人生">工具</a><br><a href="#程序人生">面试集锦</a><br><a href="#程序人生">实战训练</a>|
+|<a href="#英语" h2>英语</a>|<a href="#Java">Basic</a><br><a href="#Java">JVM</a><br><a href="#Java">Web</a><br>|<a href="#Java">Spring</a><br><a href="#Java">Spring Boot</a><br><a href="#Java">Spring Cloud</a>|<a href="#中间件">Keepalived</a><br><a href="#中间件">ActiveMQ</a><br><a href="#中间件">RabbitMQ</a><br><a href="#中间件">Netty</a><br><a href="#中间件">Mybatis</a><br><a href="#中间件">Redis</a>|<a href="#数据库">MySQL</a><br><a href="#数据库">Postgresql</a><br><a href="#数据库">Mongodb</a>|<a href="#服务器">Tomcat</a><br><a href="#服务器">Nginx</a><br><a href="#服务器">Linux</a>|<a href="#架构设计">原则</a><br><a href="#架构设计">安全</a><br><a href="#架构设计">高可用</a><br><a href="#架构设计">扩展性</a><br><a href="#架构设计">伸缩性</a><br><a href="#架构设计">性能</a><br>|<a href="#内功">数据结构</a><br><a href="#内功">算法</a><br><a href="#内功">设计模式</a>|<a href="#网络">网络</a>|<a href="#程序人生">软文</a><br><a href="#程序人生">规范</a><br><a href="#程序人生">工具</a><br><a href="#程序人生">面试集锦</a><br><a href="#程序人生">实战训练</a>|
 
-## 英语
+### 英语
 * [计算机行业常用英语积累](tool/english.md)
 
-## Java
+### Java
 * `JavaCore`: &emsp;[Java基础](java/basic/java-basic.md)
 &emsp;&emsp;[JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)&emsp;&emsp;[Java集合](java/basic/java-collection.md)&emsp;&emsp;[Java多线程系列](java/basic/java-thread.md)&emsp;&emsp;[JUC系列](java/basic/java-thread-juc.md)&emsp;&emsp;[Java IO基础](java/basic/java-io-nio.md)
 * `Java -VM`: &emsp;[Java虚拟机系列](java/jvm/深入理解Java虚拟机.md)&emsp;[JVM虚拟机监控及性能调优系列](java/jvm/JVM虚拟机监控及性能调优.md)
 * `Java-Web`: &emsp;[Servlet基础](java/javaweb/servlet.md)&emsp;[JSP基础](java/javaweb/jsp.md)
 * `Spring X`: &emsp;[Spring4基础知识系列](java/spring/spring.md#Spring)&emsp;[SpringMVC基础知识系列](java/spring/spring.md#SpringMVC)&emsp;[SpringBoot基础知识系列](java/spring/spring.md#SpringBoot)
 
-## 中间件
+### 中间件
 * `负载均衡`: &emsp;[Keepalived系列](plugins/keepalived.md)
 * `消息通信`: &emsp;[消息通信基础](http://note.youdao.com/noteshare?id=30a11e46aaef3f00d2ecfb84692ca294&sub=wcp157828038663078)&emsp;[ActiveMQ系列](plugins/activemq.md)&emsp;[RabbitMQ系列](plugins/rabbitmq.md) &emsp;[Netty系列](plugins/netty.md)
 * `数据访问`: &emsp;[MyBatis系列](plugins/mybatis.md)
 * `数据缓存`: &emsp;[Redis系列](plugins/redis.md)
 * `搜索引擎`: &emsp;[ELK](elasticsearch.md)
 
-## 数据库
+### 数据库
 * `关系型数据库`: &emsp;[数据库理论基础](plugins/database/database.md)&emsp;[MySQL](plugins/mysql.md)&emsp;[Postgresql](plugins/postgresql.md)
 * `非关系型数据库`: &emsp;[Mongodb学习笔记](plugins/mongodb.md)
 
-## 服务器
+### 服务器
 * [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)&emsp;[Linux系统常用命令](tool/shell/linux.md)
 
-## 架构设计
+### 架构设计
 * `设计原则`: &emsp;[系统设计注意事项](system/architecture/系统设计注意事项.md)
 * `系统安全`: &emsp;[系统架构安全设计](system/architecture/系统架构安全设计.md)
 * `高可用性`: &emsp;[系统架构高可用设计](system/architecture/系统架构高可用设计.md)
@@ -41,13 +41,13 @@
 * `系统性能`: &emsp;[系统架构性能设计](system/architecture/系统架构性能设计.md)
 * `其他事项`: &emsp;[系统架构设计其他注意事项](system/architecture/系统架构设计其他注意事项.md)
 
-## 内功
+### 内功
 * `设计模式`: [23种设计模式](system/algorithm/设计模式.md)
 * `数据结构`: [数据结构系列](system/algorithm/数据结构.md)
 * `算法`: [算法系列](system/algorithm/algorithm.md)
 * `操作系统`: [操作系统](system/algorithm/system.md)
 
-## 网络
+### 网络
 * `常见网络问题`: [常见网络问题系列](system/network/network.md)
 
 ### 程序人生
