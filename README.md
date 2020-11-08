@@ -1,8 +1,6 @@
 **`声明`**
 
-本文档为个人学习的总结，学习的资料大多来源网上、书籍、视频，若引用不当，麻烦告知，我定删除。Issues中记录的为一些面试题。喜欢的话可以`Star`下，生活不易，希望对读者有帮助。祝好！！！
-第一阶段，我是以梳理个人知识体系为目标，积累了很多的学习笔记，差不多3年吧。后期慢慢发现，以前整理的笔记看的次数不多，并且质量不高。
-第二阶段，我是以打造比较全的知识点面试为主，会把之前的笔记重新梳理一遍，在其中加入常见的面试题和个人的思考
+本项目为个人学习之总结，内容大多来源网上、书籍、视频，若引用不当，麻烦告知，我定删除。喜欢的话可以`Star`下，生活不易，希望对读者有帮助。祝好！！！
 
 # 目录
 
@@ -28,29 +26,29 @@
 * `搜索引擎`: &emsp;[ELK](elasticsearch.md)
 
 ## 数据库
-* `关系型数据库`: &emsp;[数据库理论基础](database/database.md)&emsp;[MySQL](database/mysql.md)&emsp;[Postgresql](database/postgresql.md)
-* `非关系型数据库`: &emsp;[Mongodb学习笔记](database/mongodb.md)
+* `关系型数据库`: &emsp;[数据库理论基础](plugins/database/database.md)&emsp;[MySQL](plugins/mysql.md)&emsp;[Postgresql](plugins/postgresql.md)
+* `非关系型数据库`: &emsp;[Mongodb学习笔记](plugins/mongodb.md)
 
 ## 服务器
-* [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)&emsp;[Linux系统常用命令](shell/linux.md)
+* [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)&emsp;[Linux系统常用命令](tool/shell/linux.md)
 
 ## 架构设计
-* `设计原则`: &emsp;[系统设计注意事项](architecture/系统设计注意事项.md)
-* `系统安全`: &emsp;[系统架构安全设计](architecture/系统架构安全设计.md)
-* `高可用性`: &emsp;[系统架构高可用设计](architecture/系统架构高可用设计.md)
-* `高扩展性`: &emsp;[系统架构扩展性设计](architecture/系统架构扩展性设计.md)
-* `高伸缩性`: &emsp;[系统架构伸缩性设计](architecture/系统架构伸缩性设计.md)
-* `系统性能`: &emsp;[系统架构性能设计](architecture/系统架构性能设计.md)
-* `其他事项`: &emsp;[系统架构设计其他注意事项](architecture/系统架构设计其他注意事项.md)
+* `设计原则`: &emsp;[系统设计注意事项](system/architecture/系统设计注意事项.md)
+* `系统安全`: &emsp;[系统架构安全设计](system/architecture/系统架构安全设计.md)
+* `高可用性`: &emsp;[系统架构高可用设计](system/architecture/系统架构高可用设计.md)
+* `高扩展性`: &emsp;[系统架构扩展性设计](system/architecture/系统架构扩展性设计.md)
+* `高伸缩性`: &emsp;[系统架构伸缩性设计](system/architecture/系统架构伸缩性设计.md)
+* `系统性能`: &emsp;[系统架构性能设计](system/architecture/系统架构性能设计.md)
+* `其他事项`: &emsp;[系统架构设计其他注意事项](system/architecture/系统架构设计其他注意事项.md)
 
 ## 内功
-* `设计模式`: [23种设计模式](algorithm/设计模式.md)
-* `数据结构`: [数据结构系列](algorithm/数据结构.md)
-* `算法`: [算法系列](algorithm/algorithm.md)
-* `操作系统`: [操作系统](algorithm/system.md)
+* `设计模式`: [23种设计模式](system/algorithm/设计模式.md)
+* `数据结构`: [数据结构系列](system/algorithm/数据结构.md)
+* `算法`: [算法系列](system/algorithm/algorithm.md)
+* `操作系统`: [操作系统](system/algorithm/system.md)
 
 ## 网络
-* `常见网络问题`: [常见网络问题系列](network/network.md)
+* `常见网络问题`: [常见网络问题系列](system/network/network.md)
 
 ### 程序人生
 > `软文`
