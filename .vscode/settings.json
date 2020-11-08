@@ -1,9 +1,0 @@
-// Place your settings in this file to overwrite default and user settings.
-{
-"editor.renderWhitespace": true,
-"editor.tabSize":4,
-"editor.folding": true,
-"diffEditor.ignoreTrimWhitespace": true,
-"files.trimTrailingWhitespace": true,
-"editor.insertSpaces": true
-}
