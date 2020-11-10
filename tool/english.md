@@ -110,3 +110,4 @@
     * Availability：可用性。意思是只要收到用户的请求，服务器就必须给出回应。
 * Inherited: 继承，是java 1.5之后4个元注解中的一个
 * c10k问题 指的是服务器同时支持成千上万个客户端的问题,也就是concurrent 10000 connection(这也是c10k这个名字的由来)
+* K12 教育类专用名词 Kindergarten through twelfth grade 是学前教育至高中教育的缩写，现在普遍被用来代指基础教育
