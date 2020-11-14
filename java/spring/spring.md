@@ -19,6 +19,7 @@
 * [Spring Condition](http://note.youdao.com/noteshare?id=cd966fbce76b5b57ee1afee0a2e7f388&sub=wcp1582507730857453)
 * [Spring组合注解](http://note.youdao.com/noteshare?id=6f847f37be5b0d7b42132ea9f069c7d5&sub=wcp1582507747315363)
 * [Spring @Enable*注解](http://note.youdao.com/noteshare?id=879cd184830f9501821ca6073c4b71a9&sub=wcp1582507762687224)
+* [Spring 常用注解总结](spring-annotation.md)
 
 ### SpringMVC
 * [SpringMVC初始化无web.xml项目](http://note.youdao.com/noteshare?id=205b607e70b9b0f0b9e131d0cce812fe&sub=wcp1582775530722662)
