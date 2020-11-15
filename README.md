@@ -52,6 +52,7 @@
 
 ### 程序人生
 > `软文`
+* [工作经历 - 记录自己的成长](tool/coding-life.md#记录自己的成长)
 * [最好的建议](tool/coding-life.md/#最好的建议)
 * [正视自己的价值](tool/coding-life.md/#正视自己的价值)
 * [新工程师要干的五件事情](tool/coding-life.md/#新工程师要干的五件事情)
