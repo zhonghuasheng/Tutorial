@@ -1,3 +1,6 @@
+### 学习笔记
+* [Zero-Copy的前世今生](http://note.youdao.com/noteshare?id=872d76d04ec285d105c3d31d68dbcc00&sub=FF49E845C211478B9777CBBAEFA6A753)
+
 * 清空文件 sudo sh -c "echo '' > a.txt"
 * 重命名 mv folderAName newFolderName
 * 创建软链 ln -s sourcefile targetfile
