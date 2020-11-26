@@ -112,3 +112,4 @@
 * c10k问题 指的是服务器同时支持成千上万个客户端的问题,也就是concurrent 10000 connection(这也是c10k这个名字的由来)
 * K12 教育类专用名词 Kindergarten through twelfth grade 是学前教育至高中教育的缩写，现在普遍被用来代指基础教育
 * WAL Write-Ahead Logging MYSQL中的WAL技术，强调的关键点是先写日志，再写磁盘
+* I dig a bit into the problem and here is what I found out so far.
