@@ -83,7 +83,7 @@
 * fair 合理的，公正的
 * reentrant 可重入的
 * AQS AbstractQueuedSynchronizer类，是Java中独占锁和共享锁的公共父类，锁的许多公共方法都是在这个类中实现
-* DMA: Direct Memory Access 直接存储器访问。他的作用就是不需要经过CPU进行数据传输
+* DMA: Direct Memory Access 直接存储器访问。是一种硬件设备绕开CPU独立直接访问内存的机制。他的作用就是不需要经过CPU进行数据传输，减少了CPU资源的浪费。
 * sandboxie 沙箱机制：沙箱是一种虚拟系统程序，沙箱提供的环境相对于每个运行的程序都是独立的，而且不会对现有系统产生影响。Docker就是使用了沙箱机制，相互之间不会有任何接口（类似iphone的app），更重要的是容器性能开销极低。
 * VO（View Object）：视图对象，用于展示层，它的作用是把某个指定页面（或组件）的所有数据封装起来。
 * DTO（Data Transfer Object）：数据传输对象，用于展示层与服务层之间的数据传输对象, Controller中接收的对象就是DTO

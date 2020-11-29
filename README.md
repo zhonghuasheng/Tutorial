@@ -45,7 +45,7 @@
 * `设计模式`: [23种设计模式](system/algorithm/设计模式.md)
 * `数据结构`: [数据结构系列](system/algorithm/数据结构.md)
 * `算法`: [算法系列](system/algorithm/algorithm.md)
-* `操作系统`: [操作系统](system/algorithm/system.md)
+* `操作系统`: [操作系统](tool/shell/linux.md)
 
 ### 网络
 * `常见网络问题`: [常见网络问题系列](system/network/network.md)
