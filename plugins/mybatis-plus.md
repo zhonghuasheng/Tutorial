@@ -1,5 +1,7 @@
 ## 目录
 * [MyBatisPlus - Active Record](#MyBatisPlus活动记录ActiveRecord)
+* [MyBatisPlus -  实现多数据源 - springboot-mybatisplus-dynaminc-datasource](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
+    * 参考文章 https://baomidou.com/guide/dynamic-datasource.html
 
 ### MyBatisPlus活动记录ActiveRecord
 * Active Record(活动记录)，是一种领域模型，特点是一个模型类对应关系型数据库中的一个表，而模型类的一个实例对应表中的一行记录。
