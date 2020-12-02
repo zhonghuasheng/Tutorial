@@ -1,6 +1,6 @@
 ## 目录
 * [MyBatisPlus - Active Record](#MyBatisPlus活动记录ActiveRecord)
-* [MyBatisPlus -  实现多数据源 - springboot-mybatisplus-dynaminc-datasource](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
+* [MyBatisPlus - 实现多数据源 - springboot-mybatisplus-dynaminc-datasource](https://github.com/zhonghuasheng/JAVA/tree/master/springboot)
     * 参考文章 https://baomidou.com/guide/dynamic-datasource.html
 
 ### MyBatisPlus活动记录ActiveRecord
