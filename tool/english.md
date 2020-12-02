@@ -113,3 +113,4 @@
 * K12 教育类专用名词 Kindergarten through twelfth grade 是学前教育至高中教育的缩写，现在普遍被用来代指基础教育
 * WAL Write-Ahead Logging MYSQL中的WAL技术，强调的关键点是先写日志，再写磁盘
 * I dig a bit into the problem and here is what I found out so far.
+* GA General Availability 正式发布版本，在国外都是用GA来说明release的版本
