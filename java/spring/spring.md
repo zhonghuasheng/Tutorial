@@ -71,7 +71,8 @@
 * [SpringBoot中使用Redis做页面缓存](https://github.com/zhonghuasheng/JAVA/commit/340d764e21902797630ea6a42136ec1fc909023b)
 * [SpringBoot + Redis Lua脚本实现分布式锁 + 解决电商超卖问题](https://github.com/zhonghuasheng/JAVA/blob/master/springboot/springboot-redis-lock/src/main/java/com/zhonghuasheng/redis/config/RedisRepository.java)
 * [SpringBoot启动后按顺序自动执行](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-basic/src/main/java/com/zhonghuasheng/basic/runner)
-* [SpringBoot Starter自定义]()
+* [SpringBoot Starter自定义实现](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/demo-spring-boot-starter)
+* [SpringBoot集成Log4j2实现日志的分类输出](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-log4j2)
 
 ### SpringCloud
 > 微服务基础知识
