@@ -9,7 +9,9 @@
     * [Log4j2的两种配置方式](#Log4j2的两种配置方式)
     * [Log4j2的三大组件](#Log4j2的三大组件)
     * [Log4j2常用配置文件详解](#Log4j2常用配置文件详解)
-* [Log4j2常用配置](#Log4j2常用配置)
+    * [异步日志](#异步日志)
+* [代码示例](#代码示例)
+* [引用](#参考)
 
 ### 导读
 在日常的面试中，问到日志这块的很少，但是也会问到关于日志的选型和对比，主要考察你平时的总结。我这篇笔记呢主要是从Java中日志的发展历史，到流行的log4j2的常规使用和规范进行一个系统的总结。
@@ -182,7 +184,7 @@ Layout日志布局参数很多，这里我只罗列常用的
 ```
 
 #### Log4j2日志回滚策略
-`Policy`是用来控制日志文件何时(When)进行滚动，`Strategy`是用来控制日志文件如何(How)进行滚动的。如果配置的是`RollingFile`或`RollingRandomAccessFile`，则必须配置一个`Policy`。
+`RollingFileAppender`是Log4j2中的一种能够实现日志文件滚动更新(rollover)的Appender。rollover的意思是当满足一定条件（如文件达到了指定的大小，达到了指定的时间）后，就重命名原日志文件进行归档，并生成新的日志文件用于log写入。如果还设置了一定时间内允许归档的日志文件的最大数量，并对过旧的日志文件进行删除操作。RollingFile实现日志文件滚动更新，依赖于TriggerPolicy和RolloverStrategy。`Policy`是用来控制日志文件何时(When)进行滚动，`Strategy`是用来控制日志文件如何(How)进行滚动的。如果配置的是`RollingFile`或`RollingRandomAccessFile`，则必须配置一个`Policy`。
 > Policy触发策略
 1. SizeBasedTriggeringPolicy 基于日志文件大小的触发策略。单位有：KB, MB, GB
 ```xml
@@ -206,15 +208,98 @@ Layout日志布局参数很多，这里我只罗列常用的
 
 > DeleteAction删除策略
 log4j2也提供了删除的策略，方便使用者删除特定的日志文件
+```xml
+<Appenders>
+  <RollingFile name="RollingFile" fileName="${baseDir}/app.log"
+        filePattern="${baseDir}/app-%d{yyyy-MM-dd}.log.gz">
+    <PatternLayout pattern="%d %p %c{1.} [%t] %m%n" />
+    <CronTriggeringPolicy schedule="0 0 0 * * ?"/>
+    <DefaultRolloverStrategy>
+    <Delete basePath="${baseDir}" maxDepth="2">
+        <IfFileName glob="*/app-*.log.gz" />
+        <IfLastModified age="60d" />
+    </Delete>
+    </DefaultRolloverStrategy>
+  </RollingFile>
+</Appenders>
+```
 
 #### lookup - 具体都有哪些可用，翻阅官网即可
 “ Lookups provide a way to add values to the Log4j configuration at arbitrary places. They are a particular type of Plugin that implements the StrLookup interface. ”
 以上内容复制于log4j2的官方文档lookup - Office Site。其清晰地说明了lookup的主要功能就是提供另外一种方式以添加某些特殊的值到日志中，以最大化松散耦合地提供可配置属性供使用者以约定的格式进行调用。
 
+#### 异步日志
+参考Apache Logging的官方介绍，Log4j2的异步日志是通过LMAX Disruptor technology实现的，通过开启一个单独的线程执行IO操作。
+Log4j2可以使用AsyncAppender和AsyncLogger两种配置方式，这两者的主要却别是对生成的LogEvent的处理不一样。其中AsyncAppender采用ArrayBlockingQueue来保存需要异步输出的日志事件；AsyncLogger则使用Disruptor框架来实现高吞吐。
+
+|    | 日志输出方式 |
+| -- | -- |
+| sync | 同步打印日志，日志输出与业务逻辑在同一线程内，当日志输出完毕，才能进行后续业务逻辑操作  |
+| Async Appender | 异步打印日志，内部采用ArrayBlockingQueue，对每个AsyncAppender创建一个线程用于处理日志输出。 |
+| Async Logger | 异步打印日志，采用了高性能并发框架Disruptor，创建一个线程EventProcessor用于处理日志输出。 |
+
+LMAX：
+```
+... using queues to pass data between stages of the system was introducing latency, so we focused on optimising this area. The Disruptor is the result of our research and testing. We found that cache misses at the CPU-level, and locks requiring kernel arbitration are both extremely costly, so we created a framework which has "mechanical sympathy" for the hardware it's running on, and that's lock-free. 
+```
+异步日志配置：
+1. 默认情况下，如上的配置走的不是异步模式，如果想在上面的配置中走异步日志的方式，需要配置`-Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Don't forget to set system property
+-Dlog4j2.contextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector
+        to make all loggers asynchronous. -->
+    
+<Configuration status="WARN">
+    <Appenders>
+    <!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+    <RandomAccessFile name="RandomAccessFile" fileName="async.log" immediateFlush="false" append="false">
+        <PatternLayout>
+        <Pattern>%d %p %c{1.} [%t] %m %ex%n</Pattern>
+        </PatternLayout>
+    </RandomAccessFile>
+    </Appenders>
+    <Loggers>
+    <Root level="info" includeLocation="false">
+        <AppenderRef ref="RandomAccessFile"/>
+    </Root>
+    </Loggers>
+</Configuration>
+```
+2. 混合模式和直接使用模式下不用指定contextSelector
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+    
+<!-- No need to set system property "log4j2.contextSelector" to any value
+        when using <asyncLogger> or <asyncRoot>. -->
+    
+<Configuration status="WARN">
+    <Appenders>
+    <!-- Async Loggers will auto-flush in batches, so switch off immediateFlush. -->
+    <RandomAccessFile name="RandomAccessFile" fileName="asyncWithLocation.log"
+                immediateFlush="false" append="false">
+        <PatternLayout>
+        <Pattern>%d %p %class{1.} [%t] %location %m %ex%n</Pattern>
+        </PatternLayout>
+    </RandomAccessFile>
+    </Appenders>
+    <Loggers>
+    <!-- pattern layout actually uses location, so we need to include it -->
+    <AsyncLogger name="com.foo.Bar" level="trace" includeLocation="true">
+        <AppenderRef ref="RandomAccessFile"/>
+    </AsyncLogger>
+    <Root level="info" includeLocation="true">
+        <AppenderRef ref="RandomAccessFile"/>
+    </Root>
+    </Loggers>
+</Configuration>
+```
+
 ### 代码示例
 https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-log4j2
 
 ## 参考
+* Log4j2官网 http://logging.apache.org/log4j/2.x/index.html
 * 为什么Log4j2优于Log4j、Logback https://www.jianshu.com/p/1ec9f5763c5c
 * log4j2.xml详解 https://www.jianshu.com/p/8ded6531ef76
 * log4j2系列 https://www.jianshu.com/nb/36706646
@@ -222,3 +307,4 @@ https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-log4j2
 * 2020 年了，Java 日志框架到底哪个性能好？——技术选型篇 https://www.cnblogs.com/xuningfans/p/12196175.html
 * Java Log 日志 https://www.jianshu.com/p/ca3d96e64607
 * Log4j2进阶使用(Pattern Layout详细设置) https://www.jianshu.com/p/37ef7bc6d6eb
+* Log4j2中的同步日志与异步日志 https://www.cnblogs.com/yeyang/p/7944906.html
