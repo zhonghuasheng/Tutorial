@@ -296,6 +296,8 @@ LMAX：
 </Configuration>
 ```
 
+### 动态调整日志级别
+
 ### 代码示例
 https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-log4j2
 
