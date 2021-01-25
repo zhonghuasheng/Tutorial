@@ -37,3 +37,4 @@ document就是ES中存储的一条数据，就像mysql中的一行记录一样�
 > Shards
 
 shard可以理解为ES中的最小工作单元，可以理解为一个lucene的实现，拥有完整的创建索引，处理请求的能力。shard分为primary shard和replicas shard，primary shard与其对应的replicas shard不能同时存在于一台server中，当primary shard宕机时，其对应的replicas shard可以继续响应用户的都请求。通过这种分片的机制，可以横向的成倍提升系统的吞吐量，比如一个shard可以处理200/s请求，此时再加一个服务器，就能支持400/s请求，天生分布式，高可用。此外，每个一document肯定存在一个primary shard和对应的replica shard中，绝对不会出现同一个document同时存在于多个primary shard中的情况。
+问题的引入：如果让一个index自己存储1TB的数据，响应的速度就会下降，为了解决这个问题，ES提供了一种将用户的index进行subdivide(分割，再分割)的操作，就是将index分片，每一片都叫一个shards，进而实现了将整体庞大的数据分布在不同的服务器上存储。
