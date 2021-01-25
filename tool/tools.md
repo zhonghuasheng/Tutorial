@@ -13,3 +13,5 @@
   * IDEA plugin statistic
 * Java诊断工具
   *  阿里JAVA诊断工具Arthas
+* S3
+  * Minio是GlusterFS创始人之一Anand Babu Periasamy发布新的开源项目。Minio兼容Amason的S3分布式对象存储项目，采用Golang实现，客户端支持Java,Python,Javacript, Golang语言。Minio可以做为云存储的解决方案用来保存海量的图片，视频，文档。由于采用Golang实现，服务端可以工作在Windows,Linux, OS X和FreeBSD上。
