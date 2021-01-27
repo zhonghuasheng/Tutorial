@@ -14,6 +14,10 @@
 
 ES号称对外提供的是近实时的搜索服务，意思是数据从写入ES到可以被Searchable仅仅需要1秒钟，所以说基于ES执行的搜索和分析可以达到秒级。
 
+> Node 与 Cluster
+Elastic 本质上是一个分布式数据库，允许多台服务器协同工作，每台服务器可以运行多个 Elastic 实例。
+单个 Elastic 实例称为一个节点（node）。一组节点构成一个集群（cluster）。
+
 > Index
 
 index是一类拥有相似属性的document的集合，index名称必须是小写的字符。比如用户可以创建一个index，产品可以创建一个index，订单也可以创建一个index。
