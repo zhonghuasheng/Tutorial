@@ -159,7 +159,7 @@ awk '/keywords/{print $5,$6}' access_log* | head -10 // 查找包含keywords的�
 * iftop -i eth0
 
 ### 保持server与client的连接不掉
-修改ssh配置文件 /etc/ssh/sshd_config，添加或者修改ClientAliveInterval为“ClientAliveInterval 60”。这个参数的是意思是每1分钟，服务器向客户端发一个消息，用于保持连接。保存后记得重启ssh服务。
+修改ssh配置文件 /etc/ssh/sshd_config，添加或者修改ClientAliveInterval为“ClientAliveInterval 60”。这个参数的是意思是每1分钟，服务器向客户端发一个消息，用于保持连接。保存后记得重启ssh服务`service sshd restart`。
 
 ### 百问
 > 65535怎么来的
