@@ -59,3 +59,78 @@ Java HotSpot(TM) 64-Bit Server VM warning: INFO: os::commit_memory(0x00000000853
 -Xms128m
 -Xmx128m
 ```
+
+### 不能以root用户启动es
+```shell
+[root@VM_0_12_centos elasticsearch-5.5.1]# ./bin/elasticsearch
+[2021-01-27T16:48:47,418][WARN ][o.e.b.ElasticsearchUncaughtExceptionHandler] [] uncaught exception in thread [main]
+org.elasticsearch.bootstrap.StartupException: java.lang.RuntimeException: can not run elasticsearch as root
+        at org.elasticsearch.bootstrap.Elasticsearch.init(Elasticsearch.java:127) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.bootstrap.Elasticsearch.execute(Elasticsearch.java:114) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.cli.EnvironmentAwareCommand.execute(EnvironmentAwareCommand.java:67) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.cli.Command.mainWithoutErrorHandling(Command.java:122) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.cli.Command.main(Command.java:88) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.bootstrap.Elasticsearch.main(Elasticsearch.java:91) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.bootstrap.Elasticsearch.main(Elasticsearch.java:84) ~[elasticsearch-5.5.1.jar:5.5.1]
+Caused by: java.lang.RuntimeException: can not run elasticsearch as root
+        at org.elasticsearch.bootstrap.Bootstrap.initializeNatives(Bootstrap.java:106) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.bootstrap.Bootstrap.setup(Bootstrap.java:194) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.bootstrap.Bootstrap.init(Bootstrap.java:351) ~[elasticsearch-5.5.1.jar:5.5.1]
+        at org.elasticsearch.bootstrap.Elasticsearch.init(Elasticsearch.java:123) ~[elasticsearch-5.5.1.jar:5.5.1]
+        ... 6 more
+
+* 解决方案 新建ES用户
+#  添加一个用户组
+[root@localhost root]# groupadd esgroup
+# 添加一个用户，-g是在用户组下 -p是密码
+[root@localhost local]# useradd esuser -g esgroup -p Abcde12345_
+# 进入es的安装目录
+[root@localhost local]# cd /usr/local/elasticsearch 
+# 给用户esuser授权 chown [-cfhvR] [--help] [--version] user[:group] file...
+[root@localhost local]# chown -R esuser:esgroup elasticsearch-5.5.1/
+# 切换到esuser用户
+[root@localhost elasticsearch]# su esuser
+#  再次启动
+[XXX@localhost elasticsearch]$ ./bin/elasticsearch
+```
+
+### 找不到JAVA环境
+```
+[esuser@VM_0_12_centos elasticsearch-5.5.1]$ ./bin/elasticsearch
+Error: Could not find or load main class org.elasticsearch.tools.JavaVersionChecker
+Elasticsearch requires at least Java 8 but your Java version from /apps/jdk1.8.0_25/bin/java does not meet this requirement
+
+* 很莫名其妙的重新登陆又好了
+```
+
+### vm.max_map_count不足
+```shell
+ERROR: [1] bootstrap checks failed
+[1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+[2021-01-27T19:24:38,603][INFO ][o.e.n.Node               ] [Q-gAi65] stopping ...
+
+* 解决方案
+sudo sysctl -w vm.max_map_count=262144
+```
+
+### 启动
+* `nohup ./bin/elaseticsearch >xxx.log 2>&1 &`
+* 请求`curl localhost:9200`得到说明信息
+```shell
+[esuser@VM_0_12_centos elasticsearch-5.5.1]$ curl localhost:9200
+{
+  "name" : "Q-gAi65",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "ZzneLnfdSIOPMp1bjA9shQ",
+  "version" : {
+    "number" : "5.5.1",
+    "build_hash" : "19c13d0",
+    "build_date" : "2017-07-18T20:44:24.823Z",
+    "build_snapshot" : false,
+    "lucene_version" : "6.6.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+* 关闭 `ps -ef | grep elasticsearch` `kill -9 PID`
+* 默认情况下，Elastic 只允许本机访问，如果需要远程访问，可以修改 Elastic 安装目录的config/elasticsearch.yml文件，去掉network.host的注释，将它的值改成0.0.0.0，然后重新启动 Elastic，打开网页访问。
