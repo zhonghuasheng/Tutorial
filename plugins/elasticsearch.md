@@ -43,7 +43,34 @@ document就是ES中存储的一条数据，就像mysql中的一行记录一样�
 shard可以理解为ES中的最小工作单元，可以理解为一个lucene的实现，拥有完整的创建索引，处理请求的能力。shard分为primary shard和replicas shard，primary shard与其对应的replicas shard不能同时存在于一台server中，当primary shard宕机时，其对应的replicas shard可以继续响应用户的都请求。通过这种分片的机制，可以横向的成倍提升系统的吞吐量，比如一个shard可以处理200/s请求，此时再加一个服务器，就能支持400/s请求，天生分布式，高可用。此外，每个一document肯定存在一个primary shard和对应的replica shard中，绝对不会出现同一个document同时存在于多个primary shard中的情况。
 问题的引入：如果让一个index自己存储1TB的数据，响应的速度就会下降，为了解决这个问题，ES提供了一种将用户的index进行subdivide(分割，再分割)的操作，就是将index分片，每一片都叫一个shards，进而实现了将整体庞大的数据分布在不同的服务器上存储。
 
-## ES启动失败常见问题汇总
+
+### 启动
+* `nohup ./bin/elaseticsearch >xxx.log 2>&1 &`
+* 请求`curl localhost:9200`得到说明信息
+```shell
+[esuser@VM_0_12_centos elasticsearch-5.5.1]$ curl localhost:9200
+{
+  "name" : "Q-gAi65",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "ZzneLnfdSIOPMp1bjA9shQ",
+  "version" : {
+    "number" : "5.5.1",
+    "build_hash" : "19c13d0",
+    "build_date" : "2017-07-18T20:44:24.823Z",
+    "build_snapshot" : false,
+    "lucene_version" : "6.6.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+* 关闭 `ps -ef | grep elasticsearch` `kill -9 PID`
+* 默认情况下，Elastic 只允许本机访问，如果需要远程访问，可以修改 Elastic 安装目录的config/elasticsearch.yml文件，去掉network.host的注释，将它的值改成0.0.0.0，然后重新启动 Elastic，打开网页访问。
+* 创建索引 curl -X PUT 'localhost:9200/accounts' -H 'content-Type:application/json' -d 'JSON数据'
+* 列出每个index所包含的type curl 'localhost:9200/_mapping?pretty=true'
+* 插入数据  curl -X PUT 'localhost:9200/accounts/person/1' -H 'content-Type:application/json' -d '{"user":"张三","title":"工程师","desc":"数据库管理"}'
+
+
+## ES常见问题汇总
 ### 内存不足
 
 ```shell
@@ -117,24 +144,32 @@ ERROR: [1] bootstrap checks failed
 sudo sysctl -w vm.max_map_count=262144
 ```
 
-### 启动
-* `nohup ./bin/elaseticsearch >xxx.log 2>&1 &`
-* 请求`curl localhost:9200`得到说明信息
-```shell
-[esuser@VM_0_12_centos elasticsearch-5.5.1]$ curl localhost:9200
+
+### 使用DBeaver连接ES时报 current license is non-compliant for [jdbc]
+默认安装的ES的类型type=basic，是不支持JDBC客户端连接的，白金版的才支持，查看
+```
+[root@VM_0_12_centos software]# curl -XGET http://localhost:9200/_license
 {
-  "name" : "Q-gAi65",
-  "cluster_name" : "elasticsearch",
-  "cluster_uuid" : "ZzneLnfdSIOPMp1bjA9shQ",
-  "version" : {
-    "number" : "5.5.1",
-    "build_hash" : "19c13d0",
-    "build_date" : "2017-07-18T20:44:24.823Z",
-    "build_snapshot" : false,
-    "lucene_version" : "6.6.0"
-  },
-  "tagline" : "You Know, for Search"
+  "license" : {
+    "status" : "active",
+    "uid" : "8d3fd3a6-0861-4a95-9a7b-0ce499474b3b",
+    "type" : "basic",
+    "issue_date" : "2021-01-28T08:53:11.889Z",
+    "issue_date_in_millis" : 1611823991889,
+    "max_nodes" : 1000,
+    "issued_to" : "elasticsearch",
+    "issuer" : "elasticsearch",
+    "start_date_in_millis" : -1
+  }
 }
 ```
-* 关闭 `ps -ef | grep elasticsearch` `kill -9 PID`
-* 默认情况下，Elastic 只允许本机访问，如果需要远程访问，可以修改 Elastic 安装目录的config/elasticsearch.yml文件，去掉network.host的注释，将它的值改成0.0.0.0，然后重新启动 Elastic，打开网页访问。
+再使用上述命令查看type=trail，刷新客户端就可以连接了
+
+### "error" : "Content-Type header [application/x-www-form-urlencoded] is not supported"
+这个问题，是在报文Content-type的参数：application/x-www-form-urlencoded不支持Json发送。需要改成application/Json
+所以需要添加参数 ; -H ‘Content-Type: application/json’
+
+```shell
+[esuser@VM_0_12_centos root]$ curl -X PUT 'localhost:9200/accounts' -H 'content-Type:application/json' -d '{"mappings":{"person":{"properties":{"user":{"type":"text","analyzer":"ik_max_word","search_analyzer":"ik_max_word"},"title":{"type":"text","analyzer":"ik_max_word","search_analyzer":"ik_max_word"},"desc":{"type":"text","analyzer":"ik_max_word","search_analyzer":"ik_max_word"}}}}}'
+{"acknowledged":true,"shards_acknowledged":true,"index":"accounts"}
+```
