@@ -1,4 +1,5 @@
 ### 学习笔记
+* 快速上手 http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html
 * ES基础部分
 
 ## ES基础部分
@@ -77,6 +78,18 @@ shard可以理解为ES中的最小工作单元，可以理解为一个lucene的�
 * 条件搜索（es的match） curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统"}}}'
 * 条件搜索 or curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统 计算"}}}' -H 'content-Type:application/json'
 * 条件搜索 and(执行多个关键词的and搜索，必须使用布尔查询) curl 'localhost:9200/accounts/person/_search' -H 'content-Type:application/json' -d '{"query":{"bool":{"must":[{"match": {"desc": "数据库"}}, {"match": {"desc": "管理"}}]}}}'
+* 查看集群的健康状态
+
+## 常用url
+* 查看集群的健康状况 http://localhost:9200/_cat
+* 查看 http://118.24.164.117:9200/_cat/health?v
+    说明：v是用来要求在结果中返回表头
+    状态值说明
+    * Green - everything is good (cluster is fully functional)，即最佳状态
+    * Yellow - all data is available but some replicas are not yet allocated (cluster is fully functional)，即数据和集群可用，但是集群的备份有的是坏的
+    * Red - some data is not available for whatever reason (cluster is partially functional)，即数据和集群都不可用
+* 查看集群的节点 http://localhost:9200/_cat/?v 
+* 查看所有索引 http://118.24.164.117:9200/_cat/indices?v
 
 ## ES常见问题汇总
 ### 内存不足
