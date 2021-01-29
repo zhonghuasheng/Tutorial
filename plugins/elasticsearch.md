@@ -66,9 +66,17 @@ shard可以理解为ES中的最小工作单元，可以理解为一个lucene的�
 * 关闭 `ps -ef | grep elasticsearch` `kill -9 PID`
 * 默认情况下，Elastic 只允许本机访问，如果需要远程访问，可以修改 Elastic 安装目录的config/elasticsearch.yml文件，去掉network.host的注释，将它的值改成0.0.0.0，然后重新启动 Elastic，打开网页访问。
 * 创建索引 curl -X PUT 'localhost:9200/accounts' -H 'content-Type:application/json' -d 'JSON数据'
+* 删除索引 curl -X DELETE 'localhost:9200/accounts'
 * 列出每个index所包含的type curl 'localhost:9200/_mapping?pretty=true'
-* 插入数据  curl -X PUT 'localhost:9200/accounts/person/1' -H 'content-Type:application/json' -d '{"user":"张三","title":"工程师","desc":"数据库管理"}'
-
+* 新增数据（指定id为1） curl -X PUT 'localhost:9200/accounts/person/1' -H 'content-Type:application/json' -d '{"user":"张三","title":"工程师","desc":"数据库管理"}'
+* 新增数据（使用POST不指定id） curl -X POST 'localhost:9200/accounts/person' -H 'content-Type:application/json' -d '{"user":"张三","title":"工程师","desc":"数据库管理"}'
+* 更新数据 curl -X PUT 'localhost:9200/accounts/person/1' -H 'content-Type:application/json' -d '{"user":"张三","title":"工程师","desc":"数据库管理"}'
+* 查看记录(返回不带索引信息) culr 'localhost:9200/accounts/person/1'
+* 查看记录(返回带索引信息) culr 'localhost:9200/accounts/person/1?pretty=true'
+* 搜索所有记录 curl 'localhost:9200/accounts/person/_search'
+* 条件搜索（es的match） curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统"}}}'
+* 条件搜索 or curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统 计算"}}}' -H 'content-Type:application/json'
+* 条件搜索 and(执行多个关键词的and搜索，必须使用布尔查询) curl 'localhost:9200/accounts/person/_search' -H 'content-Type:application/json' -d '{"query":{"bool":{"must":[{"match": {"desc": "数据库"}}, {"match": {"desc": "管理"}}]}}}'
 
 ## ES常见问题汇总
 ### 内存不足
