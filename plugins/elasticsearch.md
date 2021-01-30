@@ -1,4 +1,5 @@
 ### 学习笔记
+* 快速上手 http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html
 * ES基础部分
 
 ## ES基础部分
@@ -77,6 +78,25 @@ shard可以理解为ES中的最小工作单元，可以理解为一个lucene的�
 * 条件搜索（es的match） curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统"}}}'
 * 条件搜索 or curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统 计算"}}}' -H 'content-Type:application/json'
 * 条件搜索 and(执行多个关键词的and搜索，必须使用布尔查询) curl 'localhost:9200/accounts/person/_search' -H 'content-Type:application/json' -d '{"query":{"bool":{"must":[{"match": {"desc": "数据库"}}, {"match": {"desc": "管理"}}]}}}'
+* 查看集群的健康状态
+
+## 常用url
+* 查看集群的健康状况 http://localhost:9200/_cat
+* 查看 http://118.24.164.117:9200/_cat/health?v
+    说明：v是用来要求在结果中返回表头
+    状态值说明
+    * Green - everything is good (cluster is fully functional)，即最佳状态
+    * Yellow - all data is available but some replicas are not yet allocated (cluster is fully functional)，即数据和集群可用，但是集群的备份有的是坏的
+    * Red - some data is not available for whatever reason (cluster is partially functional)，即数据和集群都不可用
+* 查看集群的节点 http://localhost:9200/_cat/?v 
+* 查看所有索引 http://118.24.164.117:9200/_cat/indices?v
+
+## 索引
+* 创建索引
+* 构建索引映射
+映射类别 Mapping type 废除说明
+ES最先的设计是用索引类比关系型数据库的数据库，用mapping type 来类比表，一个索引中可以包含多个映射类别。这个类比存在一个严重的问题，就是当多个mapping type中存在同名字段时（特别是同名字段还是不同类型的），在一个索引中不好处理，因为搜索引擎中只有 索引-文档的结构，不同映射类别的数据都是一个一个的文档（只是包含的字段不一样而已）
+从6.0.0开始限定仅包含一个映射类别定义（ "index.mapping.single_type": true ），兼容5.x中的多映射类别。从7.0开始将移除映射类别
 
 ## ES常见问题汇总
 ### 内存不足

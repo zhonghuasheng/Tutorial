@@ -116,3 +116,4 @@
 * GA General Availability 正式发布版本，在国外都是用GA来说明release的版本
 * Threshold 门槛
 * subdivide 分割，分片
+* indices index的复数形似
