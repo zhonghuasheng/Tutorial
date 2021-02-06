@@ -9,6 +9,7 @@
     - [索引](#索引)
         - [表中有多个索引，优化器怎么决定使用哪个索引]()
     - [SQL查询优化](#sql查询优化)
+    - [order by是怎么工作的](#order-by是怎么工作的)
     - [数据库监控](#数据库监控)
   - [常用命令](#常用命令)
   - [常用函数](#常用函数)
@@ -235,6 +236,9 @@
   * not in的话可以使用left join或者right join来替代，不然它会扫描多次not in的表
   * 使用汇总表优化查询
     * select count(*) from X;创建一个汇总表，不是太好，不能实时
+
+#### order-by是怎么工作的
+http://note.youdao.com/noteshare?id=2856092d08c1277dc69972ed1ecf08c8&sub=14AD5D3D949F446A9525CE00E2EE2C64
 
 #### 数据库监控
 * 监控哪些
