@@ -9,3 +9,14 @@
   * 异步返回执行时间长
 * QMQ是去哪儿网内部广泛使用的消息中间件，自2012年诞生以来在去哪儿网所有业务场景中广泛的应用，包括跟交易息息相关的订单场景； 也包括报价搜索等高吞吐量场景。目前在公司内部日常消息qps在60W左右，生产上承载将近4W+消息topic，消息的端到端延迟可以控制在10ms以内。
 * Apache RocketMQ is a distributed messaging and streaming platform with low latency, high performance and reliability, trillion-level capacity and flexible scalability.
+
+### 消息队列的技术选型
+消息队列及常见消息队列介绍 - 云+社区...
+http://note.youdao.com/noteshare?id=7c550bb62a6597091e4533fbb6b920c1&sub=wcp155548841293021
+
+### 消息队列优势
+消息队列作为高并发系统的核心组件之一，能够帮助业务系统解构提升开发效率和系统稳定性。主要具有以下优势：
+* 解耦（解决不同重要程度、不同能力级别系统之间依赖导致一死全死）
+* 削峰（主要解决瞬时写压力大于应用服务能力导致消息丢失、系统奔溃等问题）
+* 异步（当存在一对多调用时，可以发一条消息给消息系统，让消息系统通知相关系统，应用间并发处理消息，相比串行处理，减少处理时间）
+* 蓄流压测（线上有些链路不好压测，可以通过堆积一定量消息再放开来压测）
