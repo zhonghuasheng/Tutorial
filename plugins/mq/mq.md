@@ -9,6 +9,7 @@
   * 异步返回执行时间长
 * QMQ是去哪儿网内部广泛使用的消息中间件，自2012年诞生以来在去哪儿网所有业务场景中广泛的应用，包括跟交易息息相关的订单场景； 也包括报价搜索等高吞吐量场景。目前在公司内部日常消息qps在60W左右，生产上承载将近4W+消息topic，消息的端到端延迟可以控制在10ms以内。
 * Apache RocketMQ is a distributed messaging and streaming platform with low latency, high performance and reliability, trillion-level capacity and flexible scalability.
+* ActivyMQ，RabbitMQ搭建集群需要自己配置HA
 
 ### 消息队列的技术选型
 消息队列及常见消息队列介绍 - 云+社区...
