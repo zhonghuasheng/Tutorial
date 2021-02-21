@@ -5,6 +5,13 @@
 - [RocketMQ顺序消息](http://note.youdao.com/noteshare?id=7e23b1b1e3842a06862f6d06184e4466&sub=FB7D72F268AE453BA750B846BC2DAAB0)
 
 ## 实战技巧
+* 常用命令
+```cmd
+start mqnamesrv.cmd
+start mqbroker.cmd -n 127.0.0.1:9876 autoCreateTopicEnable=true -c ../conf/broker.conf
+```
+* 使用官方下载的rocketmq，直接启动，是可以使用ip地址访问，一旦配置了conf/broker.conf，并启动了，就需要配置里面的brokerIP1，不然使用ip访问不了，总之，建议使用配置文件启动
+
 ## 百问
 
 ### RocketMQ相比其他MQ的优势特性
