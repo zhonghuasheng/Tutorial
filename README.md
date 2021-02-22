@@ -86,6 +86,8 @@
 > `实战训练`
 * [秒杀商城](https://github.com/zhonghuasheng/JAVA/tree/master/seckill)
 
+[![Stargazers over time](https://starchart.cc/zhonghuasheng/Tutorial.svg)](https://starchart.cc/zhonghuasheng/Tutorial)
+
 <center>
 <h2 align="center">技术栈</h2>
 <center>
