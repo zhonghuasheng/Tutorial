@@ -3,7 +3,7 @@
 - [RocketMQ安装，启动，基础实例](#http://rocketmq.apache.org/docs/quick-start/)
 - [RocketMQ与SpringBoot集成基础示例](https://github.com/zhonghuasheng/JAVA/tree/master/springboot/springboot-rocketmq/src/test/java/com/springboot/rocketmq)
 - [RocketMQ顺序消息](http://note.youdao.com/noteshare?id=7e23b1b1e3842a06862f6d06184e4466&sub=FB7D72F268AE453BA750B846BC2DAAB0)
-- [RocketMQ如何保证消息的可靠性]
+- [RocketMQ如何保证消息的可靠性](https://blog.csdn.net/qq_38545713/article/details/104758104)
 ## 实战技巧
 * 常用命令
 ```cmd
