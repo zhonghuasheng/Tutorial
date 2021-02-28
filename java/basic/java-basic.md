@@ -1,3 +1,4 @@
+## 目录
 * [一、数据类型](#一数据类型)
     * [基本类型](#基本类型)
     * [包装类型](#包装类型)
@@ -37,8 +38,8 @@
     * [JRE or JDK](#jre-or-jdk)
     * [Lambda表达式](#Lambda表达式)
 * [参考资料](#参考资料)
-<!-- GFM-TOC -->
 
+## 面试题
 
 # 一、数据类型
 
@@ -1574,3 +1575,7 @@ https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html
 ### 异常处理
 ### JAVA8新特性
 ### JAVA8新特性
+
+## 面试题
+* Integer和int的区别
+* String a = new String("abc");共创建了几个对象

@@ -200,7 +200,7 @@
     srandmember #返回所有元素，结果是无序的，小心使用，可能结果很大
     smembers key #获取集合中的所有元素
     spop key #从集合中随机弹出一个元素
-    scan
+    scan 分批获取，但是如果集合数量不多，redis会一次取出来
     SADD = Tagging
     SPOP/SRANDMEMBER = Random item
     SADD + SINTER = Social Graph
