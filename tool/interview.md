@@ -4,7 +4,6 @@
 
 ### 面试题
 #### Java 基础
-* [说说你对Fail-Fast的理解](http://note.youdao.com/noteshare?id=654c2063da080a2c45968caf25554b7b&sub=wcp1585706133233470)
 * [什么是面向对象](https://github.com/zhonghuasheng/Tutorial/issues/188)
 * [JDK 和 JRE 有什么区别](https://github.com/zhonghuasheng/Tutorial/issues/207)
 * [== 和 equals 的区别是什么](https://github.com/zhonghuasheng/Tutorial/issues/208)
@@ -13,10 +12,12 @@
 * [String 属于基础的数据类型吗？](https://github.com/zhonghuasheng/Tutorial/issues/232)
 * [Java中操作字符串都有哪些类？它们之间有什么区别？](https://github.com/zhonghuasheng/Tutorial/issues/233)
 * [String str="i"与 String str=new String(“i”)一样吗？](https://github.com/zhonghuasheng/Tutorial/issues/33)
+* [Integer和int区别]
 * [如何将字符串反转？](https://github.com/zhonghuasheng/Tutorial/issues/234)
 * [普通类，抽象类，接口有哪些区别？](https://github.com/zhonghuasheng/Tutorial/issues/235)
 * [抽象类能使用 final 修饰吗？](https://github.com/zhonghuasheng/Tutorial/issues/236)
 * [重载和重写的区别](https://github.com/zhonghuasheng/Tutorial/issues/237)
+* [说说你对Fail-Fast的理解](http://note.youdao.com/noteshare?id=654c2063da080a2c45968caf25554b7b&sub=wcp1585706133233470)
 15. Java 中 IO 流分为几种？
 16. BIO、NIO、AIO 有什么区别？
 17. Files的常用方法都有哪些？
