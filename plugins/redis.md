@@ -38,7 +38,7 @@
     * https://www.w3cschool.cn/redis/redis-ydwp2ozz.html
     * 系列文章 https://www.cnblogs.com/jack1995/category/1076657.html
 * [Redis常用客户端总结](redis/redis常用客户端使用总结.md)
-* Redis实战使用场景
+* [Redis实战使用场景](#实战)
 
 ### 学习笔记
 #### Redis的介绍、优缺点、使用场景
@@ -857,4 +857,24 @@ struct sdshdr {
   // 数据空间，值存在这里。
   char bu[];
 }
+```
+
+### 实战
+- SpringBoot RedisTemplate执行lua
+```java
+String luaScript = "redis.call(\"sadd\", KEYS[1], ARGV[1]);\n" +
+            "local score = redis.call(\"scard\", KEYS[1]);\n" +
+            "redis.call(\"zadd\", KEYS[2], score, KEYS[3]);";
+
+redisTemplate.executePipelined(new RedisCallback<Object>() {
+    @Override
+    public Object doInRedis(RedisConnection connection) throws DataAccessException {
+        // 打开管道
+        connection.openPipeline();
+        // 执行命令（Key按顺序排列，后面是Argv）
+        connection.eval(addTalkMachineBureauCountLua.getBytes(), ReturnType.VALUE, 3,
+                memberKey.getBytes(), memberCountKey.getBytes(), OBJECT_SERIALIZER.serialize(channelName), userID.toString().getBytes());
+        return null;
+    }
+});
 ```
