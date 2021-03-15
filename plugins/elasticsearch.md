@@ -143,6 +143,7 @@ Caused by: java.lang.RuntimeException: can not run elasticsearch as root
 [root@localhost root]# groupadd esgroup
 # 添加一个用户，-g是在用户组下 -p是密码
 [root@localhost local]# useradd esuser -g esgroup -p Abcde12345_
+# 把ES的安装包拷贝到esuser的home目录下，然后找个地方解压，如果是在root目录下，后面会遇到比较多的问题
 # 进入es的安装目录
 [root@localhost local]# cd /usr/local/elasticsearch 
 # 给用户esuser授权 chown [-cfhvR] [--help] [--version] user[:group] file...
@@ -159,7 +160,7 @@ Caused by: java.lang.RuntimeException: can not run elasticsearch as root
 Error: Could not find or load main class org.elasticsearch.tools.JavaVersionChecker
 Elasticsearch requires at least Java 8 but your Java version from /apps/jdk1.8.0_25/bin/java does not meet this requirement
 
-* 很莫名其妙的重新登陆又好了
+* 把elasticsearch目录换到不属于root目录的其他目录就行了
 ```
 
 ### vm.max_map_count不足
