@@ -878,3 +878,15 @@ redisTemplate.executePipelined(new RedisCallback<Object>() {
     }
 });
 ```
+
+- ERR 'EVAL' command keys must in same slot
+在Redis集群版实例中，事务、脚本等命令要求所有的key必须在同一个slot中，如果不在同一个slot中将返回以下错误信息(command keys must in same slot)
+在集群下,它会将数据自动分布到不同的节点(虚拟的16384个slot)
+它数据的路由分发,是通过计算key,所以只要key一样,则一定会被分到同一个slot
+Redis的配置里面,有个属性叫hash_tag
+beta:
+  listen: 127.0.0.1:22122
+  hash: fnv1a_64
+  hash_tag: "{}"
+解决方案，在这个Lua script中所有的key(key和hashKey)都是用同一个前缀，并且用花括号括起来，就能保证命中同一个slot，但是问题来了，这会导致该lua script中的所有key都集中到了一个slot。
+redis集群版的分布式是会根据KEY进行hash取模然后打到不同的slot，这种思想是典型的分而治之。分治，分流，降级。
