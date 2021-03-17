@@ -1,6 +1,7 @@
 ### 学习笔记
 * 快速上手 http://www.ruanyifeng.com/blog/2017/08/elasticsearch.html
 * ES基础部分
+* ES的工作过程
 
 ## ES基础部分
 > 两个端口(9200/9300)
@@ -79,6 +80,23 @@ shard可以理解为ES中的最小工作单元，可以理解为一个lucene的�
 * 条件搜索 or curl 'localhost:9200/accounts/person/_search' -d '{"query": {"match": {"desc": "系统 计算"}}}' -H 'content-Type:application/json'
 * 条件搜索 and(执行多个关键词的and搜索，必须使用布尔查询) curl 'localhost:9200/accounts/person/_search' -H 'content-Type:application/json' -d '{"query":{"bool":{"must":[{"match": {"desc": "数据库"}}, {"match": {"desc": "管理"}}]}}}'
 * 查看集群的健康状态
+* curl后跟-i可以显示http头信息
+```
+[root@VM-0-16-centos ~]# curl -XGET 'http://localhost:9200/_count?pretty' -d '{"query": {"match_all": {}}}' -i
+HTTP/1.1 200 OK
+Warning: 299 Elasticsearch-5.5.1-19c13d0 "Content type detection for rest requests is deprecated. Specify the content type using the [Content-Type] header." "Mon, 15 Mar 2021 07:31:04 GMT"
+content-type: application/json; charset=UTF-8
+content-length: 95
+{
+  "count" : 0,
+  "_shards" : {
+    "total" : 0,
+    "successful" : 0,
+    "failed" : 0
+  }
+}
+
+```
 
 ## 常用url
 * 查看集群的健康状况 http://localhost:9200/_cat
@@ -143,6 +161,7 @@ Caused by: java.lang.RuntimeException: can not run elasticsearch as root
 [root@localhost root]# groupadd esgroup
 # 添加一个用户，-g是在用户组下 -p是密码
 [root@localhost local]# useradd esuser -g esgroup -p Abcde12345_
+# 把ES的安装包拷贝到esuser的home目录下，然后找个地方解压，如果是在root目录下，后面会遇到比较多的问题
 # 进入es的安装目录
 [root@localhost local]# cd /usr/local/elasticsearch 
 # 给用户esuser授权 chown [-cfhvR] [--help] [--version] user[:group] file...
@@ -159,7 +178,7 @@ Caused by: java.lang.RuntimeException: can not run elasticsearch as root
 Error: Could not find or load main class org.elasticsearch.tools.JavaVersionChecker
 Elasticsearch requires at least Java 8 but your Java version from /apps/jdk1.8.0_25/bin/java does not meet this requirement
 
-* 很莫名其妙的重新登陆又好了
+* 把elasticsearch目录换到不属于root目录的其他目录就行了
 ```
 
 ### vm.max_map_count不足
