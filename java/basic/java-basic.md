@@ -1579,3 +1579,6 @@ https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html
 ## 面试题
 * Integer和int的区别
 * String a = new String("abc");共创建了几个对象
+
+## 注意点
+1. BigDecimal比较值，不要使用equals，因为0和0.00比较equals会判断false，要使用compareTo()。Compares this BigDecimal with the specified BigDecimal. Two BigDecimal objects that are equal in value but have a different scale (like 2.0 and 2.00) are considered equal by this method.
