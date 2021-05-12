@@ -284,8 +284,12 @@ public class AnnotationClass {
     }
     ```
 
-#### SpringCloud常用注解有哪些
+#### SpringX常用注解有哪些
 
+* Spring
+    * @NotEmpty 用在集合类上面 加了@NotEmpty的String类、Collection、Map、数组，是不能为null或者长度为0的(String Collection Map的isEmpty()方法)
+    * @NotBlank只用于String,不能为null且trim()之后size>0
+    * @NotNull:不能为null，但可以为empty,没有Size的约束
 * SpringCloud
     * @SpringBootApplication是Sprnig Boot项目的核心注解,目的是开启自动配置
     * @EnableDiscoveryClient注解基于spring-cloud-common依赖，并且在classpath中实现
