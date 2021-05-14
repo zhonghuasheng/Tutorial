@@ -303,6 +303,12 @@ public class AnnotationClass {
     * @EnableHystrixDashboard: 　　加在主程序上启动服务监控
     * @FeignClient（value=“服务名”）:　　写在接口上 来调用远程服务
     * @EnableZuulProxy:　　写在主程序上启动zuul路由访问功能
-
+* @Valid 用于参数中包含对象，对内部对象的校验
+```
+class A {
+    @Valid  这样会校验b中的参数
+    B b;
+}
+```
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
