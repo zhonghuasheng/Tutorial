@@ -1582,5 +1582,15 @@ https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html
 
 ## 注意点
 1. BigDecimal比较值，不要使用equals，因为0和0.00比较equals会判断false，要使用compareTo()。Compares this BigDecimal with the specified BigDecimal. Two BigDecimal objects that are equal in value but have a different scale (like 2.0 and 2.00) are considered equal by this method.
-
 2. String.split()在分割. |等时需要注意，因为split分割的时候使用了正则, 点需要使用\\.类处理，具体使用时百度下
+3. 邮箱校验 建议使用微软的格式规范 https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/how-to-verify-that-strings-are-in-valid-email-format
+```
+^[^@\s]+@[^@\s]+\.[^@\s]+$
+^ 	从字符串的开头部分开始匹配。
+[^@\s]+ 	匹配一次或多次出现的任何字符，@ 字符或空格除外。
+@ 	匹配 @ 字符。
+[^@\s]+ 	匹配一次或多次出现的任何字符，@ 字符或空格除外。
+\. 	匹配一个句点字符。
+[^@\s]+ 	匹配一次或多次出现的任何字符，@ 字符或空格除外。
+$ 	在字符串的结尾结束匹配。
+```
