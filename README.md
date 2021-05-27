@@ -58,6 +58,7 @@
 * [正视自己的价值](tool/coding-life.md/#正视自己的价值)
 * [新工程师要干的五件事情](tool/coding-life.md/#新工程师要干的五件事情)
 * [为什么CTO,技术总监，架构师不写代码都这么牛逼](http://note.youdao.com/noteshare?id=f4eeda7da9b73adf4294f984a5e7cbe5&sub=945D4467238947AAB5C030B17D5AC01E)
+* [技术/管理](https://www.cnblogs.com/yexiaochai/p/14805941.html#top)
 
 > `规范`
 * [雅虎前端34条军规](http://note.youdao.com/noteshare?id=b59d0da4f7bb2b7ba5f73129d85b1ba1)
