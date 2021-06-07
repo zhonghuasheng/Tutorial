@@ -331,8 +331,34 @@ Hibernate Validator是Bean Validation的实现，Hibernate Validator内置了JSR
 @DurationMin 间隔的最小时间，可指定到day, hour minute...
 @DurationMax 间隔的最大时间，可指定到day, hour minute...
 ```
+* Hibernate的两种校验策略
+    * 普通模式：会校验完所有的属性，然后返回所有的验证失败信息（默认）
+    * 快速失败返回模式：有一个校验失败就返回
+```java
+@Configuration
+public class ValidatorConfiguration {
+    @Bean
+    public Validator validator(){
+        ValidatorFactory validatorFactory = Validation.byProvider( HibernateValidator.class )
+                .configure()
+                .addProperty( "hibernate.validator.fail_fast", "true" )
+                .buildValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
 
-
+        return validator;
+    }
+}
+```
+```java
+@RequestMapping("/demo2")
+public void demo2(@RequestBody @Valid DemoModel demo, BindingResult result){
+    if(result.hasErrors()){
+        for (ObjectError error : result.getAllErrors()) {
+            System.out.println(error.getDefaultMessage());
+        }
+    }
+}
+```
 
 * Spring
     * @NotEmpty 用在集合类上面 加了@NotEmpty的String类、Collection、Map、数组，是不能为null或者长度为0的(String Collection Map的isEmpty()方法)
@@ -354,7 +380,7 @@ Hibernate Validator是Bean Validation的实现，Hibernate Validator内置了JSR
 * @Valid 用于参数中包含对象，对内部对象的校验
 ```
 class A {
-    @Valid  这样会校验b中的参数
+    @Valid  这样会校验b中的参数，级联校验
     B b;
 }
 ```
