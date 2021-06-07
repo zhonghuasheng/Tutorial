@@ -284,7 +284,81 @@ public class AnnotationClass {
     }
     ```
 
-#### SpringX常用注解有哪些
+#### 常用注解有哪些
+
+* Hibernate Validator 参考文章 https://zhuanlan.zhihu.com/p/194097505
+```
+在程序开发中，经常要对数据进行校验后再进行业务处理。如果在业务代码中进行Bean的字段校验，会使得代码变的非常繁琐。JSR303 - Bean Validation[JSR Java Specification Requests]为JavaBean的验证定义了相关的元数据模型和API。
+This JSR will define a meata-data model and API for JavaBeanTM validation, with overrides and extended meta-data through the use of XML validateion descriptors. 在Java8之后，又推出JSR380 - Bean Validation 2.0。
+JSR是Java Specification Requests的缩写，意思是Java 规范提案。是指向JCP(Java Community Process)提出新增一个标准化技术规范的正式请求。任何人都可以提交JSR，以向Java平台增添新的API和服务。JSR已成为Java界的一个重要标准。
+Hibernate Validator是Bean Validation的实现，Hibernate Validator内置了JSR303/JSR380中的所有的constraint[约束，限制]的实现，还额外定义了很多自定义的constraint。
+```
+* 导入依赖 spring-boot-starter-web中集成了Hibernate Validator工具，无需额外引用。
+* maven依赖 hibernate-validator
+* Bean Validation中内置的constraint
+```
+@Null 元素必须为null
+@NotNull 元素不能为null
+@NotBlank 元素不能为null且不能为空，用于string
+@NotEmpty 元素不能为null且不能为空集合
+@Length 元素字符串长度必须在指定的范围内 @Length(min=1, max = 20, message = "xxx")
+@Negative  元素必须是负数
+@NegativeOrZero 元素必须是负数或者0
+@Positive 元素必须是正数
+@PositiveOrZero 元素必须是正数或者0
+@Size 元素集合大小在指定范围@Size(min = 1, max = 5, message = "")。支持字符串数组，Collection, Map, Array
+@Min 元素最小整数值， value是long类型，可用于int long
+@Max 元素最大整数值, value是long类型，可用于int long
+@DecimalMin 元素是decimal类型，最小值
+@DecimalMax 元素是decimal类型，最大值
+@Digits 元素必须为一个指定格式的数字 @Digits(integer=, fraction=) integer指定整数精度，fraction指定小数精度。可用于Double, Intger, Decimal
+    @Digits(integer=10, fraction=0)
+    private Double double1 = 0.0;
+@AssertFalse 元素必须为false
+@AssertTrue 元素必须为true，可用于用户同意条款
+@Email 元素必须是电子邮箱地址 @Email(regexp = "^[^@\s]+@[^@\s]+\.[^@\s]+$") 使用的是微软官方给出的电子邮箱校验正则表达式
+@Pattern 元素必须符合正则表达式
+@Past 元素必须是过去的日期 获取的是服务器时间 SystemClock(ZoneId.systemDefault()) <
+@PastOrPresent 元素必须是过去的日期或者现在 <=
+@Future 元素必须是将来的日期
+@FutureOrPresent 元素必须是将来日期或者现在
+@Range 元素必须在合适的范围内 @Range(min=, max, message)
+@SafeHtml 判断字符串是否是安全的html Validate a rich text value provided by the user to ensure that it contains no malicious code, such as embedded <script> elements
+@URL 判断string是否是url RegexpURLValidator中使用正则表达式判断
+@CreditCardNumber 判断信用卡搁置
+@CodePointLength
+@UniqueElements Collection中是否有重复的object
+@DurationMin 间隔的最小时间，可指定到day, hour minute...
+@DurationMax 间隔的最大时间，可指定到day, hour minute...
+```
+* Hibernate的两种校验策略
+    * 普通模式：会校验完所有的属性，然后返回所有的验证失败信息（默认）
+    * 快速失败返回模式：有一个校验失败就返回
+```java
+@Configuration
+public class ValidatorConfiguration {
+    @Bean
+    public Validator validator(){
+        ValidatorFactory validatorFactory = Validation.byProvider( HibernateValidator.class )
+                .configure()
+                .addProperty( "hibernate.validator.fail_fast", "true" )
+                .buildValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+
+        return validator;
+    }
+}
+```
+```java
+@RequestMapping("/demo2")
+public void demo2(@RequestBody @Valid DemoModel demo, BindingResult result){
+    if(result.hasErrors()){
+        for (ObjectError error : result.getAllErrors()) {
+            System.out.println(error.getDefaultMessage());
+        }
+    }
+}
+```
 
 * Spring
     * @NotEmpty 用在集合类上面 加了@NotEmpty的String类、Collection、Map、数组，是不能为null或者长度为0的(String Collection Map的isEmpty()方法)
@@ -306,7 +380,7 @@ public class AnnotationClass {
 * @Valid 用于参数中包含对象，对内部对象的校验
 ```
 class A {
-    @Valid  这样会校验b中的参数
+    @Valid  这样会校验b中的参数，级联校验
     B b;
 }
 ```

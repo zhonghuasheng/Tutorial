@@ -117,3 +117,6 @@
 * Threshold 门槛
 * subdivide 分割，分片
 * indices index的复数形似
+* JSR Java Specialtion Requests
+* fraction 小数部分
+* constraint 验证，约束
