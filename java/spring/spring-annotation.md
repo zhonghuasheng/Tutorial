@@ -284,7 +284,53 @@ public class AnnotationClass {
     }
     ```
 
-#### SpringX常用注解有哪些
+#### 常用注解有哪些
+
+* Hibernate Validator 参考文章 https://zhuanlan.zhihu.com/p/194097505
+```
+在程序开发中，经常要对数据进行校验后再进行业务处理。如果在业务代码中进行Bean的字段校验，会使得代码变的非常繁琐。JSR303 - Bean Validation[JSR Java Specification Requests]为JavaBean的验证定义了相关的元数据模型和API。
+This JSR will define a meata-data model and API for JavaBeanTM validation, with overrides and extended meta-data through the use of XML validateion descriptors. 在Java8之后，又推出JSR380 - Bean Validation 2.0。
+JSR是Java Specification Requests的缩写，意思是Java 规范提案。是指向JCP(Java Community Process)提出新增一个标准化技术规范的正式请求。任何人都可以提交JSR，以向Java平台增添新的API和服务。JSR已成为Java界的一个重要标准。
+Hibernate Validator是Bean Validation的实现，Hibernate Validator内置了JSR303/JSR380中的所有的constraint[约束，限制]的实现，还额外定义了很多自定义的constraint。
+```
+* 导入依赖 spring-boot-starter-web中集成了Hibernate Validator工具，无需额外引用。
+* maven依赖 hibernate-validator
+* Bean Validation中内置的constraint
+```
+@Null 元素必须为null
+@NotNull 元素不能为null
+@NotBlank 元素不能为null且不能为空，用于string
+@NotEmpty 元素不能为null且不能为空集合
+@Length
+@Negative 
+@NegativeOrZero
+@Positive
+@PositiveOrZero
+@Size 
+@Min
+@Max
+@DecimalMin
+@DecimalMax
+@Digits 元素必须为一个指定格式的数字 @Digits(integer=, fraction=) integer指定整数精度，fraction指定小数精度
+@AssertFalse 元素必须为false
+@AssertTrue 元素必须为true，可用于用户同意条款
+@Email
+@Pattern
+@Past
+@PastOrPresent
+@Future
+@FutureOrPresent
+@Range
+@SafeHtml
+@URL
+@CreditCardNumber
+@CodePointLength
+@UniqueElements
+@DurationMin
+@DurationMax
+```
+
+
 
 * Spring
     * @NotEmpty 用在集合类上面 加了@NotEmpty的String类、Collection、Map、数组，是不能为null或者长度为0的(String Collection Map的isEmpty()方法)
