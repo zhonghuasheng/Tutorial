@@ -1594,4 +1594,5 @@ https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html
 [^@\s]+ 	匹配一次或多次出现的任何字符，@ 字符或空格除外。
 $ 	在字符串的结尾结束匹配。
 ```
-4. 获取系统临时目录 File tmpdir = new File(AccessController.doPrivileged(new GetPropertyAction("java.io.tmpdir")));
+4. 获取系统临时目录 File tmpdir = new File(AccessController.doPrivileged(new GetPropertyAction("java.io.tmpdir"))); AccessController.doPrivileged中断了栈检查过程，使得后续原本没有权限的代码也可以正常执行 https://blog.csdn.net/jiangtianjiao/article/details/87909065
+5. ParserConfig.getGlobalInstance().setAutoTypeSupport(true); 用于解决fastjson漏洞，防止被远程执行
