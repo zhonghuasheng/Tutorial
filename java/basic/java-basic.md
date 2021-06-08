@@ -1594,3 +1594,4 @@ https://www.ibm.com/developerworks/cn/java/j-lo-javaio/index.html
 [^@\s]+ 	匹配一次或多次出现的任何字符，@ 字符或空格除外。
 $ 	在字符串的结尾结束匹配。
 ```
+4. 获取系统临时目录 File tmpdir = new File(AccessController.doPrivileged(new GetPropertyAction("java.io.tmpdir")));
