@@ -384,5 +384,7 @@ class A {
     B b;
 }
 ```
+* 返回值
+    * @JsonIgnore 返回值过滤掉某个值
 ### 参考文章
 * http://m.biancheng.net/view/7009.html
