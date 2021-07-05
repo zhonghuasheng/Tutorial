@@ -120,3 +120,7 @@
 * JSR Java Specialtion Requests
 * fraction 小数部分
 * constraint 验证，约束
+* LTR Learning To Rand 算法
+* BRD Business Requirement Document 业务需求
+* PRD Product Requirement Document 产品需求
+* User Stroy 场景
