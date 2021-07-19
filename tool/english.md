@@ -124,3 +124,4 @@
 * BRD Business Requirement Document 业务需求
 * PRD Product Requirement Document 产品需求
 * User Stroy 场景
+* LDAP Lightweight Directory Access Protocol 轻型目录访问协议。LDAP采用树形结构存储，查询高效，开源产品OpenLDAP。可用于SSO单点登录
