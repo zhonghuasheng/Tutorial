@@ -7,6 +7,8 @@
 * 激活工具：链接：https://pan.baidu.com/s/1gzjNQe2bJ-wQeRTT_mdFGg 提取码：gf3j
 
 ## 常用设置
+
+### 插件
 * 插件 Lombook， Easy Code(https://blog.csdn.net/qq_38225558/article/details/84479653)
 * RestfulToolkit 将url收集显示，点击url可转到代码
 * Grep Console插件能让你的Console丰富多彩，并且还能够过滤控制台输出(过滤的时候先选中要过滤的关键字，然后右键选择Grep)
@@ -15,10 +17,18 @@
 使用方法很简单，选中方法名（注意不要选类名），然后点击鼠标右键，选择 Sequence Diagram 选项即可！
 * EasyCode: Easycode 可以直接对数据的表生成entity、controller、service、dao、mapper无需任何编码，简单而强大。
 
-### 显示空格
-```
-开始没开启显示空格的选项（Setting->Editor->Appearance->show whitespaces）
-```
+### 配置
+1. 开始没开启显示空格的选项（Setting->Editor->Appearance->show whitespaces）
+
+![](png/idea-tab-whitespace.PNG)
+
+2. properties文件显示中文。所有的都改成UTF-8
+
+![](png/idea-encode-utf8.png)
+
+3. 缩放字体
+
+![](png/idea-font-size.png)
 
 ### 社区版IDEA如何添加tomcat服务器
 1. 在pom.xml中plugins节点下添加tomcat-maven-plugin，目前比较稳定的是tomcat7-maven-plugin, tomcat8-maven-plugin支持不是很好
