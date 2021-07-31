@@ -19,6 +19,9 @@
 
 ### 配置
 1. 开始没开启显示空格的选项（Setting->Editor->Appearance->show whitespaces）
+一些代码规范会要求编程时使用4个空格缩进而不是tab，好处是在不同编辑器下4个空格的宽度看起来是一致的，而tab则长短不一
+设置好以后，可以按ctrl+alt+L整理格式，然后选中缩进的一部分，如果能选中缩进的一部分，证明是空格。
+https://jingyan.baidu.com/article/148a1921cbaaf04d71c3b1ee.html
 
 ![](png/idea-tab-whitespace.PNG)
 
