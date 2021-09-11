@@ -90,3 +90,10 @@ File -> Project Structure -> Project Settings -> Modules
 * https://blog.csdn.net/wt_better/article/details/86380826
 1. 右边Maven -> Generate Source and Update Project
 2. 更新.idea中的modules.xml
+
+### java.nio.charset.MalformedInputException: Input length = 1
+1. 可能是编码问题
+2. 配置文件，ctrl+x, ctrl+v解决
+
+### IDEA右下角显示内存指示器
+双shift，输入 Show Memory Indicator
