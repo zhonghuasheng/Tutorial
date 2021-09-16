@@ -22,7 +22,7 @@
   - [性能查询](#性能查询)
   - [数据页的空间利用率](#数据页的空间利用率)
   - [事务的传播机制]()
-
+  - [Sharding-JDBC](#Sharding-JDBC)
 - [百问](#百问)
 - [实战](#实战)
   - [设计](#设计)
@@ -378,6 +378,10 @@ alter table A engine=InnoDB 命令来重建表
 1. 索引没有建好
 2. SQL语句没写好
 3. MySQL选错了索引
+
+## Sharding-JDBC
+https://blog.csdn.net/taoerchun/article/details/104247399
+几个核心的步骤是一样的：SQL解析，重写，路由，执行，结果归并。
 
 ## 百问
 1. MYSQL 索引长度的限制
