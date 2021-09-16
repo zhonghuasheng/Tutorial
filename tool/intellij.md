@@ -97,3 +97,6 @@ File -> Project Structure -> Project Settings -> Modules
 
 ### IDEA右下角显示内存指示器
 双shift，输入 Show Memory Indicator
+
+### DBeaver连接mysql时Public Key Retrieval is not allowed
+编辑连接->驱动属性->allowPublicKeyRetrieval=TRUE
