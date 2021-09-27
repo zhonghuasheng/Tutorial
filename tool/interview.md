@@ -109,7 +109,7 @@
 92. Jedis 和 redisson 有哪些区别？
 93. 怎么保证缓存和数据库数据的一致性？
 94. redis 持久化有几种方式？
-95. redis 怎么实现分布式锁？
+95. [redis 怎么实现分布式锁？](../system/architecture/redis实现分布式锁.md)
 96. redis 分布式锁有什么缺陷？
 97. redis 如何做内存优化？
 98. redis 淘汰策略有哪些？

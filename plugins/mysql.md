@@ -22,7 +22,7 @@
   - [性能查询](#性能查询)
   - [数据页的空间利用率](#数据页的空间利用率)
   - [事务的传播机制]()
-
+  - [Sharding-JDBC](#Sharding-JDBC)
 - [百问](#百问)
 - [实战](#实战)
   - [设计](#设计)
@@ -379,6 +379,10 @@ alter table A engine=InnoDB 命令来重建表
 2. SQL语句没写好
 3. MySQL选错了索引
 
+## Sharding-JDBC
+https://blog.csdn.net/taoerchun/article/details/104247399
+几个核心的步骤是一样的：SQL解析，重写，路由，执行，结果归并。
+
 ## 百问
 1. MYSQL 索引长度的限制
 ```
@@ -449,3 +453,5 @@ InnoDB 只给必要的值；
 * utf8和utf8mb4区别
 MySQL在5.5.3之后增加了这个utf8mb4的编码，mb4就是most bytes 4的意思，专门用来兼容四字节的unicode。好在utf8mb4是utf8的超集，除了将编码改为utf8mb4外不需要做其他转换。当然，为了节省空间，一般情况下使用utf8也就够了。
 那上面说了既然utf8能够存下大部分中文汉字,那为什么还要使用utf8mb4呢? 原来mysql支持的 utf8 编码最大字符长度为 3 字节，如果遇到 4 字节的宽字符就会插入异常了。三个字节的 UTF-8 最大能编码的 Unicode 字符是 0xffff，也就是 Unicode 中的基本多文种平面(BMP)。也就是说，任何不在基本多文本平面的 Unicode字符，都无法使用 Mysql 的 utf8 字符集存储。包括 Emoji 表情(Emoji 是一种特殊的 Unicode 编码，常见于 ios 和 android 手机上)，和很多不常用的汉字，以及任何新增的 Unicode 字符等等(utf8的缺点)。
+
+* MySQL单表可以存储10亿级数据，只是这时候性能比较差，业界公认MySQL单表容量在1KW以下是最佳状态，因为这时它的BTREE索引树高在3~5之间。
