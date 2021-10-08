@@ -114,3 +114,10 @@
         ```
 * 处理and
     当遇到sql中这样写WHERE ( au_state = '1' OR au_state = '2' ) ，mybatis中queryWrapper.and(Wrapper -> Wrapper.eq(PcmArticle::getAuState, "1").or().eq(PcmArticle::getAuState, "2"));
+* 注解
+    * @TableName：数据库表相关
+    * @TableId：表主键标识
+    * @TableField：表字段标识
+        * @TableField(value= "", exist = false)：表示该属性不为数据库表字段，但又是必须使用的。
+        * @TableField(value= "", exist = true)：表示该属性为数据库表字段。
+    * @TableLogic：表字段逻辑处理注解（逻辑删除）
