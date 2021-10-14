@@ -598,6 +598,15 @@ public final synchronized void join(long millis)
 while(isAlive())是为了防止子线程伪唤醒(spurious wakeup)，只要子线程没有TERMINATED的，父线程就需要继续等下去。
 5. join() 和 sleep() 一样，可以被中断（被中断时，会抛出 InterrupptedException 异常）；不同的是，join() 内部调用了 wait()，会出让锁，而 sleep() 会一直保持锁。
 
+```java
+thread1.start();
+thread1.join();
+thread2.start();
+thread2.join();
+thread3.start();
+thread3.join();
+```
+调用线程的wait()方法时，会使主线程处于等待状态，等待子线程执行完成后再次向下执行。也就是说，在ThreadSort02类的main()方法中，调用子线程的join()方法，会阻塞main()方法的执行，当子线程执行完成后，main()方法会继续向下执行，启动第二个子线程，并执行子线程的业务逻辑，以此类推
 ### 线程的中断interrupted
 interrupt()的作用是中断本线程。
 本线程中断自己是被允许的；其它线程调用本线程的interrupt()方法时，会通过checkAccess()检查权限。这有可能抛出SecurityException异常。
