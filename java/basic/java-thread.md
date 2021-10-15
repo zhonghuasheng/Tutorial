@@ -18,6 +18,8 @@
 * [生产者消费者问题](#生产者消费者问题)
 * [钩子线程](#钩子线程)
 * [线程中的异常](#线程中的异常)
+* [线程池](#线程池)
+* [建议](#建议)
 
 ### 基础概念
 
@@ -598,6 +600,15 @@ public final synchronized void join(long millis)
 while(isAlive())是为了防止子线程伪唤醒(spurious wakeup)，只要子线程没有TERMINATED的，父线程就需要继续等下去。
 5. join() 和 sleep() 一样，可以被中断（被中断时，会抛出 InterrupptedException 异常）；不同的是，join() 内部调用了 wait()，会出让锁，而 sleep() 会一直保持锁。
 
+```java
+thread1.start();
+thread1.join();
+thread2.start();
+thread2.join();
+thread3.start();
+thread3.join();
+```
+调用线程的wait()方法时，会使主线程处于等待状态，等待子线程执行完成后再次向下执行。也就是说，在ThreadSort02类的main()方法中，调用子线程的join()方法，会阻塞main()方法的执行，当子线程执行完成后，main()方法会继续向下执行，启动第二个子线程，并执行子线程的业务逻辑，以此类推
 ### 线程的中断interrupted
 interrupt()的作用是中断本线程。
 本线程中断自己是被允许的；其它线程调用本线程的interrupt()方法时，会通过checkAccess()检查权限。这有可能抛出SecurityException异常。
@@ -765,10 +776,53 @@ public class UncaughtExceptionExample {
 
 非核心线程：当等待队列满了，如果当前线程数没有超过最大线程数，则会新建线程执行任务，那么核心线程和非核心线程到底有什么区别呢？说出来你可能不信，本质上它们没有什么区别，创建出来的线程也根本没有标识去区分它们是核心还是非核心的，线程池只会去判断已有的线程数（包括核心和非核心）去跟核心线程数和最大线程数比较，来决定下一步的策略。
 
-作者：三好码农
-链接：https://www.jianshu.com/p/9a8c81066201
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+### 线程池
+#### 创建线程池常用的类
+* Executors.newCachedThreadPool: 创建一个可缓存的线程池
+* Executors.newFixedThreadPool: 创建一个定长的线程池，可以控制线程的最大并发数，超出的线程会在队列中等待
+* Executors.newScheduledThreadPool: 创建一个定长的线程池，支持定时、周期性的任务执行
+* Executors.newSingleThreadExecutor: 创建一个单线程的线程池，使用一个唯一的工作线程执行任务，保证所有任务按照指定顺序执行
+* Executors.newSingleThreadScheduledExecutor: 创建一个单线程的线程池，支持定时、周期性的任务执行
+* Executors.newWorkStealingPool: 创建一个具有并行级别的work-stealing线程池
+> 参数
+* corePoolSize: 核心线程数量
+* maximumPoolSize: 最大线程数
+* workQueue: 阻塞队列，存储等待执行的任务
+1. 如果运行的线程数小于corePoolSize，直接创建新线程处理任务，即使线程池中的其他线程是空闲的
+2. 如果运行的线程数大于等于cordPoolSize，并且小于maximumPoolSize，此时，只有当workQueue满时，才会创建新的线程处理任务
+3. 如果设置的corePoolSize与maximumPoolSize相同，那么创建的线程池大小时固定的，此时，如果有新任务提交，并且workQueue没有满时，就把请求放入到workQueue中，等待空闲的线程，从workQueue中取出任务进行处理
+4. 如果运行的线程数量大于maximumPoolSize，同时，workQueue已经满了，会通过拒绝策略参数rejectHandler来指定处理策略
+    > 根据上面三个参数配置，线程池会对任务进行如下处理方式
+    ```
+    当提交一个新的任务到线程池，线程池会根据当前线程池中正在进行的线程数量来决定该任务的处理方式，处理方式共有三种：直接切换、使用无限队列、使用有界队列
+    1. 直接切换常用的队列就是SynchronousQueue
+    2. 使用无限队列就是使用基于链表的队列，比如：LinkedBlockingQueue，如果使用这种方式，线程池中创建的最大线程就是corePoolSize，此时maximumPoolSize不会起作用，因为队列是无限的，workQueue不会满。当线程池中的所有的核心线程都是运行状态时，提交新任务，就会放入等待队列中
+    3. 使用有界队列比如ArrayBlockingQueue，使用这种方式可以将线程池的最大线程数限制为maximumPoolSize，可以降低资源的消耗。
+    ```
+> 参数
+* keepAliveTime: 线程没有任务执行时最多保持多久时间终止
+* unit: keepAliveTime的时间单位
+* threadFactory: 线程工厂，用来创建线程
+* rejectHandler: 拒绝处理任务时的策略
+    ```
+    如果workQueue阻塞队列满了，并且没有空闲的线程池，此时，继续提交任务，需要采取一种策略来处理这个任务
+    1. 默认直接抛出异常，实现类为AbortPolicy
+    2. 用调用者所在的线程来执行任务，实现类为CallerRunsPolicy
+    3. 丢弃队列中最靠前的任务，并执行当前任务，实现类DiscardOldestPolicy
+    4. 直接丢弃当前任务，实现类为DiscardPolicy
+    ```
+> ThreadPoolExecutor提供的启动和停止任务的方法
+1. execute(); 提交任务，交给线程池执行
+2. submit(); 提交任务，能够返回执行结果execute + Future
+3. shutdown(); 关闭线程池，等待任务都执行完
+4. shutdownNow(); 立即关闭线程池，不等待任务执行完
+
+#### 线程池配置
+1. CPU密集型，设置为N + 1
+2. IO密集型，设置为2N
+
+### 建议
+1. SimpleDateFormat类是线程不安全的，推荐使用JDK8中的DateTimeFormatter，高并发场景中推荐使用joda-time库来处理日格式化，效率高
 
 # 引用
 * https://www.cnblogs.com/skywang12345/
