@@ -468,3 +468,10 @@ PS：
 > 写了一个数据同步，大概实现是这样的：首先从A表筛选出待同步的数据，每次取50条，然后一条条同步（中间数据组装逻辑过多，未做批量同步），不论这条数据是否同步完，都把A表的原数据打一个sync=1的标识（标记为已同步），线下N个环境跑起来都没问题，上了线，数据总是同步多了几条，重新同步后还是多几条（重新同步后多出来的数据条数不固定） - 根本原因是线上配置的是主从数据库
 
 ![](database/img/mysql-sync.PNG)
+
+> MySQL查询重复的数据
+```sql
+SELECT columnA FROM tableA 
+WHERE condation
+GROUP BY columnA HAVING COUNT(columnA) > 1
+```
