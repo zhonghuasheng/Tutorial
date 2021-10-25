@@ -817,9 +817,14 @@ public class UncaughtExceptionExample {
 3. shutdown(); 关闭线程池，等待任务都执行完
 4. shutdownNow(); 立即关闭线程池，不等待任务执行完
 
-#### 线程池配置
+#### 线程池
+> 配置
 1. CPU密集型，设置为N + 1
 2. IO密集型，设置为2N
+> 创建
+* 使用Executors工具类创建线程池
+* 使用ThreadPoolExecutor类创建线程池
+* 使用ScheduledThreadPoolExecutor类创建线程池
 
 ### 建议
 1. SimpleDateFormat类是线程不安全的，推荐使用JDK8中的DateTimeFormatter，高并发场景中推荐使用joda-time库来处理日格式化，效率高
