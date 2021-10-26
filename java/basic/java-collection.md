@@ -42,6 +42,7 @@
     * [Collections工具类-操作集合]()
     * [Arrays工具类-操作数组]()
 * [5. 圈重点](#5.圈重点)
+* [6. Stream](#6.Stream)
 
 * [参考资料](#参考资料)
 
@@ -1123,6 +1124,12 @@ List list = Arrays.asList(1, 2, 3);
 * Collection集合用于存Object的，不支持存储基础数据类型，这是由Collection接口的定义决定的： Collection<E>
 * iterator.remove()方法必须要在调用了next()方法之后，否则会报IllegalStateException
 
+# 6.Stream
+* List转map，按某个字段分类
+```java
+    // group by City
+    Map<String, List<Employee>> employeesByCity = employees.stream().collect( Collectors.groupingBy(Employee::getCity));
+```
 
 # 参考资料
 * 集合框架图 https://img-blog.csdn.net/20160124221843905
