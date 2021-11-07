@@ -1,9 +1,16 @@
 # 目录
 * [学习计划](#学习计划)
+    * [Redis安装及基础知识]()
+    * [Redis底层数据结构]()
+    * [Redis数据类型]()
+    * [Redis高级特性]()
+    * [Redis场景问题]()
 * [学习笔记](#学习笔记)
 * [百问](#百问)
-    * redis在什么情况下会变慢？
+    * Redis番外篇
+    * Redis在什么情况下会变慢？
     * 单线程的redis，如何知道要运行定时任务？
+* [实战]()
 
 ### 学习计划
 * [Redis的介绍、优缺点、使用场景](#Redis的介绍、优缺点、使用场景)
@@ -131,7 +138,7 @@
     auth "password" 验证密码
     redis-cli --raw可以避免中文乱码
     exit 退出
-    select index 切换到指定的数据库
+    select index[0-15] 切换到指定的数据库
     keys * 显示所有key，如果键值对多不建议使用，keys会遍历所有key，可以在从节点使用;时间复杂度O(N)
     dbsize 算出所有的key的数量，只是数量;时间复杂度O(1)
     exists key key是否存在，存在返回1，不存在返回0；时间复杂度O(1)
@@ -146,6 +153,7 @@
     set key value插入值
     sadd myset 1 2 3 4 插入set
     get key获取值
+    object encoding key获取value对应的编码
     del key删除key
     cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格
     setnx key value #key不存在，才设置
