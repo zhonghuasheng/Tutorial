@@ -1,9 +1,16 @@
 # 目录
 * [学习计划](#学习计划)
+    * [Redis安装及基础知识]()
+    * [Redis底层数据结构]()
+    * [Redis数据类型]()
+    * [Redis高级特性]()
+    * [Redis场景问题]()
 * [学习笔记](#学习笔记)
 * [百问](#百问)
-    * redis在什么情况下会变慢？
+    * Redis番外篇
+    * Redis在什么情况下会变慢？
     * 单线程的redis，如何知道要运行定时任务？
+* [实战]()
 
 ### 学习计划
 * [Redis的介绍、优缺点、使用场景](#Redis的介绍、优缺点、使用场景)
@@ -131,7 +138,7 @@
     auth "password" 验证密码
     redis-cli --raw可以避免中文乱码
     exit 退出
-    select index 切换到指定的数据库
+    select index[0-15] 切换到指定的数据库
     keys * 显示所有key，如果键值对多不建议使用，keys会遍历所有key，可以在从节点使用;时间复杂度O(N)
     dbsize 算出所有的key的数量，只是数量;时间复杂度O(1)
     exists key key是否存在，存在返回1，不存在返回0；时间复杂度O(1)
@@ -146,6 +153,7 @@
     set key value插入值
     sadd myset 1 2 3 4 插入set
     get key获取值
+    object encoding key获取value对应的编码
     del key删除key
     cat redis.conf | grep -v "#" | grep -v "^$" 查看配置文件，去除所有的#，去除所有的空格
     setnx key value #key不存在，才设置
@@ -417,7 +425,7 @@ struct sdshdr {
 * 复制的配置:
   * 使用slaeof命令，在从redis中执行slave masterip:port使其成为master的从服务器，就能从master拉取数据了；执行slaveof no one清除掉不成为从节点，但是数据不清楚；
   * 修改配置， slaveof ip port / slave-read-only yes(从节点只做都操作)；配置要更改的话，要重启，所以选择的时候谨慎
-* 全量复制
+* 全量复制f
   * run_id(使用info server可以看到run_id),重启之后run_id就没有了，当从服务器去复制主服务器，主服务器run_id会在从服务器上做一个标识，当从服务器发现主服务器的run_id发生了变化，说明主服务器发生了变化（重启或者什么的），那么从服务器就要把主服务器的数据都同步过来
   * 偏移量：部分复制中的一个依据，后面说
 
@@ -860,7 +868,7 @@ struct sdshdr {
 ```
 
 ### 实战
-- SpringBoot RedisTemplate执行lua
+> SpringBoot RedisTemplate执行lua
 ```java
 String luaScript = "redis.call(\"sadd\", KEYS[1], ARGV[1]);\n" +
             "local score = redis.call(\"scard\", KEYS[1]);\n" +
@@ -879,7 +887,7 @@ redisTemplate.executePipelined(new RedisCallback<Object>() {
 });
 ```
 
-- ERR 'EVAL' command keys must in same slot
+> ERR 'EVAL' command keys must in same slot
 在Redis集群版实例中，事务、脚本等命令要求所有的key必须在同一个slot中，如果不在同一个slot中将返回以下错误信息(command keys must in same slot)
 在集群下,它会将数据自动分布到不同的节点(虚拟的16384个slot)
 它数据的路由分发,是通过计算key,所以只要key一样,则一定会被分到同一个slot
@@ -890,3 +898,19 @@ beta:
   hash_tag: "{}"
 解决方案，在这个Lua script中所有的key(key和hashKey)都是用同一个前缀，并且用花括号括起来，就能保证命中同一个slot，但是问题来了，这会导致该lua script中的所有key都集中到了一个slot。
 redis集群版的分布式是会根据KEY进行hash取模然后打到不同的slot，这种思想是典型的分而治之。分治，分流，降级。
+
+> Redis遍历key
+1. 使用keys pattern来全量遍历key，如果库中key过多会造成阻塞
+   * 哈希 hgetall
+   * 集合 smembers
+   * 有序集合 zrange
+2. 使用scan cursor [match pattern] [count number]来渐进式遍历
+   * cursor是必须参数，实际cursor是一个游标，第一次遍历从0开设，每次scan都会返回当前游标和数据集合，直到游标为0，表示遍历结束
+   * match pattern 可选，在遍历中匹配想要的key
+   * count number 可选，表示每次要遍历的键个数，默认10； number不限制返回的条数，而是限制遍历的个数
+   * eg: scan 0 match a* count 100
+    * 哈希 hscan
+    * 集合sscan
+    * 有序集合zscan
+* Java中具体伪代码可百度之，关注具体类 ScanResult result = redis.scan(key, cursor, pattern); result.getStringCursor()用于获取游标
+* `问题`： 如果在scan的过程中有键的变化，那么会产生新增的键可能没有遍历到，遍历出重复的键等情况，代码逻辑要过滤
