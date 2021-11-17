@@ -1596,3 +1596,9 @@ $ 	在字符串的结尾结束匹配。
 ```
 4. 获取系统临时目录 File tmpdir = new File(AccessController.doPrivileged(new GetPropertyAction("java.io.tmpdir"))); AccessController.doPrivileged中断了栈检查过程，使得后续原本没有权限的代码也可以正常执行 https://blog.csdn.net/jiangtianjiao/article/details/87909065
 5. ParserConfig.getGlobalInstance().setAutoTypeSupport(true); 用于解决fastjson漏洞，防止被远程执行
+6. 动态监控JVM内存，并触发gc，可弄个定时任务
+```java
+long totalMemory = Runtime.getRunTime().totalMemory() / 1024 /1024;
+long freeMemory = Runtime.getRunTime().freeMemory() / 1024 /1024;
+System.gc(); // 可触发gc
+```
