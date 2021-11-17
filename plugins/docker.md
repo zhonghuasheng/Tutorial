@@ -1,8 +1,9 @@
 ### 学习路线
 * Docker基础知识
+    * [CentOS下安装Docker](#CentOS下安装Docker)
     * https://www.cnblogs.com/Can-daydayup/p/15559341.html
 * Docker基础使用
-    * Docker发布SpringBoot项目
+    * Docker发布SpringBoot项目 https://www.jianshu.com/p/397929dbc27d
     * Docker+Jenkins+Git+SpringBoot构建自动化部署
 
 ### Docker是什么
@@ -29,3 +30,10 @@ Docker主要解决了在你的环境上运行没问题，但是在我的环境�
 ```
 
 #### Docker中启动springboot项目
+
+FROM java:8
+MAINTAINER luke.chen <xiaoyong690@126.com>
+VOLUME /tmp
+ADD demo-0.0.1-SNAPSHOT.jar app.jar
+RUN bash -c 'touch /app.jar'
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
