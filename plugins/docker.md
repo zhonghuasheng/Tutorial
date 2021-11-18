@@ -1,7 +1,10 @@
-### 快速入门
-* https://www.cnblogs.com/Can-daydayup/p/15559341.html
-
-### 快速上手
+### 学习路线
+* Docker基础知识
+    * [CentOS下安装Docker](#CentOS下安装Docker)
+    * https://www.cnblogs.com/Can-daydayup/p/15559341.html
+* Docker基础使用
+    * Docker发布SpringBoot项目 https://www.jianshu.com/p/397929dbc27d
+    * Docker+Jenkins+Git+SpringBoot构建自动化部署
 
 ### Docker是什么
 Docker是一个开源的应用容器引擎，Docker其实就是可以打包程序和运行环境，把环境和程序一起发布的容器，当你需要发布程序时，你可以使用Docker将运行环境一起发布，其他人拿到你的程序后可以直接运行，避免出现一次编译，到处调试的尴尬局面~。Docker的出现主要是为了解决“在我的机器上是正常的，为什么到你的机器上就不正常了”的问题，但是随着Docker的进步，以及K8S等编排软件的流行，Docker的使用场景大大扩展，Docker已经成为高可用服务集群持续交付、继续集成以及云原生的关键技术。
@@ -27,3 +30,10 @@ Docker主要解决了在你的环境上运行没问题，但是在我的环境�
 ```
 
 #### Docker中启动springboot项目
+
+FROM java:8
+MAINTAINER luke.chen <xiaoyong690@126.com>
+VOLUME /tmp
+ADD demo-0.0.1-SNAPSHOT.jar app.jar
+RUN bash -c 'touch /app.jar'
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]
