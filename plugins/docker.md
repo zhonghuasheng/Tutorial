@@ -45,6 +45,7 @@ Docker主要解决了在你的环境上运行没问题，但是在我的环境�
 停止容器 docker stop containerId
 重启容器 docker restart containerId
 删除容器 docker rm containerId
+查看日志 docker logs [-f 跟踪日志输出 -t 显示时间戳 --since="2021-11-19"显示某个时间的所有日志 --tail=10列出最新的N条日志] containerId
 ```
 
 #### Docker中启动springboot项目
