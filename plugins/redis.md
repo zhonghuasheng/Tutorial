@@ -914,3 +914,7 @@ redis集群版的分布式是会根据KEY进行hash取模然后打到不同的sl
     * 有序集合zscan
 * Java中具体伪代码可百度之，关注具体类 ScanResult result = redis.scan(key, cursor, pattern); result.getStringCursor()用于获取游标
 * `问题`： 如果在scan的过程中有键的变化，那么会产生新增的键可能没有遍历到，遍历出重复的键等情况，代码逻辑要过滤
+
+https://www.imcsummit.org/2019/us/sites/2019.us/files/slides/10-Ways-to-Scale-with-Redis-IMCSummit-2019.pdf
+https://blog.csdn.net/weixin_33885253/article/details/88034739
+https://www.pauladamsmith.com/blog/2011/03/redis_get_set.html

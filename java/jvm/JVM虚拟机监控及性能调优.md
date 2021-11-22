@@ -100,7 +100,17 @@
     java.rmi.ConnectException: Connection refused to host: y.y.y.y; nested exception is:
     ```
     > 注意：我在这里查看了远程机器的hosts，发现其配有一些其他的IP，将其删除后能够联通
-*
+* 如何定位内存CPU高和死锁的问题
+    ```log
+    top 查看进行的cpu负载高的，获取进程id
+    jstack 进程id > xxx.txt 导出日志
+    top -p 进程id -H 查看负载高的线程
+    printf "%x" 进程id 将进程号进制转换，在日志定位
+    程序死锁
+    found 1 dead lock
+    ```
+
+
 # 引用
 * [jvisualvm简要说明](https://blog.csdn.net/weixin_38750084/article/details/83314046)
 * [jvisualvm 连接 jstatd 远程监控 jvm 或 Visual GC提示"不受此JVM支持“](https://blog.csdn.net/liupeifeng3514/article/details/78998161)
