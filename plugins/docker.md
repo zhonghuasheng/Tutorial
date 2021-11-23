@@ -43,9 +43,10 @@ Docker主要解决了在你的环境上运行没问题，但是在我的环境�
 查看镜像 docker image ls 或 docker images
 启动容器 docker start containerId
 停止容器 docker stop containerId
-重启容器 docker restart containerId
+重启容器 docker restart containerId 或者 docker restart 容器名字
 删除容器 docker rm containerId
 查看日志 docker logs [-f 跟踪日志输出 -t 显示时间戳 --since="2021-11-19"显示某个时间的所有日志 --tail=10列出最新的N条日志] containerId
+修改容器名字 docker rename 容器原来名 要改为的名字
 ```
 
 #### Docker中启动springboot项目
