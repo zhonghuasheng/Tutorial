@@ -475,3 +475,5 @@ SELECT columnA FROM tableA
 WHERE condation
 GROUP BY columnA HAVING COUNT(columnA) > 1
 ```
+
+https://mp.weixin.qq.com/s/SNRvdmyS57oWS_CyYKVvSA
