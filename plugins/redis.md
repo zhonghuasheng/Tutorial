@@ -335,7 +335,7 @@ for(0->100) {
 | List | 双向链表 | 增删快，提供了操作某一元段元素的API | 1. 最新消息，按照时间线显示<br> 2. 消息队列 |
 | Set | 哈希表实现，元素不重复 | 添加/删除/修改的复杂度都是O（1），为集合提供求交集/并集/差集的操作 | 1. 打label/tag，如文章<br>2. 查找共同好友<br>3. 抽奖系统<br>|
 | Zset | 将Set中的元素增加一个double类型的权重score，按照score排序 | 数据插入集合就好序了 | 排行榜 |
-| Hyperloglog | 本质是string | 极小空间完成独立数据量统计 | 统计基数，不完全正确 |
+| Hyperloglog | 本质是string | 极小空间完成独立数据量统计 | 统计基数，不完全正确 <br> 统计注册IP数，统计页面UV数，统计在线用户数，统计每日搜索词条数|
 | GEO | 数据类型是zset | 存储地理位置信息，并提供计算距离等操作 | 微信摇一摇查看附近好友 |
 | Bitmap | 位图 | 数据量很大的时候节省存储内存，数据量小了不节省 | 1. 设置用户的状态<br>2. BitMap解决海量数据寻找重复、判断个别元素是否在 |
 
@@ -918,3 +918,23 @@ redis集群版的分布式是会根据KEY进行hash取模然后打到不同的sl
 https://www.imcsummit.org/2019/us/sites/2019.us/files/slides/10-Ways-to-Scale-with-Redis-IMCSummit-2019.pdf
 https://blog.csdn.net/weixin_33885253/article/details/88034739
 https://www.pauladamsmith.com/blog/2011/03/redis_get_set.html
+https://www.processon.com/view/60335eea6376896cd6ea50e3?fromnew=1
+当 Redis 发生高延迟时，到底发生了什么
+http://remcarpediem.net/article/ef4e619/
+Redis 命令执行过程(上)
+https://www.cnblogs.com/remcarpediem/p/12024468.html
+https://www.cnblogs.com/remcarpediem/p/12038377.html
+https://blog.csdn.net/weixin_33885253/article/details/88034739
+Redis 6.0 多线程性能测试结果及分析
+https://www.cnblogs.com/wy123/p/14180499.html
+Redis内部数据结构详解(1)——dict
+https://blog.csdn.net/twt936457991/article/details/89816468
+https://github.com/huangz1990/redis-3.0-annotated
+https://www.processon.com/view/610e2894e0b34d0b1a438ede?fromnew=1
+https://www.processon.com/view/614c87fe7d9c08065b403dc5?fromnew=1
+https://www.processon.com/view/60501f32f346fb348a92f954?fromnew=1
+https://www.processon.com/view/60f21d6ee0b34d0e1b69ad83?fromnew=1
+https://www.processon.com/view/60335eea6376896cd6ea50e3?fromnew=1
+https://www.processon.com/view/5ea7a58807912948b0e1aa2f?fromnew=1
+https://www.processon.com/view/5f7c98677d9c0806f2659737?fromnew=1
+https://blog.csdn.net/user2025/article/details/109178738
