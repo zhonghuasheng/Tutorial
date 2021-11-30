@@ -364,6 +364,10 @@ public void demo2(@RequestBody @Valid DemoModel demo, BindingResult result){
     * @NotEmpty 用在集合类上面 加了@NotEmpty的String类、Collection、Map、数组，是不能为null或者长度为0的(String Collection Map的isEmpty()方法)
     * @NotBlank只用于String,不能为null且trim()之后size>0
     * @NotNull:不能为null，但可以为empty,没有Size的约束
+    * @Size(min = 1,max = 10,message = "姓名长度必须为1到10") 
+      private String name;
+    * @Past过去的时间
+    * @Future 将来的时间
 * SpringCloud
     * @SpringBootApplication是Sprnig Boot项目的核心注解,目的是开启自动配置
     * @EnableDiscoveryClient注解基于spring-cloud-common依赖，并且在classpath中实现
