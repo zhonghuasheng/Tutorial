@@ -914,6 +914,27 @@ redis集群版的分布式是会根据KEY进行hash取模然后打到不同的sl
 * Java中具体伪代码可百度之，关注具体类 ScanResult result = redis.scan(key, cursor, pattern); result.getStringCursor()用于获取游标
 * `问题`： 如果在scan的过程中有键的变化，那么会产生新增的键可能没有遍历到，遍历出重复的键等情况，代码逻辑要过滤
 
+> 记录慢查询
+Redis 原生提供慢查询统计功能，执行 slowlog get {n} 命令可以获取最近的 n 条慢查询命令，默认对于执行超过10毫秒(可配置)的命令都会记录到一个定长队列中，线上实例建议设置为1毫秒便于及时发现毫秒级以上的命令。
+```sh
+# 超过 slowlog-log-slower-than 阈值的命令都会被记录到慢查询队列中
+# 队列最大长度为 slowlog-max-len
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+```
+
+> Redis查找大对象
+Redis 本身提供发现大对象的工具，对应命令：redis-cli-h {ip} -p {port} bigkeys。这条命令会使用 scan 从指定的 Redis DB 中持续采样，实时输出当时得到的 value 占用空间最大的 key 值，并在最后给出各种数据结构的 biggest key 的总结报告。
+```sh
+> redis-cli -h host -p 12345 --bigkeys
+```
+
+> Redis查看上一次fork耗时
+```sh
+> redis-cli -c -p 7000 info | grep -w latest_fork_usec
+latest_fork_usec:315
+```
+
 https://www.imcsummit.org/2019/us/sites/2019.us/files/slides/10-Ways-to-Scale-with-Redis-IMCSummit-2019.pdf
 https://blog.csdn.net/weixin_33885253/article/details/88034739
 https://www.pauladamsmith.com/blog/2011/03/redis_get_set.html
