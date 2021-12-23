@@ -44,6 +44,7 @@
 37. synchronized 和 Lock 有什么区别？
 38. synchronized 和 ReentrantLock 区别是什么？
 39. 说一下 atomic 的原理？
+* [如何定位JVM死锁、cpu飙高、内存溢出](#如何定位JVM死锁、cpu飙高、内存溢出)
 ### spring/spring MVC
 * [SpringMVC 说说过滤器、监听器、拦截器有啥区别](https://github.com/zhonghuasheng/Tutorial/issues/197)
 * [SpringBoot系列](https://github. com/zhonghuasheng/Tutorial/issues?q=label%3ASpringBoot+)
@@ -251,3 +252,5 @@ epoll_wait() 多长时间去轮询一次，看有没有数据
 ```
 答：volatile修饰的变量保证了多线程下的可见性，当CPU写数据时，发现此变量被volatile修饰时，发现其他CPU中也存在该变量的副本，会发出信号通知其他CPU该变量的缓存行置为无效状态，因此当其他CPU需要读取这个变量时，发现自己缓存中的变量行是无效的，就重新去内存读取。它是通过计算机的总线嗅探机制（MESI）来实现的，当然它也会照成一个问题，就是volitale会一直嗅探，导致一些无效的交互，引发总线风暴。
 ```
+
+## 如何定位JVM死锁、cpu飙高、内存溢出
