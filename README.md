@@ -4,9 +4,9 @@
 
 ### 目录
 
-| 英语 | Java | Spring生态 | 中间件 | 数据库 | 服务器 | 网络/系统 | 架构设计 | 内功 | 程序人生 |
-|:----|:-----|:------|:------|:------|:------|:------|:------|:------|:-----|
-|<a href="#英语" h2>英语</a>|<a href="#Java">Basic</a><br><a href="#Java">JVM</a><br><a href="#Java">Web</a><br>|<a href="#Java">Spring</a><br><a href="#Java">Spring Boot</a><br><a href="#Java">Spring Cloud</a>|<a href="#中间件">Keepalived</a><br><a href="#中间件">ActiveMQ</a><br><a href="#中间件">RabbitMQ</a><br><a href="#中间件">RocketMQ</a><br><a href="#中间件">MQTT</a><br><a href="#中间件">Netty</a><br><a href="#中间件">Mybatis</a><br><a href="#中间件">Redis</a><br><a href="#中间件">Log</a>|<a href="#数据库">MySQL</a><br><a href="#数据库">Postgresql</a><br><a href="#数据库">Mongodb</a>|<a href="#服务器">Tomcat</a><br><a href="#服务器">Nginx</a>|<a href="#网络">网络</a><br><a href="#服务器">Linux</a>|<a href="#架构设计">原则</a><br><a href="#架构设计">安全</a><br><a href="#架构设计">高可用</a><br><a href="#架构设计">扩展性</a><br><a href="#架构设计">伸缩性</a><br><a href="#架构设计">性能</a><br>|<a href="#内功">数据结构</a><br><a href="#内功">算法</a><br><a href="#内功">设计模式</a>|<a href="#程序人生">软文</a><br><a href="#程序人生">规范</a><br><a href="#程序人生">工具</a><br><a href="#程序人生">面试集锦</a><br><a href="#程序人生">实战训练</a>|
+| 英语 | Java | Spring生态 | 中间件 | 数据库 | 服务器 | 网络/系统 | 内功 | 程序人生 |
+|:----|:-----|:------|:------|:------|:------|:------|:------|:------|
+|<a href="#英语" h2>英语</a>|<a href="#Java">Basic</a><br><a href="#Java">JVM</a><br><a href="#Java">Web</a><br>|<a href="#Java">Spring</a><br><a href="#Java">Spring Boot</a><br><a href="#Java">Spring Cloud</a>|<a href="#中间件">Keepalived</a><br><a href="#中间件">ActiveMQ</a><br><a href="#中间件">RabbitMQ</a><br><a href="#中间件">RocketMQ</a><br><a href="#中间件">MQTT</a><br><a href="#中间件">Netty</a><br><a href="#中间件">Mybatis</a><br><a href="#中间件">Redis</a><br><a href="#中间件">Log</a>|<a href="#数据库">MySQL</a><br><a href="#数据库">Postgresql</a><br><a href="#数据库">Mongodb</a>|<a href="#服务器">Tomcat</a><br><a href="#服务器">Nginx</a>|<a href="#网络">网络</a><br><a href="#服务器">Linux</a>|<a href="#内功">数据结构</a><br><a href="#内功">算法</a><br><a href="#内功">设计模式</a>|<a href="#程序人生">软文</a><br><a href="#程序人生">规范</a><br><a href="#程序人生">工具</a><br><a href="#程序人生">面试集锦</a><br><a href="#程序人生">实战训练</a>|
 
 ### 英语
 * [计算机行业常用英语积累](tool/english.md)
@@ -34,13 +34,7 @@
 * [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)&emsp;[Linux系统常用命令](tool/shell/linux.md)
 
 ### 架构设计
-* `设计原则`: &emsp;[系统设计注意事项](system/architecture/系统设计注意事项.md)
-* `系统安全`: &emsp;[系统架构安全设计](system/architecture/系统架构安全设计.md)
-* `高可用性`: &emsp;[系统架构高可用设计](system/architecture/系统架构高可用设计.md)
-* `高扩展性`: &emsp;[系统架构扩展性设计](system/architecture/系统架构扩展性设计.md)
-* `高伸缩性`: &emsp;[系统架构伸缩性设计](system/architecture/系统架构伸缩性设计.md)
-* `系统性能`: &emsp;[系统架构性能设计](system/architecture/系统架构性能设计.md)
-* `其他事项`: &emsp;[系统架构设计其他注意事项](system/architecture/系统架构设计其他注意事项.md)
+TODO
 
 ### 内功
 * `设计模式`: [23种设计模式](system/algorithm/设计模式.md)
