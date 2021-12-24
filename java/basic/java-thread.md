@@ -777,6 +777,11 @@ public class UncaughtExceptionExample {
 非核心线程：当等待队列满了，如果当前线程数没有超过最大线程数，则会新建线程执行任务，那么核心线程和非核心线程到底有什么区别呢？说出来你可能不信，本质上它们没有什么区别，创建出来的线程也根本没有标识去区分它们是核心还是非核心的，线程池只会去判断已有的线程数（包括核心和非核心）去跟核心线程数和最大线程数比较，来决定下一步的策略。
 
 ### 线程池
+Executor框架是指java5中引入的一系列并发库中与executor相关的一些功能类，其中包括线程池，Executor，Executors，ExecutorService，
+CompletionService，Future，Callable等。并发编程的一种编程方式是把任务拆分为一些列的小任务，即Runnable，然后在提交给一个Executor执行，Executor.execute(Runnalbe)。Executor在执行时使用内部的线程池完成操作。
+
+![](img/executor-service.png)
+
 #### 创建线程池常用的类
 * Executors.newCachedThreadPool: 创建一个可缓存的线程池
 * Executors.newFixedThreadPool: 创建一个定长的线程池，可以控制线程的最大并发数，超出的线程会在队列中等待
@@ -828,6 +833,7 @@ public class UncaughtExceptionExample {
 
 ### 建议
 1. SimpleDateFormat类是线程不安全的，推荐使用JDK8中的DateTimeFormatter，高并发场景中推荐使用joda-time库来处理日格式化，效率高
+`protected Calendar calendar;`多个线程之间共享变量calendar，并修改calendar。因此在多线程环境下，当多个线程同时使用相同的SimpleDateFormat对象（如static修饰）的话，如调用format方法时，多个线程会同时调用calender.setTime方法，导致time被别的线程修改，因此线程是不安全的。
 
 # 引用
 * https://www.cnblogs.com/skywang12345/
