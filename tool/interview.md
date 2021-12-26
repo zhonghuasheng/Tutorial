@@ -1,6 +1,29 @@
 # 目录
+* [知识点纪要](#知识点纪要)
 * [面试题](#面试题)
 * [面试技巧](#面试技巧)
+
+### 知识点纪要
+基础，集合，AQS，JVM，Spring，SpringBoot，SpringCloud，缓存，消息队列，数据库，搜索，架构
+
+集合
+----
+Java的集合类位于java.util.*包下，大体分为2类，Collection和Map，另外就是2个工具类。
+Collection包含3个分支: List, Set, Queue
+Map包含1个分支：Map
+Concurrent主要有3个package组成: 
+    * java.util.concurrent
+        ```
+        提供大部分关于并发的接口和类，如BlockingQueue, ConcurrentHashMap, ExecutorService等
+        ```
+    * java.util.concurrent.atomic
+        ```
+        提供所有的原子类操作，如AtomicInteger, AtomicLong等
+        ```
+    * java.util.concurrent.locks
+        ```
+        提供锁相关的类，如Lock, ReentrantLock, ReadWriteLock, Confition等
+        ```
 
 ### 面试题
 #### Java 基础
@@ -44,6 +67,7 @@
 37. synchronized 和 Lock 有什么区别？
 38. synchronized 和 ReentrantLock 区别是什么？
 39. 说一下 atomic 的原理？
+* [如何定位JVM死锁、cpu飙高、内存溢出](#如何定位JVM死锁、cpu飙高、内存溢出)
 ### spring/spring MVC
 * [SpringMVC 说说过滤器、监听器、拦截器有啥区别](https://github.com/zhonghuasheng/Tutorial/issues/197)
 * [SpringBoot系列](https://github. com/zhonghuasheng/Tutorial/issues?q=label%3ASpringBoot+)
@@ -222,6 +246,11 @@ epoll_wait() 多长时间去轮询一次，看有没有数据
 答：ArrayList的底层数据结构是数组，不指定ArrayList大小的时候初始化的大小是0，第一次add的时候size会变成10，扩容的话会是之前的1.5倍。ArrayList由于底层是数组，因此随机查找的速度很快，插入和删除效率比较低。因为它底层是数组，因此分配内存空间的时候要求是连续的内存单元，所以如果需要存储的数据量很大的情况下，不建议使用ArrayList。LinkedList的底层是一个带有头节点和尾节点的双向链表，提供了头插（LinkedFirst）和尾插（LinkedLast），插入和删除比较快，不支持随机查询，LinkedList数据的存储不要求内存空间是连续的。
 问：如果在多线程的情况下，我既想用List，又想保证线程安全，那怎么办？
 答：我知道的有三种方式：1. 使用Vector，它是一个线程安全的List集合，所有的方法都加了synchronized关键字来保证同步，但它性能很差。[读写都加锁，底层也是数组，扩容时是之前的2倍] 2. 使用Collections.SynchronizedList，它是Collections下的一个静态内部类，它把List下的所有方法都变成了线程安全的，于Vector不同的是，它把synchronized加到了方法内部的代码块上，提高了扩展性[锁的粒度变小] 3. 使用CopyOnWriteArrayList，add的时候加锁，读的时候不加锁，提高了读取性能 [锁粒度变小，同时锁范围变小]
+
+CopyOnWriteArrayList:CopyOnWriteArrayList这是一个ArrayList的线程安全的变体，其原理大概可以通俗的理解为:初始化的时候只有一个容器，很常一段时间，这个容器数据、数量等没有发生变化的时候，大家(多个线程)，都是读取(假设这段时间里只发生读取的操作)同一个容器中的数据，所以这样大家读到的数据都是唯一、一致、安全的，但是后来有人往里面增加了一个数据，这个时候CopyOnWriteArrayList 底层实现添加的原理是先copy出一个新的容器(可以简称副本)，再往新的容器里添加这个新的数据，最后把新的容器的引用地址赋值给了之前那个旧的的容器地址，但是在添加这个数据的期间，其他线程如果要去读取数据，仍然是读取到旧的容器里的数
+            Object[] newElements = Arrays.copyOf(elements, len + 1);
+            newElements[len] = e;
+            setArray(newElements);
 ```
 
 3. 常规的来聊一下HashMap
@@ -251,3 +280,5 @@ epoll_wait() 多长时间去轮询一次，看有没有数据
 ```
 答：volatile修饰的变量保证了多线程下的可见性，当CPU写数据时，发现此变量被volatile修饰时，发现其他CPU中也存在该变量的副本，会发出信号通知其他CPU该变量的缓存行置为无效状态，因此当其他CPU需要读取这个变量时，发现自己缓存中的变量行是无效的，就重新去内存读取。它是通过计算机的总线嗅探机制（MESI）来实现的，当然它也会照成一个问题，就是volitale会一直嗅探，导致一些无效的交互，引发总线风暴。
 ```
+
+## 如何定位JVM死锁、cpu飙高、内存溢出

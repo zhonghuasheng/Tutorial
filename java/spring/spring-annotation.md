@@ -368,6 +368,7 @@ public void demo2(@RequestBody @Valid DemoModel demo, BindingResult result){
       private String name;
     * @Past过去的时间
     * @Future 将来的时间
+    * @ConditionalOnProperty(prefix="xxx", name={"yyy"}, havingValue="zzz") xxx为配置文件中的前缀，yyy为配置文件名字，havingVaue是与配置的值进行对比，返回true则配置类生效，反之失效
 * SpringCloud
     * @SpringBootApplication是Sprnig Boot项目的核心注解,目的是开启自动配置
     * @EnableDiscoveryClient注解基于spring-cloud-common依赖，并且在classpath中实现

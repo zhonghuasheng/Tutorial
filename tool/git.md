@@ -20,6 +20,13 @@
 ## 创建自己的代码仓库，并提交一个commit
 * 参考文章 https://jingyan.baidu.com/article/8cdccae9269b1f315413cde2.html
 
+## Git Architecture
+
+![](http://r3rutcmq2.hd-bkt.clouddn.com//githubgit-architecture.jpg)
+1. Workspace: 工作区
+2. Stage：暂存区
+3. Repository: 本地仓库
+4. Remote: 远程仓库
 
 ### Create a new git branch from an old commit
 

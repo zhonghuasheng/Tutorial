@@ -100,16 +100,27 @@
     java.rmi.ConnectException: Connection refused to host: y.y.y.y; nested exception is:
     ```
     > 注意：我在这里查看了远程机器的hosts，发现其配有一些其他的IP，将其删除后能够联通
-* 如何定位内存CPU高和死锁的问题
+* 快速定位导致cpu飙升的线程堆栈信息
     ```log
-    top 查看进行的cpu负载高的，获取进程id
-    jstack 进程id > xxx.txt 导出日志
-    top -p 进程id -H 查看负载高的线程
-    printf "%x" 进程id 将进程号进制转换，在日志定位
-    程序死锁
-    found 1 dead lock
+    top 首先通过top命令找到高负载的CPU，获取进程id
+    top -p <进程id> 精确定位到cpu高的进程，然后按H键，查看该进程所有线程
+        或者 top -p 进程id -H 查看进程下的线程
+    printf "%x" 进程id 将进程号转化为16进制，注意把十六进制的大写字母转换为小写
+    jstack 进程id > xxx.txt 导出日志，然后在日志中查找nid=转换后进程id
+        或者 jstack 进程ID|grep -A 10 55a0   10表示这个线程所在行后面10行，55a0是进程ID转换后的十六进制
     ```
-
+* 查看堆内存使用情况
+    ```
+    jps查看各个应用进程id
+    jmap -heap java项目进程id
+    jmap -histo 进程id > log.txt 查看此应用中各实例生成情况
+    jmap -histo:live [pid] > log.txt 过滤存活的对象
+    ```
+* 查找代码死锁
+    ```
+    jstack 进程id > xxx.txt 导出日志
+    搜索 deadlock 或者查 locked关键字找到发生死锁线程
+    ```
 
 # 引用
 * [jvisualvm简要说明](https://blog.csdn.net/weixin_38750084/article/details/83314046)
