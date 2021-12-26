@@ -120,8 +120,30 @@ Map 映射顺序。有些实现类，可以明确保证其顺序，如 TreeMap�
 Map 的实现类应该提供2个“标准的”构造方法：第一个，void（无参数）构造方法，用于创建空映射；第二个，带有单个 Map 类型参数的构造方法，用于创建一个与其参数具有相同键-值映射关系的新映射。实际上，后一个构造方法允许用户复制任意映射，生成所需类的一个等价映射。尽管无法强制执行此建议（因为接口不能包含构造方法），但是 JDK 中所有通用的映射实现都遵从它。
 ```
 
-[Map的三种Collection视图例子 MapTest01.java](https://github.com/zhonghuasheng/JAVA/blob/master/basic/src/main/java/com/zhonghuasheng/basic/util/MapTest01.java)
+[Map的三种Collection视图例子 MapTest01.java]
+```java
+    // key视图
+    Set<String> keys = hashMap.keySet();
+    Iterator<String> iteratorKeys = keys.iterator();
+    while (iteratorKeys.hasNext()) {
+        System.out.println(iteratorKeys.next());
+    }
 
+    // value视图
+    Collection<String> values = hashMap.values();
+    Iterator<String> iteratorValues = values.iterator();
+    while (iteratorValues.hasNext()) {
+        System.out.println(iteratorValues.next());
+    }
+
+    // key-value视图
+    Set<Entry<String, String>> entrySets = hashMap.entrySet();
+    Iterator<Entry<String, String>> iteratorEntrySets = entrySets.iterator();
+    while (iteratorEntrySets.hasNext()) {
+        Entry<String, String> entry = iteratorEntrySets.next();
+        System.out.println(String.format("key: %s, value: %s", entry.getKey(), entry.getValue()));
+    }
+```
 ## Concurrent包下的集合概述
 
 1. 概述
@@ -492,7 +514,7 @@ AbstractSet没有对Set做多少的实现，其继承了AbstractCollection
 `总结`
 ```
 HashSet是一个没有重复元素的集合，它是由HashMap实现的（HashMap中key不能重复），不保证元素的顺序，而且HashSet允许使用null元素。
-HashSet是非同步的，因此如果多线程同时访问一个HashSet，而其中至少有一个线程修改了该HashSet夺得话，那么需要保持外部同步，通常可以对该Set的对象封装来完成同步操作，也可以使用Collections.synchronizedSet方法来完成。
+HashSet是非同步的，因此如果多线程同时访问一个HashSet，而其中至少有一个线程修改了该HashSet的话，那么需要保持外部同步，通常可以对该Set的对象封装来完成同步操作，也可以使用Collections.synchronizedSet方法来完成。
 HashSet是通过Iterator迭代遍历的
 ```
 

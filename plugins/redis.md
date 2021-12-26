@@ -671,7 +671,7 @@ redisTemplate.opsForValue().set(String.valueOf(goodsId), null, 60, TimeUnit.SECO
 
 解决方案：
 * 缓存数据的过期时间设置随机，防止同一时间大量数据过期现象发生。
-* 如果缓存数据库是分布式部署，将热点数据均匀分布在不同搞得缓存数据库中。
+* 如果缓存数据库是分布式部署，将热点数据均匀分布在不同的缓存数据库中。
 * 设置热点数据永远不过期。
 * redis 持久化，一旦重启，自动从磁盘上加载数据，快速恢复缓存数据。
 
@@ -960,3 +960,10 @@ https://www.processon.com/view/60335eea6376896cd6ea50e3?fromnew=1
 https://www.processon.com/view/5ea7a58807912948b0e1aa2f?fromnew=1
 https://www.processon.com/view/5f7c98677d9c0806f2659737?fromnew=1
 https://blog.csdn.net/user2025/article/details/109178738
+
+### Redis底层浅析
+* Redis整体结构
+* Redis服务启动都发生了什么
+* Redis get命令发生了什么
+* Redis set命令发生了什么
+* Redis-cli是如何和redis-server建立连接以及通信的
