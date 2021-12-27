@@ -793,10 +793,12 @@ CompletionService，Future，Callable等。并发编程的一种编程方式是�
 * corePoolSize: 核心线程数量
 * maximumPoolSize: 最大线程数
 * workQueue: 阻塞队列，存储等待执行的任务
+线程池任务执行的主要工作流程：
 1. 如果运行的线程数小于corePoolSize，直接创建新线程处理任务，即使线程池中的其他线程是空闲的
-2. 如果运行的线程数大于等于cordPoolSize，并且小于maximumPoolSize，此时，只有当workQueue满时，才会创建新的线程处理任务
-3. 如果设置的corePoolSize与maximumPoolSize相同，那么创建的线程池大小时固定的，此时，如果有新任务提交，并且workQueue没有满时，就把请求放入到workQueue中，等待空闲的线程，从workQueue中取出任务进行处理
-4. 如果运行的线程数量大于maximumPoolSize，同时，workQueue已经满了，会通过拒绝策略参数rejectHandler来指定处理策略
+2. 如果运行的线程数大于等于cordPoolSize，并且小于maximumPoolSize，则将此任务放入队列workQueue，如果workQueue满并且正在运行的线程数量小于maximumPoolSize，才会创建新的非核心线程处理任务
+3. 如果运行的线程数量大于等于maximumPoolSize，同时，workQueue已经满了，会通过拒绝策略参数rejectHandler来指定处理策略
+4. 当一个线程完成任务时，它会从队列中取下一个任务来执行。
+5. 当一个线程空闲时，超过一定的时间(keepAliveTime)时，线程池会判断，如果当前运行的线程数大于 corePoolSize 值，那么这个线程会被销毁。
     > 根据上面三个参数配置，线程池会对任务进行如下处理方式
     ```
     当提交一个新的任务到线程池，线程池会根据当前线程池中正在进行的线程数量来决定该任务的处理方式，处理方式共有三种：直接切换、使用无限队列、使用有界队列
