@@ -119,5 +119,15 @@ public class RedisRepository {
     }
 ```
 
+### java gc STW （stop the word）导致的锁过期问题
+1. 工作线程1，获取锁，并设置了超时淘汰时长
+2. jvm gc垃圾回收时，会暂停工作线程，即STW
+3. 当工作线程1恢复工作的时候，由于STW的时长稍长，可能锁已经超时淘汰了，但是该线程还不知道，此时工作线程2去获取，也是能获取到的，导致出现多个线程获取同一个锁的异常问题，如下图所示
+TODO 补图
+
+### Redis主挂掉导致的问题
+1. 异步复制，master和slave不一致，master宕机，slave则没有该锁记录，导致多端获取该锁：就是如果你对某个redis master实例，写入了myLock这种锁key的value，此时会 异步复制 给对应的master slave实例。但是这个过程中一旦发生redis master宕机，主备切换，redis slave变为了redis master。接着就会导致，客户端2来尝试加锁的时候，在新的redis master上完成了加锁，而客户端1也以为自己成功加了锁。此时就会导致多个客户端对一个分布式锁完成了加锁。这时系统在业务上一定会出现问题，导致脏数据的产生。所以这个就是redis cluster，或者是redis master-slave架构的主从异步复制导致的redis分布式锁的最大缺陷：在redis master实例宕机的时候，可能导致多个客户端同时完成加锁
+
 ### 参考文章
 * https://cloud.tencent.com/developer/article/1431873
+* https://www.cnblogs.com/woshare/p/15253014.html
