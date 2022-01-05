@@ -10,6 +10,7 @@
 * mybatis源码的中文注释以及mybatis的使用和源码解析 https://github.com/homejim/mybatis-cn
 * 【Java进阶】实现自己的ORM框架 https://blog.csdn.net/liyazhou0215/article/details/77431561
 * MyBatis Plus（简称MP）是一个 Mybatis 的增强工具，在 Mybatis 的基础上只做增强不做改变，为简化开发、提高效率而生
+* [MyBatis中${}和#{}有什么区别？MyBatis是如何防止SQL注入的？](#MyBatis防止SQL注入)
 
 ### 学习笔记
 * 【关注点】针对高级查询，Mybatis需要手动编写SQL语句，以及ResultMap。而Hibernate有良好的映射机制，开发者无需关心SQL的生成与结果映射，可以更专注于业务流程。【SQL优化方面】Hibernate的查询会将表中的所有字段查询出来，这一点会有性能消耗。Hibernate也可以自己写SQL来指定需要查询的字段，但这样就破坏了Hibernate开发的简洁性。而Mybatis的SQL是手动编写的，所以可以按需求指定查询的字段。但Hibernate具有自己的日志统计。Mybatis本身不带日志统计，使用Log4j进行日志记录。【扩展性】Hibernate与具体数据库的关联只需在XML文件中配置即可，所有的HQL语句与具体使用的数据库无关，移植性很好。MyBatis项目中所有的SQL语句都是依赖所用的数据库的，所以不同数据库类型的支持不好。【优势对比】MyBatis可以进行更为细致的SQL优化，可以减少查询字段。MyBatis容易掌握，而Hibernate门槛较高。
@@ -121,3 +122,11 @@
         * @TableField(value= "", exist = false)：表示该属性不为数据库表字段，但又是必须使用的。
         * @TableField(value= "", exist = true)：表示该属性为数据库表字段。
     * @TableLogic：表字段逻辑处理注解（逻辑删除）
+
+### MyBatis防止SQL注入
+SQL注入的根本原因就是SQL的动态编译。能产生SQL注入的肯定是字符串，否则会报类型错误。在MyBatis中${}会产生SQL注入，#{}不会产生SQL注入。
+* ${}匹配的是真实传递的值，传递过后，会与sql语句进行字符串拼接，不能预防SQL注入。比如我传递的值是 1' OR 1=1
+* #{}匹配的是一个占位符，相当于JDBC中的?，会对一些敏感的字符进行过滤。比如输入带了单引号，会在单引号前加\
+1. 那么#{}底层是如何防止SQL注入的？只看字符串
+#{}底层使用的是PreparedStatement#setString方法能够保证传参作为一个字符串而不会被拆分（所以不会产生字符串拼接），setString对每个字符都做了检查，比如单引号前会加个\来转义
+2. ${}的使用场景动态传入表名或列名

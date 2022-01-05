@@ -5,3 +5,4 @@
 * SpringCloud知识点整理
 * MQ常见问题整理
 * ZGC梳理（CMS的三次标记流程）
+* Mybatis中${}和#{}区别
