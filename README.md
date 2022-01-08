@@ -16,7 +16,7 @@
 &emsp;&emsp;[JDBC基础](https://github.com/zhonghuasheng/JAVA/blob/master/jdbc/src/main/java/com/zhonghuasheng/jdbc/learn01/BasicSteps.java)&emsp;&emsp;[Java集合](java/basic/java-collection.md)&emsp;&emsp;[Java多线程系列](java/basic/java-thread.md)&emsp;&emsp;[JUC系列](java/basic/java-thread-juc.md)&emsp;&emsp;[Java IO基础](java/basic/java-io-nio.md)
 * `Java -VM`: &emsp;[Java虚拟机系列](java/jvm/深入理解Java虚拟机.md)&emsp;[JVM虚拟机监控及性能调优系列](java/jvm/JVM虚拟机监控及性能调优.md)
 * `Java-Web`: &emsp;[Servlet基础](java/javaweb/servlet.md)&emsp;[JSP基础](java/javaweb/jsp.md)
-* `Spring X`: &emsp;[Spring4基础知识系列](java/spring/spring.md#Spring)&emsp;[SpringMVC基础知识系列](java/spring/spring.md#SpringMVC)&emsp;[SpringBoot基础知识系列](java/spring/spring.md#SpringBoot)&emsp;[SpringCloud基础知识系列](java/spring/spring-cloud/spring-cloud.md)
+* `Spring X`: &emsp;[Spring4系列](java/spring/spring.md#Spring)&emsp;[SpringMVC系列](java/spring/spring.md#SpringMVC)&emsp;[SpringBoot系列](java/spring/spring.md#SpringBoot)&emsp;[SpringCloud系列](java/spring/spring-cloud/spring-cloud.md)
 
 ### 中间件
 * `负载均衡`: &emsp;[Keepalived系列](plugins/keepalived.md)
