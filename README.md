@@ -34,7 +34,11 @@
 * [Tomcat服务器](plugins/tomcat.md)&emsp;[Nginx反向代理服务器搭建](plugins/nginx.md)&emsp;[Linux系统常用命令](tool/shell/linux.md)
 
 ### 架构设计
-TODO
+* [分布式锁](system/architecture/分布式锁.md)
+* [分布式ID生成方案](system/architecture/分布式ID生成方案.md)
+* [如何设计一个对外安全的接口](system/architecture/如何设计一个对外安全的接口.md)
+* [CAP理论](system/architecture/CAP.md)
+* [日志](system/architecture/log-note.md)
 
 ### 内功
 * `设计模式`: [23种设计模式](system/algorithm/设计模式.md)
