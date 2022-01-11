@@ -15,4 +15,4 @@ SpringCloud Gateway是基于spring-webflux，采用netty+reactor（Spring WebFlu
 
 Route(路由)：路由是构建网关的基本模块，它由ID，目标URI，一系列的断言和过滤器组成，如果断言为true则匹配该路由，目标URI会被访问。
 Predicate(断言)：这是一个java 8的Predicate，可以使用它来匹配来自HTTP请求的任何内容，可以理解为当满足这种条件后才会被转发
-Filter(过滤器
+Filter(过滤器)：

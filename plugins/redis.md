@@ -12,6 +12,7 @@
     * 单线程的redis，如何知道要运行定时任务？
     * Redis Server启动源码分析
     * Redis get/set源码分析
+    * Redis SkipMap病毒
 * [实战]()
 
 ### 学习计划
@@ -936,6 +937,11 @@ Redis 本身提供发现大对象的工具，对应命令：redis-cli-h {ip} -p 
 > redis-cli -c -p 7000 info | grep -w latest_fork_usec
 latest_fork_usec:315
 ```
+
+> Redis SkidMap病毒
+利用Redis未授权访问漏洞，来执行恶意脚本，本质上是Redis安全没做好
+
+
 
 https://www.imcsummit.org/2019/us/sites/2019.us/files/slides/10-Ways-to-Scale-with-Redis-IMCSummit-2019.pdf
 https://blog.csdn.net/weixin_33885253/article/details/88034739
