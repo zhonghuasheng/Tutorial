@@ -2,6 +2,8 @@
 * RPC
 * Protobuf
 * go thinking
+* basic
+* 注意
 
 ### RPC
 整体过程就是：
@@ -27,3 +29,15 @@ Google Protocol Buffer
 * 并发编程
 * 反射
 * 语言交互性
+
+### basic
+* Go程序由多个标记组成，可以是关键字、标识符、常量、字符创、符号。
+    * 行分隔符： 每一行代表一个语句结束。建议每一行加上分号;标识结尾，不加的话Go编译器自动完成
+    * 注释：注释不会被编译
+    * 标识符：标识符用来命名变量、类型等程序实体
+    * 字符串连接：Go语言的字符串可以通过+实现
+    * 关键字：Go语言包含25个关键字。break default func interface select case defer go map struct chan else goto package switch const flatthrough if range type continue for import return var
+        * Go语言还有36个预定义标识符
+
+### 注意
+* go语言中{不能单独放在一行，否则运行时会产生错误
