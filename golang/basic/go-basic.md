@@ -3,6 +3,7 @@
 * Protobuf
 * go thinking
 * basic
+* 空白标识符
 * 注意
 
 ### RPC
@@ -38,6 +39,7 @@ Google Protocol Buffer
     * 字符串连接：Go语言的字符串可以通过+实现
     * 关键字：Go语言包含25个关键字。break default func interface select case defer go map struct chan else goto package switch const flatthrough if range type continue for import return var
         * Go语言还有36个预定义标识符
+* 空白标识符_是一个只写变量，你不能得到它的值，被用于抛弃值。这样做是因为Go语言中你必须使用所有被声明的变量，但有时你并不需要使用从一个函数得到的所有返回值。
 
 ### 注意
 * go语言中{不能单独放在一行，否则运行时会产生错误
