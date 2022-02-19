@@ -129,3 +129,4 @@
 * User Stroy 场景
 * LDAP Lightweight Directory Access Protocol 轻型目录访问协议。LDAP采用树形结构存储，查询高效，开源产品OpenLDAP。可用于SSO单点登录。LDAP主要的应用场景是查询多而修改极少，查询和修改的比率是10:1 甚至更高， 那就充分发挥LDAP的优势了，因为没有事务处理，那数据库的速度可是比不上。 还有LDAP能存储海量的数据，还可以轻松地在各个系统之间复制，可用性超高。
 * privileged 有特权的
+* syntactic sugar 语法糖
