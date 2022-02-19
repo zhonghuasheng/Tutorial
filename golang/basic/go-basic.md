@@ -1,3 +1,7 @@
+### 学习计划
+* B站8小时转go开发
+* go-kit实战小例子
+
 ### 目录
 * RPC
 * Protobuf
@@ -22,6 +26,7 @@ Google Protocol Buffer
 ### go thinking
 众多语言学术流派，面向过程、面向对象、函数式编程、面向消息编程等。Go语言接受函数式编程、支持匿名函数与闭包，接受以Erlang语言为代表的面向消息编程思想，支持goroutine和通道，并推荐使用消息而不是共享内存来进行并发编程。Go语言最主要的特性
 * 自动垃圾回收
+* runtime系统调度机制
 * 更丰富的内置类型
 * 函数多返回值
 * 错误处理
@@ -51,7 +56,12 @@ Google Protocol Buffer
     * Transport 主要负责Http, gRpc, thrift
     * Services 业务函数
     * Endpoint 定义request, response格式等
+* 四种变量声明方式
 
 
 ### 注意
 * go语言中{不能单独放在一行，否则运行时会产生错误
+
+### 其他
+* facebook grace平滑升级项目
+* 腾讯在15年的时候使用go做了docker万台规模，主要用于蓝鲸游戏平台
