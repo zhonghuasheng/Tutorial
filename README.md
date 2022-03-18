@@ -18,7 +18,7 @@
 * `Spring X`: &emsp;[Spring4系列](java/spring/spring.md#Spring)&emsp;[SpringMVC系列](java/spring/spring.md#SpringMVC)&emsp;[SpringBoot系列](java/spring/spring.md#SpringBoot)&emsp;[SpringCloud系列](java/spring/spring-cloud/spring-cloud.md)
 
 ### Golang
-* `Golang Basic`: &emsp;[Go基础](go/basic/go-basic.md)
+* `Golang Basic`: &emsp;[Go基础](golang/basic/go-basic.md)
 
 ### 中间件
 * `负载均衡`: &emsp;[Keepalived系列](plugins/keepalived.md)
