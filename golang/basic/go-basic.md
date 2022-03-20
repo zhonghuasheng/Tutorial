@@ -65,3 +65,7 @@ Google Protocol Buffer
 ### 其他
 * facebook grace平滑升级项目
 * 腾讯在15年的时候使用go做了docker万台规模，主要用于蓝鲸游戏平台
+
+### 常见错误
+* package command-line-arguments is not a main package
+要运行的go文件，package不是main。PS，也要有一个main函数
