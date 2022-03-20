@@ -69,3 +69,6 @@ Google Protocol Buffer
 ### 常见错误
 * package command-line-arguments is not a main package
 要运行的go文件，package不是main。PS，也要有一个main函数
+
+* sql: Scan error on column index 3, name "created_at": unsupported Scan, storing driver.Value type []uint8 into type *time.Time
+在conn上加parseTime=true，eg `/guestdb?charset=utf8&parseTime=true`
