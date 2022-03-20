@@ -29,6 +29,8 @@
   - [设计](#设计)
   - [使用](#使用)
   - [count(*)的实现](#count)
+  - [MySQL给用户授权](#MySQL给用户授权)
+    - [给用户赋予某个数据库某种权限]
 
 ### 番外篇
 * 数据库的扩展没有web服务器那样容易
@@ -485,3 +487,10 @@ GROUP BY columnA HAVING COUNT(columnA) > 1
 ```
 
 https://mp.weixin.qq.com/s/SNRvdmyS57oWS_CyYKVvSA
+
+#### MySQL给用户授权
+1. 给某个用户赋予某个数据库的某种权限
+* 首先创建用户 `create user user1 identified by '123';`
+* 赋予`user1`某些权限 `grant select,insert,update on db1.* to user1@"%" identified by "123";`
+* 刷新 `flush privileges;`
+* 切换到user1查看数据库
