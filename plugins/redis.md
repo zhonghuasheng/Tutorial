@@ -12,7 +12,7 @@
     * 单线程的redis，如何知道要运行定时任务？
     * Redis Server启动源码分析
     * Redis get/set源码分析
-    * Redis SkipMap病毒
+    * 面试题 https://www.sohu.com/a/486868862_121124376
 * [实战]()
 
 ### 学习计划
