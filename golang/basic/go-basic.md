@@ -62,6 +62,7 @@ Google Protocol Buffer
     * Services 业务函数
     * Endpoint 定义request, response格式等
 * 四种变量声明方式
+* channel，go语言是如何实现不同协程之前通信的呢？其他语言是通过共享内存来实现通信，而go语言是通过通信来实现共享。一个重要的特性：不论是从channel中读一条消息，还是往channel中发送一条消息，都会阻塞当前代码运行。
 
 ##### 指针
 取址运算符“&”用于获取对象地址。
